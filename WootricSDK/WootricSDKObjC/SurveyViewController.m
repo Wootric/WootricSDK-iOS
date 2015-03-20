@@ -908,9 +908,6 @@
 }
 
 - (void)changeView {
-//  [_voteButton removeTarget:self action:NSSelectorFromString(@"voteButtonPressed:") forControlEvents:UIControlEventTouchUpInside];
-//  [_voteButton addTarget:self action:NSSelectorFromString(@"sendButtonPressed:") forControlEvents:UIControlEventTouchUpInside];
-//  [_voteButton setTitle:@"SEND FEEDBACK" forState:UIControlStateNormal];
   _voteButton.hidden = YES;
   _sendFeedbackButton.hidden = NO;
   _titleLabel.text = _commentTitleText;
