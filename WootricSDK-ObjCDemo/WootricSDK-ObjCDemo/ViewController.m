@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-@import WootricSDKObjC;
+@import WootricSDK;
 
 @interface ViewController ()
 
