@@ -1,0 +1,508 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B20A4C651ABC670300B7B52E /* WootricSDK.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = B20A4C621ABC66F500B7B52E /* WootricSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B2F4DB3B1AA77C47007FA43E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B2F4DB3A1AA77C47007FA43E /* main.m */; };
+		B2F4DB3E1AA77C47007FA43E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B2F4DB3D1AA77C47007FA43E /* AppDelegate.m */; };
+		B2F4DB411AA77C47007FA43E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2F4DB401AA77C47007FA43E /* ViewController.m */; };
+		B2F4DB441AA77C47007FA43E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2F4DB421AA77C47007FA43E /* Main.storyboard */; };
+		B2F4DB461AA77C47007FA43E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2F4DB451AA77C47007FA43E /* Images.xcassets */; };
+		B2F4DB491AA77C47007FA43E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2F4DB471AA77C47007FA43E /* LaunchScreen.xib */; };
+		B2F4DB551AA77C47007FA43E /* WootricSDK_ObjCDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2F4DB541AA77C47007FA43E /* WootricSDK_ObjCDemoTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B20A4C611ABC66F500B7B52E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B20A4C5C1ABC66F500B7B52E /* WootricSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B2F4DABE1AA77667007FA43E;
+			remoteInfo = WootricSDK;
+		};
+		B20A4C631ABC66F500B7B52E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B20A4C5C1ABC66F500B7B52E /* WootricSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B2F4DAC91AA77667007FA43E;
+			remoteInfo = WootricSDKTests;
+		};
+		B20A4C661ABC670700B7B52E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B20A4C5C1ABC66F500B7B52E /* WootricSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B2F4DABD1AA77667007FA43E;
+			remoteInfo = WootricSDK;
+		};
+		B2F4DB4F1AA77C47007FA43E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B2F4DB2D1AA77C47007FA43E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B2F4DB341AA77C47007FA43E;
+			remoteInfo = "WootricSDK-ObjCDemo";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B2F4DB6C1AA77D36007FA43E /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B20A4C651ABC670300B7B52E /* WootricSDK.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		B20A4C5C1ABC66F500B7B52E /* WootricSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WootricSDK.xcodeproj; path = ../WootricSDK/WootricSDK.xcodeproj; sourceTree = "<group>"; };
+		B2F4DB351AA77C47007FA43E /* WootricSDK-ObjCDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WootricSDK-ObjCDemo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2F4DB391AA77C47007FA43E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2F4DB3A1AA77C47007FA43E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B2F4DB3C1AA77C47007FA43E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B2F4DB3D1AA77C47007FA43E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B2F4DB3F1AA77C47007FA43E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		B2F4DB401AA77C47007FA43E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		B2F4DB431AA77C47007FA43E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B2F4DB451AA77C47007FA43E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B2F4DB481AA77C47007FA43E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		B2F4DB4E1AA77C47007FA43E /* WootricSDK-ObjCDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "WootricSDK-ObjCDemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2F4DB531AA77C47007FA43E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2F4DB541AA77C47007FA43E /* WootricSDK_ObjCDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WootricSDK_ObjCDemoTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B2F4DB321AA77C47007FA43E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2F4DB4B1AA77C47007FA43E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B20A4C5D1ABC66F500B7B52E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B20A4C621ABC66F500B7B52E /* WootricSDK.framework */,
+				B20A4C641ABC66F500B7B52E /* WootricSDKTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B2F4DB2C1AA77C47007FA43E = {
+			isa = PBXGroup;
+			children = (
+				B20A4C5C1ABC66F500B7B52E /* WootricSDK.xcodeproj */,
+				B2F4DB371AA77C47007FA43E /* WootricSDK-ObjCDemo */,
+				B2F4DB511AA77C47007FA43E /* WootricSDK-ObjCDemoTests */,
+				B2F4DB361AA77C47007FA43E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B2F4DB361AA77C47007FA43E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B2F4DB351AA77C47007FA43E /* WootricSDK-ObjCDemo.app */,
+				B2F4DB4E1AA77C47007FA43E /* WootricSDK-ObjCDemoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B2F4DB371AA77C47007FA43E /* WootricSDK-ObjCDemo */ = {
+			isa = PBXGroup;
+			children = (
+				B2F4DB3C1AA77C47007FA43E /* AppDelegate.h */,
+				B2F4DB3D1AA77C47007FA43E /* AppDelegate.m */,
+				B2F4DB3F1AA77C47007FA43E /* ViewController.h */,
+				B2F4DB401AA77C47007FA43E /* ViewController.m */,
+				B2F4DB421AA77C47007FA43E /* Main.storyboard */,
+				B2F4DB451AA77C47007FA43E /* Images.xcassets */,
+				B2F4DB471AA77C47007FA43E /* LaunchScreen.xib */,
+				B2F4DB381AA77C47007FA43E /* Supporting Files */,
+			);
+			path = "WootricSDK-ObjCDemo";
+			sourceTree = "<group>";
+		};
+		B2F4DB381AA77C47007FA43E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B2F4DB391AA77C47007FA43E /* Info.plist */,
+				B2F4DB3A1AA77C47007FA43E /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B2F4DB511AA77C47007FA43E /* WootricSDK-ObjCDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				B2F4DB541AA77C47007FA43E /* WootricSDK_ObjCDemoTests.m */,
+				B2F4DB521AA77C47007FA43E /* Supporting Files */,
+			);
+			path = "WootricSDK-ObjCDemoTests";
+			sourceTree = "<group>";
+		};
+		B2F4DB521AA77C47007FA43E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B2F4DB531AA77C47007FA43E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B2F4DB341AA77C47007FA43E /* WootricSDK-ObjCDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2F4DB581AA77C47007FA43E /* Build configuration list for PBXNativeTarget "WootricSDK-ObjCDemo" */;
+			buildPhases = (
+				B2F4DB311AA77C47007FA43E /* Sources */,
+				B2F4DB321AA77C47007FA43E /* Frameworks */,
+				B2F4DB331AA77C47007FA43E /* Resources */,
+				B2F4DB6C1AA77D36007FA43E /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B20A4C671ABC670700B7B52E /* PBXTargetDependency */,
+			);
+			name = "WootricSDK-ObjCDemo";
+			productName = "WootricSDK-ObjCDemo";
+			productReference = B2F4DB351AA77C47007FA43E /* WootricSDK-ObjCDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B2F4DB4D1AA77C47007FA43E /* WootricSDK-ObjCDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2F4DB5B1AA77C47007FA43E /* Build configuration list for PBXNativeTarget "WootricSDK-ObjCDemoTests" */;
+			buildPhases = (
+				B2F4DB4A1AA77C47007FA43E /* Sources */,
+				B2F4DB4B1AA77C47007FA43E /* Frameworks */,
+				B2F4DB4C1AA77C47007FA43E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B2F4DB501AA77C47007FA43E /* PBXTargetDependency */,
+			);
+			name = "WootricSDK-ObjCDemoTests";
+			productName = "WootricSDK-ObjCDemoTests";
+			productReference = B2F4DB4E1AA77C47007FA43E /* WootricSDK-ObjCDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B2F4DB2D1AA77C47007FA43E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = Wootric;
+				TargetAttributes = {
+					B2F4DB341AA77C47007FA43E = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					B2F4DB4D1AA77C47007FA43E = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = B2F4DB341AA77C47007FA43E;
+					};
+				};
+			};
+			buildConfigurationList = B2F4DB301AA77C47007FA43E /* Build configuration list for PBXProject "WootricSDK-ObjCDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B2F4DB2C1AA77C47007FA43E;
+			productRefGroup = B2F4DB361AA77C47007FA43E /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B20A4C5D1ABC66F500B7B52E /* Products */;
+					ProjectRef = B20A4C5C1ABC66F500B7B52E /* WootricSDK.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				B2F4DB341AA77C47007FA43E /* WootricSDK-ObjCDemo */,
+				B2F4DB4D1AA77C47007FA43E /* WootricSDK-ObjCDemoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B20A4C621ABC66F500B7B52E /* WootricSDK.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WootricSDK.framework;
+			remoteRef = B20A4C611ABC66F500B7B52E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B20A4C641ABC66F500B7B52E /* WootricSDKTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = WootricSDKTests.xctest;
+			remoteRef = B20A4C631ABC66F500B7B52E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B2F4DB331AA77C47007FA43E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2F4DB441AA77C47007FA43E /* Main.storyboard in Resources */,
+				B2F4DB491AA77C47007FA43E /* LaunchScreen.xib in Resources */,
+				B2F4DB461AA77C47007FA43E /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2F4DB4C1AA77C47007FA43E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B2F4DB311AA77C47007FA43E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2F4DB411AA77C47007FA43E /* ViewController.m in Sources */,
+				B2F4DB3E1AA77C47007FA43E /* AppDelegate.m in Sources */,
+				B2F4DB3B1AA77C47007FA43E /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2F4DB4A1AA77C47007FA43E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2F4DB551AA77C47007FA43E /* WootricSDK_ObjCDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B20A4C671ABC670700B7B52E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = WootricSDK;
+			targetProxy = B20A4C661ABC670700B7B52E /* PBXContainerItemProxy */;
+		};
+		B2F4DB501AA77C47007FA43E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B2F4DB341AA77C47007FA43E /* WootricSDK-ObjCDemo */;
+			targetProxy = B2F4DB4F1AA77C47007FA43E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B2F4DB421AA77C47007FA43E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B2F4DB431AA77C47007FA43E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B2F4DB471AA77C47007FA43E /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B2F4DB481AA77C47007FA43E /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B2F4DB561AA77C47007FA43E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B2F4DB571AA77C47007FA43E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B2F4DB591AA77C47007FA43E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "WootricSDK-ObjCDemo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B2F4DB5A1AA77C47007FA43E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "WootricSDK-ObjCDemo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		B2F4DB5C1AA77C47007FA43E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "WootricSDK-ObjCDemoTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WootricSDK-ObjCDemo.app/WootricSDK-ObjCDemo";
+			};
+			name = Debug;
+		};
+		B2F4DB5D1AA77C47007FA43E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "WootricSDK-ObjCDemoTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WootricSDK-ObjCDemo.app/WootricSDK-ObjCDemo";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B2F4DB301AA77C47007FA43E /* Build configuration list for PBXProject "WootricSDK-ObjCDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2F4DB561AA77C47007FA43E /* Debug */,
+				B2F4DB571AA77C47007FA43E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2F4DB581AA77C47007FA43E /* Build configuration list for PBXNativeTarget "WootricSDK-ObjCDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2F4DB591AA77C47007FA43E /* Debug */,
+				B2F4DB5A1AA77C47007FA43E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2F4DB5B1AA77C47007FA43E /* Build configuration list for PBXNativeTarget "WootricSDK-ObjCDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2F4DB5C1AA77C47007FA43E /* Debug */,
+				B2F4DB5D1AA77C47007FA43E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B2F4DB2D1AA77C47007FA43E /* Project object */;
+}
