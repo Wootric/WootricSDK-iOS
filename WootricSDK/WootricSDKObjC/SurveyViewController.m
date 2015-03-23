@@ -29,8 +29,7 @@
 
 - (void)setupView {
   _blurredImage = [_imageToBlur applyBlurWithRadius:3
-                                          tintColor:[[UIColor blackColor]
-                            colorWithAlphaComponent:0.3]
+                                          tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.3]
                               saturationDeltaFactor:1
                                           maskImage:nil];
   _tintColor = [UIColor colorWithRed:145.0/255.0 green:201.0/255.0 blue:29.0/255.0 alpha:1];
@@ -41,15 +40,28 @@
   [self setupConstraints];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [UIView animateWithDuration:0.25 animations:^{
+    CGRect modalFrame = _modalView.frame;
+    modalFrame.origin.y = self.view.frame.size.height - 316;
+    _modalView.frame = modalFrame;
+    _constTopToModal.constant = self.view.frame.size.height - 316;
+    _backgroundImageView.alpha = 1;
+  }];
+}
+
 #pragma mark
 
 - (void)updateSliderStep:(UISlider *)sender {
   if (!_voteButton.enabled) {
     _voteButton.enabled = YES;
     _dragToChangeLabel.hidden = NO;
-    UIImage *imageBackground = [[UIImage imageNamed:@"slider_bg_numbers_checked"
+    NSString *imageName = [[UIScreen mainScreen] nativeBounds].size.height == 1136 ? @"slider_bg_numbers_checked" : @"slider_bg_numbers_checked_667h";
+    UIImage *imageBackground = [[UIImage imageNamed:imageName
                                            inBundle:[NSBundle bundleForClass:[self class]]
-                      compatibleWithTraitCollection:nil] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+                      compatibleWithTraitCollection:nil]
+                   stretchableImageWithLeftCapWidth:10
+                                       topCapHeight:0];
     [_scoreSlider setMaximumTrackImage:imageBackground forState:UIControlStateNormal];
     [_scoreSlider setMinimumTrackImage:imageBackground forState:UIControlStateNormal];
     [UIView animateWithDuration:0.3 animations:^{
@@ -70,14 +82,15 @@
   [self changeView];
 }
 
-- (void)sliderTapped:(UIGestureRecognizer *)gesture {
+- (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer {
   if (_scoreSlider.highlighted)
     return;
-  CGPoint pt = [gesture locationInView: _scoreSlider];
+  CGPoint pt = [gestureRecognizer locationInView: _scoreSlider];
   CGFloat percentage = pt.x / _scoreSlider.bounds.size.width;
   CGFloat delta = percentage * (_scoreSlider.maximumValue - _scoreSlider.minimumValue);
   CGFloat value = _scoreSlider.minimumValue + delta;
   [_scoreSlider setValue:value animated:YES];
+  [_scoreSlider removeGestureRecognizer:gestureRecognizer];
   [self updateSliderStep:_scoreSlider];
 }
 
@@ -136,27 +149,38 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
   [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
   UIImage *image = [WootricSDK imageToBlurFromViewController:[self presentingViewController]];
-  UIImage *bluredImage = [image applyBlurWithRadius:3 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.4] saturationDeltaFactor:1 maskImage:nil];
+  UIImage *bluredImage = [image applyBlurWithRadius:3
+                                          tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.3]
+                              saturationDeltaFactor:1
+                                          maskImage:nil];
   _backgroundImageView.image = bluredImage;
   [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
 }
 
 - (void)changeView {
-  _voteButton.hidden = YES;
-  _sendFeedbackButton.hidden = NO;
+  [self hideItems];
+  [self showItems];
   _titleLabel.text = _commentTitleText;
   _titleLabel.textColor = _tintColor;
-  _scoreSlider.hidden = YES;
-  _commentTextView.hidden = NO;
+  _scoreLabel.text = [NSString stringWithFormat:@"You gave us an %d.", score];
+  [_commentTextView becomeFirstResponder];
+}
+
+- (void)hideItems {
+  _voteButton.hidden = YES;
   _dragToChangeLabel.hidden = YES;
   _extremelyLikelyLabel.hidden = YES;
   _notLikelyLabel.hidden = YES;
   _sliderBackgroundView.hidden = YES;
   _sliderCheckedBackgroundView.hidden = YES;
+  _scoreSlider.hidden = YES;
+}
+
+- (void)showItems {
+  _sendFeedbackButton.hidden = NO;
   _askForFeedbackLabel.hidden = NO;
   _scoreLabel.hidden = NO;
-  _scoreLabel.text = [NSString stringWithFormat:@"You gave us an %d.", score];
-  [_commentTextView becomeFirstResponder];
+  _commentTextView.hidden = NO;
 }
 
 - (void)dealloc {

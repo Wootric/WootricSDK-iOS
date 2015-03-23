@@ -64,7 +64,7 @@
 + (void)setupAndShowSurveyForViewController:(UIViewController *)viewController withImageToBlur:(UIImage *)imageToBlur {
   SurveyViewController *surveyViewController = [[SurveyViewController alloc] init];
 
-  surveyViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+  surveyViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
   surveyViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
   surveyViewController.imageToBlur = imageToBlur;
 

@@ -108,13 +108,14 @@
                                                                constant:41];
   [self.modalView addConstraint:constTop];
 
+  CGFloat sliderWidth = [[UIScreen mainScreen] nativeBounds].size.height <= 1136 ? 290 : 345;
   NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.sliderCheckedBackgroundView
                                                             attribute:NSLayoutAttributeWidth
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
-                                                             constant:290];
+                                                             constant:sliderWidth];
   [self.modalView addConstraint:constW];
 
   NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.sliderCheckedBackgroundView
@@ -147,13 +148,14 @@
                                                                constant:41];
   [self.modalView addConstraint:constTop];
 
+  CGFloat sliderWidth = [[UIScreen mainScreen] nativeBounds].size.height <= 1136 ? 290 : 345;
   NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.sliderBackgroundView
                                                             attribute:NSLayoutAttributeWidth
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
-                                                             constant:290];
+                                                             constant:sliderWidth];
   [self.modalView addConstraint:constW];
 
   NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.sliderBackgroundView
@@ -292,13 +294,14 @@
                                                                constant:45];
   [self.modalView addConstraint:constTop];
 
+  CGFloat sliderWidth = [[UIScreen mainScreen] nativeBounds].size.height <= 1136 ? 274 : 329;
   NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.scoreSlider
                                                             attribute:NSLayoutAttributeWidth
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
-                                                             constant:274];
+                                                             constant:sliderWidth];
   [self.modalView addConstraint:constW];
 
   NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.scoreSlider
@@ -517,7 +520,8 @@
                                                     toItem:self.scrollView
                                                  attribute:NSLayoutAttributeTop
                                                 multiplier:1
-                                                  constant:self.view.frame.size.height - 316];
+                                                  constant:self.view.frame.size.height];
+
   [self.scrollView addConstraint:self.constTopToModal];
 
   NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:self.modalView

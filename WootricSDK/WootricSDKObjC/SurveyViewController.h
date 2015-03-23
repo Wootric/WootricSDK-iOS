@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSLayoutConstraint *constTopToModal;
 @property (nonatomic, strong) UIImage *imageToBlur;
+@property (nonatomic, strong) UIImage *blurredImage;
 @property (nonatomic, strong) UIView *modalView;
 @property (nonatomic, strong) UISlider *scoreSlider;
 @property (nonatomic, strong) UIButton *voteButton;
@@ -22,7 +23,6 @@
 @property (nonatomic, strong) UIColor *tintColor;
 @property (nonatomic, strong) NSString *titleText;
 @property (nonatomic, strong) NSString *commentTitleText;
-@property (nonatomic, strong) UIImage *blurredImage;
 @property (nonatomic, strong) UIImageView *backgroundImageView;
 @property (nonatomic, strong) UIImageView *heartImageView;
 @property (nonatomic, strong) UIImageView *dismissImageView;

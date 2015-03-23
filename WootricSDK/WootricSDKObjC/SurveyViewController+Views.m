@@ -69,7 +69,8 @@
 
 - (void)setupSliderCheckedBackgroundView {
   self.sliderCheckedBackgroundView = [[UIImageView alloc] init];
-  UIImage *image = [UIImage imageNamed:@"slider_bg_checked" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  NSString *imageName = [[UIScreen mainScreen] nativeBounds].size.height == 1136 ? @"slider_bg_checked" : @"slider_bg_checked_667h";
+  UIImage *image = [UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
   self.sliderCheckedBackgroundView.image = image;
   self.sliderCheckedBackgroundView.alpha = 0;
   [self.sliderCheckedBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -77,7 +78,8 @@
 
 - (void)setupSliderBackgroundView {
   self.sliderBackgroundView = [[UIImageView alloc] init];
-  UIImage *image = [UIImage imageNamed:@"slider_bg_unchecked" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  NSString *imageName = [[UIScreen mainScreen] nativeBounds].size.height == 1136 ? @"slider_bg_unchecked" : @"slider_bg_unchecked_667h";
+  UIImage *image = [UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
   self.sliderBackgroundView.image = image;
   [self.sliderBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
@@ -123,6 +125,7 @@
 - (void)setupBackgroundImageView {
   self.backgroundImageView = [[UIImageView alloc] init];
   self.backgroundImageView.image = self.blurredImage;
+  self.backgroundImageView.alpha = 0;
   [self.backgroundImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
@@ -181,8 +184,9 @@
   self.scoreSlider.maximumValue = 10;
   self.scoreSlider.value = 5;
   self.scoreSlider.tintColor = self.tintColor;
+  NSString *imageName = [[UIScreen mainScreen] nativeBounds].size.height == 1136 ? @"slider_bg_numbers_unchecked" : @"slider_bg_numbers_unchecked_667h";
   UIImage *image = [[UIImage alloc] init];
-  UIImage *imageBackground = [[UIImage imageNamed:@"slider_bg_numbers_unchecked"
+  UIImage *imageBackground = [[UIImage imageNamed:imageName
                                          inBundle:[NSBundle bundleForClass:[self class]]
                     compatibleWithTraitCollection:nil] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
   [self.scoreSlider setMaximumTrackImage:imageBackground forState:UIControlStateNormal];
