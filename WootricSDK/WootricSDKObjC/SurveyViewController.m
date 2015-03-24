@@ -94,19 +94,22 @@
 }
 
 - (void)dismissButtonPressed:(UIButton *)sender {
-  scrolled = NO;
   [WootricSDK userDeclined];
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)sendButtonPressed:(UIButton *)sender {
-  scrolled = NO;
   NSString *text = nil;
   if ([_commentTextView.text length] != 0) {
     text = _commentTextView.text;
   }
   [WootricSDK voteWithScore:(long)_scoreSlider.value andText:text];
-  [self dismissViewControllerAnimated:YES completion:nil];
+
+  [UIView animateWithDuration:0.2 animations:^{
+    _backgroundImageView.alpha = 0;
+  } completion:^(BOOL finished) {
+    [self dismissViewControllerAnimated:YES completion:nil];
+  }];
 }
 
 - (void)adjustInsetForKeyboardShow:(BOOL)show notification:(NSNotification *)notification {
@@ -161,6 +164,7 @@
 - (void)changeView {
   [self hideItems];
   [self showItems];
+  scrolled = NO;
   _titleLabel.text = _commentTitleText;
   _titleLabel.textColor = _tintColor;
   _scoreLabel.text = [NSString stringWithFormat:@"You gave us an %d.", score];
