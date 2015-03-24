@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
@@ -16,6 +16,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="YTm-wX-T8Z">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DNL-lM-waD">
                                 <rect key="frame" x="226" y="285" width="149" height="30"/>
                                 <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
@@ -30,27 +33,14 @@
                                     <action selector="showSurvey:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a7O-HG-eLl"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="YTm-wX-T8Z">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0I3-DV-YR8">
-                                <rect key="frame" x="226" y="141" width="149" height="30"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="YTm-wX-T8Z" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="61r-k6-DqH"/>
-                            <constraint firstItem="0I3-DV-YR8" firstAttribute="trailing" secondItem="DNL-lM-waD" secondAttribute="trailing" id="CGU-Rk-aU8"/>
                             <constraint firstItem="DNL-lM-waD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EdL-1H-rul"/>
                             <constraint firstItem="YTm-wX-T8Z" firstAttribute="centerY" secondItem="DNL-lM-waD" secondAttribute="centerY" id="Fyr-jS-xZY"/>
                             <constraint firstItem="YTm-wX-T8Z" firstAttribute="centerX" secondItem="DNL-lM-waD" secondAttribute="centerX" id="NfC-X2-OED"/>
                             <constraint firstItem="DNL-lM-waD" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Zdw-MK-95c"/>
-                            <constraint firstItem="0I3-DV-YR8" firstAttribute="leading" secondItem="DNL-lM-waD" secondAttribute="leading" id="ed6-iO-0Jn"/>
-                            <constraint firstItem="0I3-DV-YR8" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="121" id="hG4-on-Uiy"/>
                             <constraint firstItem="YTm-wX-T8Z" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="sGo-gQ-Feq"/>
                         </constraints>
                     </view>

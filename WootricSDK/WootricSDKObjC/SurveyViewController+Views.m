@@ -64,12 +64,14 @@
   self.askForFeedbackLabel.font = [UIFont italicSystemFontOfSize:14];
   self.askForFeedbackLabel.textColor = [UIColor darkGrayColor];
   self.askForFeedbackLabel.hidden = YES;
+  self.askForFeedbackLabel.numberOfLines = 0;
+  self.askForFeedbackLabel.textAlignment = NSTextAlignmentCenter;
   [self.askForFeedbackLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupSliderCheckedBackgroundView {
   self.sliderCheckedBackgroundView = [[UIImageView alloc] init];
-  NSString *imageName = [[UIScreen mainScreen] nativeBounds].size.height == 1136 ? @"slider_bg_checked" : @"slider_bg_checked_667h";
+  NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_checked" : @"slider_bg_checked_667h";
   UIImage *image = [UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
   self.sliderCheckedBackgroundView.image = image;
   self.sliderCheckedBackgroundView.alpha = 0;
@@ -78,7 +80,7 @@
 
 - (void)setupSliderBackgroundView {
   self.sliderBackgroundView = [[UIImageView alloc] init];
-  NSString *imageName = [[UIScreen mainScreen] nativeBounds].size.height == 1136 ? @"slider_bg_unchecked" : @"slider_bg_unchecked_667h";
+  NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_unchecked" : @"slider_bg_unchecked_667h";
   UIImage *image = [UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
   self.sliderBackgroundView.image = image;
   [self.sliderBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -184,7 +186,7 @@
   self.scoreSlider.maximumValue = 10;
   self.scoreSlider.value = 5;
   self.scoreSlider.tintColor = self.tintColor;
-  NSString *imageName = [[UIScreen mainScreen] nativeBounds].size.height == 1136 ? @"slider_bg_numbers_unchecked" : @"slider_bg_numbers_unchecked_667h";
+  NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_numbers_unchecked" : @"slider_bg_numbers_unchecked_667h";
   UIImage *image = [[UIImage alloc] init];
   UIImage *imageBackground = [[UIImage imageNamed:imageName
                                          inBundle:[NSBundle bundleForClass:[self class]]

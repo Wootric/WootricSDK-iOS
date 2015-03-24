@@ -14,7 +14,7 @@
 
 @implementation SurveyViewController
   int score;
-  bool scrolled;
+  BOOL scrolled;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -56,7 +56,7 @@
   if (!_voteButton.enabled) {
     _voteButton.enabled = YES;
     _dragToChangeLabel.hidden = NO;
-    NSString *imageName = [[UIScreen mainScreen] nativeBounds].size.height == 1136 ? @"slider_bg_numbers_checked" : @"slider_bg_numbers_checked_667h";
+    NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_numbers_checked" : @"slider_bg_numbers_checked_667h";
     UIImage *imageBackground = [[UIImage imageNamed:imageName
                                            inBundle:[NSBundle bundleForClass:[self class]]
                       compatibleWithTraitCollection:nil]
@@ -78,7 +78,6 @@
 
 - (void)voteButtonPressed:(UIButton *)sender {
   score = (int)(_scoreSlider.value);
-
   [self changeView];
 }
 
@@ -95,11 +94,13 @@
 }
 
 - (void)dismissButtonPressed:(UIButton *)sender {
+  scrolled = NO;
   [WootricSDK userDeclined];
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)sendButtonPressed:(UIButton *)sender {
+  scrolled = NO;
   NSString *text = nil;
   if ([_commentTextView.text length] != 0) {
     text = _commentTextView.text;
@@ -181,6 +182,13 @@
   _askForFeedbackLabel.hidden = NO;
   _scoreLabel.hidden = NO;
   _commentTextView.hidden = NO;
+}
+
+- (BOOL)isSmallerScreenDevice {
+  if ([[UIScreen mainScreen] nativeBounds].size.height <= 1136) {
+    return YES;
+  }
+  return NO;
 }
 
 - (void)dealloc {

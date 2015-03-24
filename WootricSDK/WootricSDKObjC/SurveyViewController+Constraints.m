@@ -87,6 +87,26 @@
                                                            multiplier:1
                                                              constant:0];
   [self.modalView addConstraint:constX];
+
+  if ([self isSmallerScreenDevice]) {
+    NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:self.askForFeedbackLabel
+                                                                attribute:NSLayoutAttributeLeft
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.modalView
+                                                                attribute:NSLayoutAttributeLeft
+                                                               multiplier:1
+                                                                 constant:10];
+    [self.modalView addConstraint:constLeft];
+
+    NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:self.modalView
+                                                                 attribute:NSLayoutAttributeRight
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.askForFeedbackLabel
+                                                                 attribute:NSLayoutAttributeRight
+                                                                multiplier:1
+                                                                  constant:10];
+    [self.modalView addConstraint:constRight];
+  }
 }
 
 - (void)setupSliderCheckedBackgroundViewConstraints {
@@ -108,7 +128,7 @@
                                                                constant:41];
   [self.modalView addConstraint:constTop];
 
-  CGFloat sliderWidth = [[UIScreen mainScreen] nativeBounds].size.height <= 1136 ? 290 : 345;
+  CGFloat sliderWidth = [self isSmallerScreenDevice] ? 290 : 345;
   NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.sliderCheckedBackgroundView
                                                             attribute:NSLayoutAttributeWidth
                                                             relatedBy:NSLayoutRelationEqual
@@ -148,7 +168,7 @@
                                                                constant:41];
   [self.modalView addConstraint:constTop];
 
-  CGFloat sliderWidth = [[UIScreen mainScreen] nativeBounds].size.height <= 1136 ? 290 : 345;
+  CGFloat sliderWidth = [self isSmallerScreenDevice] ? 290 : 345;
   NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.sliderBackgroundView
                                                             attribute:NSLayoutAttributeWidth
                                                             relatedBy:NSLayoutRelationEqual
@@ -238,13 +258,14 @@
                                                              constant:0];
   [self.modalView addConstraint:constX];
 
+  CGFloat margin = [self isSmallerScreenDevice] ? 25 : 35;
   NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.commentTextView
                                                             attribute:NSLayoutAttributeTop
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:self.askForFeedbackLabel
                                                             attribute:NSLayoutAttributeBottom
                                                            multiplier:1
-                                                             constant:35];
+                                                             constant:margin];
   [self.modalView addConstraint:constY];
 
   NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:self.commentTextView
@@ -294,7 +315,7 @@
                                                                constant:45];
   [self.modalView addConstraint:constTop];
 
-  CGFloat sliderWidth = [[UIScreen mainScreen] nativeBounds].size.height <= 1136 ? 274 : 329;
+  CGFloat sliderWidth = [self isSmallerScreenDevice] ? 274 : 329;
   NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.scoreSlider
                                                             attribute:NSLayoutAttributeWidth
                                                             relatedBy:NSLayoutRelationEqual
@@ -335,22 +356,23 @@
 }
 
 - (void)setupTitleLabelConstraints {
+  CGFloat topMargin = [self isSmallerScreenDevice] ? 30 : 40;
   NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:self.titleLabel
                                                               attribute:NSLayoutAttributeTop
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self.modalView
                                                               attribute:NSLayoutAttributeTop
                                                              multiplier:1
-                                                               constant:40];
+                                                               constant:topMargin];
   [self.modalView addConstraint:constTop];
-
+  CGFloat margin = [self isSmallerScreenDevice] ? 30 : 60;
   NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:self.titleLabel
                                                                attribute:NSLayoutAttributeLeft
                                                                relatedBy:NSLayoutRelationEqual
                                                                   toItem:self.modalView
                                                                attribute:NSLayoutAttributeLeft
                                                               multiplier:1
-                                                                constant:60];
+                                                                constant:margin];
   [self.modalView addConstraint:constLeft];
 
   NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:self.modalView
@@ -359,7 +381,7 @@
                                                                    toItem:self.titleLabel
                                                                 attribute:NSLayoutAttributeRight
                                                                multiplier:1
-                                                                 constant:60];
+                                                                 constant:margin];
   [self.modalView addConstraint:constRight];
 }
 
