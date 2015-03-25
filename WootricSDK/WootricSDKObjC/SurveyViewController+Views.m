@@ -29,7 +29,7 @@
   [self setupScoreLabel];
   [self setupAskForFeedbackLabel];
   [self setupSendFeedbackButton];
-  [self setupScorePopupLabel];
+  [self setupScorePopoverLabel];
 
   [self addViewsToModal];
   [self.view addSubview:self.scrollView];
@@ -38,17 +38,16 @@
   [self.scrollView addSubview:self.modalView];
 }
 
-- (void)setupScorePopupLabel {
-  self.scorePopupLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 30)];
-  self.scorePopupLabel.font = [UIFont systemFontOfSize:14];
-  self.scorePopupLabel.textColor = [UIColor darkGrayColor];
-  self.scorePopupLabel.hidden = YES;
-  self.scorePopupLabel.backgroundColor = [UIColor whiteColor];
-  self.scorePopupLabel.numberOfLines = 0;
-  self.scorePopupLabel.textAlignment = NSTextAlignmentCenter;
-  self.scorePopupLabel.layer.cornerRadius = 2;
-  self.scorePopupLabel.layer.borderColor = [UIColor colorWithRed:241.0/255.0 green:241.0/255.0 blue:241.0/255 alpha:1].CGColor;
-  self.scorePopupLabel.layer.borderWidth = 1;
+- (void)setupScorePopoverLabel {
+  self.scorePopoverLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 30)];
+  self.scorePopoverLabel.font = [UIFont systemFontOfSize:14];
+  self.scorePopoverLabel.textColor = [UIColor darkGrayColor];
+  self.scorePopoverLabel.hidden = YES;
+  self.scorePopoverLabel.backgroundColor = [UIColor whiteColor];
+  self.scorePopoverLabel.textAlignment = NSTextAlignmentCenter;
+  self.scorePopoverLabel.layer.cornerRadius = 2;
+  self.scorePopoverLabel.layer.borderColor = [UIColor colorWithRed:241.0/255.0 green:241.0/255.0 blue:241.0/255 alpha:1].CGColor;
+  self.scorePopoverLabel.layer.borderWidth = 1;
 }
 
 - (void)setupSendFeedbackButton {
@@ -247,7 +246,7 @@
   [self.modalView addSubview:self.askForFeedbackLabel];
   [self.modalView addSubview:self.scoreLabel];
   [self.modalView addSubview:self.sendFeedbackButton];
-  [self.modalView addSubview:self.scorePopupLabel];
+  [self.modalView addSubview:self.scorePopoverLabel];
 }
 
 @end

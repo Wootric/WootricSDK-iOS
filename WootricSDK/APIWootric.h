@@ -20,7 +20,7 @@
 @property (nonatomic, strong) NSNumber *registeredPercent;
 @property (nonatomic, strong) NSNumber *visitorPercent;
 @property (nonatomic, strong) NSNumber *resurveyThrottle;
-@property (nonatomic) BOOL forceSurvey;
+@property (nonatomic) BOOL surveyImmediately;
 
 + (instancetype)sharedInstance;
 - (void)voteWithScore:(NSInteger)score andText:(NSString *)text;

@@ -31,9 +31,9 @@
   api.apiVersion = apiVersion;
 }
 
-+ (void)forceSurvey:(BOOL)flag {
++ (void)surveyImmediately:(BOOL)flag {
   APIWootric *api = [APIWootric sharedInstance];
-  api.forceSurvey = flag;
+  api.surveyImmediately = flag;
 }
 
 + (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercent andRegisteredPercentage:(NSNumber *)registeredPercent {

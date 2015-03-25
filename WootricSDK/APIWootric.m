@@ -204,7 +204,7 @@
 }
 
 - (void)surveyForEndUser:(void (^)())showSurvey {
-  if (_forceSurvey) {
+  if (_surveyImmediately) {
     [self authenticate:^{
       showSurvey();
     }];

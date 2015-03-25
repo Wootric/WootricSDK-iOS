@@ -26,7 +26,7 @@
 
   [WootricSDK configureWithClientID:clientId clientSecret:clientSecret andAccountToken:accountToken];
   [WootricSDK setEndUserEmail:endUserEmail andOriginURL:originURL];
-  [WootricSDK forceSurvey:YES];
+  [WootricSDK surveyImmediately:YES];
 
   [WootricSDK showSurveyInViewController:self];
 }
