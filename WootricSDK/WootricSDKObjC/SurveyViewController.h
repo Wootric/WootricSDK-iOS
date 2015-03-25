@@ -35,6 +35,7 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *notLikelyLabel;
 @property (nonatomic, strong) UILabel *extremelyLikelyLabel;
+@property (nonatomic, strong) UILabel *scorePopupLabel;
 - (BOOL)isSmallerScreenDevice;
 
 @end

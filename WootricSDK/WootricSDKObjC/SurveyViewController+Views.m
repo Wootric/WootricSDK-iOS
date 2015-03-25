@@ -29,12 +29,26 @@
   [self setupScoreLabel];
   [self setupAskForFeedbackLabel];
   [self setupSendFeedbackButton];
+  [self setupScorePopupLabel];
 
   [self addViewsToModal];
   [self.view addSubview:self.scrollView];
   [self.view addSubview:self.backgroundImageView];
   [self.view sendSubviewToBack:self.backgroundImageView];
   [self.scrollView addSubview:self.modalView];
+}
+
+- (void)setupScorePopupLabel {
+  self.scorePopupLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 30)];
+  self.scorePopupLabel.font = [UIFont systemFontOfSize:14];
+  self.scorePopupLabel.textColor = [UIColor darkGrayColor];
+  self.scorePopupLabel.hidden = YES;
+  self.scorePopupLabel.backgroundColor = [UIColor whiteColor];
+  self.scorePopupLabel.numberOfLines = 0;
+  self.scorePopupLabel.textAlignment = NSTextAlignmentCenter;
+  self.scorePopupLabel.layer.cornerRadius = 2;
+  self.scorePopupLabel.layer.borderColor = [UIColor colorWithRed:241.0/255.0 green:241.0/255.0 blue:241.0/255 alpha:1].CGColor;
+  self.scorePopupLabel.layer.borderWidth = 1;
 }
 
 - (void)setupSendFeedbackButton {
@@ -198,6 +212,8 @@
   [self.scoreSlider setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.scoreSlider addTarget:self action:NSSelectorFromString(@"updateSliderStep:")
          forControlEvents:UIControlEventValueChanged];
+  [self.scoreSlider addTarget:self action:NSSelectorFromString(@"showScore:") forControlEvents:UIControlEventTouchDragInside | UIControlEventTouchDragOutside | UIControlEventTouchDown];
+  [self.scoreSlider addTarget:self action:NSSelectorFromString(@"hideScore:") forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
   UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:NSSelectorFromString(@"sliderTapped:")];
   [self.scoreSlider addGestureRecognizer:gr];
 }
@@ -231,6 +247,7 @@
   [self.modalView addSubview:self.askForFeedbackLabel];
   [self.modalView addSubview:self.scoreLabel];
   [self.modalView addSubview:self.sendFeedbackButton];
+  [self.modalView addSubview:self.scorePopupLabel];
 }
 
 @end

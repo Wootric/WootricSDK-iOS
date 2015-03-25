@@ -11,24 +11,5 @@
 @interface SurveyViewController (Views)
 
 - (void)setupViews;
-- (void)setupSendFeedbackButton;
-- (void)setupScoreLabel;
-- (void)setupAskForFeedbackLabel;
-- (void)setupSliderCheckedBackgroundView;
-- (void)setupSliderBackgroundView;
-- (void)setupExtremelyLikelyLabel;
-- (void)setupNotLikelyLabel;
-- (void)setupDragToChangeLabel;
-- (void)setupHeartIconImageView;
-- (void)setupPoweredByWootric;
-- (void)setupBackgroundImageView;
-- (void)setupModal;
-- (void)setupScrollView;
-- (void)setupCommentTextView;
-- (void)setupTitleLabel;
-- (void)setupDismissButton;
-- (void)setupSlider;
-- (void)setupVoteButton;
-- (void)addViewsToModal;
 
 @end

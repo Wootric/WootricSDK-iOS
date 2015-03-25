@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-@interface WootricSDKObjCTests : XCTestCase
+@interface WootricSDKTests : XCTestCase
 
 @end
 

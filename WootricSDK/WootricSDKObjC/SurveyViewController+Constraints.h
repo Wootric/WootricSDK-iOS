@@ -11,21 +11,5 @@
 @interface SurveyViewController (Constraints)
 
 - (void)setupConstraints;
-- (void)setupSendFeedbackButtonConstraints;
-- (void)setupScoreLabelConstraints;
-- (void)setupAskForFeedbackLabelConstraints;
-- (void)setupSliderCheckedBackgroundViewConstraints;
-- (void)setupSliderBackgroundViewConstraints;
-- (void)setupExtremelyLikelyLabelConstraints;
-- (void)setupNotLikelyLabelConstraints;
-- (void)setupDragToChangeLabelConstraints;
-- (void)setupCommentTextViewConstraints;
-- (void)setupSliderConstraints;
-- (void)setupVoteButtonConstraints;
-- (void)setupTitleLabelConstraints;
-- (void)setupBackgroundImageViewContraints;
-- (void)setupDismissButtonConstraints;
-- (void)setupScrollViewConstraints;
-- (void)setupModalConstraint;
 
 @end

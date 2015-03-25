@@ -147,6 +147,7 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
   [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+  _scorePopupLabel.hidden = YES;
   _constTopToModal.constant = self.view.frame.size.width - 316;
 }
 
@@ -193,6 +194,27 @@
     return YES;
   }
   return NO;
+}
+
+- (void)showScore:(UISlider *)slider {
+  score = (int)(_scoreSlider.value);
+  float xPosition = [self xPositionFromSliderValue:slider];
+  _scorePopupLabel.hidden = NO;
+  _scorePopupLabel.frame = CGRectMake(xPosition, _sliderBackgroundView.frame.origin.y - 32, 20, 30);
+  _scorePopupLabel.text = [NSString stringWithFormat:@"%d", score];
+}
+
+- (void)hideScore:(UISlider *)slider {
+  _scorePopupLabel.hidden = YES;
+}
+
+- (float)xPositionFromSliderValue:(UISlider *)aSlider;
+{
+  float sliderRange = aSlider.frame.size.width - aSlider.currentThumbImage.size.width;
+  float sliderOrigin = aSlider.frame.origin.x + (aSlider.currentThumbImage.size.width / 4);
+  float sliderValueToPixels = (((aSlider.value-aSlider.minimumValue)/(aSlider.maximumValue-aSlider.minimumValue)) * sliderRange) + sliderOrigin;
+
+  return sliderValueToPixels;
 }
 
 - (void)dealloc {
