@@ -43,9 +43,9 @@
 - (void)viewDidAppear:(BOOL)animated {
   [UIView animateWithDuration:0.25 animations:^{
     CGRect modalFrame = _modalView.frame;
-    modalFrame.origin.y = self.view.frame.size.height - 316;
+    modalFrame.origin.y = self.view.frame.size.height - _modalView.frame.size.height;
     _modalView.frame = modalFrame;
-    _constTopToModal.constant = self.view.frame.size.height - 316;
+    _constTopToModal.constant = self.view.frame.size.height - _modalView.frame.size.height;
     _backgroundImageView.alpha = 1;
   }];
 }
@@ -148,7 +148,7 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
   [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
   _scorePopoverLabel.hidden = YES;
-  _constTopToModal.constant = self.view.frame.size.width - 316;
+  _constTopToModal.constant = self.view.frame.size.width - _modalView.frame.size.height;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -200,12 +200,14 @@
   score = (int)(_scoreSlider.value);
   float xPosition = [self xPositionFromSliderValue:slider];
   _scorePopoverLabel.hidden = NO;
-  _scorePopoverLabel.frame = CGRectMake(xPosition, _sliderBackgroundView.frame.origin.y - 32, 20, 30);
+  _dragToChangeLabel.hidden = YES;
+  _scorePopoverLabel.frame = CGRectMake(xPosition, _sliderBackgroundView.frame.origin.y - 35, 20, 30);
   _scorePopoverLabel.text = [NSString stringWithFormat:@"%d", score];
 }
 
 - (void)hideScore:(UISlider *)slider {
   _scorePopoverLabel.hidden = YES;
+  _dragToChangeLabel.hidden = NO;
 }
 
 - (float)xPositionFromSliderValue:(UISlider *)aSlider;

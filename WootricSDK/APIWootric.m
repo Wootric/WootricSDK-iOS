@@ -11,7 +11,6 @@
 @implementation APIWootric
   NSString *baseAPIURL = @"https://api.wootric.com";
   NSString *eligibilityServerURL = @"http://wootric-eligibility.herokuapp.com/eligible.json";
-  NSString *apiVersion = @"v1";
   NSURLSession *wootricSession;
 
 + (instancetype)sharedInstance {
@@ -24,15 +23,33 @@
   return sharedInstance;
 }
 
-+ (void)initialize {
-  wootricSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+- (instancetype)init {
+  if (self = [super init]) {
+    wootricSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    _setDefaultAfterSurvey = YES;
+    _surveyedDefaultTrottle = 30;
+    _firstSurveyAfter = 31;
+  }
+  return self;
 }
 
 - (BOOL)checkConfiguration {
   if (_clientID != nil && _clientSecret != nil && _accountToken != nil && _endUserEmail != nil && _originURL != nil) {
+    if (!_apiVersion) {
+      _apiVersion = @"v1";
+    }
     return YES;
   }
   return NO;
+}
+
+- (NSString *)parseCustomProperties {
+  NSString *parsedProperties = @"";
+  for (NSString *key in _customProperties) {
+    parsedProperties = [NSString stringWithFormat:@"%@&%@", parsedProperties, [NSString stringWithFormat:@"properties[%@]=%@", key, [_customProperties objectForKey:key]]];
+  }
+
+  return parsedProperties;
 }
 
 - (void)voteWithScore:(NSInteger)score andText:(NSString *)text {
@@ -48,7 +65,7 @@
 }
 
 - (void)createDeclineForEndUser:(NSInteger)endUserID {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/declines", baseAPIURL, apiVersion, (long)endUserID]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/declines", baseAPIURL, _apiVersion, (long)endUserID]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
 
   [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
@@ -66,7 +83,7 @@
 }
 
 - (void)createResponseForEndUser:(NSInteger)endUserID withScore:(NSInteger)score andText:(NSString *)text {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/responses", baseAPIURL, apiVersion, (long)endUserID]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/responses", baseAPIURL, _apiVersion, (long)endUserID]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   NSString *params = [NSString stringWithFormat:@"score=%ld&origin_url=%@", (long)score, _originURL];
 
@@ -90,7 +107,7 @@
 }
 
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", baseAPIURL, apiVersion, _endUserEmail]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", baseAPIURL, _apiVersion, _endUserEmail]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
 
@@ -118,9 +135,22 @@
 }
 
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", baseAPIURL, apiVersion]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", baseAPIURL, _apiVersion]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   NSString *params = [NSString stringWithFormat:@"email=%@", _endUserEmail];
+
+  if (_externalCreatedAt != 0) {
+    params = [NSString stringWithFormat:@"%@&external_created_at=%ld", params, (long)_externalCreatedAt];
+  }
+
+  if (_productName) {
+    params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, _productName];
+  }
+
+  if (_customProperties) {
+    NSString *parsedProperties = [self parseCustomProperties];
+    params = [NSString stringWithFormat:@"%@%@", params, parsedProperties];
+  }
 
   [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
   urlRequest.HTTPMethod = @"POST";
@@ -144,15 +174,15 @@
 - (void)checkEligibilityForEndUser:(void (^)())eligible {
   NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@&email=%@", eligibilityServerURL, _accountToken, _endUserEmail];
 
-  if (_registeredPercent.integerValue) {
+  if (_registeredPercent) {
     baseURLString = [NSString stringWithFormat:@"%@&registered_percent=%ld", baseURLString, (long)_registeredPercent.integerValue];
   }
 
-  if (_visitorPercent.integerValue) {
+  if (_visitorPercent) {
     baseURLString = [NSString stringWithFormat:@"%@&visitor_percent=%ld", baseURLString, (long)_visitorPercent.integerValue];
   }
 
-  if (_resurveyThrottle.integerValue) {
+  if (_resurveyThrottle) {
     baseURLString = [NSString stringWithFormat:@"%@&resurvey_throttle=%ld", baseURLString, (long)_resurveyThrottle.integerValue];
   }
 
@@ -208,13 +238,36 @@
     [self authenticate:^{
       showSurvey();
     }];
-  } else {
+  } else if ([self needsSurvey]) {
     [self checkEligibilityForEndUser:^{
       [self authenticate:^{
         showSurvey();
       }];
     }];
   }
+}
+
+- (BOOL)needsSurvey {
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  if ([defaults boolForKey:@"surveyed"]) {
+    NSLog(@"User already surveyed");
+    return NO;
+  } else {
+    NSLog(@"User not surveyed yet");
+    NSInteger age = [[NSDate date] timeIntervalSince1970] - _externalCreatedAt;
+    if (_firstSurveyAfter != 0) {
+      if (age > (_firstSurveyAfter * 60 * 60 * 24)) {
+        return YES;
+      } else {
+        if (([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"lastSeenAt"]) >= (_firstSurveyAfter * 60 * 60 * 24)) {
+          return YES;
+        }
+      }
+    } else {
+      return YES;
+    }
+  }
+  return NO;
 }
 
 @end

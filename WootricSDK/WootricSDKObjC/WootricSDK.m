@@ -13,6 +13,8 @@
 
 @implementation WootricSDK
 
+#pragma mark - Configuration
+
 + (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret andAccountToken:(NSString *)accountToken {
   APIWootric *api = [APIWootric sharedInstance];
   api.clientID = clientID;
@@ -43,16 +45,48 @@
   api.resurveyThrottle = resurveyThrottle;
 }
 
++ (void)endUserCreatedAt:(NSInteger)externalCreatedAt {
+  APIWootric *api = [APIWootric sharedInstance];
+  api.externalCreatedAt = externalCreatedAt;
+}
+
++ (void)productName:(NSString *)productName {
+  APIWootric *api = [APIWootric sharedInstance];
+  api.productName = productName;
+}
+
++ (void)endUserProperties:(NSDictionary *)customProperties {
+  APIWootric *api = [APIWootric sharedInstance];
+  api.customProperties = customProperties;
+}
+
++ (void)firstSurveyAfter:(NSUInteger)numberOfDays {
+  APIWootric *api = [APIWootric sharedInstance];
+  api.firstSurveyAfter = numberOfDays;
+}
+
++ (void)setSurveyedDefaultAfterSurvey:(BOOL)flag withDuration:(NSUInteger)numberOfDays {
+  APIWootric *api = [APIWootric sharedInstance];
+  api.setDefaultAfterSurvey = flag;
+  api.surveyedDefaultTrottle = numberOfDays;
+}
+
+#pragma mark - Survey methods
+
 + (void)voteWithScore:(NSInteger)score andText:(NSString *)text {
   [[APIWootric sharedInstance] voteWithScore:score andText:text];
+  [WootricSDK setSurveyedInDefaults];
 }
 
 + (void)userDeclined {
   [[APIWootric sharedInstance] userDeclined];
+  [WootricSDK setSurveyedInDefaults];
 }
 
 + (void)showSurveyInViewController:(UIViewController *)viewController {
   NSAssert([[APIWootric sharedInstance] checkConfiguration], @"Configure WootricSDK first");
+  [WootricSDK setLastSeenAtInDefaults];
+  [WootricSDK checkIfSurveyedDefaultExpired];
   [[APIWootric sharedInstance] surveyForEndUser:^{
     UIImage *imageToBlur = [WootricSDK imageToBlurFromViewController:viewController];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -77,6 +111,35 @@
   UIImage *imageToBlur = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   return imageToBlur;
+}
+
++ (void)setLastSeenAtInDefaults {
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  if ([defaults doubleForKey:@"lastSeenAt"] == 0) {
+    [defaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:@"lastSeenAt"];
+  } else {
+    double ninetyDaysTimestamp = 90 * 60 * 60 * 24;
+    if ([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"lastSeenAt"] >= ninetyDaysTimestamp) {
+      [defaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:@"lastSeenAt"];
+    }
+  }
+}
+
++ (void)setSurveyedInDefaults {
+  APIWootric *api = [APIWootric sharedInstance];
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  if (api.setDefaultAfterSurvey) {
+    [defaults setBool:YES forKey:@"surveyed"];
+    [defaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:@"surveyedAt"];
+  }
+}
+
++ (void)checkIfSurveyedDefaultExpired {
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  APIWootric *api = [APIWootric sharedInstance];
+  if ([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"surveyedAt"] >= (api.surveyedDefaultTrottle * 60 * 60 * 24)) {
+    [defaults setBool:NO forKey:@"surveyed"];
+  }
 }
 
 @end
