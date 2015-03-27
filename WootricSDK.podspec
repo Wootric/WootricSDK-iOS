@@ -12,4 +12,5 @@ Pod::Spec.new do |s|
 
   s.source_files = "WootricSDK/*.{h,m}", "WootricSDK/WootricSDKObjC/*.{h,m}"
   s.resources = "WootricSDK/WootricSDKObjC/Images.xcassets"
+  s.public_header_files = "WootricSDK/WootricSDKObjC/WootricSDK.h"
 end
