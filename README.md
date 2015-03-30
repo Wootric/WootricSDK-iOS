@@ -1,30 +1,37 @@
 #WootricSDK for iOS
+##Requirements
+- iOS 7.0+
 
 ##Installation
 ---
 ###Using CocoaPods
-####Podfile
-```ruby
-pod "WootricSDK"
-```
+[CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects.
 
+```bash
+$ gem install cocoapods
+```
+To integrate WootricSDK into your Xcode project using CocoaPods, specify it in your `Podfile`:
+```ruby
+pod "WootricSDK", "~> 0.1"
+```
+Then, run the following command:
+
+```bash
+$ pod install
+```
 ##Usage
 ---
-WootricSDK's most important feature, beside making Wootric API requests, is to present a fully functional survey view with just a few lines of code.
+WootricSDK task is to present a fully functional survey view with just a few lines of code.
 
-First import the SDK to your view controller where you want to show the survey:
+First import the SDK's header:
 ```objective-c
-// For embedded framework
-@import WootricSDK;
-
-// For CocoaPods 
 #import "WootricSDK.h"
 ```
 Then you need to configure the SDK with your client ID, secret and account token:
 ```objective-c
 [WootricSDK configureWithClientID:<YOUR_CLIENT_ID> clientSecret:<YOUR_CLIENT_SECRET> andAccountToken:<YOUR_TOKEN>];
 ```
-Next thing to do is to set the surveyed user's email and origin URL:
+Next thing to do is to set the surveyed end user's email and origin URL:
 ```objective-c
 [WootricSDK setEndUserEmail:<END_USER_EMAIL> andOriginURL:<ORIGIN_URL>];
 ```
@@ -42,14 +49,14 @@ If surveyImmediately is set to YES, the survey is displayed skipping eligibility
 
 ```objective-c
 //You can pass nil value for any of the parameters - it will use defaults for eligibility check if you do so.
-[WootricSDK setCustomValueForResurveyThrottle:<THROTTLE_NUMBER_OF_DAYS> visitorPercentage:<0-100> andRegisteredPercentage:<0-100>];
+[WootricSDK setCustomValueForResurveyThrottle:<NUMBER_OF_DAYS> visitorPercentage:<0-100> andRegisteredPercentage:<0-100>];
 ```
 This method will alter the values of resurvey throttle, tested visitor and registered users percentage used for eligibility check.
 
 ```objective-c
 [WootricSDK endUserCreatedAt:<UNIX Timestamp>];
 ```
-When creating a new end user for survey, it will set its external creation date (so for example, date, when end user was created in your application).
+When creating a new end user for survey, it will set his/hers external creation date (so for example, date, when end user was created in your iOS application).
 This value is also used in eligibility check, to determine if end user should be surveyed.
 
 ```objective-c
@@ -65,9 +72,25 @@ Adds custom properties to end user.
 ```objective-c
 [WootricSDK firstSurveyAfter:<NUMBER_OF_DAYS>];
 ```
-Specify number of days, end user will be checked for survey eligibility, only, after the specified time has passed since his/hers creation date within your application (which is set with [WootricSDK endUserCreatedAt:];). Defaults to 31 days.
+Specify number of days, end user will be checked for survey eligibility, only, after the specified time has passed since his/hers creation date within your iOS application (which is set with [WootricSDK endUserCreatedAt:];). Defaults to 31 days.
 
 ```objective-c
+[WootricSDK setSurveyedDefaultAfterSurvey:<BOOL>];
 [WootricSDK setSurveyedDefaultAfterSurvey:<BOOL> withDuration:<NUMBER_OF_DAYS>];
 ```
 By default, after end user is surveyed, the SDK sets a "cookie" (NSUserDefaults) valid for 90 days, during which end user won't be checked if eligible for survey.
+
+```objective-c
+[WootricSDK setCustomDetractorQuestion:<CUSTOM_QUESTION> passiveQuestion:<CUSTOM_QUESTION> andPromoterQuestion:<CUSTOM_QUESTION>];
+```
+This method allows you to set custom question for each type of end user (detractor, passive or promoter). Default question asked after end user submits the score is "Thank you! Care to tell us why?". Passing ```nil``` for any of the parameters will result in using default for that type of end user.
+```objective-c
+[WootricSDK setCustomWootricQuestion:<CUSTOM_QUESTION>];
+```
+You can use this method to modify the default "How likely are you to recommend us to a friend or collegue?" question.
+####Additional information:
+---
+#####"Forcing" eligibility check:
+If you want to check end user for survey eligibility everytime the ```showSurveyInViewController:``` method is fired, set ```firstSurveyAfter``` to "0", ```setSurveyedDefaultAfterSurvey``` to "NO". This doesn't mean your end user will be surveyed everytime, it just force eligibility check.
+#####First survey after & end user created at setting:
+While it is not required, setting ```endUserCreatedAt``` is highly recommended for proper checking if end user needs survey and skipping uneccessary eligibility checks.
