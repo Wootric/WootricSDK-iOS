@@ -91,6 +91,6 @@ You can use this method to modify the default "How likely are you to recommend u
 ####Additional information:
 ---
 #####"Forcing" eligibility check:
-If you want to check end user for survey eligibility everytime the ```showSurveyInViewController:``` method is fired, set ```firstSurveyAfter``` to "0", ```setSurveyedDefaultAfterSurvey``` to "NO". This doesn't mean your end user will be surveyed everytime, it just force eligibility check.
+If you want to check end user for survey eligibility everytime the ```showSurveyInViewController:``` method is fired, set ```firstSurveyAfter``` to "0" and ```setSurveyedDefaultAfterSurvey``` to "NO". This doesn't mean your end user will be surveyed everytime, it is just forcing eligibility check.
 #####First survey after & end user created at setting:
 While it is not required, setting ```endUserCreatedAt``` is highly recommended for proper checking if end user needs survey and skipping uneccessary eligibility checks.
