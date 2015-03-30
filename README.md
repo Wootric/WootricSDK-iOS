@@ -1,10 +1,15 @@
-#Wootric SDK for iOS
+#WootricSDK for iOS
 
-## Installation
-
-TODO
+##Installation
+---
+###Using CocoaPods
+####Podfile
+```ruby
+pod "WootricSDK"
+```
 
 ##Usage
+---
 WootricSDK's most important feature, beside making Wootric API requests, is to present a fully functional survey view with just a few lines of code.
 
 First import the SDK to your view controller where you want to show the survey:
@@ -28,7 +33,8 @@ And you are good to go! To display the survey (if user is eligible - this check 
 [WootricSDK showSurveyInViewController:<YOUR_VIEW_CONTROLLER>];
 ```
 
-Additional configuration:
+####Additional configuration:
+---
 ```objective-c
 [WootricSDK surveyImmediately:<BOOL>];
 ```

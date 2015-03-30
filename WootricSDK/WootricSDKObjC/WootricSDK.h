@@ -23,7 +23,10 @@
 + (void)productName:(NSString *)productName;
 + (void)endUserProperties:(NSDictionary *)customProperties;
 + (void)firstSurveyAfter:(NSUInteger)numberOfDays;
++ (void)setSurveyedDefaultAfterSurvey:(BOOL)flag;
 + (void)setSurveyedDefaultAfterSurvey:(BOOL)flag withDuration:(NSUInteger)numberOfDays;
++ (void)setCustomDetractorQuestion:(NSString *)detractorQuestion passiveQuestion:(NSString *)passiveQuestion andPromoterQuestion:(NSString *)promoterQuestion;
++ (void)setCustomWootricQuestion:(NSString *)wootricQuestion;
 + (UIImage *)imageToBlurFromViewController:(UIViewController *)viewController;
 
 @end

@@ -68,7 +68,24 @@
 + (void)setSurveyedDefaultAfterSurvey:(BOOL)flag withDuration:(NSUInteger)numberOfDays {
   APIWootric *api = [APIWootric sharedInstance];
   api.setDefaultAfterSurvey = flag;
-  api.surveyedDefaultTrottle = numberOfDays;
+  api.surveyedDefaultDuration = numberOfDays;
+}
+
++ (void)setSurveyedDefaultAfterSurvey:(BOOL)flag {
+  APIWootric *api = [APIWootric sharedInstance];
+  [WootricSDK setSurveyedDefaultAfterSurvey:flag withDuration:api.surveyedDefaultDuration];
+}
+
++ (void)setCustomDetractorQuestion:(NSString *)detractorQuestion passiveQuestion:(NSString *)passiveQuestion andPromoterQuestion:(NSString *)promoterQuestion {
+  APIWootric *api = [APIWootric sharedInstance];
+  api.detractorQuestion = detractorQuestion;
+  api.passiveQuestion = passiveQuestion;
+  api.promoterQuestion = promoterQuestion;
+}
+
++ (void)setCustomWootricQuestion:(NSString *)wootricQuestion {
+  APIWootric *api = [APIWootric sharedInstance];
+  api.wootricQuestion = wootricQuestion;
 }
 
 #pragma mark - Survey methods
@@ -96,11 +113,17 @@
 }
 
 + (void)setupAndShowSurveyForViewController:(UIViewController *)viewController withImageToBlur:(UIImage *)imageToBlur {
+  APIWootric *api = [APIWootric sharedInstance];
   SurveyViewController *surveyViewController = [[SurveyViewController alloc] init];
 
   surveyViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
   surveyViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
   surveyViewController.imageToBlur = imageToBlur;
+
+  surveyViewController.wootricQuestion = api.wootricQuestion;
+  surveyViewController.detractorQuestion = api.detractorQuestion;
+  surveyViewController.passiveQuestion = api.passiveQuestion;
+  surveyViewController.promoterQuestion = api.promoterQuestion;
 
   [viewController presentViewController:surveyViewController animated:YES completion:nil];
 }
@@ -137,7 +160,7 @@
 + (void)checkIfSurveyedDefaultExpired {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   APIWootric *api = [APIWootric sharedInstance];
-  if ([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"surveyedAt"] >= (api.surveyedDefaultTrottle * 60 * 60 * 24)) {
+  if ([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"surveyedAt"] >= (api.surveyedDefaultDuration * 60 * 60 * 24)) {
     [defaults setBool:NO forKey:@"surveyed"];
   }
 }

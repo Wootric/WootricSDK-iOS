@@ -16,6 +16,14 @@
   int score;
   BOOL scrolled;
 
+- (instancetype)init {
+  if (self = [super init]) {
+    _defaultWootricQuestion = @"How likely are you to recommend us to a friend or collegue?";
+    _defaultResponseQuestion = @"Thank you! Care to tell us why?";
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
@@ -33,8 +41,6 @@
                               saturationDeltaFactor:1
                                           maskImage:nil];
   _tintColor = [UIColor colorWithRed:145.0/255.0 green:201.0/255.0 blue:29.0/255.0 alpha:1];
-  _titleText = @"How likely are you to recommend us to a friend or collegue?";
-  _commentTitleText = @"Thank you for your response!";
 
   [self setupViews];
   [self setupConstraints];
@@ -166,7 +172,7 @@
   [self hideItems];
   [self showItems];
   scrolled = NO;
-  _titleLabel.text = _commentTitleText;
+  _titleLabel.text = [self textDependingOnScore:score];
   _titleLabel.textColor = _tintColor;
   _scoreLabel.text = [NSString stringWithFormat:@"You gave us an %d.", score];
   [_commentTextView becomeFirstResponder];
@@ -187,6 +193,17 @@
   _askForFeedbackLabel.hidden = NO;
   _scoreLabel.hidden = NO;
   _commentTextView.hidden = NO;
+}
+
+- (NSString *)textDependingOnScore:(int)score {
+  if (score <= 6 && _detractorQuestion != nil) {
+    return _detractorQuestion;
+  } else if (score <= 8 && _passiveQuestion != nil) {
+    return _passiveQuestion;
+  } else if (_promoterQuestion != nil) {
+    return _promoterQuestion;
+  }
+  return _defaultResponseQuestion;
 }
 
 - (BOOL)isSmallerScreenDevice {

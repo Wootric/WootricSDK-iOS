@@ -21,8 +21,12 @@
 @property (nonatomic, strong) UITextView *commentTextView;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIColor *tintColor;
-@property (nonatomic, strong) NSString *titleText;
-@property (nonatomic, strong) NSString *commentTitleText;
+@property (nonatomic, strong) NSString *wootricQuestion;
+@property (nonatomic, strong) NSString *defaultWootricQuestion;
+@property (nonatomic, strong) NSString *defaultResponseQuestion;
+@property (nonatomic, strong) NSString *detractorQuestion;
+@property (nonatomic, strong) NSString *passiveQuestion;
+@property (nonatomic, strong) NSString *promoterQuestion;
 @property (nonatomic, strong) UIImageView *backgroundImageView;
 @property (nonatomic, strong) UIImageView *heartImageView;
 @property (nonatomic, strong) UIImageView *dismissImageView;

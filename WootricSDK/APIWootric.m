@@ -27,7 +27,7 @@
   if (self = [super init]) {
     wootricSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     _setDefaultAfterSurvey = YES;
-    _surveyedDefaultTrottle = 90;
+    _surveyedDefaultDuration = 90;
     _firstSurveyAfter = 31;
     _apiVersion = @"v1";
   }

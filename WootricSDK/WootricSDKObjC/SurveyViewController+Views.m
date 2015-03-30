@@ -172,7 +172,11 @@
   self.titleLabel.textColor = [UIColor darkGrayColor];
   self.titleLabel.numberOfLines = 0;
   self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-  self.titleLabel.text = self.titleText;
+  if (self.wootricQuestion != nil) {
+    self.titleLabel.text = self.wootricQuestion;
+  } else {
+    self.titleLabel.text = self.defaultWootricQuestion;
+  }
   self.titleLabel.font = [UIFont systemFontOfSize:16];
   [self.titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
