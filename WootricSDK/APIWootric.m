@@ -27,17 +27,15 @@
   if (self = [super init]) {
     wootricSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     _setDefaultAfterSurvey = YES;
-    _surveyedDefaultTrottle = 30;
+    _surveyedDefaultTrottle = 90;
     _firstSurveyAfter = 31;
+    _apiVersion = @"v1";
   }
   return self;
 }
 
 - (BOOL)checkConfiguration {
   if (_clientID != nil && _clientSecret != nil && _accountToken != nil && _endUserEmail != nil && _originURL != nil) {
-    if (!_apiVersion) {
-      _apiVersion = @"v1";
-    }
     return YES;
   }
   return NO;
@@ -250,10 +248,8 @@
 - (BOOL)needsSurvey {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   if ([defaults boolForKey:@"surveyed"]) {
-    NSLog(@"User already surveyed");
     return NO;
   } else {
-    NSLog(@"User not surveyed yet");
     NSInteger age = [[NSDate date] timeIntervalSince1970] - _externalCreatedAt;
     if (_firstSurveyAfter != 0) {
       if (age > (_firstSurveyAfter * 60 * 60 * 24)) {
