@@ -38,6 +38,9 @@
 @property (nonatomic, strong) NSString *detractorQuestion;
 @property (nonatomic, strong) NSString *passiveQuestion;
 @property (nonatomic, strong) NSString *promoterQuestion;
+@property (nonatomic, strong) NSString *detractorPlaceholder;
+@property (nonatomic, strong) NSString *passivePlaceholder;
+@property (nonatomic, strong) NSString *promoterPlaceholder;
 @property (nonatomic, strong) NSNumber *registeredPercent;
 @property (nonatomic, strong) NSNumber *visitorPercent;
 @property (nonatomic, strong) NSNumber *resurveyThrottle;

@@ -34,8 +34,9 @@
 
 - (instancetype)init {
   if (self = [super init]) {
-    _defaultWootricQuestion = @"How likely are you to recommend us to a friend or collegue?";
+    _defaultWootricQuestion = @"How likely are you to recommend us to a friend or co-worker?";
     _defaultResponseQuestion = @"Thank you! Care to tell us why?";
+    _defaultPlaceholderText = @"Help us by explaining your score.";
   }
   return self;
 }
@@ -60,6 +61,8 @@
 
   [self setupViews];
   [self setupConstraints];
+
+  _commentTextView.delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -126,12 +129,16 @@
     text = _commentTextView.text;
   }
   [WootricSDK voteWithScore:(long)_scoreSlider.value andText:text];
+  [_commentTextView resignFirstResponder];
+  [self showFinalView];
 
-  [UIView animateWithDuration:0.2 animations:^{
-    _backgroundImageView.alpha = 0;
-  } completion:^(BOOL finished) {
-    [self dismissViewControllerAnimated:YES completion:nil];
-  }];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [UIView animateWithDuration:0.2 animations:^{
+      _backgroundImageView.alpha = 0;
+    } completion:^(BOOL finished) {
+      [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+  });
 }
 
 - (void)adjustInsetForKeyboardShow:(BOOL)show notification:(NSNotification *)notification {
@@ -188,8 +195,9 @@
   [self hideItems];
   [self showItems];
   scrolled = NO;
-  _titleLabel.text = [self textDependingOnScore:score];
+  _titleLabel.text = [self textDependingOnScore];
   _titleLabel.textColor = _tintColor;
+  _askForFeedbackLabel.text = [self placeholderDependingOnScore];
   _scoreLabel.text = [NSString stringWithFormat:@"You gave us an %d.", score];
   [_commentTextView becomeFirstResponder];
 }
@@ -211,7 +219,19 @@
   _commentTextView.hidden = NO;
 }
 
-- (NSString *)textDependingOnScore:(int)score {
+- (void)showFinalView {
+  _dismissButton.hidden =YES;
+  _commentTextView.hidden = YES;
+  _scoreLabel.hidden = YES;
+  _voteButton.hidden = YES;
+  _askForFeedbackLabel.hidden = YES;
+  _sendFeedbackButton.hidden = YES;
+  _titleLabel.text = @"Thank you for your response, and for your feedback!";
+  _titleLabel.font = [UIFont boldSystemFontOfSize:15];
+  _titleLabel.textColor = [UIColor colorWithRed:236.0/255.0 green:104.0/255.0 blue:149.0/255.0 alpha:1];
+}
+
+- (NSString *)textDependingOnScore {
   if (score <= 6 && _detractorQuestion != nil) {
     return _detractorQuestion;
   } else if (score <= 8 && _passiveQuestion != nil) {
@@ -220,6 +240,17 @@
     return _promoterQuestion;
   }
   return _defaultResponseQuestion;
+}
+
+- (NSString *)placeholderDependingOnScore {
+  if (score <= 6 && _detractorPlaceholder != nil) {
+    return _detractorPlaceholder;
+  } else if (score <= 8 && _passivePlaceholder != nil) {
+    return _passivePlaceholder;
+  } else if (_promoterPlaceholder != nil) {
+    return _promoterPlaceholder;
+  }
+  return _defaultPlaceholderText;
 }
 
 - (BOOL)isSmallerScreenDevice {
@@ -250,6 +281,14 @@
   float sliderValueToPixels = (((aSlider.value-aSlider.minimumValue)/(aSlider.maximumValue-aSlider.minimumValue)) * sliderRange) + sliderOrigin;
 
   return sliderValueToPixels;
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+  if (textView.text.length == 0) {
+    _askForFeedbackLabel.hidden = NO;
+  } else {
+    _askForFeedbackLabel.hidden = YES;
+  }
 }
 
 - (void)dealloc {

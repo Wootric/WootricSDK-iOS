@@ -24,7 +24,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SurveyViewController : UIViewController
+@interface SurveyViewController : UIViewController <UITextViewDelegate>
 
 @property (nonatomic, strong) NSLayoutConstraint *constTopToModal;
 @property (nonatomic, strong) UIImage *imageToBlur;
@@ -39,10 +39,14 @@
 @property (nonatomic, strong) UIColor *tintColor;
 @property (nonatomic, strong) NSString *wootricQuestion;
 @property (nonatomic, strong) NSString *defaultWootricQuestion;
+@property (nonatomic, strong) NSString *defaultPlaceholderText;
 @property (nonatomic, strong) NSString *defaultResponseQuestion;
 @property (nonatomic, strong) NSString *detractorQuestion;
 @property (nonatomic, strong) NSString *passiveQuestion;
 @property (nonatomic, strong) NSString *promoterQuestion;
+@property (nonatomic, strong) NSString *detractorPlaceholder;
+@property (nonatomic, strong) NSString *passivePlaceholder;
+@property (nonatomic, strong) NSString *promoterPlaceholder;
 @property (nonatomic, strong) UIImageView *backgroundImageView;
 @property (nonatomic, strong) UIImageView *heartImageView;
 @property (nonatomic, strong) UIImageView *dismissImageView;

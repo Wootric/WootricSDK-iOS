@@ -89,40 +89,29 @@
   NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:self.askForFeedbackLabel
                                                               attribute:NSLayoutAttributeTop
                                                               relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.scoreLabel
-                                                              attribute:NSLayoutAttributeBottom
+                                                                 toItem:self.commentTextView
+                                                              attribute:NSLayoutAttributeTop
                                                              multiplier:1
-                                                               constant:5];
+                                                               constant:8];
   [self.modalView addConstraint:constTop];
 
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.askForFeedbackLabel
-                                                            attribute:NSLayoutAttributeCenterX
+  NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:self.askForFeedbackLabel
+                                                            attribute:NSLayoutAttributeLeft
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.titleLabel
-                                                            attribute:NSLayoutAttributeCenterX
+                                                               toItem:self.commentTextView
+                                                            attribute:NSLayoutAttributeLeft
                                                            multiplier:1
-                                                             constant:0];
-  [self.modalView addConstraint:constX];
+                                                             constant:5];
+  [self.modalView addConstraint:constL];
 
-  if ([self isSmallerScreenDevice]) {
-    NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:self.askForFeedbackLabel
-                                                                attribute:NSLayoutAttributeLeft
-                                                                relatedBy:NSLayoutRelationEqual
-                                                                   toItem:self.modalView
-                                                                attribute:NSLayoutAttributeLeft
-                                                               multiplier:1
-                                                                 constant:10];
-    [self.modalView addConstraint:constLeft];
-
-    NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:self.modalView
-                                                                 attribute:NSLayoutAttributeRight
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.askForFeedbackLabel
-                                                                 attribute:NSLayoutAttributeRight
-                                                                multiplier:1
-                                                                  constant:10];
-    [self.modalView addConstraint:constRight];
-  }
+  NSLayoutConstraint *constR = [NSLayoutConstraint constraintWithItem:self.commentTextView
+                                                            attribute:NSLayoutAttributeRight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.askForFeedbackLabel
+                                                            attribute:NSLayoutAttributeRight
+                                                           multiplier:1
+                                                             constant:5];
+  [self.modalView addConstraint:constR];
 }
 
 - (void)setupSliderCheckedBackgroundViewConstraints {
@@ -278,7 +267,7 @@
   NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.commentTextView
                                                             attribute:NSLayoutAttributeTop
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.askForFeedbackLabel
+                                                               toItem:self.scoreLabel
                                                             attribute:NSLayoutAttributeBottom
                                                            multiplier:1
                                                              constant:margin];

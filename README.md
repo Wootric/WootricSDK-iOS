@@ -84,10 +84,16 @@ By default, after end user is surveyed, the SDK sets a "cookie" (NSUserDefaults)
 [WootricSDK setCustomDetractorQuestion:<CUSTOM_QUESTION> passiveQuestion:<CUSTOM_QUESTION> andPromoterQuestion:<CUSTOM_QUESTION>];
 ```
 This method allows you to set custom question for each type of end user (detractor, passive or promoter). Default question asked after end user submits the score is "Thank you! Care to tell us why?". Passing ```nil``` for any of the parameters will result in using default for that type of end user.
+
+```objective-c
+[WootricSDK setCustomDetractorPlaceholder:<CUSTOM_PLACEHOLDER> passivePlaceholder:<CUSTOM_PLACEHOLDER> andPromoterPlaceholder:<CUSTOM_PLACEHOLDER>];
+```
+Same as with custom question, it allows you to set custom placeholder text in feedback text view for each type of end user.
+
 ```objective-c
 [WootricSDK setCustomWootricQuestion:<CUSTOM_QUESTION>];
 ```
-You can use this method to modify the default "How likely are you to recommend us to a friend or collegue?" question.
+You can use this method to modify the default "How likely are you to recommend us to a friend or co-worker?" question. The ```friend or co-worker``` is replaced by <CUSTOM_QUESTION> value.
 ####Additional information:
 ---
 #####"Forcing" eligibility check:

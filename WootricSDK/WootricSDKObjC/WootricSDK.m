@@ -99,6 +99,13 @@
   api.promoterQuestion = promoterQuestion;
 }
 
++ (void)setCustomDetractorPlaceholder:(NSString *)detractorPlaceholder passivePlaceholder:(NSString *)passivePlaceholder andPromoterPlaceholder:(NSString *)promoterPlaceholder {
+  APIWootric *api = [APIWootric sharedInstance];
+  api.detractorPlaceholder = detractorPlaceholder;
+  api.passivePlaceholder = passivePlaceholder;
+  api.promoterPlaceholder = promoterPlaceholder;
+}
+
 + (void)setCustomWootricQuestion:(NSString *)wootricQuestion {
   APIWootric *api = [APIWootric sharedInstance];
   api.wootricQuestion = wootricQuestion;
@@ -140,6 +147,10 @@
   surveyViewController.detractorQuestion = api.detractorQuestion;
   surveyViewController.passiveQuestion = api.passiveQuestion;
   surveyViewController.promoterQuestion = api.promoterQuestion;
+
+  surveyViewController.detractorPlaceholder = api.detractorPlaceholder;
+  surveyViewController.passivePlaceholder= api.passivePlaceholder;
+  surveyViewController.promoterPlaceholder = api.promoterPlaceholder;
 
   [viewController presentViewController:surveyViewController animated:YES completion:nil];
 }

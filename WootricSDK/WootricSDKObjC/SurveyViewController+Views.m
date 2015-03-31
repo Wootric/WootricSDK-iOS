@@ -89,12 +89,11 @@
 
 - (void)setupAskForFeedbackLabel {
   self.askForFeedbackLabel = [[UILabel alloc] init];
-  self.askForFeedbackLabel.text = @"Please help us improve by sharing your feedback";
-  self.askForFeedbackLabel.font = [UIFont italicSystemFontOfSize:14];
-  self.askForFeedbackLabel.textColor = [UIColor darkGrayColor];
+  self.askForFeedbackLabel.font = [UIFont systemFontOfSize:12];
+  self.askForFeedbackLabel.textColor = [UIColor lightGrayColor];
   self.askForFeedbackLabel.hidden = YES;
   self.askForFeedbackLabel.numberOfLines = 0;
-  self.askForFeedbackLabel.textAlignment = NSTextAlignmentCenter;
+  self.askForFeedbackLabel.textAlignment = NSTextAlignmentLeft;
   [self.askForFeedbackLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
@@ -189,7 +188,7 @@
   self.titleLabel.numberOfLines = 0;
   self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
   if (self.wootricQuestion != nil) {
-    self.titleLabel.text = self.wootricQuestion;
+    self.titleLabel.text = [NSString stringWithFormat:@"How likely are you to recommend us to a %@?", self.wootricQuestion];
   } else {
     self.titleLabel.text = self.defaultWootricQuestion;
   }
