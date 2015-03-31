@@ -93,7 +93,7 @@ Same as with custom question, it allows you to set custom placeholder text in fe
 ```objective-c
 [WootricSDK setCustomWootricQuestion:<CUSTOM_QUESTION>];
 ```
-You can use this method to modify the default "How likely are you to recommend us to a friend or co-worker?" question. The ```friend or co-worker``` is replaced by <CUSTOM_QUESTION> value.
+You can use this method to modify the default "How likely are you to recommend us to a friend or co-worker?" question. The ```friend or co-worker``` is replaced by CUSTOM_QUESTION value.
 ####Additional information:
 ---
 #####"Forcing" eligibility check:
