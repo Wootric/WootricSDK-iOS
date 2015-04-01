@@ -43,6 +43,48 @@
   [self setupAskForFeedbackLabelConstraints];
   [self setupCommentTextViewConstraints];
   [self setupSendFeedbackButtonConstraints];
+  [self setupButtonIconCheckConstraints];
+  [self setupButtonIconSendConstraints];
+}
+
+- (void)setupButtonIconSendConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.buttonIconSend
+                                                            attribute:NSLayoutAttributeRight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.sendFeedbackButton
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1
+                                                             constant:-4];
+  [self.modalView addConstraint:constX];
+
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.buttonIconSend
+                                                            attribute:NSLayoutAttributeCenterY
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.sendFeedbackButton
+                                                            attribute:NSLayoutAttributeCenterY
+                                                           multiplier:1
+                                                             constant:0];
+  [self.modalView addConstraint:constY];
+}
+
+- (void)setupButtonIconCheckConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.buttonIconCheck
+                                                            attribute:NSLayoutAttributeRight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.voteButton
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1
+                                                             constant:-4];
+  [self.modalView addConstraint:constX];
+
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.buttonIconCheck
+                                                            attribute:NSLayoutAttributeCenterY
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.voteButton
+                                                            attribute:NSLayoutAttributeCenterY
+                                                           multiplier:1
+                                                             constant:0];
+  [self.modalView addConstraint:constY];
 }
 
 - (void)setupSendFeedbackButtonConstraints {
@@ -52,7 +94,7 @@
                                                                toItem:self.modalView
                                                             attribute:NSLayoutAttributeCenterX
                                                            multiplier:1
-                                                             constant:0];
+                                                             constant:12];
   [self.modalView addConstraint:constX];
 
   NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.sendFeedbackButton
@@ -347,7 +389,7 @@
                                                                toItem:self.modalView
                                                             attribute:NSLayoutAttributeCenterX
                                                            multiplier:1
-                                                             constant:0];
+                                                             constant:12];
   [self.modalView addConstraint:constX];
 
   NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.voteButton

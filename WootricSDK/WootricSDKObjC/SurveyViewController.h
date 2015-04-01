@@ -52,6 +52,8 @@
 @property (nonatomic, strong) UIImageView *dismissImageView;
 @property (nonatomic, strong) UIImageView *sliderBackgroundView;
 @property (nonatomic, strong) UIImageView *sliderCheckedBackgroundView;
+@property (nonatomic, strong) UIImageView *buttonIconCheck;
+@property (nonatomic, strong) UIImageView *buttonIconSend;
 @property (nonatomic, strong) UILabel *scoreLabel;
 @property (nonatomic, strong) UILabel *askForFeedbackLabel;
 @property (nonatomic, strong) UILabel *dragToChangeLabel;

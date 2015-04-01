@@ -46,6 +46,8 @@
   [self setupAskForFeedbackLabel];
   [self setupSendFeedbackButton];
   [self setupScorePopoverLabel];
+  [self setupButtonCheckIcon];
+  [self setupButtonSendIcon];
 
   [self addViewsToModal];
   [self.view addSubview:self.scrollView];
@@ -228,10 +230,15 @@
   [self.scoreSlider setThumbImage:image forState:UIControlStateNormal];
   [self.scoreSlider setThumbImage:image forState:UIControlStateHighlighted];
   [self.scoreSlider setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [self.scoreSlider addTarget:self action:NSSelectorFromString(@"updateSliderStep:")
-         forControlEvents:UIControlEventValueChanged];
-  [self.scoreSlider addTarget:self action:NSSelectorFromString(@"showScore:") forControlEvents:UIControlEventTouchDragInside | UIControlEventTouchDragOutside | UIControlEventTouchDown];
-  [self.scoreSlider addTarget:self action:NSSelectorFromString(@"hideScore:") forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
+  [self.scoreSlider addTarget:self
+                       action:NSSelectorFromString(@"updateSliderStep:")
+             forControlEvents:UIControlEventValueChanged];
+  [self.scoreSlider addTarget:self
+                       action:NSSelectorFromString(@"showScore:")
+             forControlEvents:UIControlEventTouchDragInside | UIControlEventTouchDragOutside | UIControlEventTouchDown];
+  [self.scoreSlider addTarget:self
+                       action:NSSelectorFromString(@"hideScore:")
+             forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
   UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:NSSelectorFromString(@"sliderTapped:")];
   [self.scoreSlider addGestureRecognizer:gr];
 }
@@ -247,6 +254,21 @@
   [self.voteButton setTitleColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1] forState:UIControlStateDisabled];
   [self.voteButton addTarget:self action:NSSelectorFromString(@"voteButtonPressed:")
         forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)setupButtonCheckIcon {
+  UIImage *checkIcon = [UIImage imageNamed:@"icon_check_disabled" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  self.buttonIconCheck = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+  self.buttonIconCheck.image = checkIcon;
+  [self.buttonIconCheck setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
+- (void)setupButtonSendIcon {
+  UIImage *sendIcon = [UIImage imageNamed:@"icon_send_arrow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  self.buttonIconSend = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+  self.buttonIconSend.image = sendIcon;
+  self.buttonIconSend.hidden = YES;
+  [self.buttonIconSend setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)addViewsToModal {
@@ -266,6 +288,8 @@
   [self.modalView addSubview:self.scoreLabel];
   [self.modalView addSubview:self.sendFeedbackButton];
   [self.modalView addSubview:self.scorePopoverLabel];
+  [self.modalView addSubview:self.buttonIconCheck];
+  [self.modalView addSubview:self.buttonIconSend];
 }
 
 @end

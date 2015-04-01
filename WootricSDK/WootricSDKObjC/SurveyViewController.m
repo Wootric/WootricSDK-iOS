@@ -79,6 +79,8 @@
 
 - (void)updateSliderStep:(UISlider *)sender {
   if (!_voteButton.enabled) {
+    UIImage *iconCheckEnabled = [UIImage imageNamed:@"icon_check_enabled" inBundle:[NSBundle bundleForClass: [self class]] compatibleWithTraitCollection:nil];
+    _buttonIconCheck.image = iconCheckEnabled;
     _voteButton.enabled = YES;
     _dragToChangeLabel.hidden = NO;
     NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_numbers_checked" : @"slider_bg_numbers_checked_667h";
@@ -124,15 +126,16 @@
 }
 
 - (void)sendButtonPressed:(UIButton *)sender {
+  _sendFeedbackButton.enabled = NO;
+  _dismissButton.enabled = NO;
   NSString *text = nil;
   if ([_commentTextView.text length] != 0) {
     text = _commentTextView.text;
   }
   [WootricSDK voteWithScore:(long)_scoreSlider.value andText:text];
   [_commentTextView resignFirstResponder];
-  [self showFinalView];
 
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     [UIView animateWithDuration:0.2 animations:^{
       _backgroundImageView.alpha = 0;
     } completion:^(BOOL finished) {
@@ -210,25 +213,15 @@
   _sliderBackgroundView.hidden = YES;
   _sliderCheckedBackgroundView.hidden = YES;
   _scoreSlider.hidden = YES;
+  _buttonIconCheck.hidden = YES;
 }
 
 - (void)showItems {
+  _buttonIconSend.hidden = NO;
   _sendFeedbackButton.hidden = NO;
   _askForFeedbackLabel.hidden = NO;
   _scoreLabel.hidden = NO;
   _commentTextView.hidden = NO;
-}
-
-- (void)showFinalView {
-  _dismissButton.hidden =YES;
-  _commentTextView.hidden = YES;
-  _scoreLabel.hidden = YES;
-  _voteButton.hidden = YES;
-  _askForFeedbackLabel.hidden = YES;
-  _sendFeedbackButton.hidden = YES;
-  _titleLabel.text = @"Thank you for your response, and for your feedback!";
-  _titleLabel.font = [UIFont boldSystemFontOfSize:15];
-  _titleLabel.textColor = [UIColor colorWithRed:236.0/255.0 green:104.0/255.0 blue:149.0/255.0 alpha:1];
 }
 
 - (NSString *)textDependingOnScore {
