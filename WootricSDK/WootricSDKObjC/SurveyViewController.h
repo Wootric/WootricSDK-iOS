@@ -34,6 +34,7 @@
 @property (nonatomic, strong) UIButton *voteButton;
 @property (nonatomic, strong) UIButton *sendFeedbackButton;
 @property (nonatomic, strong) UIButton *dismissButton;
+@property (nonatomic, strong) UIButton *backButton;
 @property (nonatomic, strong) UITextView *commentTextView;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIColor *tintColor;

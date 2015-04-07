@@ -198,8 +198,7 @@
 }
 
 - (void)changeView {
-  [self hideItems];
-  [self showItems];
+  [self changeItemsVisibilityTo:YES];
   scrolled = NO;
   _titleLabel.text = [self textDependingOnScore];
   _titleLabel.textColor = _tintColor;
@@ -208,23 +207,32 @@
   [_commentTextView becomeFirstResponder];
 }
 
-- (void)hideItems {
-  _voteButton.hidden = YES;
-  _dragToChangeLabel.hidden = YES;
-  _extremelyLikelyLabel.hidden = YES;
-  _notLikelyLabel.hidden = YES;
-  _sliderBackgroundView.hidden = YES;
-  _sliderCheckedBackgroundView.hidden = YES;
-  _scoreSlider.hidden = YES;
-  _buttonIconCheck.hidden = YES;
+- (void)backButtonPressed:(UIButton *)sender {
+  [self changeItemsVisibilityTo:NO];
+  if (_wootricQuestion != nil) {
+    _titleLabel.text = [NSString stringWithFormat:@"How likely are you to recommend us to a %@?", _wootricQuestion];
+  } else {
+    _titleLabel.text = _defaultWootricQuestion;
+  }
+  _titleLabel.textColor = [UIColor darkGrayColor];
+  [_commentTextView resignFirstResponder];
 }
 
-- (void)showItems {
-  _buttonIconSend.hidden = NO;
-  _sendFeedbackButton.hidden = NO;
-  _askForFeedbackLabel.hidden = NO;
-  _scoreLabel.hidden = NO;
-  _commentTextView.hidden = NO;
+- (void)changeItemsVisibilityTo:(BOOL)flag {
+  _voteButton.hidden = flag;
+  _dragToChangeLabel.hidden = flag;
+  _extremelyLikelyLabel.hidden = flag;
+  _notLikelyLabel.hidden = flag;
+  _sliderBackgroundView.hidden = flag;
+  _sliderCheckedBackgroundView.hidden = flag;
+  _scoreSlider.hidden = flag;
+  _buttonIconCheck.hidden = flag;
+  _buttonIconSend.hidden = !flag;
+  _sendFeedbackButton.hidden = !flag;
+  _askForFeedbackLabel.hidden = !flag;
+  _scoreLabel.hidden = !flag;
+  _commentTextView.hidden = !flag;
+  _backButton.hidden = !flag;
 }
 
 - (NSString *)textDependingOnScore {

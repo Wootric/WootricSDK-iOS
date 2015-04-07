@@ -48,12 +48,25 @@
   [self setupScorePopoverLabel];
   [self setupButtonCheckIcon];
   [self setupButtonSendIcon];
+  [self setupBackButton];
 
   [self addViewsToModal];
   [self.view addSubview:self.scrollView];
   [self.view addSubview:self.backgroundImageView];
   [self.view sendSubviewToBack:self.backgroundImageView];
   [self.scrollView addSubview:self.modalView];
+}
+
+- (void)setupBackButton {
+  self.backButton = [[UIButton alloc] init];
+  UIImage *image = [UIImage imageNamed:@"icon_back_arrow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  UIImageView *backIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+  backIcon.image = image;
+  self.backButton.hidden = YES;
+  [self.backButton addSubview:backIcon];
+  [self.backButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [self.backButton addTarget:self action:NSSelectorFromString(@"backButtonPressed:")
+                    forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupScorePopoverLabel {
@@ -290,6 +303,7 @@
   [self.modalView addSubview:self.scorePopoverLabel];
   [self.modalView addSubview:self.buttonIconCheck];
   [self.modalView addSubview:self.buttonIconSend];
+  [self.modalView addSubview:self.backButton];
 }
 
 @end

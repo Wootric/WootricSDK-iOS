@@ -45,6 +45,45 @@
   [self setupSendFeedbackButtonConstraints];
   [self setupButtonIconCheckConstraints];
   [self setupButtonIconSendConstraints];
+  [self setupBackButtonConstraints];
+}
+
+- (void)setupBackButtonConstraints {
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.backButton
+                                                               attribute:NSLayoutAttributeTop
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.modalView
+                                                               attribute:NSLayoutAttributeTop
+                                                              multiplier:1
+                                                                constant:10];
+  [self.modalView addConstraint:constY];
+
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.backButton
+                                                            attribute:NSLayoutAttributeLeft
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.modalView
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1
+                                                             constant:10];
+  [self.modalView addConstraint:constX];
+
+  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.backButton
+                                                            attribute:NSLayoutAttributeWidth
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:16];
+  [self.backButton addConstraint:constW];
+
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.backButton
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:16];
+  [self.backButton addConstraint:constH];
 }
 
 - (void)setupButtonIconSendConstraints {
