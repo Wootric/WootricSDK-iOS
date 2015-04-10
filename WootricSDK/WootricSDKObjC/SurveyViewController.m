@@ -200,10 +200,11 @@
 - (void)changeView {
   [self changeItemsVisibilityTo:YES];
   scrolled = NO;
-  _titleLabel.text = [self textDependingOnScore];
+  // Score label should display 'thank you' text for now and title label should display score.
+  _titleLabel.text = [NSString stringWithFormat:@"You gave us an %d.", score];
   _titleLabel.textColor = _tintColor;
   _askForFeedbackLabel.text = [self placeholderDependingOnScore];
-  _scoreLabel.text = [NSString stringWithFormat:@"You gave us an %d.", score];
+  _scoreLabel.text = [self textDependingOnScore];
   [_commentTextView becomeFirstResponder];
 }
 
