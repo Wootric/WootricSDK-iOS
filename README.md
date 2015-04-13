@@ -43,9 +43,14 @@ And you are good to go! To display the survey (if user is eligible - this check 
 ####Additional configuration:
 ---
 ```objective-c
+[WootricSDK forceSurvey:<BOOL>];
+```
+If forceSurvey is set to YES, the survey is displayed skipping eligibility check AND even if user was already surveyed. (This is for test purposes only as it will display the survey everytime and for every user)
+
+```objective-c
 [WootricSDK surveyImmediately:<BOOL>];
 ```
-If surveyImmediately is set to YES, the survey is displayed skipping eligibility check. (This is for test purposes only as it will display the survey everytime and for every user)
+If surveyImmediately is set to YES and user wasn't surveyed yet - the survey is displayed skipping eligibility check.
 
 ```objective-c
 //You can pass nil value for any of the parameters - it will use defaults for eligibility check if you do so.

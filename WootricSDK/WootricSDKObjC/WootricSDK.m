@@ -54,6 +54,11 @@
   api.surveyImmediately = flag;
 }
 
++ (void)forceSurvey:(BOOL)flag {
+  APIWootric *api = [APIWootric sharedInstance];
+  api.forceSurvey = flag;
+}
+
 + (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercent andRegisteredPercentage:(NSNumber *)registeredPercent {
   APIWootric *api = [APIWootric sharedInstance];
   api.registeredPercent = registeredPercent;
@@ -125,6 +130,7 @@
 
 + (void)showSurveyInViewController:(UIViewController *)viewController {
   NSAssert([[APIWootric sharedInstance] checkConfiguration], @"Configure WootricSDK first");
+  [[APIWootric sharedInstance] getTrackingPixel];
   [WootricSDK setLastSeenAtInDefaults];
   [WootricSDK checkIfSurveyedDefaultExpired];
   [[APIWootric sharedInstance] surveyForEndUser:^{

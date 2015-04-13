@@ -13,7 +13,7 @@
 
 @end
 
-@implementation WootricSDKObjCTests
+@implementation WootricSDKTests
 
 - (void)setUp {
     [super setUp];

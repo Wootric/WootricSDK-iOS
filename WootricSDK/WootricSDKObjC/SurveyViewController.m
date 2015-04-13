@@ -29,8 +29,9 @@
 #import "SurveyViewController+Views.h"
 
 @implementation SurveyViewController
-  int score;
+  long score;
   BOOL scrolled;
+  BOOL alreadyVoted;
 
 - (instancetype)init {
   if (self = [super init]) {
@@ -57,7 +58,8 @@
                                           tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.3]
                               saturationDeltaFactor:1
                                           maskImage:nil];
-  _tintColor = [UIColor colorWithRed:145.0/255.0 green:201.0/255.0 blue:29.0/255.0 alpha:1];
+  _tintColorGreen = [UIColor colorWithRed:145.0/255.0 green:201.0/255.0 blue:29.0/255.0 alpha:1];
+  _tintColorPink = [UIColor colorWithRed:236.0/255.0 green:104.0/255.0 blue:149.0/255.0 alpha:1];
 
   [self setupViews];
   [self setupConstraints];
@@ -75,77 +77,7 @@
   }];
 }
 
-#pragma mark
-
-- (void)updateSliderStep:(UISlider *)sender {
-  if (!_voteButton.enabled) {
-    UIImage *iconCheckEnabled = [UIImage imageNamed:@"icon_check_enabled" inBundle:[NSBundle bundleForClass: [self class]] compatibleWithTraitCollection:nil];
-    _buttonIconCheck.image = iconCheckEnabled;
-    _voteButton.enabled = YES;
-    _dragToChangeLabel.hidden = NO;
-    NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_numbers_checked" : @"slider_bg_numbers_checked_667h";
-    UIImage *imageBackground = [[UIImage imageNamed:imageName
-                                           inBundle:[NSBundle bundleForClass:[self class]]
-                      compatibleWithTraitCollection:nil]
-                   stretchableImageWithLeftCapWidth:10
-                                       topCapHeight:0];
-    [_scoreSlider setMaximumTrackImage:imageBackground forState:UIControlStateNormal];
-    [_scoreSlider setMinimumTrackImage:imageBackground forState:UIControlStateNormal];
-    [UIView animateWithDuration:0.3 animations:^{
-      _sliderBackgroundView.alpha = 0;
-      _sliderCheckedBackgroundView.alpha = 1;
-    }];
-  }
-  sender.value = round(sender.value);
-  NSString *imageName = [NSString stringWithFormat:@"vote_icon_%d", (int)_scoreSlider.value];
-  UIImage *image = [UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-  [_scoreSlider setThumbImage:image forState:UIControlStateNormal];
-  [_scoreSlider setThumbImage:image forState:UIControlStateHighlighted];
-}
-
-- (void)voteButtonPressed:(UIButton *)sender {
-  score = (int)(_scoreSlider.value);
-  [self changeView];
-}
-
-- (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer {
-  if (_scoreSlider.highlighted)
-    return;
-  CGPoint pt = [gestureRecognizer locationInView: _scoreSlider];
-  CGFloat percentage = pt.x / _scoreSlider.bounds.size.width;
-  CGFloat delta = percentage * (_scoreSlider.maximumValue - _scoreSlider.minimumValue);
-  CGFloat value = _scoreSlider.minimumValue + delta;
-  [_scoreSlider setValue:value animated:YES];
-  [_scoreSlider removeGestureRecognizer:gestureRecognizer];
-  [self updateSliderStep:_scoreSlider];
-}
-
-- (void)dismissButtonPressed:(UIButton *)sender {
-  [WootricSDK userDeclined];
-  [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)sendButtonPressed:(UIButton *)sender {
-  _sendFeedbackButton.enabled = NO;
-  _dismissButton.enabled = NO;
-  _commentTextView.editable = NO;
-  UIImage *sendArrowDisabled = [UIImage imageNamed:@"icon_send_arrow_disabled" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-  _buttonIconSend.image = sendArrowDisabled;
-  NSString *text = nil;
-  if ([_commentTextView.text length] != 0) {
-    text = _commentTextView.text;
-  }
-  [WootricSDK voteWithScore:(long)_scoreSlider.value andText:text];
-  [_commentTextView resignFirstResponder];
-
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    [UIView animateWithDuration:0.2 animations:^{
-      _backgroundImageView.alpha = 0;
-    } completion:^(BOOL finished) {
-      [self dismissViewControllerAnimated:YES completion:nil];
-    }];
-  });
-}
+#pragma mark - Helper methods
 
 - (void)adjustInsetForKeyboardShow:(BOOL)show notification:(NSNotification *)notification {
   NSDictionary *userInfo = notification.userInfo ? notification.userInfo : @{};
@@ -195,28 +127,8 @@
                                           maskImage:nil];
   _backgroundImageView.image = bluredImage;
   [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
-}
-
-- (void)changeView {
-  [self changeItemsVisibilityTo:YES];
-  scrolled = NO;
-  // Score label should display 'thank you' text for now and title label should display score.
-  _titleLabel.text = [NSString stringWithFormat:@"You gave us an %d.", score];
-  _titleLabel.textColor = _tintColor;
-  _askForFeedbackLabel.text = [self placeholderDependingOnScore];
-  _scoreLabel.text = [self textDependingOnScore];
-  [_commentTextView becomeFirstResponder];
-}
-
-- (void)backButtonPressed:(UIButton *)sender {
-  [self changeItemsVisibilityTo:NO];
-  if (_wootricQuestion != nil) {
-    _titleLabel.text = [NSString stringWithFormat:@"How likely are you to recommend us to a %@?", _wootricQuestion];
-  } else {
-    _titleLabel.text = _defaultWootricQuestion;
-  }
-  _titleLabel.textColor = [UIColor darkGrayColor];
-  [_commentTextView resignFirstResponder];
+  NSLog(@"%f", [[UIScreen mainScreen] scale]);
+  NSLog(@"%f", [[UIScreen mainScreen] nativeScale]);
 }
 
 - (void)changeItemsVisibilityTo:(BOOL)flag {
@@ -234,6 +146,26 @@
   _scoreLabel.hidden = !flag;
   _commentTextView.hidden = !flag;
   _backButton.hidden = !flag;
+}
+
+- (void)switchTitleAndScoreLabelsParameters:(BOOL)fromSubmit {
+  if (fromSubmit) {
+    _scoreLabel.font = [UIFont systemFontOfSize:16];
+    _scoreLabel.textColor = _tintColorGreen;
+    _scoreLabel.text = [self textDependingOnScore];
+
+    _titleLabel.font = [UIFont systemFontOfSize:14];
+    _titleLabel.textColor = _tintColorPink;
+    _titleLabel.text = [NSString stringWithFormat:@"You gave us an %ld.", score];
+  } else {
+    if (_wootricQuestion != nil) {
+      _titleLabel.text = [NSString stringWithFormat:@"How likely are you to recommend us to a %@?", _wootricQuestion];
+    } else {
+      _titleLabel.text = _defaultWootricQuestion;
+    }
+    _titleLabel.textColor = [UIColor darkGrayColor];
+    _titleLabel.font = [UIFont systemFontOfSize:16];
+  }
 }
 
 - (NSString *)textDependingOnScore {
@@ -265,20 +197,6 @@
   return NO;
 }
 
-- (void)showScore:(UISlider *)slider {
-  score = (int)(_scoreSlider.value);
-  float xPosition = [self xPositionFromSliderValue:slider];
-  _scorePopoverLabel.hidden = NO;
-  _dragToChangeLabel.hidden = YES;
-  _scorePopoverLabel.frame = CGRectMake(xPosition, _sliderBackgroundView.frame.origin.y - 35, 20, 30);
-  _scorePopoverLabel.text = [NSString stringWithFormat:@"%d", score];
-}
-
-- (void)hideScore:(UISlider *)slider {
-  _scorePopoverLabel.hidden = YES;
-  _dragToChangeLabel.hidden = NO;
-}
-
 - (float)xPositionFromSliderValue:(UISlider *)aSlider;
 {
   float sliderRange = aSlider.frame.size.width - aSlider.currentThumbImage.size.width;
@@ -295,6 +213,140 @@
     _askForFeedbackLabel.hidden = YES;
   }
 }
+
+#pragma mark - Button actions
+
+- (void)backButtonPressed:(UIButton *)sender {
+  [self changeItemsVisibilityTo:NO];
+  [self switchTitleAndScoreLabelsParameters:NO];
+  [_commentTextView resignFirstResponder];
+}
+
+- (void)updateSliderStep:(UISlider *)sender {
+  if (!_voteButton.enabled) {
+    UIImage *iconCheckEnabled = [UIImage imageNamed:@"icon_check_enabled" inBundle:[NSBundle bundleForClass: [self class]] compatibleWithTraitCollection:nil];
+    _buttonIconCheck.image = iconCheckEnabled;
+    _voteButton.enabled = YES;
+    _dragToChangeLabel.hidden = NO;
+    NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_numbers_checked" : @"slider_bg_numbers_checked_667h";
+    UIImage *imageBackground = [[UIImage imageNamed:imageName
+                                           inBundle:[NSBundle bundleForClass:[self class]]
+                      compatibleWithTraitCollection:nil]
+                   stretchableImageWithLeftCapWidth:10
+                                       topCapHeight:0];
+    [_scoreSlider setMaximumTrackImage:imageBackground forState:UIControlStateNormal];
+    [_scoreSlider setMinimumTrackImage:imageBackground forState:UIControlStateNormal];
+    [UIView animateWithDuration:0.3 animations:^{
+      _sliderBackgroundView.alpha = 0;
+      _sliderCheckedBackgroundView.alpha = 1;
+    }];
+  }
+  sender.value = round(sender.value);
+  NSString *imageName = [NSString stringWithFormat:@"vote_icon_%d", (int)_scoreSlider.value];
+  UIImage *image = [UIImage imageNamed:imageName
+                              inBundle:[NSBundle bundleForClass:[self class]]
+         compatibleWithTraitCollection:nil];
+  [_scoreSlider setThumbImage:image forState:UIControlStateNormal];
+  [_scoreSlider setThumbImage:image forState:UIControlStateHighlighted];
+}
+
+- (void)voteButtonPressed:(UIButton *)sender {
+  score = (long)(_scoreSlider.value);
+  alreadyVoted = YES;
+  [WootricSDK voteWithScore:score andText:nil];
+  [self changeView];
+}
+
+- (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer {
+  if (_scoreSlider.highlighted)
+    return;
+  CGPoint pt = [gestureRecognizer locationInView: _scoreSlider];
+  CGFloat percentage = pt.x / _scoreSlider.bounds.size.width;
+  CGFloat delta = percentage * (_scoreSlider.maximumValue - _scoreSlider.minimumValue);
+  CGFloat value = _scoreSlider.minimumValue + delta;
+  [_scoreSlider setValue:value animated:YES];
+  [_scoreSlider removeGestureRecognizer:gestureRecognizer];
+  [self updateSliderStep:_scoreSlider];
+}
+
+- (void)dismissButtonPressed:(UIButton *)sender {
+  if (!alreadyVoted) {
+    [WootricSDK userDeclined];
+  }
+  [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)sendButtonPressed:(UIButton *)sender {
+  _sendFeedbackButton.enabled = NO;
+  _dismissButton.enabled = NO;
+  _commentTextView.editable = NO;
+  UIImage *sendArrowDisabled = [UIImage imageNamed:@"icon_send_arrow_disabled"
+                                          inBundle:[NSBundle bundleForClass:[self class]]
+                     compatibleWithTraitCollection:nil];
+  _buttonIconSend.image = sendArrowDisabled;
+  NSString *text = nil;
+  if ([_commentTextView.text length] != 0) {
+    text = _commentTextView.text;
+  }
+  [WootricSDK voteWithScore:(long)_scoreSlider.value andText:text];
+  [_commentTextView resignFirstResponder];
+
+  [self showFinalView];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [UIView animateWithDuration:0.2 animations:^{
+      _backgroundImageView.alpha = 0;
+    } completion:^(BOOL finished) {
+      [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+  });
+}
+
+#pragma mark - View change
+
+- (void)showScore:(UISlider *)slider {
+  score = (int)(_scoreSlider.value);
+  float xPosition = [self xPositionFromSliderValue:slider];
+  _scorePopoverLabel.hidden = NO;
+  _dragToChangeLabel.hidden = YES;
+  _scorePopoverLabel.frame = CGRectMake(xPosition, _sliderBackgroundView.frame.origin.y - 35, 20, 30);
+  _scorePopoverLabel.text = [NSString stringWithFormat:@"%ld", score];
+}
+
+- (void)hideScore:(UISlider *)slider {
+  _scorePopoverLabel.hidden = YES;
+  _dragToChangeLabel.hidden = NO;
+}
+
+- (void)showFinalView {
+  _dismissButton.hidden = YES;
+  _commentTextView.hidden = YES;
+  _scoreLabel.hidden = YES;
+  _voteButton.hidden = YES;
+  _askForFeedbackLabel.hidden = YES;
+  _sendFeedbackButton.hidden = YES;
+  _buttonIconSend.hidden = YES;
+  _backButton.hidden = YES;
+  _titleLabel.text = @"Thank you for your response, and for your feedback!";
+  _titleLabel.font = [UIFont boldSystemFontOfSize:15];
+  _titleLabel.textColor = _tintColorPink;
+  _constModalHeight.constant = 125;
+  _constTopToModal.constant = self.view.frame.size.height - 125;
+  [UIView animateWithDuration:0.2 animations:^{
+    [self.view layoutIfNeeded];
+  }];
+}
+
+- (void)changeView {
+  [self changeItemsVisibilityTo:YES];
+  scrolled = NO;
+  // Score label should display 'thank you' text for now and title label should display score.
+  [self switchTitleAndScoreLabelsParameters:YES];
+  _askForFeedbackLabel.text = [self placeholderDependingOnScore];
+
+  [_commentTextView becomeFirstResponder];
+}
+
+#pragma mark - dealloc
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];

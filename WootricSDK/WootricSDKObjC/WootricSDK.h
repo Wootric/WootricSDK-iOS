@@ -30,6 +30,7 @@
 + (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret andAccountToken:(NSString *)accountToken;
 + (void)setEndUserEmail:(NSString *)endUserEmail andOriginURL:(NSString *)originURL;
 + (void)surveyImmediately:(BOOL)flag;
++ (void)forceSurvey:(BOOL)flag;
 + (void)setApiVersion:(NSString *)apiVersion;
 + (void)voteWithScore:(NSInteger)score andText:(NSString *)text;
 + (void)userDeclined;

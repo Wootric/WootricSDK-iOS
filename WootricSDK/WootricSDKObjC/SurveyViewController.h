@@ -27,6 +27,7 @@
 @interface SurveyViewController : UIViewController <UITextViewDelegate>
 
 @property (nonatomic, strong) NSLayoutConstraint *constTopToModal;
+@property (nonatomic, strong) NSLayoutConstraint *constModalHeight;
 @property (nonatomic, strong) UIImage *imageToBlur;
 @property (nonatomic, strong) UIImage *blurredImage;
 @property (nonatomic, strong) UIView *modalView;
@@ -37,7 +38,8 @@
 @property (nonatomic, strong) UIButton *backButton;
 @property (nonatomic, strong) UITextView *commentTextView;
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIColor *tintColor;
+@property (nonatomic, strong) UIColor *tintColorPink;
+@property (nonatomic, strong) UIColor *tintColorGreen;
 @property (nonatomic, strong) NSString *wootricQuestion;
 @property (nonatomic, strong) NSString *defaultWootricQuestion;
 @property (nonatomic, strong) NSString *defaultPlaceholderText;

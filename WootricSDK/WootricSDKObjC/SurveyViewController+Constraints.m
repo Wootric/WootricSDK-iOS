@@ -344,7 +344,7 @@
                                                              constant:0];
   [self.modalView addConstraint:constX];
 
-  CGFloat margin = [self isSmallerScreenDevice] ? 25 : 35;
+  CGFloat margin = [self isSmallerScreenDevice] ? 10 : 20;
   NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.commentTextView
                                                             attribute:NSLayoutAttributeTop
                                                             relatedBy:NSLayoutRelationEqual
@@ -595,14 +595,14 @@
                                                              constant:0];
   [self.view addConstraint:constW];
 
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.modalView
+  self.constModalHeight = [NSLayoutConstraint constraintWithItem:self.modalView
                                                             attribute:NSLayoutAttributeHeight
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
                                                              constant:316];
-  [self.modalView addConstraint:constH];
+  [self.modalView addConstraint:self.constModalHeight];
 
   NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.modalView
                                                             attribute:NSLayoutAttributeCenterX

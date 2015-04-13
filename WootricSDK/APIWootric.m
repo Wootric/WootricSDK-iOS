@@ -78,12 +78,37 @@
   }];
 }
 
+- (void)getTrackingPixel {
+  double rand = drand48();
+  NSString *formattedRand = [NSString stringWithFormat:@"%.16f", rand];
+  NSString *params = [NSString stringWithFormat:@"https://d8myem934l1zi.cloudfront.net/pixel.gif?account_token=%@&email=%@&url=%@&random=%@", _accountToken, _endUserEmail, _originURL, formattedRand];
+
+  if (_externalCreatedAt != 0) {
+    params = [NSString stringWithFormat:@"%@&created_at=%ld", params, (long)_externalCreatedAt];
+  }
+
+  NSURL *url = [NSURL URLWithString:params];
+  NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+
+  NSURLSessionDataTask *dataTask = [wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    if (error) {
+      NSLog(@"Tracking pixel error: %@", error);
+    } else {
+      NSLog(@"Tracking pixel GET success");
+    }
+  }];
+
+  [dataTask resume];
+}
+
 - (void)createDeclineForEndUser:(NSInteger)endUserID {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/declines", baseAPIURL, _apiVersion, (long)endUserID]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+  NSString *params = [NSString stringWithFormat:@"origin_url=%@&survey[channel]=mobile", _originURL];
 
   [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
   urlRequest.HTTPMethod = @"POST";
+  urlRequest.HTTPBody = [params dataUsingEncoding:NSUTF8StringEncoding];
 
   NSURLSessionDataTask *dataTask = [wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
@@ -99,7 +124,7 @@
 - (void)createResponseForEndUser:(NSInteger)endUserID withScore:(NSInteger)score andText:(NSString *)text {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/responses", baseAPIURL, _apiVersion, (long)endUserID]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-  NSString *params = [NSString stringWithFormat:@"score=%ld&origin_url=%@", (long)score, _originURL];
+  NSString *params = [NSString stringWithFormat:@"score=%ld&origin_url=%@&survey[channel]=mobile", (long)score, _originURL];
 
   if (text) {
     params = [NSString stringWithFormat:@"%@&text=%@", params, text];
@@ -249,16 +274,22 @@
 }
 
 - (void)surveyForEndUser:(void (^)())showSurvey {
-  if (_surveyImmediately) {
+  if (_forceSurvey) {
     [self authenticate:^{
       showSurvey();
     }];
   } else if ([self needsSurvey]) {
-    [self checkEligibilityForEndUser:^{
+    if (_surveyImmediately) {
       [self authenticate:^{
         showSurvey();
       }];
-    }];
+    } else {
+      [self checkEligibilityForEndUser:^{
+        [self authenticate:^{
+          showSurvey();
+        }];
+      }];
+    }
   }
 }
 
@@ -266,6 +297,8 @@
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   if ([defaults boolForKey:@"surveyed"]) {
     return NO;
+  } else if (_surveyImmediately) {
+    return YES;
   } else {
     NSInteger age = [[NSDate date] timeIntervalSince1970] - _externalCreatedAt;
     if (_firstSurveyAfter != 0) {

@@ -49,9 +49,11 @@
 @property (nonatomic) NSInteger firstSurveyAfter;
 @property (nonatomic) NSInteger surveyedDefaultDuration;
 @property (nonatomic) BOOL surveyImmediately;
+@property (nonatomic) BOOL forceSurvey;
 @property (nonatomic) BOOL setDefaultAfterSurvey;
 
 + (instancetype)sharedInstance;
+- (void)getTrackingPixel;
 - (void)voteWithScore:(NSInteger)score andText:(NSString *)text;
 - (void)userDeclined;
 - (BOOL)checkConfiguration;

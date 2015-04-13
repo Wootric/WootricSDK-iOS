@@ -83,12 +83,12 @@
 
 - (void)setupSendFeedbackButton {
   self.sendFeedbackButton = [[UIButton alloc] init];
-  self.sendFeedbackButton.tintColor = self.tintColor;
+  self.sendFeedbackButton.tintColor = self.tintColorGreen;
   self.sendFeedbackButton.hidden = YES;
   self.sendFeedbackButton.titleLabel.font = [UIFont systemFontOfSize:14 weight:0.25];
   [self.sendFeedbackButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.sendFeedbackButton setTitle:@"SEND FEEDBACK" forState:UIControlStateNormal];
-  [self.sendFeedbackButton setTitleColor:self.tintColor forState:UIControlStateNormal];
+  [self.sendFeedbackButton setTitleColor:self.tintColorGreen forState:UIControlStateNormal];
   [self.sendFeedbackButton setTitleColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1] forState:UIControlStateDisabled];
   [self.sendFeedbackButton addTarget:self action:NSSelectorFromString(@"sendButtonPressed:")
                 forControlEvents:UIControlEventTouchUpInside];
@@ -96,6 +96,7 @@
 
 - (void)setupScoreLabel {
   self.scoreLabel = [[UILabel alloc] init];
+  self.scoreLabel.textAlignment = NSTextAlignmentCenter;
   self.scoreLabel.font = [UIFont systemFontOfSize:14];
   self.scoreLabel.hidden = YES;
   self.scoreLabel.textColor = [UIColor colorWithRed:236.0/255.0 green:104.0/255.0 blue:149.0/255.0 alpha:1];
@@ -188,7 +189,7 @@
 - (void)setupCommentTextView {
   self.commentTextView = [[UITextView alloc] init];
   self.commentTextView.hidden = YES;
-  self.commentTextView.tintColor = self.tintColor;
+  self.commentTextView.tintColor = self.tintColorGreen;
   self.commentTextView.layer.cornerRadius = 2;
   self.commentTextView.layer.borderWidth = 1;
   self.commentTextView.layer.borderColor = [UIColor colorWithRed:241.0/255.0 green:241.0/255.0 blue:241.0/255 alpha:1].CGColor;
@@ -232,7 +233,7 @@
   self.scoreSlider.minimumValue = 0;
   self.scoreSlider.maximumValue = 10;
   self.scoreSlider.value = 5;
-  self.scoreSlider.tintColor = self.tintColor;
+  self.scoreSlider.tintColor = self.tintColorGreen;
   NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_numbers_unchecked" : @"slider_bg_numbers_unchecked_667h";
   UIImage *image = [[UIImage alloc] init];
   UIImage *imageBackground = [[UIImage imageNamed:imageName
@@ -258,12 +259,12 @@
 
 - (void)setupVoteButton {
   self.voteButton = [[UIButton alloc] init];
-  self.voteButton.tintColor = self.tintColor;
+  self.voteButton.tintColor = self.tintColorGreen;
   self.voteButton.enabled = NO;
   self.voteButton.titleLabel.font = [UIFont systemFontOfSize:14 weight:0.25];
   [self.voteButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.voteButton setTitle:@"SUBMIT" forState:UIControlStateNormal];
-  [self.voteButton setTitleColor:self.tintColor forState:UIControlStateNormal];
+  [self.voteButton setTitleColor:self.tintColorGreen forState:UIControlStateNormal];
   [self.voteButton setTitleColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1] forState:UIControlStateDisabled];
   [self.voteButton addTarget:self action:NSSelectorFromString(@"voteButtonPressed:")
         forControlEvents:UIControlEventTouchUpInside];
