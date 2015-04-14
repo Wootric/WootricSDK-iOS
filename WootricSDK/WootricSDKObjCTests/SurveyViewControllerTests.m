@@ -81,14 +81,11 @@
   XCTAssertEqualObjects(_surveyVC.askForFeedbackLabel.text, @"Help us by explaining your score.");
 }
 
-- (void)testLabelTextsThirdScreen {
-//  _surveyVC.scoreSlider.value = 9;
-//  [_surveyVC voteButtonPressed:_surveyVC.voteButton];
-  [_surveyVC changeView];
-  [_surveyVC showFinalView];
-
-
-  XCTAssertEqualObjects(_surveyVC.titleLabel.text, @"Thank you for your response, and for your feedback!");
-}
+//- (void)testLabelTextsThirdScreen {
+//  [_surveyVC changeView];
+//  [_surveyVC showFinalView];
+//
+//  XCTAssertEqualObjects(_surveyVC.titleLabel.text, @"Thank you for your response, and for your feedback!");
+//}
 
 @end
