@@ -260,6 +260,7 @@
       NSLog(@"%@", error);
     } else {
       NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+      NSLog(@"%@", responseJSON);
       if (responseJSON) {
         NSString *accessToken = responseJSON[@"access_token"];
         if (accessToken) {
