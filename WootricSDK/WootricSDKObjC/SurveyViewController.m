@@ -273,7 +273,12 @@
   if (!alreadyVoted) {
     [WootricSDK userDeclined];
   }
-  [self dismissViewControllerAnimated:YES completion:nil];
+  [_commentTextView resignFirstResponder];
+  [UIView animateWithDuration:0.2 animations:^{
+    _backgroundImageView.alpha = 0;
+  } completion:^(BOOL finished) {
+    [self dismissViewControllerAnimated:YES completion:nil];
+  }];
 }
 
 - (void)sendButtonPressed:(UIButton *)sender {
