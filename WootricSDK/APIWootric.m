@@ -127,7 +127,8 @@
   NSString *params = [NSString stringWithFormat:@"score=%ld&origin_url=%@&survey[channel]=mobile", (long)score, _originURL];
 
   if (text) {
-    params = [NSString stringWithFormat:@"%@&text=%@", params, text];
+    NSString *escapedText = [self percentEscapeString:text];
+    params = [NSString stringWithFormat:@"%@&text=%@", params, escapedText];
   }
 
   [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
@@ -146,7 +147,8 @@
 }
 
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", baseAPIURL, _apiVersion, _endUserEmail]];
+  NSString *escapedEmail = [self percentEscapeString:_endUserEmail];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", baseAPIURL, _apiVersion, escapedEmail]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
 
@@ -176,7 +178,8 @@
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", baseAPIURL, _apiVersion]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-  NSString *params = [NSString stringWithFormat:@"email=%@", _endUserEmail];
+  NSString *escapedEmail = [self percentEscapeString:_endUserEmail];
+  NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
 
   if (_externalCreatedAt != 0) {
     params = [NSString stringWithFormat:@"%@&external_created_at=%ld", params, (long)_externalCreatedAt];
@@ -200,6 +203,7 @@
       NSLog(@"%@", error);
     } else {
       NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+      NSLog(@"%@", responseJSON);
       if (responseJSON) {
         NSInteger endUserID = [responseJSON[@"id"] integerValue];
         endUserWithID(endUserID);
@@ -315,6 +319,15 @@
     }
   }
   return NO;
+}
+
+- (NSString *)percentEscapeString:(NSString *)string {
+  NSString *result = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                               (CFStringRef)string,
+                                                                               (CFStringRef)@" ",
+                                                                               (CFStringRef)@":/?@!$&'()*+,;=",
+                                                                               kCFStringEncodingUTF8));
+  return [result stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 }
 
 @end
