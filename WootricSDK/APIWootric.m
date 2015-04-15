@@ -60,7 +60,8 @@
 - (NSString *)parseCustomProperties {
   NSString *parsedProperties = @"";
   for (NSString *key in _customProperties) {
-    parsedProperties = [NSString stringWithFormat:@"%@&%@", parsedProperties, [NSString stringWithFormat:@"properties[%@]=%@", key, [_customProperties objectForKey:key]]];
+    NSString *escapedValue = [self percentEscapeString:[NSString stringWithFormat:@"%@", [_customProperties objectForKey:key]]];
+    parsedProperties = [NSString stringWithFormat:@"%@&%@", parsedProperties, [NSString stringWithFormat:@"properties[%@]=%@", key, escapedValue]];
   }
 
   return parsedProperties;
@@ -81,7 +82,8 @@
 - (void)getTrackingPixel {
   double rand = drand48();
   NSString *formattedRand = [NSString stringWithFormat:@"%.16f", rand];
-  NSString *params = [NSString stringWithFormat:@"https://d8myem934l1zi.cloudfront.net/pixel.gif?account_token=%@&email=%@&url=%@&random=%@", _accountToken, _endUserEmail, _originURL, formattedRand];
+  NSString *stringToFormat = @"https://d8myem934l1zi.cloudfront.net/pixel.gif?account_token=%@&email=%@&url=%@&random=%@";
+  NSString *params = [NSString stringWithFormat:stringToFormat, _accountToken, _endUserEmail, _originURL, formattedRand];
 
   if (_externalCreatedAt != 0) {
     params = [NSString stringWithFormat:@"%@&created_at=%ld", params, (long)_externalCreatedAt];

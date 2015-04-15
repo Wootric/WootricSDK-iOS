@@ -19,6 +19,8 @@
 @interface APIWootric (Tests)
 
 - (BOOL)needsSurvey;
+- (NSString *)percentEscapeString:(NSString *)string;
+- (NSString *)parseCustomProperties;
 
 @end
 
@@ -37,6 +39,7 @@
   _api.clientSecret = nil;
   _api.accountToken = nil;
   _api.endUserEmail = nil;
+  _api.customProperties = nil;
 
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults removeObjectForKey:@"surveyed"];
@@ -111,6 +114,42 @@
   _api.endUserEmail = @"endUserEmail";
   _api.originURL = @"originURL";
   XCTAssertTrue(_api.checkConfiguration);
+}
+
+// Percent escape
+- (void)testPercentEscapeCaseOne {
+  NSString *testString = @"test test test";
+  NSString *escapedString = [_api percentEscapeString:testString];
+
+  XCTAssertEqualObjects(@"test+test+test", escapedString);
+}
+
+- (void)testPercentEscapeCaseTwo {
+  NSString *testString = @"!#$&'()*+,/:;=?@[]";
+  NSString *escapedString = [_api percentEscapeString:testString];
+
+  XCTAssertEqualObjects(@"%21%23%24%26%27%28%29%2A%2B%2C%2F%3A%3B%3D%3F%40%5B%5D", escapedString);
+}
+
+- (void)testParseCustomPropertiesCaseOne {
+  _api.customProperties = @{@"plan": @"enterprise"};
+  NSString *parsedProperties = [_api parseCustomProperties];
+
+  XCTAssertEqualObjects(@"&properties[plan]=enterprise", parsedProperties);
+}
+
+- (void)testParseCustomPropertiesCaseTwo {
+  _api.customProperties = @{@"value": @1};
+  NSString *parsedProperties = [_api parseCustomProperties];
+
+  XCTAssertEqualObjects(@"&properties[value]=1", parsedProperties);
+}
+
+- (void)testParseCustomPropertiesCaseThree {
+  _api.customProperties = @{@"escaped": @"!#$&'()*+,/:;=?@[]"};
+  NSString *parsedProperties = [_api parseCustomProperties];
+
+  XCTAssertEqualObjects(@"&properties[escaped]=%21%23%24%26%27%28%29%2A%2B%2C%2F%3A%3B%3D%3F%40%5B%5D", parsedProperties);
 }
 
 @end
