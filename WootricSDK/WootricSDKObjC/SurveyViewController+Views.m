@@ -114,19 +114,27 @@
 }
 
 - (void)setupSliderCheckedBackgroundView {
-  self.sliderCheckedBackgroundView = [[UIImageView alloc] init];
-  NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_checked" : @"slider_bg_checked_667h";
-  UIImage *image = [UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-  self.sliderCheckedBackgroundView.image = image;
+  self.sliderCheckedBackgroundView = [[UILabel alloc] init];
+//  NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_checked" : @"slider_bg_checked_667h";
+//  UIImage *image = [UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+//  self.sliderCheckedBackgroundView.image = image;
+  self.sliderCheckedBackgroundView.layer.cornerRadius = 27.5;
+  self.sliderCheckedBackgroundView.layer.masksToBounds = YES;
+  self.sliderCheckedBackgroundView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1];
   self.sliderCheckedBackgroundView.alpha = 0;
   [self.sliderCheckedBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupSliderBackgroundView {
-  self.sliderBackgroundView = [[UIImageView alloc] init];
-  NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_unchecked" : @"slider_bg_unchecked_667h";
-  UIImage *image = [UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-  self.sliderBackgroundView.image = image;
+  self.sliderBackgroundView = [[UILabel alloc] init];
+//  NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_unchecked" : @"slider_bg_unchecked_667h";
+//  UIImage *image = [UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+//  self.sliderBackgroundView.image = image;
+  self.sliderBackgroundView.layer.cornerRadius = 27.5;
+  self.sliderBackgroundView.layer.borderWidth = 4;
+  self.sliderBackgroundView.layer.borderColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1].CGColor;
+  self.sliderBackgroundView.layer.masksToBounds = YES;
+  self.sliderBackgroundView.backgroundColor = [UIColor whiteColor];
   [self.sliderBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
