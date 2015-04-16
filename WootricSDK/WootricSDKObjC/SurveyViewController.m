@@ -197,10 +197,10 @@
   return NO;
 }
 
-- (float)xPositionFromSliderValue:(UISlider *)aSlider;
-{
-  float sliderRange = aSlider.frame.size.width - aSlider.currentThumbImage.size.width;
-  float sliderOrigin = aSlider.frame.origin.x + (aSlider.currentThumbImage.size.width / 4);
+- (float)xPositionFromSliderValue:(UISlider *)aSlider {
+  int thumbLabelWidth = 45;
+  float sliderRange = aSlider.frame.size.width - thumbLabelWidth;
+  float sliderOrigin = aSlider.frame.origin.x + (thumbLabelWidth / 4.0);
   float sliderValueToPixels = (((aSlider.value-aSlider.minimumValue)/(aSlider.maximumValue-aSlider.minimumValue)) * sliderRange) + sliderOrigin;
 
   return sliderValueToPixels;
@@ -241,13 +241,33 @@
       _sliderCheckedBackgroundView.alpha = 1;
     }];
   }
-  sender.value = round(sender.value);
-  NSString *imageName = [NSString stringWithFormat:@"vote_icon_%d", (int)_scoreSlider.value];
-  UIImage *image = [UIImage imageNamed:imageName
-                              inBundle:[NSBundle bundleForClass:[self class]]
-         compatibleWithTraitCollection:nil];
-  [_scoreSlider setThumbImage:image forState:UIControlStateNormal];
-  [_scoreSlider setThumbImage:image forState:UIControlStateHighlighted];
+
+  _scoreSlider.value = round(sender.value);
+  [self updateSliderThumbView];
+}
+
+- (void)updateSliderThumbView {
+  double multiplier = _scoreSlider.value / 10.0;
+
+  UIImageView *handleView = [_scoreSlider.subviews lastObject];
+  UILabel *label = (UILabel*)[handleView viewWithTag:1000];
+
+  if (label == nil) {
+    label = [[UILabel alloc] initWithFrame:CGRectMake(multiplier * -45, -22.5, 45, 45)];
+    label.tag = 1000;
+    label.backgroundColor = _tintColorPink;
+    label.layer.cornerRadius = 22.5;
+    label.layer.masksToBounds = YES;
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:20 weight:0.5];
+    label.textAlignment = NSTextAlignmentCenter;
+
+    [handleView addSubview:label];
+  } else {
+    label.frame = CGRectMake(multiplier * -45, -22.5, 45, 45);
+  }
+
+  label.text = [NSString stringWithFormat:@"%d", (int)_scoreSlider.value];
 }
 
 - (void)voteButtonPressed:(UIButton *)sender {
