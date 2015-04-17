@@ -51,7 +51,11 @@
 }
 
 - (BOOL)checkConfiguration {
-  if (_clientID != nil && _clientSecret != nil && _accountToken != nil && _endUserEmail != nil && _originURL != nil) {
+  if ([_clientID length] != 0 &&
+      [_clientSecret length] != 0 &&
+      [_accountToken length] != 0 &&
+      [_endUserEmail length] != 0 &&
+      [_originURL length] != 0) {
     return YES;
   }
   return NO;

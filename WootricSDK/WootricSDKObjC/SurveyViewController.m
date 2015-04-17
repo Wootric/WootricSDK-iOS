@@ -158,8 +158,8 @@
     _titleLabel.textColor = _tintColorPink;
     _titleLabel.text = [NSString stringWithFormat:@"You gave us an %ld.", score];
   } else {
-    if (_wootricQuestion != nil) {
-      _titleLabel.text = [NSString stringWithFormat:@"How likely are you to recommend us to a %@?", _wootricQuestion];
+    if (_wootricRecommendTo != nil) {
+      _titleLabel.text = [NSString stringWithFormat:@"How likely are you to recommend us to a %@?", _wootricRecommendTo];
     } else {
       _titleLabel.text = _defaultWootricQuestion;
     }

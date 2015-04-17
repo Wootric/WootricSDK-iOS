@@ -34,7 +34,7 @@
 @property (nonatomic, strong) NSString *apiVersion;
 @property (nonatomic, strong) NSString *originURL;
 @property (nonatomic, strong) NSString *productName;
-@property (nonatomic, strong) NSString *wootricQuestion;
+@property (nonatomic, strong) NSString *wootricRecommendTo;
 @property (nonatomic, strong) NSString *detractorQuestion;
 @property (nonatomic, strong) NSString *passiveQuestion;
 @property (nonatomic, strong) NSString *promoterQuestion;

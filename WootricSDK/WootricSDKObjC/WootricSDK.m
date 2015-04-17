@@ -111,9 +111,9 @@
   api.promoterPlaceholder = promoterPlaceholder;
 }
 
-+ (void)setCustomWootricQuestion:(NSString *)wootricQuestion {
++ (void)setCustomWootricRecommendTo:(NSString *)wootricRecommendTo {
   APIWootric *api = [APIWootric sharedInstance];
-  api.wootricQuestion = wootricQuestion;
+  api.wootricRecommendTo = wootricRecommendTo;
 }
 
 #pragma mark - Survey methods
@@ -129,16 +129,19 @@
 }
 
 + (void)showSurveyInViewController:(UIViewController *)viewController {
-  NSAssert([[APIWootric sharedInstance] checkConfiguration], @"Configure WootricSDK first");
-  [[APIWootric sharedInstance] getTrackingPixel];
-  [WootricSDK setLastSeenAtInDefaults];
-  [WootricSDK checkIfSurveyedDefaultExpired];
-  [[APIWootric sharedInstance] surveyForEndUser:^{
-    UIImage *imageToBlur = [WootricSDK imageToBlurFromViewController:viewController];
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [WootricSDK setupAndShowSurveyForViewController:viewController withImageToBlur:imageToBlur];
-    });
-  }];
+  if ([[APIWootric sharedInstance] checkConfiguration]) {
+    [[APIWootric sharedInstance] getTrackingPixel];
+    [WootricSDK setLastSeenAtInDefaults];
+    [WootricSDK checkIfSurveyedDefaultExpired];
+    [[APIWootric sharedInstance] surveyForEndUser:^{
+      UIImage *imageToBlur = [WootricSDK imageToBlurFromViewController:viewController];
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [WootricSDK setupAndShowSurveyForViewController:viewController withImageToBlur:imageToBlur];
+      });
+    }];
+  } else {
+    NSLog(@"Configure WootricSDK first");
+  }
 }
 
 + (void)setupAndShowSurveyForViewController:(UIViewController *)viewController withImageToBlur:(UIImage *)imageToBlur {
@@ -149,7 +152,7 @@
   surveyViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
   surveyViewController.imageToBlur = imageToBlur;
 
-  surveyViewController.wootricQuestion = api.wootricQuestion;
+  surveyViewController.wootricRecommendTo = api.wootricRecommendTo;
   surveyViewController.detractorQuestion = api.detractorQuestion;
   surveyViewController.passiveQuestion = api.passiveQuestion;
   surveyViewController.promoterQuestion = api.promoterQuestion;

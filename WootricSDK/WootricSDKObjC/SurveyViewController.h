@@ -40,7 +40,7 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIColor *tintColorPink;
 @property (nonatomic, strong) UIColor *tintColorGreen;
-@property (nonatomic, strong) NSString *wootricQuestion;
+@property (nonatomic, strong) NSString *wootricRecommendTo;
 @property (nonatomic, strong) NSString *defaultWootricQuestion;
 @property (nonatomic, strong) NSString *defaultPlaceholderText;
 @property (nonatomic, strong) NSString *defaultResponseQuestion;

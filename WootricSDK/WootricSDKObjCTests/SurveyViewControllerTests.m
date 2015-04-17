@@ -81,6 +81,14 @@
   XCTAssertEqualObjects(_surveyVC.askForFeedbackLabel.text, @"Help us by explaining your score.");
 }
 
+- (void)testCustomRecommendTo {
+  self.surveyVC = [[SurveyViewController alloc] init];
+  _surveyVC.wootricRecommendTo = @"BFF";
+  [self.surveyVC viewDidLoad];
+
+  XCTAssertEqualObjects(_surveyVC.titleLabel.text, @"How likely are you to recommend us to a BFF?");
+}
+
 //- (void)testLabelTextsThirdScreen {
 //  [_surveyVC changeView];
 //  [_surveyVC showFinalView];

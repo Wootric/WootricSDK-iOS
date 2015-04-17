@@ -116,6 +116,16 @@
   XCTAssertTrue(_api.checkConfiguration);
 }
 
+// One of the strings is empty
+- (void)testCheckConfigurationCaseThree {
+  _api.clientID = @"clientID";
+  _api.clientSecret = @"clientSecret";
+  _api.accountToken = @"accountToken";
+  _api.endUserEmail = @"";
+  _api.originURL = @"originURL";
+  XCTAssertFalse(_api.checkConfiguration);
+}
+
 // Percent escape
 - (void)testPercentEscapeCaseOne {
   NSString *testString = @"test test test";

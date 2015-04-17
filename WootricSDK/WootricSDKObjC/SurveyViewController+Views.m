@@ -211,8 +211,8 @@
   self.titleLabel.textColor = [UIColor darkGrayColor];
   self.titleLabel.numberOfLines = 0;
   self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-  if (self.wootricQuestion != nil) {
-    self.titleLabel.text = [NSString stringWithFormat:@"How likely are you to recommend us to a %@?", self.wootricQuestion];
+  if (self.wootricRecommendTo != nil) {
+    self.titleLabel.text = [NSString stringWithFormat:@"How likely are you to recommend us to a %@?", self.wootricRecommendTo];
   } else {
     self.titleLabel.text = self.defaultWootricQuestion;
   }

@@ -44,7 +44,7 @@
 + (void)setSurveyedDefaultAfterSurvey:(BOOL)flag withDuration:(NSUInteger)numberOfDays;
 + (void)setCustomDetractorQuestion:(NSString *)detractorQuestion passiveQuestion:(NSString *)passiveQuestion andPromoterQuestion:(NSString *)promoterQuestion;
 + (void)setCustomDetractorPlaceholder:(NSString *)detractorPlaceholder passivePlaceholder:(NSString *)passivePlaceholder andPromoterPlaceholder:(NSString *)promoterPlaceholder;
-+ (void)setCustomWootricQuestion:(NSString *)wootricQuestion;
++ (void)setCustomWootricRecommendTo:(NSString *)wootricRecommendTo;
 + (UIImage *)imageToBlurFromViewController:(UIViewController *)viewController;
 
 @end

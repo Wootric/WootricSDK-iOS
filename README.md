@@ -96,9 +96,9 @@ This method allows you to set custom question for each type of end user (detract
 Same as with custom question, it allows you to set custom placeholder text in feedback text view for each type of end user.
 
 ```objective-c
-[WootricSDK setCustomWootricQuestion:<CUSTOM_QUESTION>];
+[WootricSDK setCustomWootricRecommendTo:<RECOMMEND_TO>];
 ```
-You can use this method to modify the default "How likely are you to recommend us to a friend or co-worker?" question. The ```friend or co-worker``` is replaced by CUSTOM_QUESTION value.
+You can use this method to modify the default "How likely are you to recommend us to a friend or co-worker?" question. The ```friend or co-worker``` is replaced by RECOMMEND_TO value.
 ####Additional information:
 ---
 #####"Forcing" eligibility check:
