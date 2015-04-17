@@ -54,7 +54,7 @@
   if ([_clientID length] != 0 &&
       [_clientSecret length] != 0 &&
       [_accountToken length] != 0 &&
-      [_endUserEmail length] != 0 &&
+      [self validEmailString:_endUserEmail] &&
       [_originURL length] != 0) {
     return YES;
   }
@@ -325,6 +325,11 @@
     }
   }
   return NO;
+}
+
+- (BOOL)validEmailString:(NSString *)emailString {
+  NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
+  return !([[emailString stringByTrimmingCharactersInSet:set] length] == 0);
 }
 
 - (NSString *)percentEscapeString:(NSString *)string {
