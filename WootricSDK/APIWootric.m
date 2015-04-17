@@ -328,7 +328,7 @@
 }
 
 - (BOOL)validEmailString:(NSString *)emailString {
-  NSCharacterSet *set = [NSCharacterSet whitespaceCharacterSet];
+  NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
   return !([[emailString stringByTrimmingCharactersInSet:set] length] == 0);
 }
 
