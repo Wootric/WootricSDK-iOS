@@ -60,7 +60,7 @@
 - (void)setupBackButton {
   self.backButton = [[UIButton alloc] init];
   UIImage *image = [UIImage imageNamed:@"icon_back_arrow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-  UIImageView *backIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+  UIImageView *backIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8, 8, 16, 16)];
   backIcon.image = image;
   self.backButton.hidden = YES;
   [self.backButton addSubview:backIcon];
@@ -115,9 +115,6 @@
 
 - (void)setupSliderCheckedBackgroundView {
   self.sliderCheckedBackgroundView = [[UILabel alloc] init];
-//  NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_checked" : @"slider_bg_checked_667h";
-//  UIImage *image = [UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-//  self.sliderCheckedBackgroundView.image = image;
   self.sliderCheckedBackgroundView.layer.cornerRadius = 27.5;
   self.sliderCheckedBackgroundView.layer.masksToBounds = YES;
   self.sliderCheckedBackgroundView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1];
@@ -127,9 +124,6 @@
 
 - (void)setupSliderBackgroundView {
   self.sliderBackgroundView = [[UILabel alloc] init];
-//  NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_unchecked" : @"slider_bg_unchecked_667h";
-//  UIImage *image = [UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-//  self.sliderBackgroundView.image = image;
   self.sliderBackgroundView.layer.cornerRadius = 27.5;
   self.sliderBackgroundView.layer.borderWidth = 4;
   self.sliderBackgroundView.layer.borderColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1].CGColor;

@@ -55,7 +55,7 @@
                                                                   toItem:self.modalView
                                                                attribute:NSLayoutAttributeTop
                                                               multiplier:1
-                                                                constant:10];
+                                                                constant:2];
   [self.modalView addConstraint:constY];
 
   NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.backButton
@@ -64,7 +64,7 @@
                                                                toItem:self.modalView
                                                             attribute:NSLayoutAttributeLeft
                                                            multiplier:1
-                                                             constant:10];
+                                                             constant:2];
   [self.modalView addConstraint:constX];
 
   NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.backButton
@@ -73,7 +73,7 @@
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
-                                                             constant:16];
+                                                             constant:24];
   [self.backButton addConstraint:constW];
 
   NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.backButton
@@ -82,7 +82,7 @@
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
-                                                             constant:16];
+                                                             constant:24];
   [self.backButton addConstraint:constH];
 }
 
