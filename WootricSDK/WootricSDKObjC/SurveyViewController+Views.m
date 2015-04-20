@@ -87,7 +87,7 @@
   self.sendFeedbackButton.hidden = YES;
   self.sendFeedbackButton.titleLabel.font = [UIFont systemFontOfSize:14 weight:0.25];
   [self.sendFeedbackButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [self.sendFeedbackButton setTitle:@"SEND FEEDBACK" forState:UIControlStateNormal];
+  [self.sendFeedbackButton setTitle:[self localizedString:@"SEND FEEDBACK"] forState:UIControlStateNormal];
   [self.sendFeedbackButton setTitleColor:self.tintColorGreen forState:UIControlStateNormal];
   [self.sendFeedbackButton setTitleColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1] forState:UIControlStateDisabled];
   [self.sendFeedbackButton addTarget:self action:NSSelectorFromString(@"sendButtonPressed:")
@@ -134,7 +134,7 @@
 
 - (void)setupExtremelyLikelyLabel {
   self.extremelyLikelyLabel = [[UILabel alloc] init];
-  self.extremelyLikelyLabel.text = @"Extremely likely";
+  self.extremelyLikelyLabel.text = [self localizedString:@"Extremely likely"];
   self.extremelyLikelyLabel.font = [UIFont systemFontOfSize:10];
   self.extremelyLikelyLabel.textColor = [UIColor darkGrayColor];
   [self.extremelyLikelyLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -142,7 +142,7 @@
 
 - (void)setupNotLikelyLabel {
   self.notLikelyLabel = [[UILabel alloc] init];
-  self.notLikelyLabel.text = @"Not at all likely";
+  self.notLikelyLabel.text = [self localizedString:@"Not at all likely"];
   self.notLikelyLabel.font = [UIFont systemFontOfSize:10];
   self.notLikelyLabel.textColor = [UIColor darkGrayColor];
   [self.notLikelyLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -150,7 +150,7 @@
 
 - (void)setupDragToChangeLabel {
   self.dragToChangeLabel = [[UILabel alloc] init];
-  self.dragToChangeLabel.text = @"Drag to change score";
+  self.dragToChangeLabel.text = [self localizedString:@"Drag to change score"];
   self.dragToChangeLabel.font = [UIFont systemFontOfSize:9];
   self.dragToChangeLabel.textColor = [UIColor darkGrayColor];
   self.dragToChangeLabel.hidden = YES;
@@ -206,7 +206,7 @@
   self.titleLabel.numberOfLines = 0;
   self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
   if (self.wootricRecommendTo != nil) {
-    self.titleLabel.text = [NSString stringWithFormat:@"How likely are you to recommend us to a %@?", self.wootricRecommendTo];
+    self.titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend us to a %@?"], self.wootricRecommendTo];
   } else {
     self.titleLabel.text = self.defaultWootricQuestion;
   }
@@ -223,7 +223,7 @@
   self.dismissButton.titleLabel.textAlignment = NSTextAlignmentRight;
   self.dismissButton.titleLabel.font = [UIFont systemFontOfSize:10];
   [self.dismissButton addSubview:self.dismissImageView];
-  [self.dismissButton setTitle:@"DISMISS" forState:UIControlStateNormal];
+  [self.dismissButton setTitle:[self localizedString:@"DISMISS"] forState:UIControlStateNormal];
   [self.dismissButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
   [self.dismissButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.dismissButton addTarget:self action:NSSelectorFromString(@"dismissButtonPressed:")
@@ -236,13 +236,9 @@
   self.scoreSlider.maximumValue = 10;
   self.scoreSlider.value = 5;
   self.scoreSlider.tintColor = self.tintColorGreen;
-  NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_numbers_unchecked" : @"slider_bg_numbers_unchecked_667h";
   UIImage *image = [[UIImage alloc] init];
-  UIImage *imageBackground = [[UIImage imageNamed:imageName
-                                         inBundle:[NSBundle bundleForClass:[self class]]
-                    compatibleWithTraitCollection:nil] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
-  [self.scoreSlider setMaximumTrackImage:imageBackground forState:UIControlStateNormal];
-  [self.scoreSlider setMinimumTrackImage:imageBackground forState:UIControlStateNormal];
+  [self.scoreSlider setMaximumTrackImage:image forState:UIControlStateNormal];
+  [self.scoreSlider setMinimumTrackImage:image forState:UIControlStateNormal];
   [self.scoreSlider setThumbImage:image forState:UIControlStateNormal];
   [self.scoreSlider setThumbImage:image forState:UIControlStateHighlighted];
   [self.scoreSlider setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -265,7 +261,7 @@
   self.voteButton.enabled = NO;
   self.voteButton.titleLabel.font = [UIFont systemFontOfSize:14 weight:0.25];
   [self.voteButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [self.voteButton setTitle:@"SUBMIT" forState:UIControlStateNormal];
+  [self.voteButton setTitle:[self localizedString:@"SUBMIT"] forState:UIControlStateNormal];
   [self.voteButton setTitleColor:self.tintColorGreen forState:UIControlStateNormal];
   [self.voteButton setTitleColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1] forState:UIControlStateDisabled];
   [self.voteButton addTarget:self action:NSSelectorFromString(@"voteButtonPressed:")
@@ -273,14 +269,16 @@
 }
 
 - (void)setupButtonCheckIcon {
-  UIImage *checkIcon = [UIImage imageNamed:@"icon_check_disabled" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  UIImage *checkIcon = [UIImage imageNamed:@"icon_check_disabled"
+                                  inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
   self.buttonIconCheck = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
   self.buttonIconCheck.image = checkIcon;
   [self.buttonIconCheck setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupButtonSendIcon {
-  UIImage *sendIcon = [UIImage imageNamed:@"icon_send_arrow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  UIImage *sendIcon = [UIImage imageNamed:@"icon_send_arrow"
+                                 inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
   self.buttonIconSend = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
   self.buttonIconSend.image = sendIcon;
   self.buttonIconSend.hidden = YES;

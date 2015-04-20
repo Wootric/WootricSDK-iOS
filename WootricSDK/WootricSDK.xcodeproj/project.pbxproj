@@ -11,6 +11,7 @@
 		B2131F471AC01BDA005A2390 /* SurveyViewController+Constraints.m in Sources */ = {isa = PBXBuildFile; fileRef = B2131F451AC01BDA005A2390 /* SurveyViewController+Constraints.m */; };
 		B2131F4A1AC0226F005A2390 /* SurveyViewController+Views.h in Headers */ = {isa = PBXBuildFile; fileRef = B2131F481AC0226F005A2390 /* SurveyViewController+Views.h */; };
 		B2131F4B1AC0226F005A2390 /* SurveyViewController+Views.m in Sources */ = {isa = PBXBuildFile; fileRef = B2131F491AC0226F005A2390 /* SurveyViewController+Views.m */; };
+		B22F27F41AE4E85C007ADDED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B22F27F61AE4E85C007ADDED /* Localizable.strings */; };
 		B2643E0B1AAF38210023C0C5 /* UIImage+ImageEffects.h in Headers */ = {isa = PBXBuildFile; fileRef = B2643E091AAF38210023C0C5 /* UIImage+ImageEffects.h */; };
 		B2643E0C1AAF38210023C0C5 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = B2643E0A1AAF38210023C0C5 /* UIImage+ImageEffects.m */; };
 		B2643E0E1AAF47650023C0C5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2643E0D1AAF47650023C0C5 /* Images.xcassets */; };
@@ -55,6 +56,9 @@
 		B2131F451AC01BDA005A2390 /* SurveyViewController+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SurveyViewController+Constraints.m"; sourceTree = "<group>"; };
 		B2131F481AC0226F005A2390 /* SurveyViewController+Views.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SurveyViewController+Views.h"; sourceTree = "<group>"; };
 		B2131F491AC0226F005A2390 /* SurveyViewController+Views.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SurveyViewController+Views.m"; sourceTree = "<group>"; };
+		B22F27F51AE4E85C007ADDED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B22F27FB1AE5049D007ADDED /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B263E0CE1AE518E0008F7F0D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B2643E091AAF38210023C0C5 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		B2643E0A1AAF38210023C0C5 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		B2643E0D1AAF47650023C0C5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -129,6 +133,7 @@
 				B2643E0A1AAF38210023C0C5 /* UIImage+ImageEffects.m */,
 				B2643E0D1AAF47650023C0C5 /* Images.xcassets */,
 				B2F4DAC11AA77667007FA43E /* Supporting Files */,
+				B22F27F61AE4E85C007ADDED /* Localizable.strings */,
 			);
 			name = WootricSDK;
 			path = WootricSDKObjC;
@@ -242,6 +247,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				pl,
+				fr,
 			);
 			mainGroup = B2F4DAB41AA77667007FA43E;
 			productRefGroup = B2F4DABF1AA77667007FA43E /* Products */;
@@ -260,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2643E0E1AAF47650023C0C5 /* Images.xcassets in Resources */,
+				B22F27F41AE4E85C007ADDED /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,6 +313,19 @@
 			targetProxy = B2F4DACB1AA77667007FA43E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B22F27F61AE4E85C007ADDED /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B22F27F51AE4E85C007ADDED /* en */,
+				B22F27FB1AE5049D007ADDED /* pl */,
+				B263E0CE1AE518E0008F7F0D /* fr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		B2F4DAD21AA77667007FA43E /* Debug */ = {

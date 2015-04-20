@@ -66,5 +66,6 @@
 @property (nonatomic, strong) UILabel *extremelyLikelyLabel;
 @property (nonatomic, strong) UILabel *scorePopoverLabel;
 - (BOOL)isSmallerScreenDevice;
+- (NSString *)localizedString:(NSString *)key;
 
 @end

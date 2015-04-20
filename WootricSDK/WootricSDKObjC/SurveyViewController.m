@@ -32,12 +32,13 @@
   long score;
   BOOL scrolled;
   BOOL alreadyVoted;
+  BOOL addedLabels;
 
 - (instancetype)init {
   if (self = [super init]) {
-    _defaultWootricQuestion = @"How likely are you to recommend us to a friend or co-worker?";
-    _defaultResponseQuestion = @"Thank you! Care to tell us why?";
-    _defaultPlaceholderText = @"Help us by explaining your score.";
+    _defaultWootricQuestion = [self localizedString:@"How likely are you to recommend us to a friend or co-worker?"];
+    _defaultResponseQuestion = [self localizedString:@"Thank you! Care to tell us why?"];
+    _defaultPlaceholderText = [self localizedString:@"Help us by explaining your score."];
   }
   return self;
 }
@@ -65,6 +66,7 @@
   [self setupConstraints];
 
   _commentTextView.delegate = self;
+  [self addLabelsToSlider:_scoreSlider];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -78,6 +80,12 @@
 }
 
 #pragma mark - Helper methods
+
+- (NSString *)localizedString:(NSString *)key {
+  return [[NSBundle bundleForClass:[self class]] localizedStringForKey:key
+                                                                 value:nil
+                                                                 table:nil];
+}
 
 - (void)adjustInsetForKeyboardShow:(BOOL)show notification:(NSNotification *)notification {
   NSDictionary *userInfo = notification.userInfo ? notification.userInfo : @{};
@@ -127,8 +135,6 @@
                                           maskImage:nil];
   _backgroundImageView.image = bluredImage;
   [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
-  NSLog(@"%f", [[UIScreen mainScreen] scale]);
-  NSLog(@"%f", [[UIScreen mainScreen] nativeScale]);
 }
 
 - (void)changeItemsVisibilityTo:(BOOL)flag {
@@ -156,10 +162,14 @@
 
     _titleLabel.font = [UIFont systemFontOfSize:14];
     _titleLabel.textColor = _tintColorPink;
-    _titleLabel.text = [NSString stringWithFormat:@"You gave us an %ld.", score];
+    NSString *aan = @"a";
+    if (score == 8) {
+      aan = @"an";
+    }
+    _titleLabel.text = [NSString stringWithFormat:[self localizedString:@"You gave us %@ %ld."], aan, score];
   } else {
     if (_wootricRecommendTo != nil) {
-      _titleLabel.text = [NSString stringWithFormat:@"How likely are you to recommend us to a %@?", _wootricRecommendTo];
+      _titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend us to a %@?"], _wootricRecommendTo];
     } else {
       _titleLabel.text = _defaultWootricQuestion;
     }
@@ -197,6 +207,17 @@
   return NO;
 }
 
+// HAXX to return slider width before autolayout is solved.
+// Method that requires this values could be called in viewDidLayoutSubviews,
+// but viewDidLayoutSubviews is called twice at 'init' where first value of slider width is 100.0
+// which is wrong, but I don't want to check for a magic number which may change.
+- (float)sliderWidthBeforeAutolayout {
+  if ([self isSmallerScreenDevice]) {
+    return 278;
+  }
+  return 333;
+}
+
 - (float)xPositionFromSliderValue:(UISlider *)aSlider {
   int thumbLabelWidth = 45;
   float sliderRange = aSlider.frame.size.width - thumbLabelWidth;
@@ -214,31 +235,40 @@
   }
 }
 
-#pragma mark - Button actions
+- (void)addLabelsToSlider:(UISlider *)slider {
+  for (int i = 0; i <= 10; i++) {
+    UILabel *label = [[UILabel alloc] init];
+    label.font = [UIFont systemFontOfSize:10];
+    label.textColor = [UIColor blackColor];
+    label.text = [NSString stringWithFormat:@"%d", i];
+    label.tag = 9000 + i;
+    [label sizeToFit];
+    CGFloat labelX = 22.5;
+    if (i >= 1) {
+      labelX += round([self sliderWidthBeforeAutolayout] / 10.0 * i) - 4.5 * i;
+    }
+    CGFloat labelY = 22.5;
+    label.center = CGPointMake(labelX, labelY);
 
-- (void)backButtonPressed:(UIButton *)sender {
-  [self changeItemsVisibilityTo:NO];
-  [self switchTitleAndScoreLabelsParameters:NO];
-  [_commentTextView resignFirstResponder];
+    [slider addSubview:label];
+  }
 }
 
 - (void)updateSliderStep:(UISlider *)sender {
   if (!_voteButton.enabled) {
-    UIImage *iconCheckEnabled = [UIImage imageNamed:@"icon_check_enabled" inBundle:[NSBundle bundleForClass: [self class]] compatibleWithTraitCollection:nil];
+    UIImage *iconCheckEnabled = [UIImage imageNamed:@"icon_check_enabled"
+                                           inBundle:[NSBundle bundleForClass: [self class]]
+                      compatibleWithTraitCollection:nil];
     _buttonIconCheck.image = iconCheckEnabled;
     _voteButton.enabled = YES;
     _dragToChangeLabel.hidden = NO;
-    NSString *imageName = [self isSmallerScreenDevice] ? @"slider_bg_numbers_checked" : @"slider_bg_numbers_checked_667h";
-    UIImage *imageBackground = [[UIImage imageNamed:imageName
-                                           inBundle:[NSBundle bundleForClass:[self class]]
-                      compatibleWithTraitCollection:nil]
-                   stretchableImageWithLeftCapWidth:10
-                                       topCapHeight:0];
-    [_scoreSlider setMaximumTrackImage:imageBackground forState:UIControlStateNormal];
-    [_scoreSlider setMinimumTrackImage:imageBackground forState:UIControlStateNormal];
     [UIView animateWithDuration:0.3 animations:^{
       _sliderBackgroundView.alpha = 0;
       _sliderCheckedBackgroundView.alpha = 1;
+      for (int i = 0; i <= 10; i++) {
+        UILabel *label = (UILabel *)[_scoreSlider viewWithTag:(9000 + i)];
+        label.textColor = [UIColor colorWithRed:155.0/255.0 green:155.0/255.0 blue:155.0/255.0 alpha:1];
+      }
     }];
   }
 
@@ -250,7 +280,7 @@
   double multiplier = _scoreSlider.value / 10.0;
 
   UIImageView *handleView = [_scoreSlider.subviews lastObject];
-  UILabel *label = (UILabel*)[handleView viewWithTag:1000];
+  UILabel *label = (UILabel *)[handleView viewWithTag:1000];
 
   if (label == nil) {
     label = [[UILabel alloc] initWithFrame:CGRectMake(multiplier * -45, -22.5, 45, 45)];
@@ -268,6 +298,14 @@
   }
 
   label.text = [NSString stringWithFormat:@"%d", (int)_scoreSlider.value];
+}
+
+#pragma mark - Button actions
+
+- (void)backButtonPressed:(UIButton *)sender {
+  [self changeItemsVisibilityTo:NO];
+  [self switchTitleAndScoreLabelsParameters:NO];
+  [_commentTextView resignFirstResponder];
 }
 
 - (void)voteButtonPressed:(UIButton *)sender {
@@ -351,7 +389,7 @@
   _sendFeedbackButton.hidden = YES;
   _buttonIconSend.hidden = YES;
   _backButton.hidden = YES;
-  _titleLabel.text = @"Thank you for your response, and for your feedback!";
+  _titleLabel.text = [self localizedString:@"Thank you for your response, and for your feedback!"];
   _titleLabel.font = [UIFont boldSystemFontOfSize:15];
   _titleLabel.textColor = _tintColorPink;
   _constModalHeight.constant = 125;
