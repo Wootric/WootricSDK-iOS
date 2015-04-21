@@ -1,3 +1,6 @@
 
 /* Class = "UIButton"; normalTitle = "Show survey"; ObjectID = "DNL-lM-waD"; */
 "DNL-lM-waD.normalTitle" = "Show survey";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "I94-2V-MYL"; */
+"I94-2V-MYL.title" = "Item";

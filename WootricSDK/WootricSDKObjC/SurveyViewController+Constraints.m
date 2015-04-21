@@ -180,7 +180,7 @@
                                                                constant:topMargin];
   [self.modalView addConstraint:constTop];
 
-  CGFloat margin = [self isSmallerScreenDevice] ? 30 : 60;
+  CGFloat margin = [self isSmallerScreenDevice] ? 20 : 50;
   NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:self.titleLabel
                                                                attribute:NSLayoutAttributeLeft
                                                                relatedBy:NSLayoutRelationEqual
@@ -218,6 +218,25 @@
                                                            multiplier:1
                                                              constant:0];
   [self.modalView addConstraint:constX];
+
+  CGFloat margin = [self isSmallerScreenDevice] ? 10 : 20;
+  NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:self.scoreLabel
+                                                               attribute:NSLayoutAttributeLeft
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.modalView
+                                                               attribute:NSLayoutAttributeLeft
+                                                              multiplier:1
+                                                                constant:margin];
+  [self.modalView addConstraint:constLeft];
+
+  NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:self.modalView
+                                                                attribute:NSLayoutAttributeRight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.scoreLabel
+                                                                attribute:NSLayoutAttributeRight
+                                                               multiplier:1
+                                                                 constant:margin];
+  [self.modalView addConstraint:constRight];
 }
 
 - (void)setupAskForFeedbackLabelConstraints {
@@ -635,12 +654,12 @@
   [self.scrollView addConstraint:constB];
 
   self.constTopToModal = [NSLayoutConstraint constraintWithItem:self.modalView
-                                                 attribute:NSLayoutAttributeTop
-                                                 relatedBy:NSLayoutRelationEqual
-                                                    toItem:self.scrollView
-                                                 attribute:NSLayoutAttributeTop
-                                                multiplier:1
-                                                  constant:self.view.frame.size.height];
+                                                      attribute:NSLayoutAttributeTop
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:self.scrollView
+                                                      attribute:NSLayoutAttributeTop
+                                                     multiplier:1
+                                                       constant:self.view.frame.size.height];
 
   [self.scrollView addConstraint:self.constTopToModal];
 

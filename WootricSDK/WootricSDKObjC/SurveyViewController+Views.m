@@ -133,6 +133,8 @@
   self.scoreLabel.textAlignment = NSTextAlignmentCenter;
   self.scoreLabel.font = [UIFont systemFontOfSize:14];
   self.scoreLabel.hidden = YES;
+  self.scoreLabel.numberOfLines = 0;
+  self.scoreLabel.lineBreakMode = NSLineBreakByWordWrapping;
   self.scoreLabel.textColor = [UIColor colorWithRed:236.0/255.0 green:104.0/255.0 blue:149.0/255.0 alpha:1];
   [self.scoreLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }

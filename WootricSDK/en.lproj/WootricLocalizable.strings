@@ -1,4 +1,4 @@
-// Localizable.strings
+// WootricLocalizable.strings
 // WootricSDK
 
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -30,6 +30,6 @@
 "SUBMIT" = "SUBMIT";
 "DISMISS" = "DISMISS";
 "SEND FEEDBACK" = "SEND FEEDBACK";
-"You gave us a %ld." = "You gave us a %ld.";
+"You chose %ld." = "You chose %ld.";
 "Thank you for your response, and for your feedback!" = "Thank you for your response, and for your feedback!";
 "Drag to change score" = "Drag to change score";

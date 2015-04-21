@@ -11,12 +11,12 @@
 		B2131F471AC01BDA005A2390 /* SurveyViewController+Constraints.m in Sources */ = {isa = PBXBuildFile; fileRef = B2131F451AC01BDA005A2390 /* SurveyViewController+Constraints.m */; };
 		B2131F4A1AC0226F005A2390 /* SurveyViewController+Views.h in Headers */ = {isa = PBXBuildFile; fileRef = B2131F481AC0226F005A2390 /* SurveyViewController+Views.h */; };
 		B2131F4B1AC0226F005A2390 /* SurveyViewController+Views.m in Sources */ = {isa = PBXBuildFile; fileRef = B2131F491AC0226F005A2390 /* SurveyViewController+Views.m */; };
-		B22F27F41AE4E85C007ADDED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B22F27F61AE4E85C007ADDED /* Localizable.strings */; };
 		B263E0D21AE68347008F7F0D /* SurveyViewController+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = B263E0D01AE68347008F7F0D /* SurveyViewController+Utils.h */; };
 		B263E0D31AE68347008F7F0D /* SurveyViewController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = B263E0D11AE68347008F7F0D /* SurveyViewController+Utils.m */; };
 		B2643E0B1AAF38210023C0C5 /* UIImage+ImageEffects.h in Headers */ = {isa = PBXBuildFile; fileRef = B2643E091AAF38210023C0C5 /* UIImage+ImageEffects.h */; };
 		B2643E0C1AAF38210023C0C5 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = B2643E0A1AAF38210023C0C5 /* UIImage+ImageEffects.m */; };
 		B2643E0E1AAF47650023C0C5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2643E0D1AAF47650023C0C5 /* Images.xcassets */; };
+		B2748B721AE697E400303B6A /* WootricLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2748B741AE697E400303B6A /* WootricLocalizable.strings */; };
 		B27628B91AA85E04000402B5 /* APIWootric.h in Headers */ = {isa = PBXBuildFile; fileRef = B27628B71AA85E04000402B5 /* APIWootric.h */; };
 		B27628BA1AA85E04000402B5 /* APIWootric.m in Sources */ = {isa = PBXBuildFile; fileRef = B27628B81AA85E04000402B5 /* APIWootric.m */; };
 		B2A43C4A1ADC0F5900C48EF9 /* APIWootricTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A43C491ADC0F5900C48EF9 /* APIWootricTests.m */; };
@@ -58,14 +58,14 @@
 		B2131F451AC01BDA005A2390 /* SurveyViewController+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SurveyViewController+Constraints.m"; sourceTree = "<group>"; };
 		B2131F481AC0226F005A2390 /* SurveyViewController+Views.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SurveyViewController+Views.h"; sourceTree = "<group>"; };
 		B2131F491AC0226F005A2390 /* SurveyViewController+Views.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SurveyViewController+Views.m"; sourceTree = "<group>"; };
-		B22F27F51AE4E85C007ADDED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B22F27FB1AE5049D007ADDED /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B263E0CE1AE518E0008F7F0D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B263E0D01AE68347008F7F0D /* SurveyViewController+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SurveyViewController+Utils.h"; sourceTree = "<group>"; };
 		B263E0D11AE68347008F7F0D /* SurveyViewController+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SurveyViewController+Utils.m"; sourceTree = "<group>"; };
 		B2643E091AAF38210023C0C5 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		B2643E0A1AAF38210023C0C5 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		B2643E0D1AAF47650023C0C5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B2748B731AE697E400303B6A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WootricLocalizable.strings; sourceTree = "<group>"; };
+		B2748B751AE697E700303B6A /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/WootricLocalizable.strings; sourceTree = "<group>"; };
+		B2748B761AE697E800303B6A /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/WootricLocalizable.strings; sourceTree = "<group>"; };
 		B27628B71AA85E04000402B5 /* APIWootric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIWootric.h; sourceTree = "<group>"; };
 		B27628B81AA85E04000402B5 /* APIWootric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIWootric.m; sourceTree = "<group>"; };
 		B2A43C491ADC0F5900C48EF9 /* APIWootricTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIWootricTests.m; sourceTree = "<group>"; };
@@ -138,8 +138,8 @@
 				B2643E091AAF38210023C0C5 /* UIImage+ImageEffects.h */,
 				B2643E0A1AAF38210023C0C5 /* UIImage+ImageEffects.m */,
 				B2643E0D1AAF47650023C0C5 /* Images.xcassets */,
+				B2748B741AE697E400303B6A /* WootricLocalizable.strings */,
 				B2F4DAC11AA77667007FA43E /* Supporting Files */,
-				B22F27F61AE4E85C007ADDED /* Localizable.strings */,
 			);
 			name = WootricSDK;
 			path = WootricSDKObjC;
@@ -274,7 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2643E0E1AAF47650023C0C5 /* Images.xcassets in Resources */,
-				B22F27F41AE4E85C007ADDED /* Localizable.strings in Resources */,
+				B2748B721AE697E400303B6A /* WootricLocalizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,14 +323,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B22F27F61AE4E85C007ADDED /* Localizable.strings */ = {
+		B2748B741AE697E400303B6A /* WootricLocalizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B22F27F51AE4E85C007ADDED /* en */,
-				B22F27FB1AE5049D007ADDED /* pl */,
-				B263E0CE1AE518E0008F7F0D /* fr */,
+				B2748B731AE697E400303B6A /* en */,
+				B2748B751AE697E700303B6A /* pl */,
+				B2748B761AE697E800303B6A /* fr */,
 			);
-			name = Localizable.strings;
+			name = WootricLocalizable.strings;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -13,7 +13,7 @@
 - (NSString *)localizedString:(NSString *)key {
   return [[NSBundle bundleForClass:[self class]] localizedStringForKey:key
                                                                  value:nil
-                                                                 table:nil];
+                                                                 table:@"WootricLocalizable"];
 }
 
 - (BOOL)isSmallerScreenDevice {
