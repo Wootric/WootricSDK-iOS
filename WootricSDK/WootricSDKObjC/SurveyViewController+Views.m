@@ -23,6 +23,7 @@
 // THE SOFTWARE.
 
 #import "SurveyViewController+Views.h"
+#import "SurveyViewController+Utils.h"
 
 @implementation SurveyViewController (Views)
 
@@ -57,6 +58,8 @@
   [self.scrollView addSubview:self.modalView];
 }
 
+#pragma mark - Buttons
+
 - (void)setupBackButton {
   self.backButton = [[UIButton alloc] init];
   UIImage *image = [UIImage imageNamed:@"icon_back_arrow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
@@ -69,18 +72,6 @@
                     forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)setupScorePopoverLabel {
-  self.scorePopoverLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 30)];
-  self.scorePopoverLabel.font = [UIFont systemFontOfSize:14];
-  self.scorePopoverLabel.textColor = [UIColor darkGrayColor];
-  self.scorePopoverLabel.hidden = YES;
-  self.scorePopoverLabel.backgroundColor = [UIColor whiteColor];
-  self.scorePopoverLabel.textAlignment = NSTextAlignmentCenter;
-  self.scorePopoverLabel.layer.cornerRadius = 2;
-  self.scorePopoverLabel.layer.borderColor = [UIColor colorWithRed:241.0/255.0 green:241.0/255.0 blue:241.0/255 alpha:1].CGColor;
-  self.scorePopoverLabel.layer.borderWidth = 1;
-}
-
 - (void)setupSendFeedbackButton {
   self.sendFeedbackButton = [[UIButton alloc] init];
   self.sendFeedbackButton.tintColor = self.tintColorGreen;
@@ -91,7 +82,50 @@
   [self.sendFeedbackButton setTitleColor:self.tintColorGreen forState:UIControlStateNormal];
   [self.sendFeedbackButton setTitleColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1] forState:UIControlStateDisabled];
   [self.sendFeedbackButton addTarget:self action:NSSelectorFromString(@"sendButtonPressed:")
-                forControlEvents:UIControlEventTouchUpInside];
+                    forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)setupVoteButton {
+  self.voteButton = [[UIButton alloc] init];
+  self.voteButton.tintColor = self.tintColorGreen;
+  self.voteButton.enabled = NO;
+  self.voteButton.titleLabel.font = [UIFont systemFontOfSize:14 weight:0.25];
+  [self.voteButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [self.voteButton setTitle:[self localizedString:@"SUBMIT"] forState:UIControlStateNormal];
+  [self.voteButton setTitleColor:self.tintColorGreen forState:UIControlStateNormal];
+  [self.voteButton setTitleColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1] forState:UIControlStateDisabled];
+  [self.voteButton addTarget:self action:NSSelectorFromString(@"voteButtonPressed:")
+            forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)setupDismissButton {
+  self.dismissButton = [[UIButton alloc] init];
+  UIImage *image = [UIImage imageNamed:@"icon_close_round_grey" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  self.dismissImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 8, 16, 16)];
+  self.dismissImageView.image = image;
+  self.dismissImageView.tintColor = [UIColor whiteColor];
+  self.dismissButton.titleLabel.textAlignment = NSTextAlignmentRight;
+  self.dismissButton.titleLabel.font = [UIFont systemFontOfSize:10];
+  [self.dismissButton addSubview:self.dismissImageView];
+  [self.dismissButton setTitle:[self localizedString:@"DISMISS"] forState:UIControlStateNormal];
+  [self.dismissButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+  [self.dismissButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [self.dismissButton addTarget:self action:NSSelectorFromString(@"dismissButtonPressed:")
+               forControlEvents:UIControlEventTouchUpInside];
+}
+
+#pragma mark - Labels
+
+- (void)setupScorePopoverLabel {
+  self.scorePopoverLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 30)];
+  self.scorePopoverLabel.font = [UIFont systemFontOfSize:14];
+  self.scorePopoverLabel.textColor = [UIColor darkGrayColor];
+  self.scorePopoverLabel.hidden = YES;
+  self.scorePopoverLabel.backgroundColor = [UIColor whiteColor];
+  self.scorePopoverLabel.textAlignment = NSTextAlignmentCenter;
+  self.scorePopoverLabel.layer.cornerRadius = 2;
+  self.scorePopoverLabel.layer.borderColor = [UIColor colorWithRed:241.0/255.0 green:241.0/255.0 blue:241.0/255 alpha:1].CGColor;
+  self.scorePopoverLabel.layer.borderWidth = 1;
 }
 
 - (void)setupScoreLabel {
@@ -111,25 +145,6 @@
   self.askForFeedbackLabel.numberOfLines = 0;
   self.askForFeedbackLabel.textAlignment = NSTextAlignmentLeft;
   [self.askForFeedbackLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-}
-
-- (void)setupSliderCheckedBackgroundView {
-  self.sliderCheckedBackgroundView = [[UILabel alloc] init];
-  self.sliderCheckedBackgroundView.layer.cornerRadius = 27.5;
-  self.sliderCheckedBackgroundView.layer.masksToBounds = YES;
-  self.sliderCheckedBackgroundView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1];
-  self.sliderCheckedBackgroundView.alpha = 0;
-  [self.sliderCheckedBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
-}
-
-- (void)setupSliderBackgroundView {
-  self.sliderBackgroundView = [[UILabel alloc] init];
-  self.sliderBackgroundView.layer.cornerRadius = 27.5;
-  self.sliderBackgroundView.layer.borderWidth = 4;
-  self.sliderBackgroundView.layer.borderColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1].CGColor;
-  self.sliderBackgroundView.layer.masksToBounds = YES;
-  self.sliderBackgroundView.backgroundColor = [UIColor whiteColor];
-  [self.sliderBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupExtremelyLikelyLabel {
@@ -157,10 +172,19 @@
   [self.dragToChangeLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
-- (void)setupHeartIconImageView {
-  UIImage *image = [UIImage imageNamed:@"icon_heart" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-  self.heartImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 297, 8, 8)];
-  self.heartImageView.image = image;
+- (void)setupTitleLabel {
+  self.titleLabel = [[UILabel alloc] init];
+  self.titleLabel.textAlignment = NSTextAlignmentCenter;
+  self.titleLabel.textColor = [UIColor darkGrayColor];
+  self.titleLabel.numberOfLines = 0;
+  self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+  if (self.wootricRecommendTo != nil) {
+    self.titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend us to a %@?"], self.wootricRecommendTo];
+  } else {
+    self.titleLabel.text = self.defaultWootricQuestion;
+  }
+  self.titleLabel.font = [UIFont systemFontOfSize:16];
+  [self.titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupPoweredByWootric {
@@ -170,12 +194,60 @@
   self.poweredByWootricLabel.textColor = [UIColor darkGrayColor];
 }
 
+#pragma mark - Background Views
+
+- (void)setupSliderCheckedBackgroundView {
+  self.sliderCheckedBackgroundView = [[UILabel alloc] init];
+  self.sliderCheckedBackgroundView.layer.cornerRadius = 27.5;
+  self.sliderCheckedBackgroundView.layer.masksToBounds = YES;
+  self.sliderCheckedBackgroundView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1];
+  self.sliderCheckedBackgroundView.alpha = 0;
+  [self.sliderCheckedBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
+- (void)setupSliderBackgroundView {
+  self.sliderBackgroundView = [[UILabel alloc] init];
+  self.sliderBackgroundView.layer.cornerRadius = 27.5;
+  self.sliderBackgroundView.layer.borderWidth = 4;
+  self.sliderBackgroundView.layer.borderColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1].CGColor;
+  self.sliderBackgroundView.layer.masksToBounds = YES;
+  self.sliderBackgroundView.backgroundColor = [UIColor whiteColor];
+  [self.sliderBackgroundView setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
 - (void)setupBackgroundImageView {
   self.backgroundImageView = [[UIImageView alloc] init];
   self.backgroundImageView.image = self.blurredImage;
   self.backgroundImageView.alpha = 0;
   [self.backgroundImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
+
+#pragma mark - Icons
+
+- (void)setupHeartIconImageView {
+  UIImage *image = [UIImage imageNamed:@"icon_heart" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  self.heartImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 297, 8, 8)];
+  self.heartImageView.image = image;
+}
+
+- (void)setupButtonCheckIcon {
+  UIImage *checkIcon = [UIImage imageNamed:@"icon_check_disabled"
+                                  inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  self.buttonIconCheck = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+  self.buttonIconCheck.image = checkIcon;
+  [self.buttonIconCheck setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
+- (void)setupButtonSendIcon {
+  UIImage *sendIcon = [UIImage imageNamed:@"icon_send_arrow"
+                                 inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  self.buttonIconSend = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+  self.buttonIconSend.image = sendIcon;
+  self.buttonIconSend.hidden = YES;
+  [self.buttonIconSend setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
+#pragma mark - Misc.
 
 - (void)setupModal {
   self.modalView = [[UIView alloc] init];
@@ -197,37 +269,6 @@
   self.commentTextView.layer.borderColor = [UIColor colorWithRed:241.0/255.0 green:241.0/255.0 blue:241.0/255 alpha:1].CGColor;
   self.commentTextView.backgroundColor = [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1];
   [self.commentTextView setTranslatesAutoresizingMaskIntoConstraints:NO];
-}
-
-- (void)setupTitleLabel {
-  self.titleLabel = [[UILabel alloc] init];
-  self.titleLabel.textAlignment = NSTextAlignmentCenter;
-  self.titleLabel.textColor = [UIColor darkGrayColor];
-  self.titleLabel.numberOfLines = 0;
-  self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-  if (self.wootricRecommendTo != nil) {
-    self.titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend us to a %@?"], self.wootricRecommendTo];
-  } else {
-    self.titleLabel.text = self.defaultWootricQuestion;
-  }
-  self.titleLabel.font = [UIFont systemFontOfSize:16];
-  [self.titleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-}
-
-- (void)setupDismissButton {
-  self.dismissButton = [[UIButton alloc] init];
-  UIImage *image = [UIImage imageNamed:@"icon_close_round_grey" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-  self.dismissImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 8, 16, 16)];
-  self.dismissImageView.image = image;
-  self.dismissImageView.tintColor = [UIColor whiteColor];
-  self.dismissButton.titleLabel.textAlignment = NSTextAlignmentRight;
-  self.dismissButton.titleLabel.font = [UIFont systemFontOfSize:10];
-  [self.dismissButton addSubview:self.dismissImageView];
-  [self.dismissButton setTitle:[self localizedString:@"DISMISS"] forState:UIControlStateNormal];
-  [self.dismissButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-  [self.dismissButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [self.dismissButton addTarget:self action:NSSelectorFromString(@"dismissButtonPressed:")
-           forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupSlider {
@@ -253,36 +294,6 @@
              forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
   UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:NSSelectorFromString(@"sliderTapped:")];
   [self.scoreSlider addGestureRecognizer:gr];
-}
-
-- (void)setupVoteButton {
-  self.voteButton = [[UIButton alloc] init];
-  self.voteButton.tintColor = self.tintColorGreen;
-  self.voteButton.enabled = NO;
-  self.voteButton.titleLabel.font = [UIFont systemFontOfSize:14 weight:0.25];
-  [self.voteButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [self.voteButton setTitle:[self localizedString:@"SUBMIT"] forState:UIControlStateNormal];
-  [self.voteButton setTitleColor:self.tintColorGreen forState:UIControlStateNormal];
-  [self.voteButton setTitleColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1] forState:UIControlStateDisabled];
-  [self.voteButton addTarget:self action:NSSelectorFromString(@"voteButtonPressed:")
-        forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)setupButtonCheckIcon {
-  UIImage *checkIcon = [UIImage imageNamed:@"icon_check_disabled"
-                                  inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-  self.buttonIconCheck = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
-  self.buttonIconCheck.image = checkIcon;
-  [self.buttonIconCheck setTranslatesAutoresizingMaskIntoConstraints:NO];
-}
-
-- (void)setupButtonSendIcon {
-  UIImage *sendIcon = [UIImage imageNamed:@"icon_send_arrow"
-                                 inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-  self.buttonIconSend = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
-  self.buttonIconSend.image = sendIcon;
-  self.buttonIconSend.hidden = YES;
-  [self.buttonIconSend setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)addViewsToModal {

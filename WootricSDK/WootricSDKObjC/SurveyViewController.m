@@ -27,6 +27,7 @@
 #import "UIImage+ImageEffects.h"
 #import "SurveyViewController+Constraints.h"
 #import "SurveyViewController+Views.h"
+#import "SurveyViewController+Utils.h"
 
 @implementation SurveyViewController
   long score;
@@ -80,12 +81,6 @@
 }
 
 #pragma mark - Helper methods
-
-- (NSString *)localizedString:(NSString *)key {
-  return [[NSBundle bundleForClass:[self class]] localizedStringForKey:key
-                                                                 value:nil
-                                                                 table:nil];
-}
 
 - (void)adjustInsetForKeyboardShow:(BOOL)show notification:(NSNotification *)notification {
   NSDictionary *userInfo = notification.userInfo ? notification.userInfo : @{};
@@ -162,11 +157,7 @@
 
     _titleLabel.font = [UIFont systemFontOfSize:14];
     _titleLabel.textColor = _tintColorPink;
-    NSString *aan = @"a";
-    if (score == 8) {
-      aan = @"an";
-    }
-    _titleLabel.text = [NSString stringWithFormat:[self localizedString:@"You gave us %@ %ld."], aan, score];
+    _titleLabel.text = [NSString stringWithFormat:[self localizedString:@"You chose %ld."], score];
   } else {
     if (_wootricRecommendTo != nil) {
       _titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend us to a %@?"], _wootricRecommendTo];
@@ -200,24 +191,6 @@
   return _defaultPlaceholderText;
 }
 
-- (BOOL)isSmallerScreenDevice {
-  if ([[UIScreen mainScreen] nativeBounds].size.height <= 1136) {
-    return YES;
-  }
-  return NO;
-}
-
-// HAXX to return slider width before autolayout is solved.
-// Method that requires this values could be called in viewDidLayoutSubviews,
-// but viewDidLayoutSubviews is called twice at 'init' where first value of slider width is 100.0
-// which is wrong, but I don't want to check for a magic number which may change.
-- (float)sliderWidthBeforeAutolayout {
-  if ([self isSmallerScreenDevice]) {
-    return 278;
-  }
-  return 333;
-}
-
 - (float)xPositionFromSliderValue:(UISlider *)aSlider {
   int thumbLabelWidth = 45;
   float sliderRange = aSlider.frame.size.width - thumbLabelWidth;
@@ -236,16 +209,19 @@
 }
 
 - (void)addLabelsToSlider:(UISlider *)slider {
+  float sliderWidth = [self sliderWidthBeforeAutolayout];
+
   for (int i = 0; i <= 10; i++) {
     UILabel *label = [[UILabel alloc] init];
-    label.font = [UIFont systemFontOfSize:10];
+    label.font = [UIFont systemFontOfSize:12];
     label.textColor = [UIColor blackColor];
     label.text = [NSString stringWithFormat:@"%d", i];
+    // It's over 9000!!!
     label.tag = 9000 + i;
     [label sizeToFit];
     CGFloat labelX = 22.5;
     if (i >= 1) {
-      labelX += round([self sliderWidthBeforeAutolayout] / 10.0 * i) - 4.5 * i;
+      labelX += round(sliderWidth / 10.0 * i) - 4 * i;
     }
     CGFloat labelY = 22.5;
     label.center = CGPointMake(labelX, labelY);
@@ -283,7 +259,7 @@
   UILabel *label = (UILabel *)[handleView viewWithTag:1000];
 
   if (label == nil) {
-    label = [[UILabel alloc] initWithFrame:CGRectMake(multiplier * -45, -22.5, 45, 45)];
+    label = [[UILabel alloc] initWithFrame:CGRectMake(multiplier * -45, -22, 45, 45)];
     label.tag = 1000;
     label.backgroundColor = _tintColorPink;
     label.layer.cornerRadius = 22.5;
@@ -294,7 +270,7 @@
 
     [handleView addSubview:label];
   } else {
-    label.frame = CGRectMake(multiplier * -45, -22.5, 45, 45);
+    label.frame = CGRectMake(multiplier * -45, -22, 45, 45);
   }
 
   label.text = [NSString stringWithFormat:@"%d", (int)_scoreSlider.value];
@@ -393,7 +369,7 @@
   _titleLabel.font = [UIFont boldSystemFontOfSize:15];
   _titleLabel.textColor = _tintColorPink;
   _constModalHeight.constant = 125;
-  _constTopToModal.constant = self.view.frame.size.height - 125;
+  _constTopToModal.constant = self.view.frame.size.height - _constModalHeight.constant;
   [UIView animateWithDuration:0.2 animations:^{
     [self.view layoutIfNeeded];
   }];

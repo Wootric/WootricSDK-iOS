@@ -23,6 +23,7 @@
 // THE SOFTWARE.
 
 #import "SurveyViewController+Constraints.h"
+#import "SurveyViewController+Utils.h"
 
 @implementation SurveyViewController (Constraints)
 
@@ -48,14 +49,36 @@
   [self setupBackButtonConstraints];
 }
 
+#pragma mark - Buttons
+
+- (void)setupVoteButtonConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.voteButton
+                                                            attribute:NSLayoutAttributeCenterX
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.modalView
+                                                            attribute:NSLayoutAttributeCenterX
+                                                           multiplier:1
+                                                             constant:12];
+  [self.modalView addConstraint:constX];
+
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.voteButton
+                                                            attribute:NSLayoutAttributeBottom
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.modalView
+                                                            attribute:NSLayoutAttributeBottom
+                                                           multiplier:1
+                                                             constant:-65];
+  [self.modalView addConstraint:constY];
+}
+
 - (void)setupBackButtonConstraints {
   NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.backButton
-                                                               attribute:NSLayoutAttributeTop
-                                                               relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self.modalView
-                                                               attribute:NSLayoutAttributeTop
-                                                              multiplier:1
-                                                                constant:2];
+                                                            attribute:NSLayoutAttributeTop
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.modalView
+                                                            attribute:NSLayoutAttributeTop
+                                                           multiplier:1
+                                                             constant:2];
   [self.modalView addConstraint:constY];
 
   NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.backButton
@@ -86,46 +109,6 @@
   [self.backButton addConstraint:constH];
 }
 
-- (void)setupButtonIconSendConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.buttonIconSend
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.sendFeedbackButton
-                                                            attribute:NSLayoutAttributeLeft
-                                                           multiplier:1
-                                                             constant:-4];
-  [self.modalView addConstraint:constX];
-
-  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.buttonIconSend
-                                                            attribute:NSLayoutAttributeCenterY
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.sendFeedbackButton
-                                                            attribute:NSLayoutAttributeCenterY
-                                                           multiplier:1
-                                                             constant:0];
-  [self.modalView addConstraint:constY];
-}
-
-- (void)setupButtonIconCheckConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.buttonIconCheck
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.voteButton
-                                                            attribute:NSLayoutAttributeLeft
-                                                           multiplier:1
-                                                             constant:-4];
-  [self.modalView addConstraint:constX];
-
-  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.buttonIconCheck
-                                                            attribute:NSLayoutAttributeCenterY
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.voteButton
-                                                            attribute:NSLayoutAttributeCenterY
-                                                           multiplier:1
-                                                             constant:0];
-  [self.modalView addConstraint:constY];
-}
-
 - (void)setupSendFeedbackButtonConstraints {
   NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.sendFeedbackButton
                                                             attribute:NSLayoutAttributeCenterX
@@ -144,6 +127,77 @@
                                                            multiplier:1
                                                              constant:15];
   [self.modalView addConstraint:constY];
+}
+
+- (void)setupDismissButtonConstraints {
+  NSLayoutConstraint *constXTop = [NSLayoutConstraint constraintWithItem:self.dismissButton
+                                                               attribute:NSLayoutAttributeTop
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.modalView
+                                                               attribute:NSLayoutAttributeTop
+                                                              multiplier:1
+                                                                constant:284];
+  [self.modalView addConstraint:constXTop];
+
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.modalView
+                                                            attribute:NSLayoutAttributeRight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.dismissButton
+                                                            attribute:NSLayoutAttributeRight
+                                                           multiplier:1
+                                                             constant:-5];
+  [self.modalView addConstraint:constX];
+
+  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.dismissButton
+                                                            attribute:NSLayoutAttributeWidth
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:80];
+  [self.dismissButton addConstraint:constW];
+
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.dismissButton
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:32];
+  [self.dismissButton addConstraint:constH];
+}
+
+#pragma mark - Labels
+
+- (void)setupTitleLabelConstraints {
+  CGFloat topMargin = [self isSmallerScreenDevice] ? 30 : 40;
+  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.modalView
+                                                              attribute:NSLayoutAttributeTop
+                                                             multiplier:1
+                                                               constant:topMargin];
+  [self.modalView addConstraint:constTop];
+
+  CGFloat margin = [self isSmallerScreenDevice] ? 30 : 60;
+  NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                               attribute:NSLayoutAttributeLeft
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.modalView
+                                                               attribute:NSLayoutAttributeLeft
+                                                              multiplier:1
+                                                                constant:margin];
+  [self.modalView addConstraint:constLeft];
+
+  NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:self.modalView
+                                                                attribute:NSLayoutAttributeRight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.titleLabel
+                                                                attribute:NSLayoutAttributeRight
+                                                               multiplier:1
+                                                                 constant:margin];
+  [self.modalView addConstraint:constRight];
 }
 
 - (void)setupScoreLabelConstraints {
@@ -193,85 +247,6 @@
                                                            multiplier:1
                                                              constant:5];
   [self.modalView addConstraint:constR];
-}
-
-- (void)setupSliderCheckedBackgroundViewConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.sliderCheckedBackgroundView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.modalView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self.modalView addConstraint:constX];
-
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:self.sliderCheckedBackgroundView
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.titleLabel
-                                                              attribute:NSLayoutAttributeBottom
-                                                             multiplier:1
-                                                               constant:41];
-  [self.modalView addConstraint:constTop];
-
-  CGFloat sliderWidth = [self isSmallerScreenDevice] ? 290 : 345;
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.sliderCheckedBackgroundView
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:sliderWidth];
-  [self.modalView addConstraint:constW];
-
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.sliderCheckedBackgroundView
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:55];
-  [self.modalView addConstraint:constH];
-}
-
-
-- (void)setupSliderBackgroundViewConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.sliderBackgroundView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.modalView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self.modalView addConstraint:constX];
-
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:self.sliderBackgroundView
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.titleLabel
-                                                              attribute:NSLayoutAttributeBottom
-                                                             multiplier:1
-                                                               constant:41];
-  [self.modalView addConstraint:constTop];
-
-  CGFloat sliderWidth = [self isSmallerScreenDevice] ? 290 : 345;
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.sliderBackgroundView
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:sliderWidth];
-  [self.modalView addConstraint:constW];
-
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.sliderBackgroundView
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:55];
-  [self.modalView addConstraint:constH];
 }
 
 - (void)setupExtremelyLikelyLabelConstraints {
@@ -333,6 +308,169 @@
                                                              constant:-5];
   [self.modalView addConstraint:constY];
 }
+
+#pragma mark - Icons
+
+- (void)setupButtonIconSendConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.buttonIconSend
+                                                            attribute:NSLayoutAttributeRight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.sendFeedbackButton
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1
+                                                             constant:-4];
+  [self.modalView addConstraint:constX];
+
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.buttonIconSend
+                                                            attribute:NSLayoutAttributeCenterY
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.sendFeedbackButton
+                                                            attribute:NSLayoutAttributeCenterY
+                                                           multiplier:1
+                                                             constant:0];
+  [self.modalView addConstraint:constY];
+}
+
+- (void)setupButtonIconCheckConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.buttonIconCheck
+                                                            attribute:NSLayoutAttributeRight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.voteButton
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1
+                                                             constant:-4];
+  [self.modalView addConstraint:constX];
+
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.buttonIconCheck
+                                                            attribute:NSLayoutAttributeCenterY
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.voteButton
+                                                            attribute:NSLayoutAttributeCenterY
+                                                           multiplier:1
+                                                             constant:0];
+  [self.modalView addConstraint:constY];
+}
+
+#pragma mark - Background Views
+
+- (void)setupBackgroundImageViewContraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.backgroundImageView
+                                                            attribute:NSLayoutAttributeCenterX
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view
+                                                            attribute:NSLayoutAttributeCenterX
+                                                           multiplier:1
+                                                             constant:0];
+  [self.view addConstraint:constX];
+
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.backgroundImageView
+                                                            attribute:NSLayoutAttributeCenterY
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view
+                                                            attribute:NSLayoutAttributeCenterY
+                                                           multiplier:1
+                                                             constant:0];
+  [self.view addConstraint:constY];
+
+  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.backgroundImageView
+                                                            attribute:NSLayoutAttributeWidth
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view
+                                                            attribute:NSLayoutAttributeWidth
+                                                           multiplier:1
+                                                             constant:0];
+  [self.view addConstraint:constW];
+
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.backgroundImageView
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view
+                                                            attribute:NSLayoutAttributeHeight
+                                                           multiplier:1
+                                                             constant:0];
+  [self.view addConstraint:constH];
+}
+
+- (void)setupSliderCheckedBackgroundViewConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.sliderCheckedBackgroundView
+                                                            attribute:NSLayoutAttributeCenterX
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.modalView
+                                                            attribute:NSLayoutAttributeCenterX
+                                                           multiplier:1
+                                                             constant:0];
+  [self.modalView addConstraint:constX];
+
+  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:self.sliderCheckedBackgroundView
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.titleLabel
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1
+                                                               constant:41];
+  [self.modalView addConstraint:constTop];
+
+  CGFloat sliderWidth = [self sliderWidthDependingOnDevice];
+  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.sliderCheckedBackgroundView
+                                                            attribute:NSLayoutAttributeWidth
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:sliderWidth];
+  [self.modalView addConstraint:constW];
+
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.sliderCheckedBackgroundView
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:55];
+  [self.modalView addConstraint:constH];
+}
+
+
+- (void)setupSliderBackgroundViewConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.sliderBackgroundView
+                                                            attribute:NSLayoutAttributeCenterX
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.modalView
+                                                            attribute:NSLayoutAttributeCenterX
+                                                           multiplier:1
+                                                             constant:0];
+  [self.modalView addConstraint:constX];
+
+  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:self.sliderBackgroundView
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.titleLabel
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1
+                                                               constant:41];
+  [self.modalView addConstraint:constTop];
+
+  CGFloat sliderWidth = [self sliderWidthDependingOnDevice];
+  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.sliderBackgroundView
+                                                            attribute:NSLayoutAttributeWidth
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:sliderWidth];
+  [self.modalView addConstraint:constW];
+
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.sliderBackgroundView
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:55];
+  [self.modalView addConstraint:constH];
+}
+
+#pragma mark - Misc.
 
 - (void)setupCommentTextViewConstraints {
   NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.commentTextView
@@ -401,15 +539,15 @@
                                                                constant:45];
   [self.modalView addConstraint:constTop];
 
-  CGFloat sliderWidth = [self isSmallerScreenDevice] ? 274 : 329;
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.scoreSlider
+  CGFloat sliderWidth = [self sliderWidthDependingOnDevice] - 12.0;
+  self.sliderWidth = [NSLayoutConstraint constraintWithItem:self.scoreSlider
                                                             attribute:NSLayoutAttributeWidth
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
                                                              constant:sliderWidth];
-  [self.modalView addConstraint:constW];
+  [self.modalView addConstraint:self.sliderWidth];
 
   NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.scoreSlider
                                                             attribute:NSLayoutAttributeHeight
@@ -419,132 +557,6 @@
                                                            multiplier:1
                                                              constant:45];
   [self.modalView addConstraint:constH];
-}
-
-- (void)setupVoteButtonConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.voteButton
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.modalView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:12];
-  [self.modalView addConstraint:constX];
-
-  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.voteButton
-                                                            attribute:NSLayoutAttributeBottom
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.modalView
-                                                            attribute:NSLayoutAttributeBottom
-                                                           multiplier:1
-                                                             constant:-65];
-  [self.modalView addConstraint:constY];
-}
-
-- (void)setupTitleLabelConstraints {
-  CGFloat topMargin = [self isSmallerScreenDevice] ? 30 : 40;
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:self.titleLabel
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.modalView
-                                                              attribute:NSLayoutAttributeTop
-                                                             multiplier:1
-                                                               constant:topMargin];
-  [self.modalView addConstraint:constTop];
-  CGFloat margin = [self isSmallerScreenDevice] ? 30 : 60;
-  NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:self.titleLabel
-                                                               attribute:NSLayoutAttributeLeft
-                                                               relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self.modalView
-                                                               attribute:NSLayoutAttributeLeft
-                                                              multiplier:1
-                                                                constant:margin];
-  [self.modalView addConstraint:constLeft];
-
-  NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:self.modalView
-                                                                attribute:NSLayoutAttributeRight
-                                                                relatedBy:NSLayoutRelationEqual
-                                                                   toItem:self.titleLabel
-                                                                attribute:NSLayoutAttributeRight
-                                                               multiplier:1
-                                                                 constant:margin];
-  [self.modalView addConstraint:constRight];
-}
-
-- (void)setupBackgroundImageViewContraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.backgroundImageView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self.view addConstraint:constX];
-
-  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.backgroundImageView
-                                                            attribute:NSLayoutAttributeCenterY
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeCenterY
-                                                           multiplier:1
-                                                             constant:0];
-  [self.view addConstraint:constY];
-
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.backgroundImageView
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeWidth
-                                                           multiplier:1
-                                                             constant:0];
-  [self.view addConstraint:constW];
-
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.backgroundImageView
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeHeight
-                                                           multiplier:1
-                                                             constant:0];
-  [self.view addConstraint:constH];
-}
-
-- (void)setupDismissButtonConstraints {
-  NSLayoutConstraint *constXTop = [NSLayoutConstraint constraintWithItem:self.dismissButton
-                                                               attribute:NSLayoutAttributeTop
-                                                               relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self.modalView
-                                                               attribute:NSLayoutAttributeTop
-                                                              multiplier:1
-                                                                constant:284];
-  [self.modalView addConstraint:constXTop];
-
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.modalView
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.dismissButton
-                                                            attribute:NSLayoutAttributeRight
-                                                           multiplier:1
-                                                             constant:-5];
-  [self.modalView addConstraint:constX];
-
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.dismissButton
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:80];
-  [self.dismissButton addConstraint:constW];
-
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.dismissButton
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:32];
-  [self.dismissButton addConstraint:constH];
 }
 
 - (void)setupScrollViewConstraints {

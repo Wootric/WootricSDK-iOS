@@ -26,25 +26,25 @@
 
 @interface APIWootric : NSObject
 
-@property (nonatomic, strong) NSString *clientSecret;
-@property (nonatomic, strong) NSString *clientID;
-@property (nonatomic, strong) NSString *accountToken;
-@property (nonatomic, strong) NSString *accessToken;
-@property (nonatomic, strong) NSString *endUserEmail;
-@property (nonatomic, strong) NSString *apiVersion;
-@property (nonatomic, strong) NSString *originURL;
-@property (nonatomic, strong) NSString *productName;
-@property (nonatomic, strong) NSString *wootricRecommendTo;
-@property (nonatomic, strong) NSString *detractorQuestion;
-@property (nonatomic, strong) NSString *passiveQuestion;
-@property (nonatomic, strong) NSString *promoterQuestion;
-@property (nonatomic, strong) NSString *detractorPlaceholder;
-@property (nonatomic, strong) NSString *passivePlaceholder;
-@property (nonatomic, strong) NSString *promoterPlaceholder;
-@property (nonatomic, strong) NSNumber *registeredPercent;
-@property (nonatomic, strong) NSNumber *visitorPercent;
-@property (nonatomic, strong) NSNumber *resurveyThrottle;
-@property (nonatomic, strong) NSDictionary *customProperties;
+@property (nonatomic) NSString *clientSecret;
+@property (nonatomic) NSString *clientID;
+@property (nonatomic) NSString *accountToken;
+@property (nonatomic) NSString *accessToken;
+@property (nonatomic) NSString *endUserEmail;
+@property (nonatomic) NSString *apiVersion;
+@property (nonatomic) NSString *originURL;
+@property (nonatomic) NSString *productName;
+@property (nonatomic) NSString *wootricRecommendTo;
+@property (nonatomic) NSString *detractorQuestion;
+@property (nonatomic) NSString *passiveQuestion;
+@property (nonatomic) NSString *promoterQuestion;
+@property (nonatomic) NSString *detractorPlaceholder;
+@property (nonatomic) NSString *passivePlaceholder;
+@property (nonatomic) NSString *promoterPlaceholder;
+@property (nonatomic) NSNumber *registeredPercent;
+@property (nonatomic) NSNumber *visitorPercent;
+@property (nonatomic) NSNumber *resurveyThrottle;
+@property (nonatomic) NSDictionary *customProperties;
 @property (nonatomic) NSInteger externalCreatedAt;
 @property (nonatomic) NSInteger firstSurveyAfter;
 @property (nonatomic) NSInteger surveyedDefaultDuration;
