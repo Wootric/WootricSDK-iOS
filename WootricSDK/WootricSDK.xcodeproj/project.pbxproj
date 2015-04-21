@@ -58,6 +58,7 @@
 		B2131F451AC01BDA005A2390 /* SurveyViewController+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SurveyViewController+Constraints.m"; sourceTree = "<group>"; };
 		B2131F481AC0226F005A2390 /* SurveyViewController+Views.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SurveyViewController+Views.h"; sourceTree = "<group>"; };
 		B2131F491AC0226F005A2390 /* SurveyViewController+Views.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SurveyViewController+Views.m"; sourceTree = "<group>"; };
+		B25C9EC31AE6A187008939A2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/WootricLocalizable.strings; sourceTree = "<group>"; };
 		B263E0D01AE68347008F7F0D /* SurveyViewController+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SurveyViewController+Utils.h"; sourceTree = "<group>"; };
 		B263E0D11AE68347008F7F0D /* SurveyViewController+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SurveyViewController+Utils.m"; sourceTree = "<group>"; };
 		B2643E091AAF38210023C0C5 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
@@ -101,6 +102,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B2748B791AE6A02A00303B6A /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				B2748B741AE697E400303B6A /* WootricLocalizable.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		B2F4DAB41AA77667007FA43E = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +131,7 @@
 		B2F4DAC01AA77667007FA43E /* WootricSDK */ = {
 			isa = PBXGroup;
 			children = (
+				B2748B791AE6A02A00303B6A /* Localization */,
 				B27628B71AA85E04000402B5 /* APIWootric.h */,
 				B27628B81AA85E04000402B5 /* APIWootric.m */,
 				B2F4DAC31AA77667007FA43E /* WootricSDKObjC.h */,
@@ -138,7 +148,6 @@
 				B2643E091AAF38210023C0C5 /* UIImage+ImageEffects.h */,
 				B2643E0A1AAF38210023C0C5 /* UIImage+ImageEffects.m */,
 				B2643E0D1AAF47650023C0C5 /* Images.xcassets */,
-				B2748B741AE697E400303B6A /* WootricLocalizable.strings */,
 				B2F4DAC11AA77667007FA43E /* Supporting Files */,
 			);
 			name = WootricSDK;
@@ -256,6 +265,7 @@
 				en,
 				pl,
 				fr,
+				es,
 			);
 			mainGroup = B2F4DAB41AA77667007FA43E;
 			productRefGroup = B2F4DABF1AA77667007FA43E /* Products */;
@@ -329,9 +339,9 @@
 				B2748B731AE697E400303B6A /* en */,
 				B2748B751AE697E700303B6A /* pl */,
 				B2748B761AE697E800303B6A /* fr */,
+				B25C9EC31AE6A187008939A2 /* es */,
 			);
 			name = WootricLocalizable.strings;
-			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
