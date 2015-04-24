@@ -76,7 +76,7 @@
   self.sendFeedbackButton = [[UIButton alloc] init];
   self.sendFeedbackButton.tintColor = self.tintColorGreen;
   self.sendFeedbackButton.hidden = YES;
-  self.sendFeedbackButton.titleLabel.font = [UIFont systemFontOfSize:14 weight:0.25];
+  self.sendFeedbackButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
   [self.sendFeedbackButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.sendFeedbackButton setTitle:[self localizedString:@"SEND FEEDBACK"] forState:UIControlStateNormal];
   [self.sendFeedbackButton setTitleColor:self.tintColorGreen forState:UIControlStateNormal];
@@ -89,7 +89,7 @@
   self.voteButton = [[UIButton alloc] init];
   self.voteButton.tintColor = self.tintColorGreen;
   self.voteButton.enabled = NO;
-  self.voteButton.titleLabel.font = [UIFont systemFontOfSize:14 weight:0.25];
+  self.voteButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
   [self.voteButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.voteButton setTitle:[self localizedString:@"SUBMIT"] forState:UIControlStateNormal];
   [self.voteButton setTitleColor:self.tintColorGreen forState:UIControlStateNormal];

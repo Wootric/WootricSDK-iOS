@@ -265,7 +265,7 @@
     label.layer.cornerRadius = 22.5;
     label.layer.masksToBounds = YES;
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:20 weight:0.5];
+    label.font = [UIFont boldSystemFontOfSize:22];
     label.textAlignment = NSTextAlignmentCenter;
 
     [handleView addSubview:label];
