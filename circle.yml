@@ -1,2 +1,5 @@
+machine:
+  xcode:
+    version: "6.2"
 general:
   build_dir: WootricSDK
