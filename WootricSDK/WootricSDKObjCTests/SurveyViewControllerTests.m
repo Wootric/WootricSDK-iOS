@@ -76,7 +76,7 @@
   _surveyVC.scoreSlider.value = 9;
   [_surveyVC voteButtonPressed:_surveyVC.voteButton];
 
-  XCTAssertEqualObjects(_surveyVC.titleLabel.text, @"You gave us an 9.");
+  XCTAssertEqualObjects(_surveyVC.titleLabel.text, @"You chose 9.");
   XCTAssertEqualObjects(_surveyVC.scoreLabel.text, @"Thank you! Care to tell us why?");
   XCTAssertEqualObjects(_surveyVC.askForFeedbackLabel.text, @"Help us by explaining your score.");
 }
