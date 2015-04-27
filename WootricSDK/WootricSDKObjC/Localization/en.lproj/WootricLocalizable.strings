@@ -27,6 +27,7 @@
 "Help us by explaining your score." = "Help us by explaining your score.";
 "How likely are you to recommend us to a friend or co-worker?" = "How likely are you to recommend us to a friend or co-worker?";
 "How likely are you to recommend us to a %@?" = "How likely are you to recommend us to a %@?";
+"How likely are you to recommend %@ to a %@?" = "How likely are you to recommend %@ to a %@?";
 "SUBMIT" = "SUBMIT";
 "DISMISS" = "DISMISS";
 "SEND FEEDBACK" = "SEND FEEDBACK";

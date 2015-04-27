@@ -159,14 +159,21 @@
     _titleLabel.textColor = _tintColorPink;
     _titleLabel.text = [NSString stringWithFormat:[self localizedString:@"You chose %ld."], score];
   } else {
-    if (_wootricRecommendTo != nil) {
-      _titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend us to a %@?"], _wootricRecommendTo];
-    } else {
-      _titleLabel.text = _defaultWootricQuestion;
-    }
+    _titleLabel.text = [self npsQuestion];
     _titleLabel.textColor = [UIColor darkGrayColor];
     _titleLabel.font = [UIFont systemFontOfSize:16];
   }
+}
+
+- (NSString *)npsQuestion {
+  if (_wootricRecommendTo != nil && _wootricRecommendProduct != nil) {
+    return [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend %@ to a %@?"], _wootricRecommendProduct, _wootricRecommendTo];
+  } else if (_wootricRecommendTo != nil) {
+    return [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend us to a %@?"], _wootricRecommendTo];
+  } else if (_wootricRecommendProduct != nil) {
+    return [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend %@ to a friend or co-worker?"], _wootricRecommendProduct];
+  }
+  return _defaultWootricQuestion;
 }
 
 - (NSString *)textDependingOnScore {
@@ -176,6 +183,8 @@
     return _passiveQuestion;
   } else if (_promoterQuestion != nil) {
     return _promoterQuestion;
+  } else if (_customQuestion) {
+    return _customQuestion;
   }
   return _defaultResponseQuestion;
 }
@@ -187,6 +196,8 @@
     return _passivePlaceholder;
   } else if (_promoterPlaceholder != nil) {
     return _promoterPlaceholder;
+  } else if (_customPlaceholder) {
+    return _customPlaceholder;
   }
   return _defaultPlaceholderText;
 }
@@ -277,6 +288,13 @@
 }
 
 #pragma mark - Button actions
+
+- (void)openWootricPage:(UIButton *)sender {
+  NSURL *url = [NSURL URLWithString:@"https://www.wootric.com"];
+  if (![[UIApplication sharedApplication] openURL:url]) {
+    NSLog(@"Failed to open wootric page");
+  }
+}
 
 - (void)backButtonPressed:(UIButton *)sender {
   [self changeItemsVisibilityTo:NO];

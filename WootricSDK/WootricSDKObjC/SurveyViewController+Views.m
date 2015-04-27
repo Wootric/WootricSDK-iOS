@@ -29,6 +29,7 @@
 
 - (void)setupViews {
   [self setupModal];
+  [self setupWootricLink];
   [self setupSlider];
   [self setupVoteButton];
   [self setupDismissButton];
@@ -38,7 +39,6 @@
   [self setupDragToChangeLabel];
   [self setupNotLikelyLabel];
   [self setupPoweredByWootric];
-  [self setupHeartIconImageView];
   [self setupExtremelyLikelyLabel];
   [self setupBackgroundImageView];
   [self setupSliderBackgroundView];
@@ -59,6 +59,15 @@
 }
 
 #pragma mark - Buttons
+
+- (void)setupWootricLink {
+  self.wootricLink = [[UIButton alloc] initWithFrame:CGRectMake(63, 295, 40, 11)];
+  [self.wootricLink setTitle:@"wootric" forState:UIControlStateNormal];
+  self.wootricLink.titleLabel.font = [UIFont systemFontOfSize:9];
+  self.wootricLink.titleLabel.textAlignment = NSTextAlignmentLeft;
+  [self.wootricLink setTitleColor:[UIColor colorWithRed:0.51 green:0.745 blue:0.824 alpha:1] forState:UIControlStateNormal];
+  [self.wootricLink addTarget:self action:NSSelectorFromString(@"openWootricPage:") forControlEvents:UIControlEventTouchUpInside];
+}
 
 - (void)setupBackButton {
   self.backButton = [[UIButton alloc] init];
@@ -180,8 +189,12 @@
   self.titleLabel.textColor = [UIColor darkGrayColor];
   self.titleLabel.numberOfLines = 0;
   self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-  if (self.wootricRecommendTo != nil) {
+  if (self.wootricRecommendTo != nil && self.wootricRecommendProduct != nil) {
+    self.titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend %@ to a %@?"], self.wootricRecommendProduct, self.wootricRecommendTo];
+  } else if (self.wootricRecommendTo != nil) {
     self.titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend us to a %@?"], self.wootricRecommendTo];
+  } else if (self.wootricRecommendProduct != nil) {
+    self.titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend %@ to a friend or co-worker?"], self.wootricRecommendProduct];
   } else {
     self.titleLabel.text = self.defaultWootricQuestion;
   }
@@ -190,8 +203,8 @@
 }
 
 - (void)setupPoweredByWootric {
-  self.poweredByWootricLabel = [[UILabel alloc] initWithFrame:CGRectMake(27, 295, 100, 11)];
-  self.poweredByWootricLabel.text = @"powered by wootric";
+  self.poweredByWootricLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 295, 100, 11)];
+  self.poweredByWootricLabel.text = @"powered by ";
   self.poweredByWootricLabel.font = [UIFont systemFontOfSize:9];
   self.poweredByWootricLabel.textColor = [UIColor darkGrayColor];
 }
@@ -225,12 +238,6 @@
 }
 
 #pragma mark - Icons
-
-- (void)setupHeartIconImageView {
-  UIImage *image = [UIImage imageNamed:@"icon_heart" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-  self.heartImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 297, 8, 8)];
-  self.heartImageView.image = image;
-}
 
 - (void)setupButtonCheckIcon {
   UIImage *checkIcon = [UIImage imageNamed:@"icon_check_disabled"
@@ -300,7 +307,7 @@
 
 - (void)addViewsToModal {
   [self.modalView addSubview:self.dismissButton];
-  [self.modalView addSubview:self.heartImageView];
+  [self.modalView addSubview:self.wootricLink];
   [self.modalView addSubview:self.poweredByWootricLabel];
   [self.modalView addSubview:self.titleLabel];
   [self.modalView addSubview:self.sliderBackgroundView];

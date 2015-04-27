@@ -86,19 +86,35 @@ Specify number of days, end user will be checked for survey eligibility, only, a
 By default, after end user is surveyed, the SDK sets a "cookie" (NSUserDefaults) valid for 90 days, during which end user won't be checked if eligible for survey.
 
 ```objective-c
+[WootricSDK setCustomQuestion:<CUSTOM_QUESTION>];
+```
+This method allows you to set custom question instead of default: "Thank you! Care to tell us why?".
+
+```objective-c
+[WootricSDK setCustomPlaceholder:<CUSTOM_PLACEHOLDER>];
+```
+This method allows you to set custom placeholder instead of default: "Help us by explaining your score."
+
+```objective-c
 [WootricSDK setCustomDetractorQuestion:<CUSTOM_QUESTION> passiveQuestion:<CUSTOM_QUESTION> andPromoterQuestion:<CUSTOM_QUESTION>];
 ```
-This method allows you to set custom question for each type of end user (detractor, passive or promoter). Default question asked after end user submits the score is "Thank you! Care to tell us why?". Passing ```nil``` for any of the parameters will result in using default for that type of end user.
+This method allows you to set custom question for each type of end user (detractor, passive or promoter). Default question asked after end user submits the score is "Thank you! Care to tell us why?". Passing ```nil``` for any of the parameters will result in using default for that type of end user. Be advised that this setting takes precedence over ```[WootricSDK setCustomQuestion]```
 
 ```objective-c
 [WootricSDK setCustomDetractorPlaceholder:<CUSTOM_PLACEHOLDER> passivePlaceholder:<CUSTOM_PLACEHOLDER> andPromoterPlaceholder:<CUSTOM_PLACEHOLDER>];
 ```
-Same as with custom question, it allows you to set custom placeholder text in feedback text view for each type of end user.
+Same as with custom question, it allows you to set custom placeholder text in feedback text view for each type of end user. Be advised that this setting takes precedence over ```[WootricSDK setCustomPlaceholder]```
 
 ```objective-c
 [WootricSDK setCustomWootricRecommendTo:<RECOMMEND_TO>];
 ```
 You can use this method to modify the default "How likely are you to recommend us to a friend or co-worker?" question. The ```friend or co-worker``` is replaced by RECOMMEND_TO value.
+
+```objective-c
+[WootricSDK setCustomWootricRecommendProduct:<RECOMMEND_PRODUCT>];
+```
+You can use this method to modify the default "How likely are you to recommend us to a friend or co-worker?" question. The ```us``` is replaced by RECOMMEND_PRODUCT value.
+
 ####Additional information:
 ---
 #####"Forcing" eligibility check:

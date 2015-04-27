@@ -25,7 +25,7 @@
 #import "APIWootric.h"
 
 @implementation APIWootric
-  NSString *baseAPIURL = @"https://api.wootric.com";
+  NSString *baseAPIURL = @"http://localhost:3001";
   NSString *eligibilityServerURL = @"http://wootric-eligibility.herokuapp.com/eligible.json";
   NSURLSession *wootricSession;
 
@@ -172,9 +172,40 @@
         NSDictionary *endUser = responseJSON[0];
         if (endUser[@"id"]) {
           NSInteger endUserID = [endUser[@"id"] integerValue];
+          [self updateExistingEndUser:endUserID];
           endUserWithID(endUserID);
         }
       }
+    }
+  }];
+
+  [dataTask resume];
+}
+
+- (void)updateExistingEndUser:(NSInteger)endUserID {
+  NSString *escapedEmail = [self percentEscapeString:_endUserEmail];
+  NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
+
+  if (_productName) {
+    params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, _productName];
+  }
+
+  if (_customProperties) {
+    NSString *parsedProperties = [self parseCustomProperties];
+    params = [NSString stringWithFormat:@"%@%@", params, parsedProperties];
+  }
+
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld?%@", baseAPIURL, _apiVersion, (long)endUserID, params]];
+  NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+
+  [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
+  urlRequest.HTTPMethod = @"PUT";
+
+  NSURLSessionDataTask *dataTask = [wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    if (error) {
+      NSLog(@"%@", error);
+    } else {
+      NSLog(@"user updated");
     }
   }];
 

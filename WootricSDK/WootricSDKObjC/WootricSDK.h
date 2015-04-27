@@ -42,9 +42,12 @@
 + (void)firstSurveyAfter:(NSUInteger)numberOfDays;
 + (void)setSurveyedDefaultAfterSurvey:(BOOL)flag;
 + (void)setSurveyedDefaultAfterSurvey:(BOOL)flag withDuration:(NSUInteger)numberOfDays;
++ (void)setCustomQuestion:(NSString *)customQuestion;
++ (void)setCustomPlaceholder:(NSString *)customPlaceholder;
 + (void)setCustomDetractorQuestion:(NSString *)detractorQuestion passiveQuestion:(NSString *)passiveQuestion andPromoterQuestion:(NSString *)promoterQuestion;
 + (void)setCustomDetractorPlaceholder:(NSString *)detractorPlaceholder passivePlaceholder:(NSString *)passivePlaceholder andPromoterPlaceholder:(NSString *)promoterPlaceholder;
 + (void)setCustomWootricRecommendTo:(NSString *)wootricRecommendTo;
++ (void)setCustomWootricRecommendProduct:(NSString *)wootricRecommendProduct;
 + (UIImage *)imageToBlurFromViewController:(UIViewController *)viewController;
 
 @end

@@ -116,6 +116,18 @@
   api.wootricRecommendTo = wootricRecommendTo;
 }
 
++ (void)setCustomQuestion:(NSString *)customQuestion {
+  [APIWootric sharedInstance].customQuestion = customQuestion;
+}
+
++ (void)setCustomPlaceholder:(NSString *)customPlaceholder {
+  [APIWootric sharedInstance].customPlaceholder = customPlaceholder;
+}
+
++ (void)setCustomWootricRecommendProduct:(NSString *)wootricRecommendProduct{
+  [APIWootric sharedInstance].wootricRecommendProduct = wootricRecommendProduct;
+}
+
 #pragma mark - Survey methods
 
 + (void)voteWithScore:(NSInteger)score andText:(NSString *)text {
@@ -153,10 +165,14 @@
   surveyViewController.imageToBlur = imageToBlur;
 
   surveyViewController.wootricRecommendTo = api.wootricRecommendTo;
+  surveyViewController.wootricRecommendProduct = api.wootricRecommendProduct;
+
+  surveyViewController.customQuestion = api.customQuestion;
   surveyViewController.detractorQuestion = api.detractorQuestion;
   surveyViewController.passiveQuestion = api.passiveQuestion;
   surveyViewController.promoterQuestion = api.promoterQuestion;
 
+  surveyViewController.customPlaceholder = api.customPlaceholder;
   surveyViewController.detractorPlaceholder = api.detractorPlaceholder;
   surveyViewController.passivePlaceholder= api.passivePlaceholder;
   surveyViewController.promoterPlaceholder = api.promoterPlaceholder;
