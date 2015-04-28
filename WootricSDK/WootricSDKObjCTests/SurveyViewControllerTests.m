@@ -50,7 +50,6 @@
   XCTAssertNotNil(_surveyVC.defaultPlaceholderText);
   XCTAssertNotNil(_surveyVC.defaultResponseQuestion);
   XCTAssertNotNil(_surveyVC.backgroundImageView);
-  XCTAssertNotNil(_surveyVC.heartImageView);
   XCTAssertNotNil(_surveyVC.dismissImageView);
   XCTAssertNotNil(_surveyVC.sliderBackgroundView);
   XCTAssertNotNil(_surveyVC.sliderCheckedBackgroundView);
