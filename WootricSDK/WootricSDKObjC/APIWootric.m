@@ -372,4 +372,9 @@
   return [result stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 }
 
+// For test purposes only
+- (NSString *)getBaseAPIURL {
+  return baseAPIURL;
+}
+
 @end

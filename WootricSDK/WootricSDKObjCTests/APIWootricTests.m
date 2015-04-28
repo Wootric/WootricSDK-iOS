@@ -21,6 +21,7 @@
 - (BOOL)needsSurvey;
 - (NSString *)percentEscapeString:(NSString *)string;
 - (NSString *)parseCustomProperties;
+- (NSString *)getBaseAPIURL;
 
 @end
 
@@ -44,6 +45,10 @@
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults removeObjectForKey:@"surveyed"];
   [defaults removeObjectForKey:@"lastSeenAt"];
+}
+
+- (void)testAPIURLString {
+  XCTAssertEqualObjects(@"https://api.wootric.com", _api.getBaseAPIURL);
 }
 
 // surveyed = NO, surveyImmediately = YES
