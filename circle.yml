@@ -9,7 +9,6 @@ test:
         PROVISIONING_PROFILE=
         -sdk iphonesimulator
         -destination 'platform=iOS Simulator,OS=8.1,name=iPhone 6'
-        -workspace WootricSDK-iOS.xcworkspace
         -scheme "My Scheme"
         clean test |
       tee $CIRCLE_ARTIFACTS/xcode_raw.log |
