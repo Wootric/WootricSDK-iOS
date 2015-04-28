@@ -25,7 +25,7 @@
 #import "APIWootric.h"
 
 @implementation APIWootric
-  NSString *baseAPIURL = @"http://localhost:3001";
+  NSString *baseAPIURL = @"https://api.wootric.com";
   NSString *eligibilityServerURL = @"http://wootric-eligibility.herokuapp.com/eligible.json";
   NSURLSession *wootricSession;
 
