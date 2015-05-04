@@ -1,6 +1,6 @@
 //
-//  SurveyViewController+Utils.h
-//  WootricSDK
+//  WTSettings.m
+//  WootricSDKObjC
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
 //
@@ -22,13 +22,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "SurveyViewController.h"
+#import "WTSettings.h"
 
-@interface SurveyViewController (Utils)
-
-- (BOOL)isSmallerScreenDevice;
-- (NSString *)localizedString:(NSString *)key;
-- (float)sliderWidthBeforeAutolayout;
-- (float)sliderWidthDependingOnDevice;
+@implementation WTSettings
 
 @end

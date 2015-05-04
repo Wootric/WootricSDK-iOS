@@ -21,6 +21,8 @@
 		B27628BA1AA85E04000402B5 /* APIWootric.m in Sources */ = {isa = PBXBuildFile; fileRef = B27628B81AA85E04000402B5 /* APIWootric.m */; };
 		B2A43C4A1ADC0F5900C48EF9 /* APIWootricTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A43C491ADC0F5900C48EF9 /* APIWootricTests.m */; };
 		B2A43C4C1ADD449F00C48EF9 /* SurveyViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A43C4B1ADD449F00C48EF9 /* SurveyViewControllerTests.m */; };
+		B2E9F2D31AF76A62006B7D1D /* WTSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E9F2D11AF76A62006B7D1D /* WTSettings.h */; };
+		B2E9F2D41AF76A62006B7D1D /* WTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = B2E9F2D21AF76A62006B7D1D /* WTSettings.m */; };
 		B2F4DAC41AA77667007FA43E /* WootricSDKObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = B2F4DAC31AA77667007FA43E /* WootricSDKObjC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B2F4DACA1AA77667007FA43E /* WootricSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F4DABE1AA77667007FA43E /* WootricSDK.framework */; };
 		B2F4DAD11AA77667007FA43E /* WootricSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2F4DAD01AA77667007FA43E /* WootricSDKTests.m */; };
@@ -71,6 +73,8 @@
 		B27628B81AA85E04000402B5 /* APIWootric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIWootric.m; sourceTree = "<group>"; };
 		B2A43C491ADC0F5900C48EF9 /* APIWootricTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIWootricTests.m; sourceTree = "<group>"; };
 		B2A43C4B1ADD449F00C48EF9 /* SurveyViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyViewControllerTests.m; sourceTree = "<group>"; };
+		B2E9F2D11AF76A62006B7D1D /* WTSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTSettings.h; sourceTree = "<group>"; };
+		B2E9F2D21AF76A62006B7D1D /* WTSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTSettings.m; sourceTree = "<group>"; };
 		B2F4DABE1AA77667007FA43E /* WootricSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WootricSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2F4DAC21AA77667007FA43E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2F4DAC31AA77667007FA43E /* WootricSDKObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WootricSDKObjC.h; sourceTree = "<group>"; };
@@ -134,6 +138,8 @@
 				B2748B791AE6A02A00303B6A /* Localization */,
 				B27628B71AA85E04000402B5 /* APIWootric.h */,
 				B27628B81AA85E04000402B5 /* APIWootric.m */,
+				B2E9F2D11AF76A62006B7D1D /* WTSettings.h */,
+				B2E9F2D21AF76A62006B7D1D /* WTSettings.m */,
 				B2F4DAC31AA77667007FA43E /* WootricSDKObjC.h */,
 				B2F4DADA1AA77684007FA43E /* WootricSDK.h */,
 				B2F4DADB1AA77684007FA43E /* WootricSDK.m */,
@@ -192,6 +198,7 @@
 				B2F4DAC41AA77667007FA43E /* WootricSDKObjC.h in Headers */,
 				B2131F4A1AC0226F005A2390 /* SurveyViewController+Views.h in Headers */,
 				B2643E0B1AAF38210023C0C5 /* UIImage+ImageEffects.h in Headers */,
+				B2E9F2D31AF76A62006B7D1D /* WTSettings.h in Headers */,
 				B263E0D21AE68347008F7F0D /* SurveyViewController+Utils.h in Headers */,
 				B2F4DADC1AA77684007FA43E /* WootricSDK.h in Headers */,
 				B27628B91AA85E04000402B5 /* APIWootric.h in Headers */,
@@ -305,6 +312,7 @@
 				B2131F471AC01BDA005A2390 /* SurveyViewController+Constraints.m in Sources */,
 				B2131F4B1AC0226F005A2390 /* SurveyViewController+Views.m in Sources */,
 				B2643E0C1AAF38210023C0C5 /* UIImage+ImageEffects.m in Sources */,
+				B2E9F2D41AF76A62006B7D1D /* WTSettings.m in Sources */,
 				B2F4DAE11AA776A3007FA43E /* SurveyViewController.m in Sources */,
 				B263E0D31AE68347008F7F0D /* SurveyViewController+Utils.m in Sources */,
 				B27628BA1AA85E04000402B5 /* APIWootric.m in Sources */,
