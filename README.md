@@ -54,9 +54,9 @@ If surveyImmediately is set to YES and user wasn't surveyed yet - the survey is 
 
 ```objective-c
 //You can pass nil value for any of the parameters - it will use defaults for eligibility check if you do so.
-[WootricSDK setCustomValueForResurveyThrottle:<NUMBER_OF_DAYS> visitorPercentage:<0-100> andRegisteredPercentage:<0-100>];
+[WootricSDK setCustomValueForResurveyThrottle:<NUMBER_OF_DAYS> visitorPercentage:<0-100> registeredPercentage:<0-100> andDailyResponseCap:<0-...>];
 ```
-This method will alter the values of resurvey throttle, tested visitor and registered users percentage used for eligibility check.
+This method will alter the values of resurvey throttle, tested visitor, registered users percentage and daily response cap used for eligibility check.
 
 ```objective-c
 [WootricSDK endUserCreatedAt:<UNIX Timestamp>];

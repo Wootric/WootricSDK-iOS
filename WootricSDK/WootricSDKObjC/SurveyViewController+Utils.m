@@ -27,20 +27,18 @@
 @implementation SurveyViewController (Utils)
 
 - (NSString *)localizedString:(NSString *)key {
-//  NSString *path = [[NSBundle mainBundle] pathForResource:@"pl" ofType:@"lproj"];
-//  NSLog(@"%@", path);
-//
-//  NSString * path = [[NSBundle mainBundle] pathForResource:@"pt-PT" ofType:@"lproj"];
-//  NSBundle * bundle = nil;
-//  if(path == nil){
-//    bundle = [NSBundle mainBundle];
-//  }else{
-//    bundle = [NSBundle bundleWithPath:path];
-//  }
-//  NSString * str = [bundle localizedStringForKey:@"a string" value:@"comment" table:nil];
-  return [[NSBundle bundleForClass:[self class]] localizedStringForKey:key
-                                                                 value:nil
-                                                                 table:@"WootricLocalizable"];
+  NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:self.settings.language ofType:@"lproj"];
+  NSBundle *bundle = nil;
+
+  if (path == nil) {
+    bundle = [NSBundle bundleForClass:[self class]];
+  } else {
+    bundle = [NSBundle bundleWithPath:path];
+  }
+
+  return [bundle localizedStringForKey:key
+                                 value:nil
+                                 table:@"WootricLocalizable"];
 }
 
 - (BOOL)isSmallerScreenDevice {

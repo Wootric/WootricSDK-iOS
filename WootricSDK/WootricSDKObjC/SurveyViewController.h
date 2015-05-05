@@ -23,12 +23,15 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import "WTSettings.h"
 
 @interface SurveyViewController : UIViewController <UITextViewDelegate>
 
+@property (nonatomic) WTSettings *settings;
 @property (nonatomic) NSLayoutConstraint *constTopToModal;
 @property (nonatomic) NSLayoutConstraint *sliderWidth;
 @property (nonatomic) NSLayoutConstraint *constModalHeight;
+@property (nonatomic) NSLayoutConstraint *chosenScoreConstR;
 @property (nonatomic) UIImage *imageToBlur;
 @property (nonatomic) UIImage *blurredImage;
 @property (nonatomic) UIView *modalView;
@@ -40,21 +43,9 @@
 @property (nonatomic) UIButton *wootricLink;
 @property (nonatomic) UITextView *commentTextView;
 @property (nonatomic) UIScrollView *scrollView;
-@property (nonatomic) UIColor *tintColorPink;
-@property (nonatomic) UIColor *tintColorGreen;
-@property (nonatomic) NSString *customQuestion;
-@property (nonatomic) NSString *customPlaceholder;
-@property (nonatomic) NSString *wootricRecommendTo;
-@property (nonatomic) NSString *wootricRecommendProduct;
 @property (nonatomic) NSString *defaultWootricQuestion;
 @property (nonatomic) NSString *defaultPlaceholderText;
 @property (nonatomic) NSString *defaultResponseQuestion;
-@property (nonatomic) NSString *detractorQuestion;
-@property (nonatomic) NSString *passiveQuestion;
-@property (nonatomic) NSString *promoterQuestion;
-@property (nonatomic) NSString *detractorPlaceholder;
-@property (nonatomic) NSString *passivePlaceholder;
-@property (nonatomic) NSString *promoterPlaceholder;
 @property (nonatomic) UIImageView *backgroundImageView;
 @property (nonatomic) UIImageView *heartImageView;
 @property (nonatomic) UIImageView *dismissImageView;
@@ -70,5 +61,8 @@
 @property (nonatomic) UILabel *notLikelyLabel;
 @property (nonatomic) UILabel *extremelyLikelyLabel;
 @property (nonatomic) UILabel *scorePopoverLabel;
+@property (nonatomic) UILabel *chosenScore;
+
+- (instancetype)initWithSettings:(WTSettings *)settings;
 
 @end

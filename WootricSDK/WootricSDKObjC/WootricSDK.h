@@ -35,7 +35,7 @@
 + (void)voteWithScore:(NSInteger)score andText:(NSString *)text;
 + (void)userDeclined;
 + (void)showSurveyInViewController:(UIViewController *)viewController;
-+ (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercent andRegisteredPercentage:(NSNumber *)registeredPercent;
++ (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercent registeredPercentage:(NSNumber *)registeredPercent andDailyResponseCap:(NSNumber *)dailyResponseCap;
 + (void)endUserCreatedAt:(NSInteger)externalCreatedAt;
 + (void)productName:(NSString *)productName;
 + (void)endUserProperties:(NSDictionary *)customProperties;
@@ -48,6 +48,7 @@
 + (void)setCustomDetractorPlaceholder:(NSString *)detractorPlaceholder passivePlaceholder:(NSString *)passivePlaceholder andPromoterPlaceholder:(NSString *)promoterPlaceholder;
 + (void)setCustomWootricRecommendTo:(NSString *)wootricRecommendTo;
 + (void)setCustomWootricRecommendProduct:(NSString *)wootricRecommendProduct;
++ (void)setDailyResponseCap:(NSNumber *)dailyResponseCap;
 + (UIImage *)imageToBlurFromViewController:(UIViewController *)viewController;
 
 @end

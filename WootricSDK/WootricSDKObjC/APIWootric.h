@@ -23,9 +23,11 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#import "WTSettings.h"
 
 @interface APIWootric : NSObject
 
+@property (nonatomic) WTSettings *settings;
 @property (nonatomic) NSString *clientSecret;
 @property (nonatomic) NSString *clientID;
 @property (nonatomic) NSString *accountToken;
@@ -33,27 +35,6 @@
 @property (nonatomic) NSString *endUserEmail;
 @property (nonatomic) NSString *apiVersion;
 @property (nonatomic) NSString *originURL;
-@property (nonatomic) NSString *productName;
-@property (nonatomic) NSString *wootricRecommendProduct;
-@property (nonatomic) NSString *customQuestion;
-@property (nonatomic) NSString *customPlaceholder;
-@property (nonatomic) NSString *wootricRecommendTo;
-@property (nonatomic) NSString *detractorQuestion;
-@property (nonatomic) NSString *passiveQuestion;
-@property (nonatomic) NSString *promoterQuestion;
-@property (nonatomic) NSString *detractorPlaceholder;
-@property (nonatomic) NSString *passivePlaceholder;
-@property (nonatomic) NSString *promoterPlaceholder;
-@property (nonatomic) NSNumber *registeredPercent;
-@property (nonatomic) NSNumber *visitorPercent;
-@property (nonatomic) NSNumber *resurveyThrottle;
-@property (nonatomic) NSDictionary *customProperties;
-@property (nonatomic) NSInteger externalCreatedAt;
-@property (nonatomic) NSInteger firstSurveyAfter;
-@property (nonatomic) NSInteger surveyedDefaultDuration;
-@property (nonatomic) BOOL surveyImmediately;
-@property (nonatomic) BOOL forceSurvey;
-@property (nonatomic) BOOL setDefaultAfterSurvey;
 
 + (instancetype)sharedInstance;
 - (void)getTrackingPixel;

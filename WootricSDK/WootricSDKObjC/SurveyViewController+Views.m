@@ -50,6 +50,7 @@
   [self setupButtonCheckIcon];
   [self setupButtonSendIcon];
   [self setupBackButton];
+  [self setupChosenScoreLabel];
 
   [self addViewsToModal];
   [self.view addSubview:self.scrollView];
@@ -61,7 +62,7 @@
 #pragma mark - Buttons
 
 - (void)setupWootricLink {
-  self.wootricLink = [[UIButton alloc] initWithFrame:CGRectMake(63, 295, 40, 11)];
+  self.wootricLink = [[UIButton alloc] initWithFrame:CGRectMake(63, 279, 40, 11)];
   [self.wootricLink setTitle:@"wootric" forState:UIControlStateNormal];
   self.wootricLink.titleLabel.font = [UIFont systemFontOfSize:9];
   self.wootricLink.titleLabel.textAlignment = NSTextAlignmentLeft;
@@ -72,10 +73,14 @@
 - (void)setupBackButton {
   self.backButton = [[UIButton alloc] init];
   UIImage *image = [UIImage imageNamed:@"icon_back_arrow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-  UIImageView *backIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8, 8, 16, 16)];
+  UIImageView *backIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8, 3, 16, 16)];
   backIcon.image = image;
   self.backButton.hidden = YES;
   [self.backButton addSubview:backIcon];
+  [self.backButton setTitle:[self localizedString:@"back"] forState:UIControlStateNormal];
+  self.backButton.titleLabel.font = [UIFont systemFontOfSize:11];
+  [self.backButton setTitleColor:[UIColor colorWithRed:196.0/255.0 green:196.0/255.0 blue:196.0/255.0 alpha:1] forState:UIControlStateNormal];
+  self.backButton.titleLabel.textAlignment = NSTextAlignmentRight;
   [self.backButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.backButton addTarget:self action:NSSelectorFromString(@"backButtonPressed:")
                     forControlEvents:UIControlEventTouchUpInside];
@@ -83,12 +88,12 @@
 
 - (void)setupSendFeedbackButton {
   self.sendFeedbackButton = [[UIButton alloc] init];
-  self.sendFeedbackButton.tintColor = self.tintColorGreen;
+  self.sendFeedbackButton.tintColor = self.settings.tintColorSubmit;
   self.sendFeedbackButton.hidden = YES;
   self.sendFeedbackButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
   [self.sendFeedbackButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.sendFeedbackButton setTitle:[self localizedString:@"SEND FEEDBACK"] forState:UIControlStateNormal];
-  [self.sendFeedbackButton setTitleColor:self.tintColorGreen forState:UIControlStateNormal];
+  [self.sendFeedbackButton setTitleColor:self.settings.tintColorSubmit forState:UIControlStateNormal];
   [self.sendFeedbackButton setTitleColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1] forState:UIControlStateDisabled];
   [self.sendFeedbackButton addTarget:self action:NSSelectorFromString(@"sendButtonPressed:")
                     forControlEvents:UIControlEventTouchUpInside];
@@ -96,12 +101,12 @@
 
 - (void)setupVoteButton {
   self.voteButton = [[UIButton alloc] init];
-  self.voteButton.tintColor = self.tintColorGreen;
+  self.voteButton.tintColor = self.settings.tintColorSubmit;
   self.voteButton.enabled = NO;
   self.voteButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
   [self.voteButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.voteButton setTitle:[self localizedString:@"SUBMIT"] forState:UIControlStateNormal];
-  [self.voteButton setTitleColor:self.tintColorGreen forState:UIControlStateNormal];
+  [self.voteButton setTitleColor:self.settings.tintColorSubmit forState:UIControlStateNormal];
   [self.voteButton setTitleColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1] forState:UIControlStateDisabled];
   [self.voteButton addTarget:self action:NSSelectorFromString(@"voteButtonPressed:")
             forControlEvents:UIControlEventTouchUpInside];
@@ -183,18 +188,30 @@
   [self.dragToChangeLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
+- (void)setupChosenScoreLabel {
+  self.chosenScore = [[UILabel alloc] init];
+  self.chosenScore.font = [UIFont systemFontOfSize:12];
+  self.chosenScore.textColor = [UIColor whiteColor];
+  self.chosenScore.layer.cornerRadius = 10;
+  self.chosenScore.textAlignment = NSTextAlignmentCenter;
+  self.chosenScore.layer.masksToBounds = YES;
+  self.chosenScore.backgroundColor = self.settings.tintColorCircle;
+  self.chosenScore.hidden = YES;
+  [self.chosenScore setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
 - (void)setupTitleLabel {
   self.titleLabel = [[UILabel alloc] init];
   self.titleLabel.textAlignment = NSTextAlignmentCenter;
   self.titleLabel.textColor = [UIColor darkGrayColor];
   self.titleLabel.numberOfLines = 0;
   self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-  if (self.wootricRecommendTo != nil && self.wootricRecommendProduct != nil) {
-    self.titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend %@ to a %@?"], self.wootricRecommendProduct, self.wootricRecommendTo];
-  } else if (self.wootricRecommendTo != nil) {
-    self.titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend us to a %@?"], self.wootricRecommendTo];
-  } else if (self.wootricRecommendProduct != nil) {
-    self.titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend %@ to a friend or co-worker?"], self.wootricRecommendProduct];
+  if (self.settings.wootricRecommendTo != nil && self.settings.wootricRecommendProduct != nil) {
+    self.titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend %@ to a %@?"], self.settings.wootricRecommendProduct, self.settings.wootricRecommendTo];
+  } else if (self.settings.wootricRecommendTo != nil) {
+    self.titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend us to a %@?"], self.settings.wootricRecommendTo];
+  } else if (self.settings.wootricRecommendProduct != nil) {
+    self.titleLabel.text = [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend %@ to a friend or co-worker?"], self.settings.wootricRecommendProduct];
   } else {
     self.titleLabel.text = self.defaultWootricQuestion;
   }
@@ -203,7 +220,7 @@
 }
 
 - (void)setupPoweredByWootric {
-  self.poweredByWootricLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 295, 100, 11)];
+  self.poweredByWootricLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 279, 100, 11)];
   self.poweredByWootricLabel.text = @"powered by ";
   self.poweredByWootricLabel.font = [UIFont systemFontOfSize:9];
   self.poweredByWootricLabel.textColor = [UIColor darkGrayColor];
@@ -272,7 +289,7 @@
 - (void)setupCommentTextView {
   self.commentTextView = [[UITextView alloc] init];
   self.commentTextView.hidden = YES;
-  self.commentTextView.tintColor = self.tintColorGreen;
+  self.commentTextView.tintColor = self.settings.tintColorSubmit;
   self.commentTextView.layer.cornerRadius = 2;
   self.commentTextView.layer.borderWidth = 1;
   self.commentTextView.layer.borderColor = [UIColor colorWithRed:241.0/255.0 green:241.0/255.0 blue:241.0/255 alpha:1].CGColor;
@@ -285,7 +302,7 @@
   self.scoreSlider.minimumValue = 0;
   self.scoreSlider.maximumValue = 10;
   self.scoreSlider.value = 5;
-  self.scoreSlider.tintColor = self.tintColorGreen;
+  self.scoreSlider.tintColor = self.settings.tintColorSubmit;
   UIImage *image = [[UIImage alloc] init];
   [self.scoreSlider setMaximumTrackImage:image forState:UIControlStateNormal];
   [self.scoreSlider setMinimumTrackImage:image forState:UIControlStateNormal];
@@ -325,6 +342,7 @@
   [self.modalView addSubview:self.buttonIconCheck];
   [self.modalView addSubview:self.buttonIconSend];
   [self.modalView addSubview:self.backButton];
+  [self.modalView addSubview:self.chosenScore];
 }
 
 @end

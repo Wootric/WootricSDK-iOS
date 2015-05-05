@@ -25,6 +25,7 @@
 #import "WootricSDK.h"
 #import <Foundation/Foundation.h>
 #import "APIWootric.h"
+#import "WTSettings.h"
 #import "SurveyViewController.h"
 
 @implementation WootricSDK
@@ -51,81 +52,85 @@
 
 + (void)surveyImmediately:(BOOL)flag {
   APIWootric *api = [APIWootric sharedInstance];
-  api.surveyImmediately = flag;
+  api.settings.surveyImmediately = flag;
 }
 
 + (void)forceSurvey:(BOOL)flag {
   APIWootric *api = [APIWootric sharedInstance];
-  api.forceSurvey = flag;
+  api.settings.forceSurvey = flag;
 }
 
-+ (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercent andRegisteredPercentage:(NSNumber *)registeredPercent {
++ (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle
+                        visitorPercentage:(NSNumber *)visitorPercent
+                     registeredPercentage:(NSNumber *)registeredPercent
+                      andDailyResponseCap:(NSNumber *)dailyResponseCap {
   APIWootric *api = [APIWootric sharedInstance];
-  api.registeredPercent = registeredPercent;
-  api.visitorPercent = visitorPercent;
-  api.resurveyThrottle = resurveyThrottle;
+  api.settings.registeredPercent = registeredPercent;
+  api.settings.visitorPercent = visitorPercent;
+  api.settings.resurveyThrottle = resurveyThrottle;
+  api.settings.dailyResponseCap = dailyResponseCap;
 }
 
 + (void)endUserCreatedAt:(NSInteger)externalCreatedAt {
   APIWootric *api = [APIWootric sharedInstance];
-  api.externalCreatedAt = externalCreatedAt;
+  api.settings.externalCreatedAt = externalCreatedAt;
 }
 
 + (void)productName:(NSString *)productName {
   APIWootric *api = [APIWootric sharedInstance];
-  api.productName = productName;
+  api.settings.productName = productName;
 }
 
 + (void)endUserProperties:(NSDictionary *)customProperties {
   APIWootric *api = [APIWootric sharedInstance];
-  api.customProperties = customProperties;
+  api.settings.customProperties = customProperties;
 }
 
 + (void)firstSurveyAfter:(NSUInteger)numberOfDays {
   APIWootric *api = [APIWootric sharedInstance];
-  api.firstSurveyAfter = numberOfDays;
+  api.settings.firstSurveyAfter = numberOfDays;
 }
 
 + (void)setSurveyedDefaultAfterSurvey:(BOOL)flag withDuration:(NSUInteger)numberOfDays {
   APIWootric *api = [APIWootric sharedInstance];
-  api.setDefaultAfterSurvey = flag;
-  api.surveyedDefaultDuration = numberOfDays;
+  api.settings.setDefaultAfterSurvey = flag;
+  api.settings.surveyedDefaultDuration = numberOfDays;
 }
 
 + (void)setSurveyedDefaultAfterSurvey:(BOOL)flag {
   APIWootric *api = [APIWootric sharedInstance];
-  [WootricSDK setSurveyedDefaultAfterSurvey:flag withDuration:api.surveyedDefaultDuration];
+  [WootricSDK setSurveyedDefaultAfterSurvey:flag withDuration:api.settings.surveyedDefaultDuration];
 }
 
 + (void)setCustomDetractorQuestion:(NSString *)detractorQuestion passiveQuestion:(NSString *)passiveQuestion andPromoterQuestion:(NSString *)promoterQuestion {
   APIWootric *api = [APIWootric sharedInstance];
-  api.detractorQuestion = detractorQuestion;
-  api.passiveQuestion = passiveQuestion;
-  api.promoterQuestion = promoterQuestion;
+  api.settings.detractorQuestion = detractorQuestion;
+  api.settings.passiveQuestion = passiveQuestion;
+  api.settings.promoterQuestion = promoterQuestion;
 }
 
 + (void)setCustomDetractorPlaceholder:(NSString *)detractorPlaceholder passivePlaceholder:(NSString *)passivePlaceholder andPromoterPlaceholder:(NSString *)promoterPlaceholder {
   APIWootric *api = [APIWootric sharedInstance];
-  api.detractorPlaceholder = detractorPlaceholder;
-  api.passivePlaceholder = passivePlaceholder;
-  api.promoterPlaceholder = promoterPlaceholder;
+  api.settings.detractorPlaceholder = detractorPlaceholder;
+  api.settings.passivePlaceholder = passivePlaceholder;
+  api.settings.promoterPlaceholder = promoterPlaceholder;
 }
 
 + (void)setCustomWootricRecommendTo:(NSString *)wootricRecommendTo {
   APIWootric *api = [APIWootric sharedInstance];
-  api.wootricRecommendTo = wootricRecommendTo;
+  api.settings.wootricRecommendTo = wootricRecommendTo;
 }
 
 + (void)setCustomQuestion:(NSString *)customQuestion {
-  [APIWootric sharedInstance].customQuestion = customQuestion;
+  [APIWootric sharedInstance].settings.customQuestion = customQuestion;
 }
 
 + (void)setCustomPlaceholder:(NSString *)customPlaceholder {
-  [APIWootric sharedInstance].customPlaceholder = customPlaceholder;
+  [APIWootric sharedInstance].settings.customPlaceholder = customPlaceholder;
 }
 
 + (void)setCustomWootricRecommendProduct:(NSString *)wootricRecommendProduct{
-  [APIWootric sharedInstance].wootricRecommendProduct = wootricRecommendProduct;
+  [APIWootric sharedInstance].settings.wootricRecommendProduct = wootricRecommendProduct;
 }
 
 #pragma mark - Survey methods
@@ -157,25 +162,11 @@
 }
 
 + (void)setupAndShowSurveyForViewController:(UIViewController *)viewController withImageToBlur:(UIImage *)imageToBlur {
-  APIWootric *api = [APIWootric sharedInstance];
-  SurveyViewController *surveyViewController = [[SurveyViewController alloc] init];
+  SurveyViewController *surveyViewController = [[SurveyViewController alloc] initWithSettings:[APIWootric sharedInstance].settings];
 
   surveyViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
   surveyViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
   surveyViewController.imageToBlur = imageToBlur;
-
-  surveyViewController.wootricRecommendTo = api.wootricRecommendTo;
-  surveyViewController.wootricRecommendProduct = api.wootricRecommendProduct;
-
-  surveyViewController.customQuestion = api.customQuestion;
-  surveyViewController.detractorQuestion = api.detractorQuestion;
-  surveyViewController.passiveQuestion = api.passiveQuestion;
-  surveyViewController.promoterQuestion = api.promoterQuestion;
-
-  surveyViewController.customPlaceholder = api.customPlaceholder;
-  surveyViewController.detractorPlaceholder = api.detractorPlaceholder;
-  surveyViewController.passivePlaceholder= api.passivePlaceholder;
-  surveyViewController.promoterPlaceholder = api.promoterPlaceholder;
 
   [viewController presentViewController:surveyViewController animated:YES completion:nil];
 }
@@ -201,9 +192,8 @@
 }
 
 + (void)setSurveyedInDefaults {
-  APIWootric *api = [APIWootric sharedInstance];
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  if (api.setDefaultAfterSurvey) {
+  if ([APIWootric sharedInstance].settings.setDefaultAfterSurvey) {
     [defaults setBool:YES forKey:@"surveyed"];
     [defaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:@"surveyedAt"];
   }
@@ -211,8 +201,7 @@
 
 + (void)checkIfSurveyedDefaultExpired {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  APIWootric *api = [APIWootric sharedInstance];
-  if ([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"surveyedAt"] >= (api.surveyedDefaultDuration * 60 * 60 * 24)) {
+  if ([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"surveyedAt"] >= ([APIWootric sharedInstance].settings.surveyedDefaultDuration * 60 * 60 * 24)) {
     [defaults setBool:NO forKey:@"surveyed"];
   }
 }

@@ -27,6 +27,7 @@
 @implementation APIWootric
   NSString *baseAPIURL = @"https://api.wootric.com";
   NSString *eligibilityServerURL = @"http://wootric-eligibility.herokuapp.com/eligible.json";
+  BOOL endUserAlreadyUpdate;
   NSURLSession *wootricSession;
 
 + (instancetype)sharedInstance {
@@ -42,9 +43,7 @@
 - (instancetype)init {
   if (self = [super init]) {
     wootricSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    _setDefaultAfterSurvey = YES;
-    _surveyedDefaultDuration = 90;
-    _firstSurveyAfter = 31;
+    _settings = [[WTSettings alloc] init];
     _apiVersion = @"v1";
   }
   return self;
@@ -63,8 +62,8 @@
 
 - (NSString *)parseCustomProperties {
   NSString *parsedProperties = @"";
-  for (NSString *key in _customProperties) {
-    NSString *escapedValue = [self percentEscapeString:[NSString stringWithFormat:@"%@", [_customProperties objectForKey:key]]];
+  for (NSString *key in _settings.customProperties) {
+    NSString *escapedValue = [self percentEscapeString:[NSString stringWithFormat:@"%@", [_settings.customProperties objectForKey:key]]];
     parsedProperties = [NSString stringWithFormat:@"%@&%@", parsedProperties, [NSString stringWithFormat:@"properties[%@]=%@", key, escapedValue]];
   }
 
@@ -89,8 +88,8 @@
   NSString *stringToFormat = @"https://d8myem934l1zi.cloudfront.net/pixel.gif?account_token=%@&email=%@&url=%@&random=%@";
   NSString *params = [NSString stringWithFormat:stringToFormat, _accountToken, _endUserEmail, _originURL, formattedRand];
 
-  if (_externalCreatedAt != 0) {
-    params = [NSString stringWithFormat:@"%@&created_at=%ld", params, (long)_externalCreatedAt];
+  if (_settings.externalCreatedAt != 0) {
+    params = [NSString stringWithFormat:@"%@&created_at=%ld", params, (long)_settings.externalCreatedAt];
   }
 
   NSURL *url = [NSURL URLWithString:params];
@@ -172,7 +171,9 @@
         NSDictionary *endUser = responseJSON[0];
         if (endUser[@"id"]) {
           NSInteger endUserID = [endUser[@"id"] integerValue];
-          [self updateExistingEndUser:endUserID];
+          if (!endUserAlreadyUpdate) {
+            [self updateExistingEndUser:endUserID];
+          }
           endUserWithID(endUserID);
         }
       }
@@ -186,11 +187,11 @@
   NSString *escapedEmail = [self percentEscapeString:_endUserEmail];
   NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
 
-  if (_productName) {
-    params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, _productName];
+  if (_settings.productName) {
+    params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, _settings.productName];
   }
 
-  if (_customProperties) {
+  if (_settings.customProperties) {
     NSString *parsedProperties = [self parseCustomProperties];
     params = [NSString stringWithFormat:@"%@%@", params, parsedProperties];
   }
@@ -206,6 +207,7 @@
       NSLog(@"%@", error);
     } else {
       NSLog(@"user updated");
+      endUserAlreadyUpdate = YES;
     }
   }];
 
@@ -218,15 +220,15 @@
   NSString *escapedEmail = [self percentEscapeString:_endUserEmail];
   NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
 
-  if (_externalCreatedAt != 0) {
-    params = [NSString stringWithFormat:@"%@&external_created_at=%ld", params, (long)_externalCreatedAt];
+  if (_settings.externalCreatedAt != 0) {
+    params = [NSString stringWithFormat:@"%@&external_created_at=%ld", params, (long)_settings.externalCreatedAt];
   }
 
-  if (_productName) {
-    params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, _productName];
+  if (_settings.productName) {
+    params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, _settings.productName];
   }
 
-  if (_customProperties) {
+  if (_settings.customProperties) {
     NSString *parsedProperties = [self parseCustomProperties];
     params = [NSString stringWithFormat:@"%@%@", params, parsedProperties];
   }
@@ -254,16 +256,20 @@
 - (void)checkEligibilityForEndUser:(void (^)())eligible {
   NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@&email=%@", eligibilityServerURL, _accountToken, _endUserEmail];
 
-  if (_registeredPercent) {
-    baseURLString = [NSString stringWithFormat:@"%@&registered_percent=%ld", baseURLString, (long)_registeredPercent.integerValue];
+  if (_settings.registeredPercent) {
+    baseURLString = [NSString stringWithFormat:@"%@&registered_percent=%ld", baseURLString, (long)_settings.registeredPercent.integerValue];
   }
 
-  if (_visitorPercent) {
-    baseURLString = [NSString stringWithFormat:@"%@&visitor_percent=%ld", baseURLString, (long)_visitorPercent.integerValue];
+  if (_settings.visitorPercent) {
+    baseURLString = [NSString stringWithFormat:@"%@&visitor_percent=%ld", baseURLString, (long)_settings.visitorPercent.integerValue];
   }
 
-  if (_resurveyThrottle) {
-    baseURLString = [NSString stringWithFormat:@"%@&resurvey_throttle=%ld", baseURLString, (long)_resurveyThrottle.integerValue];
+  if (_settings.resurveyThrottle) {
+    baseURLString = [NSString stringWithFormat:@"%@&resurvey_throttle=%ld", baseURLString, (long)_settings.resurveyThrottle.integerValue];
+  }
+
+  if (_settings.dailyResponseCap) {
+    baseURLString = [NSString stringWithFormat:@"%@&daily_response_cap=%ld", baseURLString, (long)_settings.dailyResponseCap.integerValue];
   }
 
   NSURL *url = [NSURL URLWithString:baseURLString];
@@ -276,8 +282,10 @@
     } else {
       NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
       if (responseJSON) {
+        NSLog(@"%@", responseJSON);
         if ([responseJSON[@"eligible"] isEqual:@1]) {
           NSLog(@"User eligible");
+          [_settings modifyWithSettingsFromEligibility:responseJSON];
           eligible();
         } else {
           NSLog(@"User not eligible");
@@ -316,12 +324,12 @@
 }
 
 - (void)surveyForEndUser:(void (^)())showSurvey {
-  if (_forceSurvey) {
+  if (_settings.forceSurvey) {
     [self authenticate:^{
       showSurvey();
     }];
   } else if ([self needsSurvey]) {
-    if (_surveyImmediately) {
+    if (_settings.surveyImmediately) {
       [self authenticate:^{
         showSurvey();
       }];
@@ -339,15 +347,15 @@
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   if ([defaults boolForKey:@"surveyed"]) {
     return NO;
-  } else if (_surveyImmediately) {
+  } else if (_settings.surveyImmediately) {
     return YES;
   } else {
-    NSInteger age = [[NSDate date] timeIntervalSince1970] - _externalCreatedAt;
-    if (_firstSurveyAfter != 0) {
-      if (age > (_firstSurveyAfter * 60 * 60 * 24)) {
+    NSInteger age = [[NSDate date] timeIntervalSince1970] - _settings.externalCreatedAt;
+    if (_settings.firstSurveyAfter != 0) {
+      if (age > (_settings.firstSurveyAfter * 60 * 60 * 24)) {
         return YES;
       } else {
-        if (([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"lastSeenAt"]) >= (_firstSurveyAfter * 60 * 60 * 24)) {
+        if (([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"lastSeenAt"]) >= (_settings.firstSurveyAfter * 60 * 60 * 24)) {
           return YES;
         }
       }

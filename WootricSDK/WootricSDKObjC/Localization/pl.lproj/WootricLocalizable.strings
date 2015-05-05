@@ -25,7 +25,7 @@
 "Extremely likely" = "Zdecydowanie tak";
 "Thank you! Care to tell us why?" = "Dziękujemy za odpowiedź. Co zadecydowało o Państwa ocenie?";
 "Help us by explaining your score." = "Pomóż nam, wyjaśniając swój wybór.";
-"How likely are you to recommend us to a friend or co-worker?" = "Czy poleciliby Państwo nasz produkt lub usługę swojemu znajomemu lub koledze?";
+"How likely are you to recommend us to a friend or co-worker?" = "Czy poleciliby Państwo nas swojemu znajomemu lub koledze?";
 "How likely are you to recommend us to a %@?" = "Czy poleciliby Państwo nasz produkt lub usługę %@?";
 "How likely are you to recommend %@ to a %@?" = "Czy poleciliby Państwo %@ %@?";
 "SUBMIT" = "WYŚLIJ";
@@ -34,3 +34,4 @@
 "You chose %ld." = "Wybrali Państwo %ld.";
 "Thank you for your response, and for your feedback!" = "Dziękujemy za odpowiedź i sugestie!";
 "Drag to change score" = "Przeciągnij, aby zmienić ocenę";
+"back" = "wstecz";

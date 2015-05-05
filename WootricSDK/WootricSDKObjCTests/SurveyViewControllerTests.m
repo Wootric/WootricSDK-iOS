@@ -28,7 +28,8 @@
 
 - (void)setUp {
   [super setUp];
-  self.surveyVC = [[SurveyViewController alloc] init];
+  WTSettings *settings = [[WTSettings alloc] init];
+  self.surveyVC = [[SurveyViewController alloc] initWithSettings:settings];
   [self.surveyVC viewDidLoad];
 }
 
@@ -44,8 +45,6 @@
   XCTAssertNotNil(_surveyVC.backButton);
   XCTAssertNotNil(_surveyVC.commentTextView);
   XCTAssertNotNil(_surveyVC.scrollView);
-  XCTAssertNotNil(_surveyVC.tintColorPink);
-  XCTAssertNotNil(_surveyVC.tintColorGreen);
   XCTAssertNotNil(_surveyVC.defaultWootricQuestion);
   XCTAssertNotNil(_surveyVC.defaultPlaceholderText);
   XCTAssertNotNil(_surveyVC.defaultResponseQuestion);
@@ -75,17 +74,29 @@
   _surveyVC.scoreSlider.value = 9;
   [_surveyVC voteButtonPressed:_surveyVC.voteButton];
 
-  XCTAssertEqualObjects(_surveyVC.titleLabel.text, @"You chose 9.");
+  XCTAssertEqualObjects(_surveyVC.chosenScore.text, @"9");
   XCTAssertEqualObjects(_surveyVC.scoreLabel.text, @"Thank you! Care to tell us why?");
   XCTAssertEqualObjects(_surveyVC.askForFeedbackLabel.text, @"Help us by explaining your score.");
 }
 
 - (void)testCustomRecommendTo {
-  self.surveyVC = [[SurveyViewController alloc] init];
-  _surveyVC.wootricRecommendTo = @"BFF";
+  WTSettings *settings = [[WTSettings alloc] init];
+  self.surveyVC = [[SurveyViewController alloc] initWithSettings:settings];
+  _surveyVC.settings.wootricRecommendTo = @"BFF";
   [self.surveyVC viewDidLoad];
 
   XCTAssertEqualObjects(_surveyVC.titleLabel.text, @"How likely are you to recommend us to a BFF?");
+}
+
+- (void)testLanguageSettings {
+  WTSettings *settings = [[WTSettings alloc] init];
+  settings.language = @"pl";
+  self.surveyVC = [[SurveyViewController alloc] initWithSettings:settings];
+  [self.surveyVC viewDidLoad];
+
+  XCTAssertEqualObjects(_surveyVC.titleLabel.text, @"Czy poleciliby Państwo nas swojemu znajomemu lub koledze?");
+  XCTAssertEqualObjects(_surveyVC.notLikelyLabel.text, @"Zdecydowanie nie");
+  XCTAssertEqualObjects(_surveyVC.extremelyLikelyLabel.text, @"Zdecydowanie tak");
 }
 
 //- (void)testLabelTextsThirdScreen {
