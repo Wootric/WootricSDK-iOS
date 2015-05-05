@@ -23,7 +23,39 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface WTSettings : NSObject
+
+@property (nonatomic) UIColor *tintColorCircle;
+@property (nonatomic) UIColor *tintColorSubmit;
+@property (nonatomic) NSString *defaultWootricQuestion;
+@property (nonatomic) NSString *defaultPlaceholderText;
+@property (nonatomic) NSString *defaultResponseQuestion;
+@property (nonatomic) NSString *productName;
+@property (nonatomic) NSString *wootricRecommendProduct;
+@property (nonatomic) NSString *customQuestion;
+@property (nonatomic) NSString *customPlaceholder;
+@property (nonatomic) NSString *wootricRecommendTo;
+@property (nonatomic) NSString *detractorQuestion;
+@property (nonatomic) NSString *passiveQuestion;
+@property (nonatomic) NSString *promoterQuestion;
+@property (nonatomic) NSString *detractorPlaceholder;
+@property (nonatomic) NSString *passivePlaceholder;
+@property (nonatomic) NSString *promoterPlaceholder;
+@property (nonatomic) NSString *language;
+@property (nonatomic) NSNumber *registeredPercent;
+@property (nonatomic) NSNumber *visitorPercent;
+@property (nonatomic) NSNumber *resurveyThrottle;
+@property (nonatomic) NSNumber *dailyResponseCap;
+@property (nonatomic) NSDictionary *customProperties;
+@property (nonatomic) NSInteger externalCreatedAt;
+@property (nonatomic) NSInteger firstSurveyAfter;
+@property (nonatomic) NSInteger surveyedDefaultDuration;
+@property (nonatomic) BOOL surveyImmediately;
+@property (nonatomic) BOOL forceSurvey;
+@property (nonatomic) BOOL setDefaultAfterSurvey;
+
+- (void)modifyWithSettingsFromEligibility:(NSDictionary *)eligibilitySettings;
 
 @end

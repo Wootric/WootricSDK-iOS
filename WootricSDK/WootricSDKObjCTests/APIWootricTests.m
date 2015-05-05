@@ -34,13 +34,13 @@
 
 - (void)tearDown {
   [super tearDown];
-  _api.surveyImmediately = NO;
-  _api.firstSurveyAfter = 31;
+  _api.settings.surveyImmediately = NO;
+  _api.settings.firstSurveyAfter = 31;
   _api.clientID = nil;
   _api.clientSecret = nil;
   _api.accountToken = nil;
   _api.endUserEmail = nil;
-  _api.customProperties = nil;
+  _api.settings.customProperties = nil;
 
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults removeObjectForKey:@"surveyed"];
@@ -53,7 +53,7 @@
 
 // surveyed = NO, surveyImmediately = YES
 - (void)testNeedsSurveyCaseOne {
-  _api.surveyImmediately = YES;
+  _api.settings.surveyImmediately = YES;
   XCTAssertTrue(_api.needsSurvey);
 }
 
@@ -61,45 +61,45 @@
 - (void)testNeedsSurveyCaseTwo {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setBool:YES forKey:@"surveyed"];
-  _api.surveyImmediately = YES;
+  _api.settings.surveyImmediately = YES;
   XCTAssertFalse(_api.needsSurvey);
 }
 
 // surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 31
 - (void)testNeedsSurveyCaseThree {
-  _api.externalCreatedAt = [[NSDate date] timeIntervalSince1970] - (32 * 60 * 60 * 24); // 32 days ago
-  XCTAssertTrue(_api.needsSurvey);
+  _api.settings.externalCreatedAt = [[NSDate date] timeIntervalSince1970] - (32 * 60 * 60 * 24); // 32 days ago
+  XCTAssertTrue([_api needsSurvey]);
 }
 
 // surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 31, lastSeenAt = 20
 - (void)testNeedsSurveyCaseFour {
-  _api.externalCreatedAt = [[NSDate date] timeIntervalSince1970] - (20 * 60 * 60 * 24); // 20 days ago
+  _api.settings.externalCreatedAt = [[NSDate date] timeIntervalSince1970] - (20 * 60 * 60 * 24); // 20 days ago
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setDouble:[[NSDate date] timeIntervalSince1970] - (20 * 60 * 60 * 24) forKey:@"lastSeenAt"];
-  XCTAssertFalse(_api.needsSurvey);
+  XCTAssertFalse([_api needsSurvey]);
 }
 
 // surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 31, externalCreatedAt = 20, lastSeenAt = 40
 - (void)testNeedsSurveyCaseFive {
-  _api.externalCreatedAt = [[NSDate date] timeIntervalSince1970] - (20 * 60 * 60 * 24);
+  _api.settings.externalCreatedAt = [[NSDate date] timeIntervalSince1970] - (20 * 60 * 60 * 24);
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setDouble:[[NSDate date] timeIntervalSince1970] - (40 * 60 * 60 * 24) forKey:@"lastSeenAt"];
-  XCTAssertTrue(_api.needsSurvey);
+  XCTAssertTrue([_api needsSurvey]);
 }
 
 // surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 60, externalCreatedAt = 20, lastSeenAt = 40
 - (void)testNeedsSurveyCaseSix {
-  _api.firstSurveyAfter = 60;
-  _api.externalCreatedAt = [[NSDate date] timeIntervalSince1970] - (20 * 60 * 60 * 24);
+  _api.settings.firstSurveyAfter = 60;
+  _api.settings.externalCreatedAt = [[NSDate date] timeIntervalSince1970] - (20 * 60 * 60 * 24);
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setDouble:[[NSDate date] timeIntervalSince1970] - (40 * 60 * 60 * 24) forKey:@"lastSeenAt"];
-  XCTAssertFalse(_api.needsSurvey);
+  XCTAssertFalse([_api needsSurvey]);
 }
 
 // firstSurveyAfter = 0
 - (void)testNeedsSurveyCaseSeven {
-  _api.firstSurveyAfter = 0;
-  XCTAssertTrue(_api.needsSurvey);
+  _api.settings.firstSurveyAfter = 0;
+  XCTAssertTrue([_api needsSurvey]);
 }
 
 // With one of the setting missing
@@ -147,21 +147,21 @@
 }
 
 - (void)testParseCustomPropertiesCaseOne {
-  _api.customProperties = @{@"plan": @"enterprise"};
+  _api.settings.customProperties = @{@"plan": @"enterprise"};
   NSString *parsedProperties = [_api parseCustomProperties];
 
   XCTAssertEqualObjects(@"&properties[plan]=enterprise", parsedProperties);
 }
 
 - (void)testParseCustomPropertiesCaseTwo {
-  _api.customProperties = @{@"value": @1};
+  _api.settings.customProperties = @{@"value": @1};
   NSString *parsedProperties = [_api parseCustomProperties];
 
   XCTAssertEqualObjects(@"&properties[value]=1", parsedProperties);
 }
 
 - (void)testParseCustomPropertiesCaseThree {
-  _api.customProperties = @{@"escaped": @"!#$&'()*+,/:;=?@[]"};
+  _api.settings.customProperties = @{@"escaped": @"!#$&'()*+,/:;=?@[]"};
   NSString *parsedProperties = [_api parseCustomProperties];
 
   XCTAssertEqualObjects(@"&properties[escaped]=%21%23%24%26%27%28%29%2A%2B%2C%2F%3A%3B%3D%3F%40%5B%5D", parsedProperties);

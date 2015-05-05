@@ -30,16 +30,18 @@
 #import "SurveyViewController+Utils.h"
 
 @implementation SurveyViewController
+  CGSize textSize;
   long score;
   BOOL scrolled;
   BOOL alreadyVoted;
   BOOL addedLabels;
 
-- (instancetype)init {
+- (instancetype)initWithSettings:(WTSettings *)settings {
   if (self = [super init]) {
-    _defaultWootricQuestion = [self localizedString:@"How likely are you to recommend us to a friend or co-worker?"];
-    _defaultResponseQuestion = [self localizedString:@"Thank you! Care to tell us why?"];
-    _defaultPlaceholderText = [self localizedString:@"Help us by explaining your score."];
+    _settings = settings;
+    _defaultWootricQuestion = [self localizedString:_settings.defaultWootricQuestion];
+    _defaultResponseQuestion = [self localizedString:_settings.defaultResponseQuestion];
+    _defaultPlaceholderText = [self localizedString:_settings.defaultPlaceholderText];
   }
   return self;
 }
@@ -60,8 +62,6 @@
                                           tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.3]
                               saturationDeltaFactor:1
                                           maskImage:nil];
-  _tintColorGreen = [UIColor colorWithRed:145.0/255.0 green:201.0/255.0 blue:29.0/255.0 alpha:1];
-  _tintColorPink = [UIColor colorWithRed:236.0/255.0 green:104.0/255.0 blue:149.0/255.0 alpha:1];
 
   [self setupViews];
   [self setupConstraints];
@@ -147,17 +147,24 @@
   _scoreLabel.hidden = !flag;
   _commentTextView.hidden = !flag;
   _backButton.hidden = !flag;
+  _chosenScore.hidden = !flag;
 }
 
 - (void)switchTitleAndScoreLabelsParameters:(BOOL)fromSubmit {
   if (fromSubmit) {
     _scoreLabel.font = [UIFont systemFontOfSize:16];
-    _scoreLabel.textColor = _tintColorGreen;
+    _scoreLabel.textColor = _settings.tintColorSubmit;
     _scoreLabel.text = [self textDependingOnScore];
 
     _titleLabel.font = [UIFont systemFontOfSize:14];
-    _titleLabel.textColor = _tintColorPink;
-    _titleLabel.text = [NSString stringWithFormat:[self localizedString:@"You chose %ld."], score];
+    _titleLabel.textColor = _settings.tintColorCircle;
+    // HAX, HAX everywhere
+    _titleLabel.text = [NSString stringWithFormat:[self localizedString:@"You chose %ld."], 10];
+    if (textSize.width == 0) {
+      textSize = [_titleLabel.text sizeWithAttributes:@{NSFontAttributeName: _titleLabel.font}];
+      _chosenScoreConstR.constant = textSize.width / 2 - 10;
+    }
+    _chosenScore.text = [NSString stringWithFormat:@"%ld", score];
   } else {
     _titleLabel.text = [self npsQuestion];
     _titleLabel.textColor = [UIColor darkGrayColor];
@@ -166,38 +173,38 @@
 }
 
 - (NSString *)npsQuestion {
-  if (_wootricRecommendTo != nil && _wootricRecommendProduct != nil) {
-    return [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend %@ to a %@?"], _wootricRecommendProduct, _wootricRecommendTo];
-  } else if (_wootricRecommendTo != nil) {
-    return [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend us to a %@?"], _wootricRecommendTo];
-  } else if (_wootricRecommendProduct != nil) {
-    return [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend %@ to a friend or co-worker?"], _wootricRecommendProduct];
+  if (_settings.wootricRecommendTo != nil && _settings.wootricRecommendProduct != nil) {
+    return [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend %@ to a %@?"], _settings.wootricRecommendProduct, _settings.wootricRecommendTo];
+  } else if (_settings.wootricRecommendTo != nil) {
+    return [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend us to a %@?"], _settings.wootricRecommendTo];
+  } else if (_settings.wootricRecommendProduct != nil) {
+    return [NSString stringWithFormat:[self localizedString:@"How likely are you to recommend %@ to a friend or co-worker?"], _settings.wootricRecommendProduct];
   }
   return _defaultWootricQuestion;
 }
 
 - (NSString *)textDependingOnScore {
-  if (score <= 6 && _detractorQuestion != nil) {
-    return _detractorQuestion;
-  } else if (score <= 8 && _passiveQuestion != nil) {
-    return _passiveQuestion;
-  } else if (_promoterQuestion != nil) {
-    return _promoterQuestion;
-  } else if (_customQuestion) {
-    return _customQuestion;
+  if (score <= 6 && _settings.detractorQuestion != nil) {
+    return _settings.detractorQuestion;
+  } else if (score <= 8 && _settings.passiveQuestion != nil) {
+    return _settings.passiveQuestion;
+  } else if (_settings.promoterQuestion != nil) {
+    return _settings.promoterQuestion;
+  } else if (_settings.customQuestion != nil) {
+    return _settings.customQuestion;
   }
   return _defaultResponseQuestion;
 }
 
 - (NSString *)placeholderDependingOnScore {
-  if (score <= 6 && _detractorPlaceholder != nil) {
-    return _detractorPlaceholder;
-  } else if (score <= 8 && _passivePlaceholder != nil) {
-    return _passivePlaceholder;
-  } else if (_promoterPlaceholder != nil) {
-    return _promoterPlaceholder;
-  } else if (_customPlaceholder) {
-    return _customPlaceholder;
+  if (score <= 6 && _settings.detractorPlaceholder != nil) {
+    return _settings.detractorPlaceholder;
+  } else if (score <= 8 && _settings.passivePlaceholder != nil) {
+    return _settings.passivePlaceholder;
+  } else if (_settings.promoterPlaceholder != nil) {
+    return _settings.promoterPlaceholder;
+  } else if (_settings.customPlaceholder != nil) {
+    return _settings.customPlaceholder;
   }
   return _defaultPlaceholderText;
 }
@@ -272,7 +279,7 @@
   if (label == nil) {
     label = [[UILabel alloc] initWithFrame:CGRectMake(multiplier * -45, -22, 45, 45)];
     label.tag = 1000;
-    label.backgroundColor = _tintColorPink;
+    label.backgroundColor = _settings.tintColorCircle;
     label.layer.cornerRadius = 22.5;
     label.layer.masksToBounds = YES;
     label.textColor = [UIColor whiteColor];
@@ -304,6 +311,8 @@
 
 - (void)voteButtonPressed:(UIButton *)sender {
   score = (long)(_scoreSlider.value);
+  [self hideScore:nil];
+  [_scoreSlider cancelTrackingWithEvent:nil];
   alreadyVoted = YES;
   [WootricSDK voteWithScore:score andText:nil];
   [self changeView];
@@ -317,7 +326,6 @@
   CGFloat delta = percentage * (_scoreSlider.maximumValue - _scoreSlider.minimumValue);
   CGFloat value = _scoreSlider.minimumValue + delta;
   [_scoreSlider setValue:value animated:YES];
-  [_scoreSlider removeGestureRecognizer:gestureRecognizer];
   [self updateSliderStep:_scoreSlider];
 }
 
@@ -385,7 +393,7 @@
   _backButton.hidden = YES;
   _titleLabel.text = [self localizedString:@"Thank you for your response, and for your feedback!"];
   _titleLabel.font = [UIFont boldSystemFontOfSize:15];
-  _titleLabel.textColor = _tintColorPink;
+  _titleLabel.textColor = _settings.tintColorCircle;
   _constModalHeight.constant = 125;
   _constTopToModal.constant = self.view.frame.size.height - _constModalHeight.constant;
   [UIView animateWithDuration:0.2 animations:^{

@@ -47,6 +47,7 @@
   [self setupButtonIconCheckConstraints];
   [self setupButtonIconSendConstraints];
   [self setupBackButtonConstraints];
+  [self setupChosenScoreLabelConstraints];
 }
 
 #pragma mark - Buttons
@@ -96,7 +97,7 @@
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
-                                                             constant:24];
+                                                             constant:90];
   [self.backButton addConstraint:constW];
 
   NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.backButton
@@ -136,7 +137,7 @@
                                                                   toItem:self.modalView
                                                                attribute:NSLayoutAttributeTop
                                                               multiplier:1
-                                                                constant:284];
+                                                                constant:268];
   [self.modalView addConstraint:constXTop];
 
   NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.modalView
@@ -198,6 +199,45 @@
                                                                multiplier:1
                                                                  constant:margin];
   [self.modalView addConstraint:constRight];
+}
+
+- (void)setupChosenScoreLabelConstraints {
+  self.chosenScoreConstR = [NSLayoutConstraint constraintWithItem:self.chosenScore
+                                                     attribute:NSLayoutAttributeCenterX
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self.titleLabel
+                                                     attribute:NSLayoutAttributeCenterX
+                                                    multiplier:1
+                                                      constant:0];
+
+  [self.modalView addConstraint:self.chosenScoreConstR];
+
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.chosenScore
+                                                            attribute:NSLayoutAttributeCenterY
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.titleLabel
+                                                            attribute:NSLayoutAttributeCenterY
+                                                           multiplier:1
+                                                             constant:0];
+  [self.modalView addConstraint:constY];
+
+  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.chosenScore
+                                                            attribute:NSLayoutAttributeWidth
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:20];
+  [self.chosenScore addConstraint:constW];
+
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.chosenScore
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:20];
+  [self.chosenScore addConstraint:constH];
 }
 
 - (void)setupScoreLabelConstraints {
@@ -632,7 +672,7 @@
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
-                                                             constant:316];
+                                                             constant:300];
   [self.modalView addConstraint:self.constModalHeight];
 
   NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.modalView
