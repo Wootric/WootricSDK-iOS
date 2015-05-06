@@ -102,14 +102,18 @@
   [WootricSDK setSurveyedDefaultAfterSurvey:flag withDuration:api.settings.surveyedDefaultDuration];
 }
 
-+ (void)setCustomDetractorQuestion:(NSString *)detractorQuestion passiveQuestion:(NSString *)passiveQuestion andPromoterQuestion:(NSString *)promoterQuestion {
++ (void)setCustomDetractorQuestion:(NSString *)detractorQuestion
+                   passiveQuestion:(NSString *)passiveQuestion
+               andPromoterQuestion:(NSString *)promoterQuestion {
   APIWootric *api = [APIWootric sharedInstance];
   api.settings.detractorQuestion = detractorQuestion;
   api.settings.passiveQuestion = passiveQuestion;
   api.settings.promoterQuestion = promoterQuestion;
 }
 
-+ (void)setCustomDetractorPlaceholder:(NSString *)detractorPlaceholder passivePlaceholder:(NSString *)passivePlaceholder andPromoterPlaceholder:(NSString *)promoterPlaceholder {
++ (void)setCustomDetractorPlaceholder:(NSString *)detractorPlaceholder
+                   passivePlaceholder:(NSString *)passivePlaceholder
+               andPromoterPlaceholder:(NSString *)promoterPlaceholder {
   APIWootric *api = [APIWootric sharedInstance];
   api.settings.detractorPlaceholder = detractorPlaceholder;
   api.settings.passivePlaceholder = passivePlaceholder;

@@ -27,7 +27,7 @@
 @implementation APIWootric
   NSString *baseAPIURL = @"https://api.wootric.com";
   NSString *eligibilityServerURL = @"http://wootric-eligibility.herokuapp.com/eligible.json";
-  BOOL endUserAlreadyUpdate;
+  BOOL endUserAlreadyUpdated;
   NSURLSession *wootricSession;
 
 + (instancetype)sharedInstance {
@@ -171,7 +171,7 @@
         NSDictionary *endUser = responseJSON[0];
         if (endUser[@"id"]) {
           NSInteger endUserID = [endUser[@"id"] integerValue];
-          if (!endUserAlreadyUpdate) {
+          if (!endUserAlreadyUpdated) {
             [self updateExistingEndUser:endUserID];
           }
           endUserWithID(endUserID);
@@ -207,7 +207,7 @@
       NSLog(@"%@", error);
     } else {
       NSLog(@"user updated");
-      endUserAlreadyUpdate = YES;
+      endUserAlreadyUpdated = YES;
     }
   }];
 
@@ -285,7 +285,7 @@
         NSLog(@"%@", responseJSON);
         if ([responseJSON[@"eligible"] isEqual:@1]) {
           NSLog(@"User eligible");
-          [_settings modifyWithSettingsFromEligibility:responseJSON];
+          [_settings userSettingsFromEligibility:responseJSON];
           eligible();
         } else {
           NSLog(@"User not eligible");

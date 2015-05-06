@@ -41,15 +41,11 @@
   return self;
 }
 
-- (void)modifyWithSettingsFromEligibility:(NSDictionary *)eligibilitySettings {
+- (void)userSettingsFromEligibility:(NSDictionary *)eligibilitySettings {
   NSDictionary *settings = eligibilitySettings[@"settings"];
 
   if ([settings[@"language"] integerValue] && !_language) {
     _language = [self countryCodeFromLanguageNumber:[settings[@"language"] integerValue]];
-  }
-
-  if (settings[@"product_name"] && !_productName) {
-    _productName = settings[@"product_name"];
   }
 
   if (settings[@"followup_question"] && !_customQuestion) {
@@ -133,6 +129,10 @@
   default:
     return @"en";
   }
+}
+
+- (void)dealloc {
+  NSLog(@"Settings dealloc");
 }
 
 @end

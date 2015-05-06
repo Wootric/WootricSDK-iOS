@@ -33,7 +33,7 @@
   [self setupModalConstraint];
   [self setupDismissButtonConstraints];
   [self setupTitleLabelConstraints];
-  [self setupVoteButtonConstraints];
+  [self setupSubmitButtonConstraints];
   [self setupSliderConstraints];
   [self setupDragToChangeLabelConstraints];
   [self setupNotLikelyLabelConstraints];
@@ -41,7 +41,7 @@
   [self setupSliderBackgroundViewConstraints];
   [self setupSliderCheckedBackgroundViewConstraints];
   [self setupScoreLabelConstraints];
-  [self setupAskForFeedbackLabelConstraints];
+  [self setupFeedbackPlaceholderConstraints];
   [self setupCommentTextViewConstraints];
   [self setupSendFeedbackButtonConstraints];
   [self setupButtonIconCheckConstraints];
@@ -52,8 +52,8 @@
 
 #pragma mark - Buttons
 
-- (void)setupVoteButtonConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.voteButton
+- (void)setupSubmitButtonConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.submitButton
                                                             attribute:NSLayoutAttributeCenterX
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:self.modalView
@@ -62,7 +62,7 @@
                                                              constant:12];
   [self.modalView addConstraint:constX];
 
-  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.voteButton
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.submitButton
                                                             attribute:NSLayoutAttributeBottom
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:self.modalView
@@ -279,8 +279,8 @@
   [self.modalView addConstraint:constRight];
 }
 
-- (void)setupAskForFeedbackLabelConstraints {
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:self.askForFeedbackLabel
+- (void)setupFeedbackPlaceholderConstraints {
+  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:self.feedbackPlaceholder
                                                               attribute:NSLayoutAttributeTop
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self.commentTextView
@@ -289,7 +289,7 @@
                                                                constant:8];
   [self.modalView addConstraint:constTop];
 
-  NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:self.askForFeedbackLabel
+  NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:self.feedbackPlaceholder
                                                             attribute:NSLayoutAttributeLeft
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:self.commentTextView
@@ -301,7 +301,7 @@
   NSLayoutConstraint *constR = [NSLayoutConstraint constraintWithItem:self.commentTextView
                                                             attribute:NSLayoutAttributeRight
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.askForFeedbackLabel
+                                                               toItem:self.feedbackPlaceholder
                                                             attribute:NSLayoutAttributeRight
                                                            multiplier:1
                                                              constant:5];
@@ -394,7 +394,7 @@
   NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.buttonIconCheck
                                                             attribute:NSLayoutAttributeRight
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.voteButton
+                                                               toItem:self.submitButton
                                                             attribute:NSLayoutAttributeLeft
                                                            multiplier:1
                                                              constant:-4];
@@ -403,7 +403,7 @@
   NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.buttonIconCheck
                                                             attribute:NSLayoutAttributeCenterY
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.voteButton
+                                                               toItem:self.submitButton
                                                             attribute:NSLayoutAttributeCenterY
                                                            multiplier:1
                                                              constant:0];

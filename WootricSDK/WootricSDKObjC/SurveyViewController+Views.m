@@ -31,7 +31,7 @@
   [self setupModal];
   [self setupWootricLink];
   [self setupSlider];
-  [self setupVoteButton];
+  [self setupSubmitButton];
   [self setupDismissButton];
   [self setupTitleLabel];
   [self setupCommentTextView];
@@ -44,7 +44,7 @@
   [self setupSliderBackgroundView];
   [self setupSliderCheckedBackgroundView];
   [self setupScoreLabel];
-  [self setupAskForFeedbackLabel];
+  [self setupFeedbackPlaceholder];
   [self setupSendFeedbackButton];
   [self setupScorePopoverLabel];
   [self setupButtonCheckIcon];
@@ -99,16 +99,16 @@
                     forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)setupVoteButton {
-  self.voteButton = [[UIButton alloc] init];
-  self.voteButton.tintColor = self.settings.tintColorSubmit;
-  self.voteButton.enabled = NO;
-  self.voteButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-  [self.voteButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [self.voteButton setTitle:[self localizedString:@"SUBMIT"] forState:UIControlStateNormal];
-  [self.voteButton setTitleColor:self.settings.tintColorSubmit forState:UIControlStateNormal];
-  [self.voteButton setTitleColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1] forState:UIControlStateDisabled];
-  [self.voteButton addTarget:self action:NSSelectorFromString(@"voteButtonPressed:")
+- (void)setupSubmitButton {
+  self.submitButton = [[UIButton alloc] init];
+  self.submitButton.tintColor = self.settings.tintColorSubmit;
+  self.submitButton.enabled = NO;
+  self.submitButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+  [self.submitButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [self.submitButton setTitle:[self localizedString:@"SUBMIT"] forState:UIControlStateNormal];
+  [self.submitButton setTitleColor:self.settings.tintColorSubmit forState:UIControlStateNormal];
+  [self.submitButton setTitleColor:[UIColor colorWithRed:233.0/255.0 green:233.0/255.0 blue:233.0/255.0 alpha:1] forState:UIControlStateDisabled];
+  [self.submitButton addTarget:self action:NSSelectorFromString(@"submitButtonPressed:")
             forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -153,14 +153,14 @@
   [self.scoreLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
-- (void)setupAskForFeedbackLabel {
-  self.askForFeedbackLabel = [[UILabel alloc] init];
-  self.askForFeedbackLabel.font = [UIFont systemFontOfSize:12];
-  self.askForFeedbackLabel.textColor = [UIColor lightGrayColor];
-  self.askForFeedbackLabel.hidden = YES;
-  self.askForFeedbackLabel.numberOfLines = 0;
-  self.askForFeedbackLabel.textAlignment = NSTextAlignmentLeft;
-  [self.askForFeedbackLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+- (void)setupFeedbackPlaceholder {
+  self.feedbackPlaceholder = [[UILabel alloc] init];
+  self.feedbackPlaceholder.font = [UIFont systemFontOfSize:12];
+  self.feedbackPlaceholder.textColor = [UIColor lightGrayColor];
+  self.feedbackPlaceholder.hidden = YES;
+  self.feedbackPlaceholder.numberOfLines = 0;
+  self.feedbackPlaceholder.textAlignment = NSTextAlignmentLeft;
+  [self.feedbackPlaceholder setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupExtremelyLikelyLabel {
@@ -330,12 +330,12 @@
   [self.modalView addSubview:self.sliderBackgroundView];
   [self.modalView addSubview:self.sliderCheckedBackgroundView];
   [self.modalView addSubview:self.scoreSlider];
-  [self.modalView addSubview:self.voteButton];
+  [self.modalView addSubview:self.submitButton];
   [self.modalView addSubview:self.commentTextView];
   [self.modalView addSubview:self.dragToChangeLabel];
   [self.modalView addSubview:self.notLikelyLabel];
   [self.modalView addSubview:self.extremelyLikelyLabel];
-  [self.modalView addSubview:self.askForFeedbackLabel];
+  [self.modalView addSubview:self.feedbackPlaceholder];
   [self.modalView addSubview:self.scoreLabel];
   [self.modalView addSubview:self.sendFeedbackButton];
   [self.modalView addSubview:self.scorePopoverLabel];

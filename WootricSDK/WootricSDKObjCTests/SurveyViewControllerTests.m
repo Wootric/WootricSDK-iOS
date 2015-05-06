@@ -18,7 +18,7 @@
 
 @interface SurveyViewController (Tests)
 
-- (void)voteButtonPressed:(UIButton *)sender;
+- (void)submitButtonPressed:(UIButton *)sender;
 - (void)changeView;
 - (void)showFinalView;
 
@@ -39,7 +39,7 @@
 
 - (void)testInit {
   XCTAssertNotNil(_surveyVC.scoreSlider);
-  XCTAssertNotNil(_surveyVC.voteButton);
+  XCTAssertNotNil(_surveyVC.submitButton);
   XCTAssertNotNil(_surveyVC.sendFeedbackButton);
   XCTAssertNotNil(_surveyVC.dismissButton);
   XCTAssertNotNil(_surveyVC.backButton);
@@ -55,7 +55,7 @@
   XCTAssertNotNil(_surveyVC.buttonIconCheck);
   XCTAssertNotNil(_surveyVC.buttonIconSend);
   XCTAssertNotNil(_surveyVC.scoreLabel);
-  XCTAssertNotNil(_surveyVC.askForFeedbackLabel);
+  XCTAssertNotNil(_surveyVC.feedbackPlaceholder);
   XCTAssertNotNil(_surveyVC.dragToChangeLabel);
   XCTAssertNotNil(_surveyVC.poweredByWootricLabel);
   XCTAssertNotNil(_surveyVC.titleLabel);
@@ -72,11 +72,11 @@
 
 - (void)testLabelTextsSecondScreen {
   _surveyVC.scoreSlider.value = 9;
-  [_surveyVC voteButtonPressed:_surveyVC.voteButton];
+  [_surveyVC submitButtonPressed:_surveyVC.submitButton];
 
   XCTAssertEqualObjects(_surveyVC.chosenScore.text, @"9");
   XCTAssertEqualObjects(_surveyVC.scoreLabel.text, @"Thank you! Care to tell us why?");
-  XCTAssertEqualObjects(_surveyVC.askForFeedbackLabel.text, @"Help us by explaining your score.");
+  XCTAssertEqualObjects(_surveyVC.feedbackPlaceholder.text, @"Help us by explaining your score.");
 }
 
 - (void)testCustomRecommendTo {
@@ -99,11 +99,11 @@
   XCTAssertEqualObjects(_surveyVC.extremelyLikelyLabel.text, @"Zdecydowanie tak");
 }
 
-//- (void)testLabelTextsThirdScreen {
-//  [_surveyVC changeView];
-//  [_surveyVC showFinalView];
-//
-//  XCTAssertEqualObjects(_surveyVC.titleLabel.text, @"Thank you for your response, and for your feedback!");
-//}
+- (void)testLabelTextsThirdScreen {
+  [_surveyVC changeView];
+  [_surveyVC showFinalView];
+
+  XCTAssertEqualObjects(_surveyVC.titleLabel.text, @"Thank you for your response, and for your feedback!");
+}
 
 @end

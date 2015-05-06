@@ -23,6 +23,7 @@
 		B2A43C4C1ADD449F00C48EF9 /* SurveyViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A43C4B1ADD449F00C48EF9 /* SurveyViewControllerTests.m */; };
 		B2D4BD511AF777CE00A8DA07 /* WTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = B2E9F2D21AF76A62006B7D1D /* WTSettings.m */; };
 		B2D4BD521AF777D900A8DA07 /* WTSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E9F2D11AF76A62006B7D1D /* WTSettings.h */; };
+		B2D4BD561AFA0CD900A8DA07 /* WTSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D4BD551AFA0CD900A8DA07 /* WTSettingsTests.m */; };
 		B2F4DAC41AA77667007FA43E /* WootricSDKObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = B2F4DAC31AA77667007FA43E /* WootricSDKObjC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B2F4DACA1AA77667007FA43E /* WootricSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F4DABE1AA77667007FA43E /* WootricSDK.framework */; };
 		B2F4DAD11AA77667007FA43E /* WootricSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2F4DAD01AA77667007FA43E /* WootricSDKTests.m */; };
@@ -73,6 +74,7 @@
 		B27628B81AA85E04000402B5 /* APIWootric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIWootric.m; sourceTree = "<group>"; };
 		B2A43C491ADC0F5900C48EF9 /* APIWootricTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIWootricTests.m; sourceTree = "<group>"; };
 		B2A43C4B1ADD449F00C48EF9 /* SurveyViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurveyViewControllerTests.m; sourceTree = "<group>"; };
+		B2D4BD551AFA0CD900A8DA07 /* WTSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTSettingsTests.m; sourceTree = "<group>"; };
 		B2E9F2D11AF76A62006B7D1D /* WTSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTSettings.h; sourceTree = "<group>"; };
 		B2E9F2D21AF76A62006B7D1D /* WTSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTSettings.m; sourceTree = "<group>"; };
 		B2F4DABE1AA77667007FA43E /* WootricSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WootricSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				B2A43C4B1ADD449F00C48EF9 /* SurveyViewControllerTests.m */,
+				B2D4BD551AFA0CD900A8DA07 /* WTSettingsTests.m */,
 				B2A43C491ADC0F5900C48EF9 /* APIWootricTests.m */,
 				B2F4DAD01AA77667007FA43E /* WootricSDKTests.m */,
 				B2F4DACE1AA77667007FA43E /* Supporting Files */,
@@ -327,6 +330,7 @@
 				B2A43C4A1ADC0F5900C48EF9 /* APIWootricTests.m in Sources */,
 				B2F4DAD11AA77667007FA43E /* WootricSDKTests.m in Sources */,
 				B2A43C4C1ADD449F00C48EF9 /* SurveyViewControllerTests.m in Sources */,
+				B2D4BD561AFA0CD900A8DA07 /* WTSettingsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

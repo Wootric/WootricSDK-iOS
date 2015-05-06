@@ -133,7 +133,7 @@
 }
 
 - (void)changeItemsVisibilityTo:(BOOL)flag {
-  _voteButton.hidden = flag;
+  _submitButton.hidden = flag;
   _dragToChangeLabel.hidden = flag;
   _extremelyLikelyLabel.hidden = flag;
   _notLikelyLabel.hidden = flag;
@@ -143,7 +143,7 @@
   _buttonIconCheck.hidden = flag;
   _buttonIconSend.hidden = !flag;
   _sendFeedbackButton.hidden = !flag;
-  _askForFeedbackLabel.hidden = !flag;
+  _feedbackPlaceholder.hidden = !flag;
   _scoreLabel.hidden = !flag;
   _commentTextView.hidden = !flag;
   _backButton.hidden = !flag;
@@ -153,18 +153,19 @@
 - (void)switchTitleAndScoreLabelsParameters:(BOOL)fromSubmit {
   if (fromSubmit) {
     _scoreLabel.font = [UIFont systemFontOfSize:16];
-    _scoreLabel.textColor = _settings.tintColorSubmit;
     _scoreLabel.text = [self textDependingOnScore];
+    _scoreLabel.textColor = _settings.tintColorSubmit;
 
     _titleLabel.font = [UIFont systemFontOfSize:14];
     _titleLabel.textColor = _settings.tintColorCircle;
     // HAX, HAX everywhere
     _titleLabel.text = [NSString stringWithFormat:[self localizedString:@"You chose %ld."], 10];
+    _chosenScore.text = [NSString stringWithFormat:@"%ld", score];
+
     if (textSize.width == 0) {
       textSize = [_titleLabel.text sizeWithAttributes:@{NSFontAttributeName: _titleLabel.font}];
       _chosenScoreConstR.constant = textSize.width / 2 - 10;
     }
-    _chosenScore.text = [NSString stringWithFormat:@"%ld", score];
   } else {
     _titleLabel.text = [self npsQuestion];
     _titleLabel.textColor = [UIColor darkGrayColor];
@@ -213,16 +214,16 @@
   int thumbLabelWidth = 45;
   float sliderRange = aSlider.frame.size.width - thumbLabelWidth;
   float sliderOrigin = aSlider.frame.origin.x + (thumbLabelWidth / 4.0);
-  float sliderValueToPixels = (((aSlider.value-aSlider.minimumValue)/(aSlider.maximumValue-aSlider.minimumValue)) * sliderRange) + sliderOrigin;
+  float sliderValueToPixels = (((aSlider.value-aSlider.minimumValue) / (aSlider.maximumValue-aSlider.minimumValue)) * sliderRange) + sliderOrigin;
 
   return sliderValueToPixels;
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
   if (textView.text.length == 0) {
-    _askForFeedbackLabel.hidden = NO;
+    _feedbackPlaceholder.hidden = NO;
   } else {
-    _askForFeedbackLabel.hidden = YES;
+    _feedbackPlaceholder.hidden = YES;
   }
 }
 
@@ -249,25 +250,28 @@
 }
 
 - (void)updateSliderStep:(UISlider *)sender {
-  if (!_voteButton.enabled) {
-    UIImage *iconCheckEnabled = [UIImage imageNamed:@"icon_check_enabled"
-                                           inBundle:[NSBundle bundleForClass: [self class]]
-                      compatibleWithTraitCollection:nil];
-    _buttonIconCheck.image = iconCheckEnabled;
-    _voteButton.enabled = YES;
-    _dragToChangeLabel.hidden = NO;
-    [UIView animateWithDuration:0.3 animations:^{
-      _sliderBackgroundView.alpha = 0;
-      _sliderCheckedBackgroundView.alpha = 1;
-      for (int i = 0; i <= 10; i++) {
-        UILabel *label = (UILabel *)[_scoreSlider viewWithTag:(9000 + i)];
-        label.textColor = [UIColor colorWithRed:155.0/255.0 green:155.0/255.0 blue:155.0/255.0 alpha:1];
-      }
-    }];
+  if (!_submitButton.enabled) {
+    [self firstTimeSliderTap];
   }
-
   _scoreSlider.value = round(sender.value);
   [self updateSliderThumbView];
+}
+
+- (void)firstTimeSliderTap {
+  UIImage *iconCheckEnabled = [UIImage imageNamed:@"icon_check_enabled"
+                                         inBundle:[NSBundle bundleForClass: [self class]]
+                    compatibleWithTraitCollection:nil];
+  _buttonIconCheck.image = iconCheckEnabled;
+  _submitButton.enabled = YES;
+  _dragToChangeLabel.hidden = NO;
+  [UIView animateWithDuration:0.3 animations:^{
+    _sliderBackgroundView.alpha = 0;
+    _sliderCheckedBackgroundView.alpha = 1;
+    for (int i = 0; i <= 10; i++) {
+      UILabel *label = (UILabel *)[_scoreSlider viewWithTag:(9000 + i)];
+      label.textColor = [UIColor colorWithRed:155.0/255.0 green:155.0/255.0 blue:155.0/255.0 alpha:1];
+    }
+  }];
 }
 
 - (void)updateSliderThumbView {
@@ -309,11 +313,11 @@
   [_commentTextView resignFirstResponder];
 }
 
-- (void)voteButtonPressed:(UIButton *)sender {
+- (void)submitButtonPressed:(UIButton *)sender {
   score = (long)(_scoreSlider.value);
+  alreadyVoted = YES;
   [self hideScore:nil];
   [_scoreSlider cancelTrackingWithEvent:nil];
-  alreadyVoted = YES;
   [WootricSDK voteWithScore:score andText:nil];
   [self changeView];
 }
@@ -386,8 +390,8 @@
   _dismissButton.hidden = YES;
   _commentTextView.hidden = YES;
   _scoreLabel.hidden = YES;
-  _voteButton.hidden = YES;
-  _askForFeedbackLabel.hidden = YES;
+  _submitButton.hidden = YES;
+  _feedbackPlaceholder.hidden = YES;
   _sendFeedbackButton.hidden = YES;
   _buttonIconSend.hidden = YES;
   _backButton.hidden = YES;
@@ -406,7 +410,7 @@
   scrolled = NO;
   // Score label should display 'thank you' text for now and title label should display score.
   [self switchTitleAndScoreLabelsParameters:YES];
-  _askForFeedbackLabel.text = [self placeholderDependingOnScore];
+  _feedbackPlaceholder.text = [self placeholderDependingOnScore];
 
   [_commentTextView becomeFirstResponder];
 }

@@ -56,6 +56,6 @@
 @property (nonatomic) BOOL forceSurvey;
 @property (nonatomic) BOOL setDefaultAfterSurvey;
 
-- (void)modifyWithSettingsFromEligibility:(NSDictionary *)eligibilitySettings;
+- (void)userSettingsFromEligibility:(NSDictionary *)eligibilitySettings;
 
 @end

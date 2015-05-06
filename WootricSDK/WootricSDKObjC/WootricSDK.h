@@ -27,7 +27,9 @@
 
 @interface WootricSDK : NSObject
 
-+ (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret andAccountToken:(NSString *)accountToken;
++ (void)configureWithClientID:(NSString *)clientID
+                 clientSecret:(NSString *)clientSecret
+              andAccountToken:(NSString *)accountToken;
 + (void)setEndUserEmail:(NSString *)endUserEmail andOriginURL:(NSString *)originURL;
 + (void)surveyImmediately:(BOOL)flag;
 + (void)forceSurvey:(BOOL)flag;
@@ -35,7 +37,10 @@
 + (void)voteWithScore:(NSInteger)score andText:(NSString *)text;
 + (void)userDeclined;
 + (void)showSurveyInViewController:(UIViewController *)viewController;
-+ (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercent registeredPercentage:(NSNumber *)registeredPercent andDailyResponseCap:(NSNumber *)dailyResponseCap;
++ (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle
+                        visitorPercentage:(NSNumber *)visitorPercent
+                     registeredPercentage:(NSNumber *)registeredPercent
+                      andDailyResponseCap:(NSNumber *)dailyResponseCap;
 + (void)endUserCreatedAt:(NSInteger)externalCreatedAt;
 + (void)productName:(NSString *)productName;
 + (void)endUserProperties:(NSDictionary *)customProperties;
@@ -44,11 +49,14 @@
 + (void)setSurveyedDefaultAfterSurvey:(BOOL)flag withDuration:(NSUInteger)numberOfDays;
 + (void)setCustomQuestion:(NSString *)customQuestion;
 + (void)setCustomPlaceholder:(NSString *)customPlaceholder;
-+ (void)setCustomDetractorQuestion:(NSString *)detractorQuestion passiveQuestion:(NSString *)passiveQuestion andPromoterQuestion:(NSString *)promoterQuestion;
-+ (void)setCustomDetractorPlaceholder:(NSString *)detractorPlaceholder passivePlaceholder:(NSString *)passivePlaceholder andPromoterPlaceholder:(NSString *)promoterPlaceholder;
++ (void)setCustomDetractorQuestion:(NSString *)detractorQuestion
+                   passiveQuestion:(NSString *)passiveQuestion
+               andPromoterQuestion:(NSString *)promoterQuestion;
++ (void)setCustomDetractorPlaceholder:(NSString *)detractorPlaceholder
+                   passivePlaceholder:(NSString *)passivePlaceholder
+               andPromoterPlaceholder:(NSString *)promoterPlaceholder;
 + (void)setCustomWootricRecommendTo:(NSString *)wootricRecommendTo;
 + (void)setCustomWootricRecommendProduct:(NSString *)wootricRecommendProduct;
-+ (void)setDailyResponseCap:(NSNumber *)dailyResponseCap;
 + (UIImage *)imageToBlurFromViewController:(UIViewController *)viewController;
 
 @end
