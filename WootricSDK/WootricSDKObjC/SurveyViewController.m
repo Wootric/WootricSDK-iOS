@@ -387,6 +387,7 @@
 }
 
 - (void)showFinalView {
+  _chosenScore.hidden = YES;
   _dismissButton.hidden = YES;
   _commentTextView.hidden = YES;
   _scoreLabel.hidden = YES;
