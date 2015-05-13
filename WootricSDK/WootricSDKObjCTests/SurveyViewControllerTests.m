@@ -12,7 +12,7 @@
 
 @interface SurveyViewControllerTests : XCTestCase
 
-@property (nonatomic) SurveyViewController *surveyVC;
+@property (nonatomic, strong) SurveyViewController *surveyVC;
 
 @end
 

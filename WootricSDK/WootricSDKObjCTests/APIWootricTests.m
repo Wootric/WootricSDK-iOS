@@ -12,7 +12,7 @@
 
 @interface APIWootricTests : XCTestCase
 
-@property (nonatomic) APIWootric *api;
+@property (nonatomic, strong) APIWootric *api;
 
 @end
 

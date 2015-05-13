@@ -12,7 +12,7 @@
 
 @interface WTSettingsTests : XCTestCase
 
-@property (nonatomic) WTSettings *settings;
+@property (nonatomic, strong) WTSettings *settings;
 
 @end
 

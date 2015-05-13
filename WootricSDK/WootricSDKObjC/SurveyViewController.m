@@ -29,12 +29,16 @@
 #import "SurveyViewController+Views.h"
 #import "SurveyViewController+Utils.h"
 
+@interface SurveyViewController ()
+
+@property (nonatomic, assign) CGSize textSize;
+@property (nonatomic, assign) long score;
+@property (nonatomic, assign) BOOL scrolled;
+@property (nonatomic, assign) BOOL alreadyVoted;
+
+@end
+
 @implementation SurveyViewController
-  CGSize textSize;
-  long score;
-  BOOL scrolled;
-  BOOL alreadyVoted;
-  BOOL addedLabels;
 
 - (instancetype)initWithSettings:(WTSettings *)settings {
   if (self = [super init]) {
@@ -90,9 +94,9 @@
   _scrollView.contentInset = contentInsets;
   _scrollView.scrollIndicatorInsets = contentInsets;
 
-  if (!scrolled) {
+  if (!_scrolled) {
     [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
-    scrolled = YES;
+    _scrolled = YES;
   }
 }
 
@@ -160,11 +164,11 @@
     _titleLabel.textColor = _settings.tintColorCircle;
     // HAX, HAX everywhere
     _titleLabel.text = [NSString stringWithFormat:[self localizedString:@"You chose %ld."], 10];
-    _chosenScore.text = [NSString stringWithFormat:@"%ld", score];
+    _chosenScore.text = [NSString stringWithFormat:@"%ld", _score];
 
-    if (textSize.width == 0) {
-      textSize = [_titleLabel.text sizeWithAttributes:@{NSFontAttributeName: _titleLabel.font}];
-      _chosenScoreConstR.constant = textSize.width / 2 - 10;
+    if (_textSize.width == 0) {
+      _textSize = [_titleLabel.text sizeWithAttributes:@{NSFontAttributeName: _titleLabel.font}];
+      _chosenScoreConstR.constant = _textSize.width / 2 - 10;
     }
   } else {
     _titleLabel.text = [self npsQuestion];
@@ -185,9 +189,9 @@
 }
 
 - (NSString *)textDependingOnScore {
-  if (score <= 6 && _settings.detractorQuestion != nil) {
+  if (_score <= 6 && _settings.detractorQuestion != nil) {
     return _settings.detractorQuestion;
-  } else if (score <= 8 && _settings.passiveQuestion != nil) {
+  } else if (_score <= 8 && _settings.passiveQuestion != nil) {
     return _settings.passiveQuestion;
   } else if (_settings.promoterQuestion != nil) {
     return _settings.promoterQuestion;
@@ -198,9 +202,9 @@
 }
 
 - (NSString *)placeholderDependingOnScore {
-  if (score <= 6 && _settings.detractorPlaceholder != nil) {
+  if (_score <= 6 && _settings.detractorPlaceholder != nil) {
     return _settings.detractorPlaceholder;
-  } else if (score <= 8 && _settings.passivePlaceholder != nil) {
+  } else if (_score <= 8 && _settings.passivePlaceholder != nil) {
     return _settings.passivePlaceholder;
   } else if (_settings.promoterPlaceholder != nil) {
     return _settings.promoterPlaceholder;
@@ -314,11 +318,11 @@
 }
 
 - (void)submitButtonPressed:(UIButton *)sender {
-  score = (long)(_scoreSlider.value);
-  alreadyVoted = YES;
+  _score = (long)(_scoreSlider.value);
+  _alreadyVoted = YES;
   [self hideScore:nil];
   [_scoreSlider cancelTrackingWithEvent:nil];
-  [WootricSDK voteWithScore:score andText:nil];
+  [WootricSDK voteWithScore:_score andText:nil];
   [self changeView];
 }
 
@@ -334,7 +338,7 @@
 }
 
 - (void)dismissButtonPressed:(UIButton *)sender {
-  if (!alreadyVoted) {
+  if (!_alreadyVoted) {
     [WootricSDK userDeclined];
   }
   [_commentTextView resignFirstResponder];
@@ -373,12 +377,12 @@
 #pragma mark - View change
 
 - (void)showScore:(UISlider *)slider {
-  score = (int)(_scoreSlider.value);
+  _score = (int)(_scoreSlider.value);
   float xPosition = [self xPositionFromSliderValue:slider];
   _scorePopoverLabel.hidden = NO;
   _dragToChangeLabel.hidden = YES;
   _scorePopoverLabel.frame = CGRectMake(xPosition, _sliderBackgroundView.frame.origin.y - 35, 20, 30);
-  _scorePopoverLabel.text = [NSString stringWithFormat:@"%ld", score];
+  _scorePopoverLabel.text = [NSString stringWithFormat:@"%ld", _score];
 }
 
 - (void)hideScore:(UISlider *)slider {
@@ -408,7 +412,7 @@
 
 - (void)changeView {
   [self changeItemsVisibilityTo:YES];
-  scrolled = NO;
+  _scrolled = NO;
   // Score label should display 'thank you' text for now and title label should display score.
   [self switchTitleAndScoreLabelsParameters:YES];
   _feedbackPlaceholder.text = [self placeholderDependingOnScore];

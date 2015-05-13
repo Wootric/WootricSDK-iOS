@@ -24,11 +24,16 @@
 
 #import "APIWootric.h"
 
+@interface APIWootric ()
+
+@property (nonatomic, strong) NSString *baseAPIURL;
+@property (nonatomic, strong) NSString *eligibilityServerURL;
+@property (nonatomic, assign) BOOL endUserAlreadyUpdated;
+@property (nonatomic, strong) NSURLSession *wootricSession;
+
+@end
+
 @implementation APIWootric
-  NSString *baseAPIURL = @"https://api.wootric.com";
-  NSString *eligibilityServerURL = @"http://wootric-eligibility.herokuapp.com/eligible.json";
-  BOOL endUserAlreadyUpdated;
-  NSURLSession *wootricSession;
 
 + (instancetype)sharedInstance {
   static APIWootric *sharedInstance = nil;
@@ -42,7 +47,9 @@
 
 - (instancetype)init {
   if (self = [super init]) {
-    wootricSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    _baseAPIURL = @"https://api.wootric.com";
+    _eligibilityServerURL = @"http://wootric-eligibility.herokuapp.com/eligible.json";
+    _wootricSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     _settings = [[WTSettings alloc] init];
     _apiVersion = @"v1";
   }
@@ -95,7 +102,7 @@
   NSURL *url = [NSURL URLWithString:params];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
 
-  NSURLSessionDataTask *dataTask = [wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+  NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       NSLog(@"Tracking pixel error: %@", error);
     } else {
@@ -107,7 +114,7 @@
 }
 
 - (void)createDeclineForEndUser:(NSInteger)endUserID {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/declines", baseAPIURL, _apiVersion, (long)endUserID]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/declines", _baseAPIURL, _apiVersion, (long)endUserID]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   NSString *params = [NSString stringWithFormat:@"origin_url=%@&survey[channel]=mobile", _originURL];
 
@@ -115,7 +122,7 @@
   urlRequest.HTTPMethod = @"POST";
   urlRequest.HTTPBody = [params dataUsingEncoding:NSUTF8StringEncoding];
 
-  NSURLSessionDataTask *dataTask = [wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+  NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       NSLog(@"DeclineError: %@", error);
     } else {
@@ -127,7 +134,7 @@
 }
 
 - (void)createResponseForEndUser:(NSInteger)endUserID withScore:(NSInteger)score andText:(NSString *)text {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/responses", baseAPIURL, _apiVersion, (long)endUserID]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/responses", _baseAPIURL, _apiVersion, (long)endUserID]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   NSString *params = [NSString stringWithFormat:@"score=%ld&origin_url=%@&survey[channel]=mobile", (long)score, _originURL];
 
@@ -140,7 +147,7 @@
   urlRequest.HTTPMethod = @"POST";
   urlRequest.HTTPBody = [params dataUsingEncoding:NSUTF8StringEncoding];
 
-  NSURLSessionDataTask *dataTask = [wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+  NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       NSLog(@"ResponseError: %@", error);
     } else {
@@ -153,11 +160,11 @@
 
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID {
   NSString *escapedEmail = [self percentEscapeString:_endUserEmail];
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", baseAPIURL, _apiVersion, escapedEmail]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", _baseAPIURL, _apiVersion, escapedEmail]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
 
-  NSURLSessionDataTask *dataTask = [wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+  NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       NSLog(@"%@", error);
     } else {
@@ -171,7 +178,7 @@
         NSDictionary *endUser = responseJSON[0];
         if (endUser[@"id"]) {
           NSInteger endUserID = [endUser[@"id"] integerValue];
-          if (!endUserAlreadyUpdated) {
+          if (!_endUserAlreadyUpdated) {
             [self updateExistingEndUser:endUserID];
           }
           endUserWithID(endUserID);
@@ -196,18 +203,18 @@
     params = [NSString stringWithFormat:@"%@%@", params, parsedProperties];
   }
 
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld?%@", baseAPIURL, _apiVersion, (long)endUserID, params]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld?%@", _baseAPIURL, _apiVersion, (long)endUserID, params]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
 
   [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
   urlRequest.HTTPMethod = @"PUT";
 
-  NSURLSessionDataTask *dataTask = [wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+  NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       NSLog(@"%@", error);
     } else {
       NSLog(@"user updated");
-      endUserAlreadyUpdated = YES;
+      _endUserAlreadyUpdated = YES;
     }
   }];
 
@@ -215,7 +222,7 @@
 }
 
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", baseAPIURL, _apiVersion]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", _baseAPIURL, _apiVersion]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   NSString *escapedEmail = [self percentEscapeString:_endUserEmail];
   NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
@@ -237,7 +244,7 @@
   urlRequest.HTTPMethod = @"POST";
   urlRequest.HTTPBody = [params dataUsingEncoding:NSUTF8StringEncoding];
 
-  NSURLSessionDataTask *dataTask = [wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+  NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       NSLog(@"%@", error);
     } else {
@@ -254,29 +261,34 @@
 }
 
 - (void)checkEligibilityForEndUser:(void (^)())eligible {
-  NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@&email=%@", eligibilityServerURL, _accountToken, _endUserEmail];
+  NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@&email=%@",
+                             _eligibilityServerURL, _accountToken, _endUserEmail];
 
   if (_settings.registeredPercent) {
-    baseURLString = [NSString stringWithFormat:@"%@&registered_percent=%ld", baseURLString, (long)_settings.registeredPercent.integerValue];
+    baseURLString = [NSString stringWithFormat:@"%@&registered_percent=%ld",
+                     baseURLString, (long)_settings.registeredPercent.integerValue];
   }
 
   if (_settings.visitorPercent) {
-    baseURLString = [NSString stringWithFormat:@"%@&visitor_percent=%ld", baseURLString, (long)_settings.visitorPercent.integerValue];
+    baseURLString = [NSString stringWithFormat:@"%@&visitor_percent=%ld",
+                     baseURLString, (long)_settings.visitorPercent.integerValue];
   }
 
   if (_settings.resurveyThrottle) {
-    baseURLString = [NSString stringWithFormat:@"%@&resurvey_throttle=%ld", baseURLString, (long)_settings.resurveyThrottle.integerValue];
+    baseURLString = [NSString stringWithFormat:@"%@&resurvey_throttle=%ld",
+                     baseURLString, (long)_settings.resurveyThrottle.integerValue];
   }
 
   if (_settings.dailyResponseCap) {
-    baseURLString = [NSString stringWithFormat:@"%@&daily_response_cap=%ld", baseURLString, (long)_settings.dailyResponseCap.integerValue];
+    baseURLString = [NSString stringWithFormat:@"%@&daily_response_cap=%ld",
+                     baseURLString, (long)_settings.dailyResponseCap.integerValue];
   }
 
   NSURL *url = [NSURL URLWithString:baseURLString];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"USER_AGENT"];
 
-  NSURLSessionDataTask *dataTask = [wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+  NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       NSLog(@"%@", error);
     } else {
@@ -298,13 +310,13 @@
 }
 
 - (void)authenticate:(void (^)())authenticated {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/oauth/token", baseAPIURL]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/oauth/token", _baseAPIURL]];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   NSString *params = [NSString stringWithFormat:@"grant_type=client_credentials&client_id=%@&client_secret=%@", _clientID, _clientSecret];
   urlRequest.HTTPBody = [params dataUsingEncoding:NSUTF8StringEncoding];
   urlRequest.HTTPMethod = @"POST";
 
-  NSURLSessionDataTask *dataTask = [wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+  NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       NSLog(@"%@", error);
     } else {
@@ -382,7 +394,7 @@
 
 // For test purposes only
 - (NSString *)getBaseAPIURL {
-  return baseAPIURL;
+  return _baseAPIURL;
 }
 
 @end

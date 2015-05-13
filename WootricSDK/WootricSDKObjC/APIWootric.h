@@ -27,14 +27,14 @@
 
 @interface APIWootric : NSObject
 
-@property (nonatomic) WTSettings *settings;
-@property (nonatomic) NSString *clientSecret;
-@property (nonatomic) NSString *clientID;
-@property (nonatomic) NSString *accountToken;
-@property (nonatomic) NSString *accessToken;
-@property (nonatomic) NSString *endUserEmail;
-@property (nonatomic) NSString *apiVersion;
-@property (nonatomic) NSString *originURL;
+@property (nonatomic, strong) WTSettings *settings;
+@property (nonatomic, strong) NSString *clientSecret;
+@property (nonatomic, strong) NSString *clientID;
+@property (nonatomic, strong) NSString *accountToken;
+@property (nonatomic, strong) NSString *accessToken;
+@property (nonatomic, strong) NSString *endUserEmail;
+@property (nonatomic, strong) NSString *apiVersion;
+@property (nonatomic, strong) NSString *originURL;
 
 + (instancetype)sharedInstance;
 - (void)getTrackingPixel;

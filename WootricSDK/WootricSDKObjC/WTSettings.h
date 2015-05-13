@@ -27,34 +27,34 @@
 
 @interface WTSettings : NSObject
 
-@property (nonatomic) UIColor *tintColorCircle;
-@property (nonatomic) UIColor *tintColorSubmit;
-@property (nonatomic) NSString *defaultWootricQuestion;
-@property (nonatomic) NSString *defaultPlaceholderText;
-@property (nonatomic) NSString *defaultResponseQuestion;
-@property (nonatomic) NSString *productName;
-@property (nonatomic) NSString *wootricRecommendProduct;
-@property (nonatomic) NSString *customQuestion;
-@property (nonatomic) NSString *customPlaceholder;
-@property (nonatomic) NSString *wootricRecommendTo;
-@property (nonatomic) NSString *detractorQuestion;
-@property (nonatomic) NSString *passiveQuestion;
-@property (nonatomic) NSString *promoterQuestion;
-@property (nonatomic) NSString *detractorPlaceholder;
-@property (nonatomic) NSString *passivePlaceholder;
-@property (nonatomic) NSString *promoterPlaceholder;
-@property (nonatomic) NSString *language;
-@property (nonatomic) NSNumber *registeredPercent;
-@property (nonatomic) NSNumber *visitorPercent;
-@property (nonatomic) NSNumber *resurveyThrottle;
-@property (nonatomic) NSNumber *dailyResponseCap;
-@property (nonatomic) NSDictionary *customProperties;
-@property (nonatomic) NSInteger externalCreatedAt;
-@property (nonatomic) NSInteger firstSurveyAfter;
-@property (nonatomic) NSInteger surveyedDefaultDuration;
-@property (nonatomic) BOOL surveyImmediately;
-@property (nonatomic) BOOL forceSurvey;
-@property (nonatomic) BOOL setDefaultAfterSurvey;
+@property (nonatomic, strong) UIColor *tintColorCircle;
+@property (nonatomic, strong) UIColor *tintColorSubmit;
+@property (nonatomic, strong) NSString *defaultWootricQuestion;
+@property (nonatomic, strong) NSString *defaultPlaceholderText;
+@property (nonatomic, strong) NSString *defaultResponseQuestion;
+@property (nonatomic, strong) NSString *productName;
+@property (nonatomic, strong) NSString *wootricRecommendProduct;
+@property (nonatomic, strong) NSString *customQuestion;
+@property (nonatomic, strong) NSString *customPlaceholder;
+@property (nonatomic, strong) NSString *wootricRecommendTo;
+@property (nonatomic, strong) NSString *detractorQuestion;
+@property (nonatomic, strong) NSString *passiveQuestion;
+@property (nonatomic, strong) NSString *promoterQuestion;
+@property (nonatomic, strong) NSString *detractorPlaceholder;
+@property (nonatomic, strong) NSString *passivePlaceholder;
+@property (nonatomic, strong) NSString *promoterPlaceholder;
+@property (nonatomic, strong) NSString *language;
+@property (nonatomic, strong) NSNumber *registeredPercent;
+@property (nonatomic, strong) NSNumber *visitorPercent;
+@property (nonatomic, strong) NSNumber *resurveyThrottle;
+@property (nonatomic, strong) NSNumber *dailyResponseCap;
+@property (nonatomic, strong) NSDictionary *customProperties;
+@property (nonatomic, assign) NSInteger externalCreatedAt;
+@property (nonatomic, assign) NSInteger firstSurveyAfter;
+@property (nonatomic, assign) NSInteger surveyedDefaultDuration;
+@property (nonatomic, assign) BOOL surveyImmediately;
+@property (nonatomic, assign) BOOL forceSurvey;
+@property (nonatomic, assign) BOOL setDefaultAfterSurvey;
 
 - (void)userSettingsFromEligibility:(NSDictionary *)eligibilitySettings;
 
