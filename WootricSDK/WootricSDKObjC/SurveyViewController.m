@@ -193,7 +193,7 @@
     return _settings.detractorQuestion;
   } else if (_score <= 8 && _settings.passiveQuestion != nil) {
     return _settings.passiveQuestion;
-  } else if (_settings.promoterQuestion != nil) {
+  } else if (_score >= 9 && _settings.promoterQuestion != nil) {
     return _settings.promoterQuestion;
   } else if (_settings.customQuestion != nil) {
     return _settings.customQuestion;
@@ -206,7 +206,7 @@
     return _settings.detractorPlaceholder;
   } else if (_score <= 8 && _settings.passivePlaceholder != nil) {
     return _settings.passivePlaceholder;
-  } else if (_settings.promoterPlaceholder != nil) {
+  } else if (_score >= 9 && _settings.promoterPlaceholder != nil) {
     return _settings.promoterPlaceholder;
   } else if (_settings.customPlaceholder != nil) {
     return _settings.customPlaceholder;

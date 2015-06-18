@@ -43,53 +43,54 @@
 
 - (void)userSettingsFromEligibility:(NSDictionary *)eligibilitySettings {
   NSDictionary *settings = eligibilitySettings[@"settings"];
+  NSDictionary *messages = settings[@"messages"];
 
   if ([settings[@"language"] integerValue] && !_language) {
     _language = [self countryCodeFromLanguageNumber:[settings[@"language"] integerValue]];
   }
 
-  if (settings[@"followup_question"] && !_customQuestion) {
-    _customQuestion = settings[@"followup_question"];
+  if (messages[@"followup_question"] && !_customQuestion) {
+    _customQuestion = messages[@"followup_question"];
   }
 
-  if (settings[@"followup_questions_list"]) {
-    NSDictionary *question_list = settings[@"followup_questions_list"];
+  if (messages[@"followup_questions_list"]) {
+    NSDictionary *question_list = messages[@"followup_questions_list"];
 
     if (question_list[@"detractor_question"] && !_detractorQuestion) {
-      _detractorQuestion = settings[@"detractor_question"];
+      _detractorQuestion = question_list[@"detractor_question"];
     }
 
     if (question_list[@"passive_question"] && !_passiveQuestion) {
-      _passiveQuestion = settings[@"detractor_question"];
+      _passiveQuestion = question_list[@"passive_question"];
     }
 
     if (question_list[@"promoter_question"] && !_promoterQuestion) {
-      _promoterQuestion = settings[@"detractor_question"];
+      _promoterQuestion = question_list[@"promoter_question"];
     }
   }
 
-  if (settings[@"placeholder_text"] && !_customPlaceholder) {
-    _customPlaceholder = settings[@"followup_question"];
+  if (messages[@"placeholder_text"] && !_customPlaceholder) {
+    _customPlaceholder = messages[@"followup_question"];
   }
 
-  if (settings[@"placeholder_texts_list"]) {
-    NSDictionary *placeholder_list = settings[@"placeholder_texts_list"];
+  if (messages[@"placeholder_texts_list"]) {
+    NSDictionary *placeholder_list = messages[@"placeholder_texts_list"];
 
     if (placeholder_list[@"detractor_text"] && !_detractorPlaceholder) {
-      _detractorPlaceholder = settings[@"detractor_question"];
+      _detractorPlaceholder = placeholder_list[@"detractor_text"];
     }
 
     if (placeholder_list[@"passive_text"] && !_passivePlaceholder) {
-      _passivePlaceholder = settings[@"detractor_question"];
+      _passivePlaceholder = placeholder_list[@"passive_text"];
     }
 
     if (placeholder_list[@"promoter_text"] && !_promoterPlaceholder) {
-      _promoterPlaceholder = settings[@"detractor_question"];
+      _promoterPlaceholder = placeholder_list[@"promoter_text"];
     }
   }
 
-  if (settings[@"wootric_recommend_target"] && !_wootricRecommendTo) {
-    _wootricRecommendTo = settings[@"wootric_recommend_target"];
+  if (messages[@"wootric_recommend_target"] && !_wootricRecommendTo) {
+    _wootricRecommendTo = messages[@"wootric_recommend_target"];
   }
 
   if (settings[@"product_name"] && !_wootricRecommendProduct) {
@@ -125,6 +126,10 @@
     return @"tr";
   case 12:
     return @"vn";
+  case 13:
+    return @"ru";
+  case 14:
+    return @"sv";
 
   default:
     return @"en";
