@@ -24,39 +24,39 @@
 
 #import "WootricSDK.h"
 #import <Foundation/Foundation.h>
-#import "APIWootric.h"
-#import "WTSettings.h"
-#import "SurveyViewController.h"
+#import "WTRNetworkClient.h"
+#import "WTRSettings.h"
+#import "WTRSurveyViewController.h"
 
 @implementation WootricSDK
 
 #pragma mark - Configuration
 
 + (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret andAccountToken:(NSString *)accountToken {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.clientID = clientID;
   api.clientSecret = clientSecret;
   api.accountToken = accountToken;
 }
 
 + (void)setEndUserEmail:(NSString *)endUserEmail andOriginURL:(NSString *)originURL {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.endUserEmail = endUserEmail;
   api.originURL = originURL;
 }
 
 + (void)setApiVersion:(NSString *)apiVersion {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.apiVersion = apiVersion;
 }
 
 + (void)surveyImmediately:(BOOL)flag {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.settings.surveyImmediately = flag;
 }
 
 + (void)forceSurvey:(BOOL)flag {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.settings.forceSurvey = flag;
 }
 
@@ -64,7 +64,7 @@
                         visitorPercentage:(NSNumber *)visitorPercent
                      registeredPercentage:(NSNumber *)registeredPercent
                       andDailyResponseCap:(NSNumber *)dailyResponseCap {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.settings.registeredPercent = registeredPercent;
   api.settings.visitorPercent = visitorPercent;
   api.settings.resurveyThrottle = resurveyThrottle;
@@ -72,40 +72,40 @@
 }
 
 + (void)endUserCreatedAt:(NSInteger)externalCreatedAt {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.settings.externalCreatedAt = externalCreatedAt;
 }
 
 + (void)productName:(NSString *)productName {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.settings.productName = productName;
 }
 
 + (void)endUserProperties:(NSDictionary *)customProperties {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.settings.customProperties = customProperties;
 }
 
 + (void)firstSurveyAfter:(NSUInteger)numberOfDays {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.settings.firstSurveyAfter = numberOfDays;
 }
 
 + (void)setSurveyedDefaultAfterSurvey:(BOOL)flag withDuration:(NSUInteger)numberOfDays {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.settings.setDefaultAfterSurvey = flag;
   api.settings.surveyedDefaultDuration = numberOfDays;
 }
 
 + (void)setSurveyedDefaultAfterSurvey:(BOOL)flag {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   [WootricSDK setSurveyedDefaultAfterSurvey:flag withDuration:api.settings.surveyedDefaultDuration];
 }
 
 + (void)setCustomDetractorQuestion:(NSString *)detractorQuestion
                    passiveQuestion:(NSString *)passiveQuestion
                andPromoterQuestion:(NSString *)promoterQuestion {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.settings.detractorQuestion = detractorQuestion;
   api.settings.passiveQuestion = passiveQuestion;
   api.settings.promoterQuestion = promoterQuestion;
@@ -114,47 +114,47 @@
 + (void)setCustomDetractorPlaceholder:(NSString *)detractorPlaceholder
                    passivePlaceholder:(NSString *)passivePlaceholder
                andPromoterPlaceholder:(NSString *)promoterPlaceholder {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.settings.detractorPlaceholder = detractorPlaceholder;
   api.settings.passivePlaceholder = passivePlaceholder;
   api.settings.promoterPlaceholder = promoterPlaceholder;
 }
 
 + (void)setCustomWootricRecommendTo:(NSString *)wootricRecommendTo {
-  APIWootric *api = [APIWootric sharedInstance];
+  WTRNetworkClient *api = [WTRNetworkClient sharedInstance];
   api.settings.wootricRecommendTo = wootricRecommendTo;
 }
 
 + (void)setCustomQuestion:(NSString *)customQuestion {
-  [APIWootric sharedInstance].settings.customQuestion = customQuestion;
+  [WTRNetworkClient sharedInstance].settings.customQuestion = customQuestion;
 }
 
 + (void)setCustomPlaceholder:(NSString *)customPlaceholder {
-  [APIWootric sharedInstance].settings.customPlaceholder = customPlaceholder;
+  [WTRNetworkClient sharedInstance].settings.customPlaceholder = customPlaceholder;
 }
 
 + (void)setCustomWootricRecommendProduct:(NSString *)wootricRecommendProduct{
-  [APIWootric sharedInstance].settings.wootricRecommendProduct = wootricRecommendProduct;
+  [WTRNetworkClient sharedInstance].settings.wootricRecommendProduct = wootricRecommendProduct;
 }
 
 #pragma mark - Survey methods
 
 + (void)voteWithScore:(NSInteger)score andText:(NSString *)text {
-  [[APIWootric sharedInstance] voteWithScore:score andText:text];
+  [[WTRNetworkClient sharedInstance] voteWithScore:score andText:text];
   [WootricSDK setSurveyedInDefaults];
 }
 
 + (void)userDeclined {
-  [[APIWootric sharedInstance] userDeclined];
+  [[WTRNetworkClient sharedInstance] userDeclined];
   [WootricSDK setSurveyedInDefaults];
 }
 
 + (void)showSurveyInViewController:(UIViewController *)viewController {
-  if ([[APIWootric sharedInstance] checkConfiguration]) {
-    [[APIWootric sharedInstance] getTrackingPixel];
+  if ([[WTRNetworkClient sharedInstance] checkConfiguration]) {
+    [[WTRNetworkClient sharedInstance] getTrackingPixel];
     [WootricSDK setLastSeenAtInDefaults];
     [WootricSDK checkIfSurveyedDefaultExpired];
-    [[APIWootric sharedInstance] surveyForEndUser:^{
+    [[WTRNetworkClient sharedInstance] surveyForEndUser:^{
       UIImage *imageToBlur = [WootricSDK imageToBlurFromViewController:viewController];
       dispatch_async(dispatch_get_main_queue(), ^{
         [WootricSDK setupAndShowSurveyForViewController:viewController withImageToBlur:imageToBlur];
@@ -166,7 +166,7 @@
 }
 
 + (void)setupAndShowSurveyForViewController:(UIViewController *)viewController withImageToBlur:(UIImage *)imageToBlur {
-  SurveyViewController *surveyViewController = [[SurveyViewController alloc] initWithSettings:[APIWootric sharedInstance].settings];
+  WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSettings:[WTRNetworkClient sharedInstance].settings];
 
   surveyViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
   surveyViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
@@ -197,7 +197,7 @@
 
 + (void)setSurveyedInDefaults {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  if ([APIWootric sharedInstance].settings.setDefaultAfterSurvey) {
+  if ([WTRNetworkClient sharedInstance].settings.setDefaultAfterSurvey) {
     [defaults setBool:YES forKey:@"surveyed"];
     [defaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:@"surveyedAt"];
   }
@@ -205,7 +205,7 @@
 
 + (void)checkIfSurveyedDefaultExpired {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  if ([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"surveyedAt"] >= ([APIWootric sharedInstance].settings.surveyedDefaultDuration * 60 * 60 * 24)) {
+  if ([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"surveyedAt"] >= ([WTRNetworkClient sharedInstance].settings.surveyedDefaultDuration * 60 * 60 * 24)) {
     [defaults setBool:NO forKey:@"surveyed"];
   }
 }

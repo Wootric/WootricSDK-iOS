@@ -1,5 +1,5 @@
 //
-//  SurveyViewControllerTests.m
+//  WTRSurveyViewControllerTests.m
 //  WootricSDK
 //
 //  Created by Łukasz Cichecki on 14/04/15.
@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "SurveyViewController.h"
+#import "WTRSurveyViewController.h"
 
-@interface SurveyViewControllerTests : XCTestCase
+@interface WTRSurveyViewControllerTests : XCTestCase
 
-@property (nonatomic, strong) SurveyViewController *surveyVC;
+@property (nonatomic, strong) WTRSurveyViewController *surveyVC;
 
 @end
 
-@interface SurveyViewController (Tests)
+@interface WTRSurveyViewController (Tests)
 
 - (void)submitButtonPressed:(UIButton *)sender;
 - (void)changeView;
@@ -24,12 +24,12 @@
 
 @end
 
-@implementation SurveyViewControllerTests
+@implementation WTRSurveyViewControllerTests
 
 - (void)setUp {
   [super setUp];
-  WTSettings *settings = [[WTSettings alloc] init];
-  self.surveyVC = [[SurveyViewController alloc] initWithSettings:settings];
+  WTRSettings *settings = [[WTRSettings alloc] init];
+  self.surveyVC = [[WTRSurveyViewController alloc] initWithSettings:settings];
   [self.surveyVC viewDidLoad];
 }
 
@@ -80,8 +80,8 @@
 }
 
 - (void)testCustomRecommendTo {
-  WTSettings *settings = [[WTSettings alloc] init];
-  self.surveyVC = [[SurveyViewController alloc] initWithSettings:settings];
+  WTRSettings *settings = [[WTRSettings alloc] init];
+  self.surveyVC = [[WTRSurveyViewController alloc] initWithSettings:settings];
   _surveyVC.settings.wootricRecommendTo = @"BFF";
   [self.surveyVC viewDidLoad];
 
@@ -89,9 +89,9 @@
 }
 
 - (void)testLanguageSettings {
-  WTSettings *settings = [[WTSettings alloc] init];
+  WTRSettings *settings = [[WTRSettings alloc] init];
   settings.language = @"pl";
-  self.surveyVC = [[SurveyViewController alloc] initWithSettings:settings];
+  self.surveyVC = [[WTRSurveyViewController alloc] initWithSettings:settings];
   [self.surveyVC viewDidLoad];
 
   XCTAssertEqualObjects(_surveyVC.titleLabel.text, @"Czy poleciliby Państwo nas swojemu znajomemu lub koledze?");

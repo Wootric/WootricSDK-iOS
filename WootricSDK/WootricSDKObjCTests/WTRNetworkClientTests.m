@@ -1,5 +1,5 @@
 //
-//  APIWootricTests.m
+//  WTRNetworkClientTests.m
 //  WootricSDK
 //
 //  Created by Łukasz Cichecki on 13/04/15.
@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "APIWootric.h"
+#import "WTRNetworkClient.h"
 
-@interface APIWootricTests : XCTestCase
+@interface WTRNetworkClientTests : XCTestCase
 
-@property (nonatomic, strong) APIWootric *api;
+@property (nonatomic, strong) WTRNetworkClient *api;
 
 @end
 
-@interface APIWootric (Tests)
+@interface WTRNetworkClient (Tests)
 
 - (BOOL)needsSurvey;
 - (NSString *)percentEscapeString:(NSString *)string;
@@ -25,11 +25,11 @@
 
 @end
 
-@implementation APIWootricTests
+@implementation WTRNetworkClientTests
 
 - (void)setUp {
   [super setUp];
-  self.api = [APIWootric sharedInstance];
+  self.api = [WTRNetworkClient sharedInstance];
 }
 
 - (void)tearDown {

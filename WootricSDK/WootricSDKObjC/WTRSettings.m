@@ -1,5 +1,5 @@
 //
-//  WTSettings.m
+//  WTRSettings.m
 //  WootricSDKObjC
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,9 +22,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "WTSettings.h"
+#import "WTRSettings.h"
 
-@implementation WTSettings
+@implementation WTRSettings
 
 - (instancetype)init {
   if (self = [super init]) {

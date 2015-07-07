@@ -1,5 +1,5 @@
 //
-//  SurveyViewController.h
+//  WTRSurveyViewController.h
 //  WootricSDKObjC
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -23,11 +23,11 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "WTSettings.h"
+#import "WTRSettings.h"
 
-@interface SurveyViewController : UIViewController <UITextViewDelegate>
+@interface WTRSurveyViewController : UIViewController <UITextViewDelegate>
 
-@property (nonatomic, strong) WTSettings *settings;
+@property (nonatomic, strong) WTRSettings *settings;
 @property (nonatomic, strong) NSLayoutConstraint *constTopToModal;
 @property (nonatomic, strong) NSLayoutConstraint *sliderWidth;
 @property (nonatomic, strong) NSLayoutConstraint *constModalHeight;
@@ -62,6 +62,6 @@
 @property (nonatomic, strong) UILabel *scorePopoverLabel;
 @property (nonatomic, strong) UILabel *chosenScore;
 
-- (instancetype)initWithSettings:(WTSettings *)settings;
+- (instancetype)initWithSettings:(WTRSettings *)settings;
 
 @end

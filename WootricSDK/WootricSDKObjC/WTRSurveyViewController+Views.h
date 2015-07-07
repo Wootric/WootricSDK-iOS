@@ -1,6 +1,6 @@
 //
-//  APIWootric.h
-//  WootricSDKObjC
+//  WTRSurveyViewController+Views.h
+//  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
 //
@@ -22,25 +22,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "WTSettings.h"
+#import "WTRSurveyViewController.h"
 
-@interface APIWootric : NSObject
+@interface WTRSurveyViewController (Views)
 
-@property (nonatomic, strong) WTSettings *settings;
-@property (nonatomic, strong) NSString *clientSecret;
-@property (nonatomic, strong) NSString *clientID;
-@property (nonatomic, strong) NSString *accountToken;
-@property (nonatomic, strong) NSString *accessToken;
-@property (nonatomic, strong) NSString *endUserEmail;
-@property (nonatomic, strong) NSString *apiVersion;
-@property (nonatomic, strong) NSString *originURL;
-
-+ (instancetype)sharedInstance;
-- (void)getTrackingPixel;
-- (void)voteWithScore:(NSInteger)score andText:(NSString *)text;
-- (void)userDeclined;
-- (BOOL)checkConfiguration;
-- (void)surveyForEndUser:(void (^)())completionHandler;
+- (void)setupViews;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  APIWootric.m
+//  WTRNetworkClient.m
 //  WootricSDKObjC
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,9 +22,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "APIWootric.h"
+#import "WTRNetworkClient.h"
 
-@interface APIWootric ()
+@interface WTRNetworkClient ()
 
 @property (nonatomic, strong) NSString *baseAPIURL;
 @property (nonatomic, strong) NSString *eligibilityServerURL;
@@ -33,10 +33,10 @@
 
 @end
 
-@implementation APIWootric
+@implementation WTRNetworkClient
 
 + (instancetype)sharedInstance {
-  static APIWootric *sharedInstance = nil;
+  static WTRNetworkClient *sharedInstance = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     sharedInstance = [[self alloc] init];
@@ -50,7 +50,7 @@
     _baseAPIURL = @"https://api.wootric.com";
     _eligibilityServerURL = @"http://wootric-eligibility.herokuapp.com/eligible.json";
     _wootricSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    _settings = [[WTSettings alloc] init];
+    _settings = [[WTRSettings alloc] init];
     _apiVersion = @"v1";
   }
   return self;

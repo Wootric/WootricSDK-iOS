@@ -1,5 +1,5 @@
 //
-//  WTSettingsTests.m
+//  WTRSettingsTests.m
 //  WootricSDK
 //
 //  Created by Łukasz Cichecki on 06/05/15.
@@ -8,25 +8,25 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "WTSettings.h"
+#import "WTRSettings.h"
 
-@interface WTSettingsTests : XCTestCase
+@interface WTRSettingsTests : XCTestCase
 
-@property (nonatomic, strong) WTSettings *settings;
+@property (nonatomic, strong) WTRSettings *settings;
 
 @end
 
-@interface WTSettings (Tests)
+@interface WTRSettings (Tests)
 
 - (NSString *)countryCodeFromLanguageNumber:(NSInteger)languageNumber;
 
 @end
 
-@implementation WTSettingsTests
+@implementation WTRSettingsTests
 
 - (void)setUp {
   [super setUp];
-  _settings = [[WTSettings alloc] init];
+  _settings = [[WTRSettings alloc] init];
 }
 
 - (void)tearDown {

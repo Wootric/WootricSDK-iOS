@@ -1,5 +1,5 @@
 //
-//  SurveyViewController+Views.m
+//  WTRSurveyViewController+Views.m
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,10 +22,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "SurveyViewController+Views.h"
-#import "SurveyViewController+Utils.h"
+#import "WTRSurveyViewController+Views.h"
+#import "WTRSurveyViewController+Utils.h"
 
-@implementation SurveyViewController (Views)
+@implementation WTRSurveyViewController (Views)
 
 - (void)setupViews {
   [self setupModal];

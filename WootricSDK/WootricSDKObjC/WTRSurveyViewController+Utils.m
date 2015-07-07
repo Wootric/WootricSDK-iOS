@@ -1,5 +1,5 @@
 //
-//  SurveyViewController+Utils.m
+//  WTRSurveyViewController+Utils.m
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,9 +22,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "SurveyViewController+Utils.h"
+#import "WTRSurveyViewController+Utils.h"
 
-@implementation SurveyViewController (Utils)
+@implementation WTRSurveyViewController (Utils)
 
 - (NSString *)localizedString:(NSString *)key {
   NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:self.settings.language ofType:@"lproj"];

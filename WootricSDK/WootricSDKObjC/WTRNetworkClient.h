@@ -1,6 +1,6 @@
 //
-//  SurveyViewController+ConstraintsViewController.h
-//  WootricSDK
+//  WTRNetworkClient.h
+//  WootricSDKObjC
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
 //
@@ -22,10 +22,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "SurveyViewController.h"
+#import <Foundation/Foundation.h>
+#import "WTRSettings.h"
 
-@interface SurveyViewController (Constraints)
+@interface WTRNetworkClient : NSObject
 
-- (void)setupConstraints;
+@property (nonatomic, strong) WTRSettings *settings;
+@property (nonatomic, strong) NSString *clientSecret;
+@property (nonatomic, strong) NSString *clientID;
+@property (nonatomic, strong) NSString *accountToken;
+@property (nonatomic, strong) NSString *accessToken;
+@property (nonatomic, strong) NSString *endUserEmail;
+@property (nonatomic, strong) NSString *apiVersion;
+@property (nonatomic, strong) NSString *originURL;
+
++ (instancetype)sharedInstance;
+- (void)getTrackingPixel;
+- (void)voteWithScore:(NSInteger)score andText:(NSString *)text;
+- (void)userDeclined;
+- (BOOL)checkConfiguration;
+- (void)surveyForEndUser:(void (^)())completionHandler;
 
 @end

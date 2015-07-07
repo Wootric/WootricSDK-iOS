@@ -1,5 +1,5 @@
 //
-//  SurveyViewController+ConstraintsViewController.m
+//  WTRSurveyViewController+ConstraintsViewController.m
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,10 +22,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "SurveyViewController+Constraints.h"
-#import "SurveyViewController+Utils.h"
+#import "WTRSurveyViewController+Constraints.h"
+#import "WTRSurveyViewController+Utils.h"
 
-@implementation SurveyViewController (Constraints)
+@implementation WTRSurveyViewController (Constraints)
 
 - (void)setupConstraints {
   [self setupBackgroundImageViewContraints];

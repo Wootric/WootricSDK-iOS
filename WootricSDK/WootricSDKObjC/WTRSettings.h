@@ -1,5 +1,5 @@
 //
-//  WTSettings.h
+//  WTRSettings.h
 //  WootricSDKObjC
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -25,7 +25,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface WTSettings : NSObject
+@interface WTRSettings : NSObject
 
 @property (nonatomic, strong) UIColor *tintColorCircle;
 @property (nonatomic, strong) UIColor *tintColorSubmit;

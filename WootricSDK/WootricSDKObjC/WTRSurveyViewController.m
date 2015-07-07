@@ -1,5 +1,5 @@
 //
-//  SurveyViewController.m
+//  WTRSurveyViewController.m
 //  WootricSDKObjC
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,14 +22,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "SurveyViewController.h"
+#import "WTRSurveyViewController.h"
 #import "WootricSDK.h"
 #import "UIImage+ImageEffects.h"
-#import "SurveyViewController+Constraints.h"
-#import "SurveyViewController+Views.h"
-#import "SurveyViewController+Utils.h"
+#import "WTRSurveyViewController+Constraints.h"
+#import "WTRSurveyViewController+Views.h"
+#import "WTRSurveyViewController+Utils.h"
 
-@interface SurveyViewController ()
+@interface WTRSurveyViewController ()
 
 @property (nonatomic, assign) CGSize textSize;
 @property (nonatomic, assign) long score;
@@ -38,9 +38,9 @@
 
 @end
 
-@implementation SurveyViewController
+@implementation WTRSurveyViewController
 
-- (instancetype)initWithSettings:(WTSettings *)settings {
+- (instancetype)initWithSettings:(WTRSettings *)settings {
   if (self = [super init]) {
     _settings = settings;
     _defaultWootricQuestion = [self localizedString:_settings.defaultWootricQuestion];
