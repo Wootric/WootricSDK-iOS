@@ -295,7 +295,7 @@
       NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
       if (responseJSON) {
         NSLog(@"%@", responseJSON);
-        if ([responseJSON[@"eligible"] isEqual:@1]) {
+        if ([responseJSON[@"eligible"] isEqual:@1] || _settings.surveyImmediately) {
           NSLog(@"User eligible");
           [_settings userSettingsFromEligibility:responseJSON];
           eligible();
@@ -341,17 +341,11 @@
       showSurvey();
     }];
   } else if ([self needsSurvey]) {
-    if (_settings.surveyImmediately) {
+    [self checkEligibilityForEndUser:^{
       [self authenticate:^{
         showSurvey();
       }];
-    } else {
-      [self checkEligibilityForEndUser:^{
-        [self authenticate:^{
-          showSurvey();
-        }];
-      }];
-    }
+    }];
   }
 }
 
