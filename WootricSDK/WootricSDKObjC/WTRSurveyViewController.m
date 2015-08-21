@@ -262,9 +262,7 @@
 }
 
 - (void)firstTimeSliderTap {
-  UIImage *iconCheckEnabled = [UIImage imageNamed:@"icon_check_enabled"
-                                         inBundle:[NSBundle bundleForClass: [self class]]
-                    compatibleWithTraitCollection:nil];
+  UIImage *iconCheckEnabled = [UIImage imageNamed:@"icon_check_enabled"];
   _buttonIconCheck.image = iconCheckEnabled;
   _submitButton.enabled = YES;
   _dragToChangeLabel.hidden = NO;
@@ -353,9 +351,7 @@
   _sendFeedbackButton.enabled = NO;
   _dismissButton.enabled = NO;
   _commentTextView.editable = NO;
-  UIImage *sendArrowDisabled = [UIImage imageNamed:@"icon_send_arrow_disabled"
-                                          inBundle:[NSBundle bundleForClass:[self class]]
-                     compatibleWithTraitCollection:nil];
+  UIImage *sendArrowDisabled = [UIImage imageNamed:@"icon_send_arrow_disabled"];
   _buttonIconSend.image = sendArrowDisabled;
   NSString *text = nil;
   if ([_commentTextView.text length] != 0) {
