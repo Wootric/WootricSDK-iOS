@@ -42,8 +42,20 @@
 }
 
 - (BOOL)isSmallerScreenDevice {
+  // 'nativeBounds' only available on iOS 8.0+.
+  CGRect nativeBounds = CGRectZero;
+
+  if ([[UIScreen mainScreen] respondsToSelector:@selector(nativeBounds)]) {
+    nativeBounds = [[UIScreen mainScreen] nativeBounds];
+  } else {
+    nativeBounds = [[UIScreen mainScreen] bounds];
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    nativeBounds = CGRectMake(0.0, 0.0,
+                              nativeBounds.size.width * scale, nativeBounds.size.height * scale);
+  }
+
   // < iPhone 6 + iPhone 6 in "Zoomed Display"
-  if ([[UIScreen mainScreen] nativeBounds].size.height <= 1136 ||
+  if (nativeBounds.size.height <= 1136 ||
       [UIScreen mainScreen].currentMode.size.height <= 1136) {
     return YES;
   }

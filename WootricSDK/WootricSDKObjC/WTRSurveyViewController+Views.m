@@ -72,7 +72,7 @@
 
 - (void)setupBackButton {
   self.backButton = [[UIButton alloc] init];
-  UIImage *image = [UIImage imageNamed:@"icon_back_arrow" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  UIImage *image = [UIImage imageNamed:@"icon_back_arrow"];
   UIImageView *backIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8, 3, 16, 16)];
   backIcon.image = image;
   self.backButton.hidden = YES;
@@ -114,7 +114,7 @@
 
 - (void)setupDismissButton {
   self.dismissButton = [[UIButton alloc] init];
-  UIImage *image = [UIImage imageNamed:@"icon_close_round_grey" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  UIImage *image = [UIImage imageNamed:@"icon_close_round_grey"];
   self.dismissImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 8, 16, 16)];
   self.dismissImageView.image = image;
   self.dismissImageView.tintColor = [UIColor whiteColor];
@@ -257,16 +257,14 @@
 #pragma mark - Icons
 
 - (void)setupButtonCheckIcon {
-  UIImage *checkIcon = [UIImage imageNamed:@"icon_check_disabled"
-                                  inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  UIImage *checkIcon = [UIImage imageNamed:@"icon_check_disabled"];
   self.buttonIconCheck = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
   self.buttonIconCheck.image = checkIcon;
   [self.buttonIconCheck setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupButtonSendIcon {
-  UIImage *sendIcon = [UIImage imageNamed:@"icon_send_arrow"
-                                 inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+  UIImage *sendIcon = [UIImage imageNamed:@"icon_send_arrow"];
   self.buttonIconSend = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
   self.buttonIconSend.image = sendIcon;
   self.buttonIconSend.hidden = YES;
