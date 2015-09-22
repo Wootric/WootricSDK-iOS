@@ -1,5 +1,5 @@
 //
-//  WTRFeedbackView.h
+//  WTRThankYouButton.m
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,17 +22,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import "WTRSettings.h"
+#import "WTRThankYouButton.h"
+#import "WTRColor.h"
 
-@interface WTRFeedbackView : UIView
+@interface WTRThankYouButton ()
 
-- (instancetype)initWithSettings:(WTRSettings *)settings;
-- (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
-- (void)setupSubviewsConstraints;
-- (void)setYouChoseLabelTextBasedOnScore:(int)score;
-- (void)textViewResignFirstResponder;
-- (void)showFeedbackPlaceholder:(BOOL)flag;
-- (void)setFeedbackPlaceholderText:(NSString *)text;
+@property (nonatomic, strong) NSURL *buttonURL;
+
+@end
+
+@implementation WTRThankYouButton
+
+- (instancetype)initWithText:(NSString *)text andURL:(NSURL *)url {
+  if (self = [super init]) {
+    _buttonURL = url;
+    self.layer.cornerRadius = 3;
+    self.layer.borderWidth = 1;
+    self.backgroundColor = [WTRColor callToActionButtonBackground];
+    self.layer.borderColor = [WTRColor callToActionButtonBorder].CGColor;
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self setTitle:text forState:UIControlStateNormal];
+    [self addTarget:self action:NSSelectorFromString(@"openURL") forControlEvents:UIControlEventTouchUpInside];
+  }
+  return self;
+}
+
+- (void)openURL {
+  if (![[UIApplication sharedApplication] openURL:_buttonURL]) {
+    NSLog(@"Failed to open url");
+  }
+}
 
 @end

@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		B229766D1BB0036100FC2772 /* WTRPropertiesParser.h in Headers */ = {isa = PBXBuildFile; fileRef = B229766B1BB0036100FC2772 /* WTRPropertiesParser.h */; settings = {ASSET_TAGS = (); }; };
 		B229766E1BB0036100FC2772 /* WTRPropertiesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B229766C1BB0036100FC2772 /* WTRPropertiesParser.m */; settings = {ASSET_TAGS = (); }; };
+		B22976751BB1404D00FC2772 /* WTRCustomThankYou.h in Headers */ = {isa = PBXBuildFile; fileRef = B22976731BB1404D00FC2772 /* WTRCustomThankYou.h */; settings = {ASSET_TAGS = (); }; };
+		B22976761BB1404D00FC2772 /* WTRCustomThankYou.m in Sources */ = {isa = PBXBuildFile; fileRef = B22976741BB1404D00FC2772 /* WTRCustomThankYou.m */; settings = {ASSET_TAGS = (); }; };
+		B229767D1BB1901500FC2772 /* WTRThankYouButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B229767B1BB1901500FC2772 /* WTRThankYouButton.h */; settings = {ASSET_TAGS = (); }; };
+		B229767E1BB1901500FC2772 /* WTRThankYouButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B229767C1BB1901500FC2772 /* WTRThankYouButton.m */; settings = {ASSET_TAGS = (); }; };
 		B24550891B8DF75D001AC1FB /* WTRTrackingPixel.h in Headers */ = {isa = PBXBuildFile; fileRef = B24550871B8DF75D001AC1FB /* WTRTrackingPixel.h */; };
 		B245508A1B8DF75D001AC1FB /* WTRTrackingPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = B24550881B8DF75D001AC1FB /* WTRTrackingPixel.m */; };
 		B245508D1B8DFF36001AC1FB /* WTRDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B245508B1B8DFF36001AC1FB /* WTRDefaults.h */; };
@@ -67,6 +71,10 @@
 /* Begin PBXFileReference section */
 		B229766B1BB0036100FC2772 /* WTRPropertiesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRPropertiesParser.h; sourceTree = "<group>"; };
 		B229766C1BB0036100FC2772 /* WTRPropertiesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRPropertiesParser.m; sourceTree = "<group>"; };
+		B22976731BB1404D00FC2772 /* WTRCustomThankYou.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRCustomThankYou.h; sourceTree = "<group>"; };
+		B22976741BB1404D00FC2772 /* WTRCustomThankYou.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRCustomThankYou.m; sourceTree = "<group>"; };
+		B229767B1BB1901500FC2772 /* WTRThankYouButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRThankYouButton.h; sourceTree = "<group>"; };
+		B229767C1BB1901500FC2772 /* WTRThankYouButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRThankYouButton.m; sourceTree = "<group>"; };
 		B24550871B8DF75D001AC1FB /* WTRTrackingPixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTRTrackingPixel.h; path = ../WTRTrackingPixel.h; sourceTree = "<group>"; };
 		B24550881B8DF75D001AC1FB /* WTRTrackingPixel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTRTrackingPixel.m; path = ../WTRTrackingPixel.m; sourceTree = "<group>"; };
 		B245508B1B8DFF36001AC1FB /* WTRDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTRDefaults.h; path = ../WTRDefaults.h; sourceTree = "<group>"; };
@@ -143,6 +151,8 @@
 				B25DDB9D1B8DD96C0051C10C /* WTRLocalizedTexts.m */,
 				B2ADF64D1B9DBD44005403AC /* WTRCustomMessages.h */,
 				B2ADF64E1B9DBD44005403AC /* WTRCustomMessages.m */,
+				B22976731BB1404D00FC2772 /* WTRCustomThankYou.h */,
+				B22976741BB1404D00FC2772 /* WTRCustomThankYou.m */,
 			);
 			name = SurveySettings;
 			sourceTree = "<group>";
@@ -179,6 +189,8 @@
 				B25CE75E1BAADC920063E6E5 /* WTRNPSQuestionView.m */,
 				B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */,
 				B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */,
+				B229767B1BB1901500FC2772 /* WTRThankYouButton.h */,
+				B229767C1BB1901500FC2772 /* WTRThankYouButton.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -272,9 +284,11 @@
 				B2C9406C1BA83E6200482494 /* WTRScoreView.h in Headers */,
 				B2DC6F081B81E6F900F599B3 /* WootricSDKHeaders.h in Headers */,
 				B25DDB9E1B8DD96C0051C10C /* WTRLocalizedTexts.h in Headers */,
+				B229767D1BB1901500FC2772 /* WTRThankYouButton.h in Headers */,
 				B24550991B8F4250001AC1FB /* WTRSurvey.h in Headers */,
 				B245508D1B8DFF36001AC1FB /* WTRDefaults.h in Headers */,
 				B24550A51B909AC9001AC1FB /* WTRSurveyViewController+Constraints.h in Headers */,
+				B22976751BB1404D00FC2772 /* WTRCustomThankYou.h in Headers */,
 				B24550891B8DF75D001AC1FB /* WTRTrackingPixel.h in Headers */,
 				B24550911B8E0188001AC1FB /* WTRColor.h in Headers */,
 				B229766D1BB0036100FC2772 /* WTRPropertiesParser.h in Headers */,
@@ -389,6 +403,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2C940691BA71A2900482494 /* WTRSliderDot.m in Sources */,
+				B22976761BB1404D00FC2772 /* WTRCustomThankYou.m in Sources */,
 				B229766E1BB0036100FC2772 /* WTRPropertiesParser.m in Sources */,
 				B2C940651BA30AFB00482494 /* UIImage+ImageFromColor.m in Sources */,
 				B2C9405C1BA0723300482494 /* WTRModalView.m in Sources */,
@@ -408,6 +423,7 @@
 				B24550921B8E0188001AC1FB /* WTRColor.m in Sources */,
 				B245508A1B8DF75D001AC1FB /* WTRTrackingPixel.m in Sources */,
 				B2DC6F381B82143B00F599B3 /* WTRSettings.m in Sources */,
+				B229767E1BB1901500FC2772 /* WTRThankYouButton.m in Sources */,
 				B245508E1B8DFF36001AC1FB /* WTRDefaults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

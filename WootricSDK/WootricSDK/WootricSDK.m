@@ -23,11 +23,11 @@
 // THE SOFTWARE.
 
 #import "WootricSDK.h"
-#import "WTRApiClient.h"
 #import "WTRTrackingPixel.h"
 #import "WTRSurvey.h"
 #import "WTRDefaults.h"
 #import "WTRSurveyViewController.h"
+#import "WTRApiClient.h"
 
 @implementation WootricSDK
 
@@ -76,6 +76,48 @@
   WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:surveySettings];
 
   [viewController presentViewController:surveyViewController animated:YES completion:nil];
+}
+
+#pragma mark - Custom Thanks
+
++ (void)setThankYouMessage:(NSString *)thankYouMessage {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setThankYouMessage:thankYouMessage];
+}
+
++ (void)setDetractorThankYouMessage:(NSString *)detractorThankYouMessage {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setDetractorThankYouMessage:detractorThankYouMessage];
+}
+
++ (void)setPassiveThankYouMessage:(NSString *)passiveThankYouMessage {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setPassiveThankYouMessage:passiveThankYouMessage];
+}
+
++ (void)setPromoterThankYouMessage:(NSString *)promoterThankYouMessage {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setPromoterThankYouMessage:promoterThankYouMessage];
+}
+
++ (void)setThankYouLinkWithText:(NSString *)thankYouLinkText andURL:(NSURL *)thankYouLinkURL {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setThankYouLinkWithText:thankYouLinkText andURL:thankYouLinkURL];
+}
+
++ (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText andURL:(NSURL *)detractorThankYouLinkURL {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setDetractorThankYouLinkWithText:detractorThankYouLinkText andURL:detractorThankYouLinkURL];
+}
+
++ (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText andURL:(NSURL *)passiveThankYouLinkURL {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setPassiveThankYouLinkWithText:passiveThankYouLinkText andURL:passiveThankYouLinkURL];
+}
+
++ (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText andURL:(NSURL *)promoterThankYouLinkURL {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setPromoterThankYouLinkWithText:promoterThankYouLinkText andURL:promoterThankYouLinkURL];
 }
 
 @end

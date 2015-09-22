@@ -35,4 +35,13 @@
 + (void)setOriginUrl:(NSString *)originUrl;
 + (void)forceSurvey:(BOOL)flag;
 
++ (void)setThankYouMessage:(NSString *)thankYouMessage;
++ (void)setDetractorThankYouMessage:(NSString *)detractorThankYouMessage;
++ (void)setPassiveThankYouMessage:(NSString *)passiveThankYouMessage;
++ (void)setPromoterThankYouMessage:(NSString *)promoterThankYouMessage;
++ (void)setThankYouLinkWithText:(NSString *)thankYouLinkText andURL:(NSURL *)thankYouLinkURL;
++ (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText andURL:(NSURL *)detractorThankYouLinkURL;
++ (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText andURL:(NSURL *)passiveThankYouLinkURL;
++ (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText andURL:(NSURL *)promoterThankYouLinkURL;
+
 @end

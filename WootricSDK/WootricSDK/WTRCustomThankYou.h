@@ -1,5 +1,5 @@
 //
-//  WTRFeedbackView.h
+//  WTRCustomThankYou.h
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,17 +22,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import "WTRSettings.h"
+#import <Foundation/Foundation.h>
 
-@interface WTRFeedbackView : UIView
+@interface WTRCustomThankYou : NSObject
 
-- (instancetype)initWithSettings:(WTRSettings *)settings;
-- (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
-- (void)setupSubviewsConstraints;
-- (void)setYouChoseLabelTextBasedOnScore:(int)score;
-- (void)textViewResignFirstResponder;
-- (void)showFeedbackPlaceholder:(BOOL)flag;
-- (void)setFeedbackPlaceholderText:(NSString *)text;
+@property (nonatomic, strong) NSString *thankYouMessage;
+@property (nonatomic, strong) NSString *detractorThankYouMessage;
+@property (nonatomic, strong) NSString *passiveThankYouMessage;
+@property (nonatomic, strong) NSString *promoterThankYouMessage;
+@property (nonatomic, strong) NSString *thankYouLinkText;
+@property (nonatomic, strong) NSURL *thankYouLinkURL;
+@property (nonatomic, strong) NSString *detractorThankYouLinkText;
+@property (nonatomic, strong) NSURL *detractorThankYouLinkURL;
+@property (nonatomic, strong) NSString *passiveThankYouLinkText;
+@property (nonatomic, strong) NSURL *passiveThankYouLinkURL;
+@property (nonatomic, strong) NSString *promoterThankYouLinkText;
+@property (nonatomic, strong) NSURL *promoterThankYouLinkURL;
 
 @end

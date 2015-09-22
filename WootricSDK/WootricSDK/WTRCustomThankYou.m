@@ -1,5 +1,5 @@
 //
-//  WTRFeedbackView.h
+//  WTRCustomThankYou.m
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,17 +22,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import "WTRSettings.h"
+#import "WTRCustomThankYou.h"
 
-@interface WTRFeedbackView : UIView
-
-- (instancetype)initWithSettings:(WTRSettings *)settings;
-- (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
-- (void)setupSubviewsConstraints;
-- (void)setYouChoseLabelTextBasedOnScore:(int)score;
-- (void)textViewResignFirstResponder;
-- (void)showFeedbackPlaceholder:(BOOL)flag;
-- (void)setFeedbackPlaceholderText:(NSString *)text;
+@implementation WTRCustomThankYou
 
 @end

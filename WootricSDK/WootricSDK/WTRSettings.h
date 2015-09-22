@@ -39,6 +39,7 @@
 @property (nonatomic, assign) BOOL setDefaultAfterSurvey;
 
 - (void)parseDataFromSurveyServer:(NSDictionary *)surveyServerSettings;
+
 - (NSString *)followupQuestionTextForScore:(int)score;
 - (NSString *)followupPlaceholderTextForScore:(int)score;
 - (NSString *)npsQuestionText;
@@ -49,5 +50,18 @@
 - (NSString *)dismissButtonText;
 - (NSString *)socialShareQuestionText;
 - (NSString *)socialShareDeclineText;
+
+- (void)setThankYouMessage:(NSString *)thankYouMessage;
+- (void)setDetractorThankYouMessage:(NSString *)detractorThankYouMessage;
+- (void)setPassiveThankYouMessage:(NSString *)passiveThankYouMessage;
+- (void)setPromoterThankYouMessage:(NSString *)promoterThankYouMessage;
+- (void)setThankYouLinkWithText:(NSString *)thankYouLinkText andURL:(NSURL *)thankYouLinkURL;
+- (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText andURL:(NSURL *)detractorThankYouLinkURL;
+- (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText andURL:(NSURL *)passiveThankYouLinkURL;
+- (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText andURL:(NSURL *)promoterThankYouLinkURL;
+
+- (NSString *)thankYouMessageDependingOnScore:(int)score;
+- (NSString *)thankYouLinkTextDependingOnScore:(int)score;
+- (NSURL *)thankYouLinkURLDependingOnScore:(int)score;
 
 @end
