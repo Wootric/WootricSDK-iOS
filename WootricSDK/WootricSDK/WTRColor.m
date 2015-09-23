@@ -26,95 +26,99 @@
 
 @implementation WTRColor
 
-+ (UIColor *)viewBackground {
++ (UIColor *)viewBackgroundColor {
   return [UIColor colorWithRed:0 green:0 blue:0 alpha:0.85];
 }
 
-+ (UIColor *)dismissX {
++ (UIColor *)dismissXColor {
   return [self colorWithHexString:@"#C8C8C8"];
 }
 
-+ (UIColor *)sliderModalBorder {
++ (UIColor *)sliderModalBorderColor {
   return [self colorWithHexString:@"EBEBEB"];
 }
 
-+ (UIColor *)grayGradientTop {
++ (UIColor *)grayGradientTopColor {
   return [self colorWithHexString:@"#FDFDFD"];
 }
 
-+ (UIColor *)grayGradientBottom {
++ (UIColor *)grayGradientBottomColor {
   return [self colorWithHexString:@"#F7F7F7"];
 }
 
-+ (UIColor *)sliderBackground {
++ (UIColor *)sliderBackgroundColor {
   return [self colorWithHexString:@"#EFEFEF"];
 }
 
-+ (UIColor *)sliderDotBorder {
++ (UIColor *)sliderDotBorderColor {
   return [self colorWithHexString:@"#E6E6E6"];
 }
 
-+ (UIColor *)anchorAndScore {
++ (UIColor *)anchorAndScoreColor {
   return [self colorWithHexString:@"#C8C8C8"];
 }
 
-+ (UIColor *)sendButtonDisabledBackground {
++ (UIColor *)sendButtonDisabledBackgroundColor {
   return [[self colorWithHexString:@"#D43B69"] colorWithAlphaComponent:0.4f];
 }
 
-+ (UIColor *)sendButtonBackground {
++ (UIColor *)sendButtonBackgroundColor {
   return [self colorWithHexString:@"#D43B69"];
 }
 
-+ (UIColor *)poweredBy {
++ (UIColor *)poweredByColor {
   return [self colorWithHexString:@"#AFAFAF"];
 }
 
-+ (UIColor *)wootricText {
++ (UIColor *)wootricTextColor {
   return [self colorWithHexString:@"4A4A4A"];
 }
 
-+ (UIColor *)sliderValue {
++ (UIColor *)sliderValueColor {
   return [self colorWithHexString:@"#3081C2"];
 }
 
-+ (UIColor *)sliderDotSelected {
++ (UIColor *)sliderDotSelectedColor {
   return [self colorWithHexString:@"#105DA0"];
 }
 
-+ (UIColor *)selectedValueDot {
++ (UIColor *)selectedValueDotColor {
   return [self colorWithHexString:@"#3081C2"];
 }
 
-+ (UIColor *)selectedValueScore {
++ (UIColor *)selectedValueScoreColor {
   return [self colorWithHexString:@"#3081C2"];
 }
 
-+ (UIColor *)selectedValueUnderline {
++ (UIColor *)socialShareQuestionTextColor {
+  return [self colorWithHexString:@"#3081C2"];
+}
+
++ (UIColor *)selectedValueUnderlineColor {
   return [self colorWithHexString:@"#D43B69"];
 }
 
-+ (UIColor *)editScoreText {
++ (UIColor *)editScoreTextColor {
   return [self colorWithHexString:@"#437FC5"];
 }
 
-+ (UIColor *)textAreaBorder {
++ (UIColor *)textAreaBorderColor {
   return [self colorWithHexString:@"#DEDEDE"];
 }
 
-+ (UIColor *)textAreaText {
++ (UIColor *)textAreaTextColor {
   return [self colorWithHexString:@"#7F7F7F"];
 }
 
-+ (UIColor *)textAreaCursor {
++ (UIColor *)textAreaCursorColor {
   return [self colorWithHexString:@"#3081C2"];
 }
 
-+ (UIColor *)callToActionButtonBackground {
++ (UIColor *)callToActionButtonBackgroundColor {
   return [self colorWithHexString:@"#18BB71"];
 }
 
-+ (UIColor *)callToActionButtonBorder {
++ (UIColor *)callToActionButtonBorderColor {
   return [self colorWithHexString:@"#13AF68"];
 }
 

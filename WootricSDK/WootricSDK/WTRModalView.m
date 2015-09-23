@@ -43,4 +43,8 @@
   }
 }
 
+- (void)hideDismissButton {
+  _dismissButton.hidden = YES;
+}
+
 @end

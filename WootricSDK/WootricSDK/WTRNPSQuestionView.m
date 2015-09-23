@@ -24,6 +24,8 @@
 
 #import "WTRNPSQuestionView.h"
 #import "WTRColor.h"
+#import "WTRScoreView.h"
+#import "WTRSlider.h"
 
 @interface WTRNPSQuestionView ()
 
@@ -44,7 +46,7 @@
   if (self = [super init]) {
     self.backgroundColor = [UIColor whiteColor];
     self.layer.borderWidth = 1;
-    self.layer.borderColor = [WTRColor sliderModalBorder].CGColor;
+    self.layer.borderColor = [WTRColor sliderModalBorderColor].CGColor;
     _settings = settings;
     _firstTap = YES;
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -68,12 +70,12 @@
 
 - (void)highlightAnchorForScore:(int)currentScore {
   if (currentScore == 0) {
-    _notLikelyAnchor.textColor = [WTRColor selectedValueScore];
+    _notLikelyAnchor.textColor = [WTRColor selectedValueScoreColor];
   } else if (currentScore == 10) {
-    _likelyAnchor.textColor = [WTRColor selectedValueScore];
+    _likelyAnchor.textColor = [WTRColor selectedValueScoreColor];
   } else {
-    _notLikelyAnchor.textColor = [WTRColor anchorAndScore];
-    _likelyAnchor.textColor = [WTRColor anchorAndScore];
+    _notLikelyAnchor.textColor = [WTRColor anchorAndScoreColor];
+    _likelyAnchor.textColor = [WTRColor anchorAndScoreColor];
   }
 }
 
@@ -124,13 +126,13 @@
   } else {
     _npsQuestionLabel.font = [UIFont systemFontOfSize:18];
   }
-  _npsQuestionLabel.text = [self.settings npsQuestionText];
+  _npsQuestionLabel.text = [_settings npsQuestionText];
   [_npsQuestionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupLikelyAnchor {
   _likelyAnchor = [[UILabel alloc] init];
-  _likelyAnchor.textColor = [WTRColor anchorAndScore];
+  _likelyAnchor.textColor = [WTRColor anchorAndScoreColor];
   _likelyAnchor.text = [self.settings likelyAnchorText];
   _likelyAnchor.font = [UIFont systemFontOfSize:14];
   [_likelyAnchor setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -138,7 +140,7 @@
 
 - (void)setupNotLikelyAnchor {
   _notLikelyAnchor = [[UILabel alloc] init];
-  _notLikelyAnchor.textColor = [WTRColor anchorAndScore];
+  _notLikelyAnchor.textColor = [WTRColor anchorAndScoreColor];
   _notLikelyAnchor.text = [self.settings notLikelyAnchorText];
   _notLikelyAnchor.font = [UIFont systemFontOfSize:14];
   [_notLikelyAnchor setTranslatesAutoresizingMaskIntoConstraints:NO];

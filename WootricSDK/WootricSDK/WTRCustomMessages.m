@@ -1,5 +1,5 @@
 //
-//  WTRSurveyViewController.h
+//  WTRCustomMessages.m
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,30 +22,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import "WTRModalView.h"
-#import "WTRSettings.h"
-#import "WTRNPSQuestionView.h"
-#import "WTRFeedbackView.h"
-#import "WTRSocialShareView.h"
+#import "WTRCustomMessages.h"
 
-#define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+@implementation WTRCustomMessages
 
-@interface WTRSurveyViewController : UIViewController <UITextViewDelegate>
+- (instancetype)initWithCustomMessages:(NSDictionary *)customMessages {
+  if (self = [super init]) {
+    NSDictionary *followupQuestionList = customMessages[@"followup_questions_list"];
+    NSDictionary *placeholderTextList = customMessages[@"placeholder_texts_list"];
 
-@property (nonatomic, strong) WTRModalView *modalView;
-@property (nonatomic, strong) WTRFeedbackView *feedbackView;
-@property (nonatomic, strong) WTRNPSQuestionView *npsQuestionView;
-@property (nonatomic, strong) WTRSocialShareView *socialShareView;
-@property (nonatomic, strong) UIButton *sendButton;
-@property (nonatomic, strong) UIButton *poweredByWootric;
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) NSLayoutConstraint *constraintTopToModalTop;
-@property (nonatomic, strong) NSLayoutConstraint *sliderWidth;
-@property (nonatomic, strong) NSLayoutConstraint *constraintModalHeight;
-@property (nonatomic, strong) WTRSettings *settings;
-@property (nonatomic, strong) UILabel *finalThankYouLabel;
+    if (followupQuestionList) {
+      _detractorQuestion = followupQuestionList[@"detractor_question"];
+      _passiveQuestion = followupQuestionList[@"passive_question"];
+      _promoterQuestion = followupQuestionList[@"promoter_question"];
+    }
 
-- (instancetype)initWithSurveySettings:(WTRSettings *)settings;
+    if (placeholderTextList) {
+      _detractorText = placeholderTextList[@"detractor_text"];
+      _passiveText = placeholderTextList[@"passive_text"];
+      _promoterText = placeholderTextList[@"promoter_text"];
+    }
+  }
+  return self;
+}
 
 @end

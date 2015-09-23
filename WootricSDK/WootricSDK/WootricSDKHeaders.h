@@ -32,4 +32,4 @@ FOUNDATION_EXPORT const unsigned char WootricSDKMainVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <WootricSDK/PublicHeader.h>
 
-#import <WootricSDK/WootricSDK.h>
+#import "WootricSDK.h"

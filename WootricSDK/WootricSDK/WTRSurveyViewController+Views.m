@@ -33,6 +33,8 @@
   [self setupScrollView];
   [self setupNPSQuestionView];
   [self setupFeedbackView];
+  [self setupSocialShareView];
+  [self setupFinalThankYouLabel];
   [self setupSendButton];
   [self setupDismissButton];
   [self setupPoweredByWootric];
@@ -50,16 +52,32 @@
   UIButton *dismissButton = [[UIButton alloc] init];
   dismissButton.titleLabel.font = [UIFont systemFontOfSize:32];
   [dismissButton setTitle:@"\u00D7" forState:UIControlStateNormal];
-  [dismissButton setTitleColor:[WTRColor dismissX] forState:UIControlStateNormal];
+  [dismissButton setTitleColor:[WTRColor dismissXColor] forState:UIControlStateNormal];
   [dismissButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [dismissButton addTarget:self action:NSSelectorFromString(@"dismissButtonPressed:")
             forControlEvents:UIControlEventTouchUpInside];
   self.modalView.dismissButton = dismissButton;
 }
 
+- (void)setupFinalThankYouLabel {
+  self.finalThankYouLabel = [[UILabel alloc] init];
+  self.finalThankYouLabel.textAlignment = NSTextAlignmentCenter;
+  self.finalThankYouLabel.textColor = [UIColor blackColor];
+  self.finalThankYouLabel.numberOfLines = 0;
+  self.finalThankYouLabel.lineBreakMode = NSLineBreakByWordWrapping;
+  self.finalThankYouLabel.hidden = YES;
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    self.finalThankYouLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightMedium];
+  } else {
+    self.finalThankYouLabel.font = [UIFont systemFontOfSize:18];
+  }
+  self.finalThankYouLabel.text = [self.settings finalThankYouText];
+  [self.finalThankYouLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
 - (void)setupSendButton {
   self.sendButton = [[UIButton alloc] init];
-  self.sendButton.backgroundColor = [WTRColor sendButtonDisabledBackground];
+  self.sendButton.backgroundColor = [WTRColor sendButtonDisabledBackgroundColor];
   self.sendButton.enabled = NO;
   self.sendButton.layer.cornerRadius = 3;
   self.sendButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
@@ -76,8 +94,8 @@
   self.poweredByWootric = [[UIButton alloc] init];
   [self.poweredByWootric setTranslatesAutoresizingMaskIntoConstraints:NO];
   NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"Powered by Wootric"]];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredBy] range:NSMakeRange(0, 10)];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricText] range:NSMakeRange(11, 6)];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, 10)];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColor] range:NSMakeRange(11, 6)];
   [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, 18)];
   [self.poweredByWootric setAttributedTitle:attrStr forState:UIControlStateNormal];
   [self.poweredByWootric addTarget:self
@@ -101,10 +119,17 @@
   [self.feedbackView initializeSubviewsWithTargetViewController:self];
 }
 
+- (void)setupSocialShareView {
+  self.socialShareView = [[WTRSocialShareView alloc] initWithSettings:self.settings];
+  [self.socialShareView initializeSubviewsWithTargetViewController:self];
+}
+
 - (void)addViewsToModal {
   [self.modalView addSubview:self.npsQuestionView];
   [self.modalView addSubview:self.feedbackView];
+  [self.modalView addSubview:self.socialShareView];
   [self.modalView addSubview:self.modalView.dismissButton];
+  [self.modalView addSubview:self.finalThankYouLabel];
   [self.modalView addSubview:self.sendButton];
   [self.modalView addSubview:self.poweredByWootric];
 }

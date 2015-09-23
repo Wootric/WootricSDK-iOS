@@ -7,20 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2102A2D1BB59ABC0025DABC /* WTRDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */; settings = {ASSET_TAGS = (); }; };
+		B2102A2E1BB59ABC0025DABC /* WTRDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A2C1BB59ABC0025DABC /* WTRDefaults.m */; settings = {ASSET_TAGS = (); }; };
+		B2102A331BB59ACE0025DABC /* WTRCustomMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2F1BB59ACE0025DABC /* WTRCustomMessages.h */; settings = {ASSET_TAGS = (); }; };
+		B2102A341BB59ACE0025DABC /* WTRCustomMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A301BB59ACE0025DABC /* WTRCustomMessages.m */; settings = {ASSET_TAGS = (); }; };
+		B2102A351BB59ACE0025DABC /* WTRLocalizedTexts.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A311BB59ACE0025DABC /* WTRLocalizedTexts.h */; settings = {ASSET_TAGS = (); }; };
+		B2102A361BB59ACE0025DABC /* WTRLocalizedTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A321BB59ACE0025DABC /* WTRLocalizedTexts.m */; settings = {ASSET_TAGS = (); }; };
+		B2102A3B1BB59AE60025DABC /* WTRSurvey.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A371BB59AE60025DABC /* WTRSurvey.h */; settings = {ASSET_TAGS = (); }; };
+		B2102A3C1BB59AE60025DABC /* WTRSurvey.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A381BB59AE60025DABC /* WTRSurvey.m */; settings = {ASSET_TAGS = (); }; };
+		B2102A3D1BB59AE60025DABC /* WTRTrackingPixel.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A391BB59AE60025DABC /* WTRTrackingPixel.h */; settings = {ASSET_TAGS = (); }; };
+		B2102A3E1BB59AE60025DABC /* WTRTrackingPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A3A1BB59AE60025DABC /* WTRTrackingPixel.m */; settings = {ASSET_TAGS = (); }; };
 		B229766D1BB0036100FC2772 /* WTRPropertiesParser.h in Headers */ = {isa = PBXBuildFile; fileRef = B229766B1BB0036100FC2772 /* WTRPropertiesParser.h */; settings = {ASSET_TAGS = (); }; };
 		B229766E1BB0036100FC2772 /* WTRPropertiesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B229766C1BB0036100FC2772 /* WTRPropertiesParser.m */; settings = {ASSET_TAGS = (); }; };
 		B22976751BB1404D00FC2772 /* WTRCustomThankYou.h in Headers */ = {isa = PBXBuildFile; fileRef = B22976731BB1404D00FC2772 /* WTRCustomThankYou.h */; settings = {ASSET_TAGS = (); }; };
 		B22976761BB1404D00FC2772 /* WTRCustomThankYou.m in Sources */ = {isa = PBXBuildFile; fileRef = B22976741BB1404D00FC2772 /* WTRCustomThankYou.m */; settings = {ASSET_TAGS = (); }; };
 		B229767D1BB1901500FC2772 /* WTRThankYouButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B229767B1BB1901500FC2772 /* WTRThankYouButton.h */; settings = {ASSET_TAGS = (); }; };
 		B229767E1BB1901500FC2772 /* WTRThankYouButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B229767C1BB1901500FC2772 /* WTRThankYouButton.m */; settings = {ASSET_TAGS = (); }; };
-		B24550891B8DF75D001AC1FB /* WTRTrackingPixel.h in Headers */ = {isa = PBXBuildFile; fileRef = B24550871B8DF75D001AC1FB /* WTRTrackingPixel.h */; };
-		B245508A1B8DF75D001AC1FB /* WTRTrackingPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = B24550881B8DF75D001AC1FB /* WTRTrackingPixel.m */; };
-		B245508D1B8DFF36001AC1FB /* WTRDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B245508B1B8DFF36001AC1FB /* WTRDefaults.h */; };
-		B245508E1B8DFF36001AC1FB /* WTRDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B245508C1B8DFF36001AC1FB /* WTRDefaults.m */; };
+		B22976811BB2A2C300FC2772 /* WTRSocialShareView.h in Headers */ = {isa = PBXBuildFile; fileRef = B229767F1BB2A2C300FC2772 /* WTRSocialShareView.h */; settings = {ASSET_TAGS = (); }; };
+		B22976821BB2A2C300FC2772 /* WTRSocialShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = B22976801BB2A2C300FC2772 /* WTRSocialShareView.m */; settings = {ASSET_TAGS = (); }; };
+		B23DEF7B1BBBE9CA002A7FFD /* WTRUserCustomMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = B23DEF791BBBE9CA002A7FFD /* WTRUserCustomMessages.h */; settings = {ASSET_TAGS = (); }; };
+		B23DEF7C1BBBE9CA002A7FFD /* WTRUserCustomMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = B23DEF7A1BBBE9CA002A7FFD /* WTRUserCustomMessages.m */; settings = {ASSET_TAGS = (); }; };
 		B24550911B8E0188001AC1FB /* WTRColor.h in Headers */ = {isa = PBXBuildFile; fileRef = B245508F1B8E0188001AC1FB /* WTRColor.h */; };
 		B24550921B8E0188001AC1FB /* WTRColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B24550901B8E0188001AC1FB /* WTRColor.m */; };
-		B24550991B8F4250001AC1FB /* WTRSurvey.h in Headers */ = {isa = PBXBuildFile; fileRef = B24550971B8F4250001AC1FB /* WTRSurvey.h */; };
-		B245509A1B8F4250001AC1FB /* WTRSurvey.m in Sources */ = {isa = PBXBuildFile; fileRef = B24550981B8F4250001AC1FB /* WTRSurvey.m */; };
 		B245509D1B909A03001AC1FB /* WTRSurveyViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B245509B1B909A03001AC1FB /* WTRSurveyViewController.h */; };
 		B245509E1B909A03001AC1FB /* WTRSurveyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B245509C1B909A03001AC1FB /* WTRSurveyViewController.m */; };
 		B24550A11B909A49001AC1FB /* WTRSurveyViewController+Views.h in Headers */ = {isa = PBXBuildFile; fileRef = B245509F1B909A49001AC1FB /* WTRSurveyViewController+Views.h */; };
@@ -29,12 +37,8 @@
 		B24550A61B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m in Sources */ = {isa = PBXBuildFile; fileRef = B24550A41B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m */; };
 		B25CE75F1BAADC920063E6E5 /* WTRNPSQuestionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B25CE75D1BAADC920063E6E5 /* WTRNPSQuestionView.h */; };
 		B25CE7601BAADC920063E6E5 /* WTRNPSQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B25CE75E1BAADC920063E6E5 /* WTRNPSQuestionView.m */; };
-		B25DDB9E1B8DD96C0051C10C /* WTRLocalizedTexts.h in Headers */ = {isa = PBXBuildFile; fileRef = B25DDB9C1B8DD96C0051C10C /* WTRLocalizedTexts.h */; };
-		B25DDB9F1B8DD96C0051C10C /* WTRLocalizedTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = B25DDB9D1B8DD96C0051C10C /* WTRLocalizedTexts.m */; };
 		B29A2E881BAC0B50007181D3 /* WTRFeedbackView.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */; settings = {ASSET_TAGS = (); }; };
 		B29A2E891BAC0B50007181D3 /* WTRFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */; settings = {ASSET_TAGS = (); }; };
-		B2ADF64F1B9DBD44005403AC /* WTRCustomMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = B2ADF64D1B9DBD44005403AC /* WTRCustomMessages.h */; };
-		B2ADF6501B9DBD44005403AC /* WTRCustomMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = B2ADF64E1B9DBD44005403AC /* WTRCustomMessages.m */; };
 		B2BED80C1BA8610900DD1EFC /* WTRSingleScoreLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = B2BED80A1BA8610900DD1EFC /* WTRSingleScoreLabel.h */; };
 		B2BED80D1BA8610900DD1EFC /* WTRSingleScoreLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B2BED80B1BA8610900DD1EFC /* WTRSingleScoreLabel.m */; };
 		B2C9405B1BA0723300482494 /* WTRModalView.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C940591BA0723300482494 /* WTRModalView.h */; };
@@ -69,20 +73,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRDefaults.h; sourceTree = "<group>"; };
+		B2102A2C1BB59ABC0025DABC /* WTRDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRDefaults.m; sourceTree = "<group>"; };
+		B2102A2F1BB59ACE0025DABC /* WTRCustomMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRCustomMessages.h; sourceTree = "<group>"; };
+		B2102A301BB59ACE0025DABC /* WTRCustomMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRCustomMessages.m; sourceTree = "<group>"; };
+		B2102A311BB59ACE0025DABC /* WTRLocalizedTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRLocalizedTexts.h; sourceTree = "<group>"; };
+		B2102A321BB59ACE0025DABC /* WTRLocalizedTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRLocalizedTexts.m; sourceTree = "<group>"; };
+		B2102A371BB59AE60025DABC /* WTRSurvey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRSurvey.h; sourceTree = "<group>"; };
+		B2102A381BB59AE60025DABC /* WTRSurvey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSurvey.m; sourceTree = "<group>"; };
+		B2102A391BB59AE60025DABC /* WTRTrackingPixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRTrackingPixel.h; sourceTree = "<group>"; };
+		B2102A3A1BB59AE60025DABC /* WTRTrackingPixel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRTrackingPixel.m; sourceTree = "<group>"; };
 		B229766B1BB0036100FC2772 /* WTRPropertiesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRPropertiesParser.h; sourceTree = "<group>"; };
 		B229766C1BB0036100FC2772 /* WTRPropertiesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRPropertiesParser.m; sourceTree = "<group>"; };
 		B22976731BB1404D00FC2772 /* WTRCustomThankYou.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRCustomThankYou.h; sourceTree = "<group>"; };
 		B22976741BB1404D00FC2772 /* WTRCustomThankYou.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRCustomThankYou.m; sourceTree = "<group>"; };
 		B229767B1BB1901500FC2772 /* WTRThankYouButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRThankYouButton.h; sourceTree = "<group>"; };
 		B229767C1BB1901500FC2772 /* WTRThankYouButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRThankYouButton.m; sourceTree = "<group>"; };
-		B24550871B8DF75D001AC1FB /* WTRTrackingPixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTRTrackingPixel.h; path = ../WTRTrackingPixel.h; sourceTree = "<group>"; };
-		B24550881B8DF75D001AC1FB /* WTRTrackingPixel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTRTrackingPixel.m; path = ../WTRTrackingPixel.m; sourceTree = "<group>"; };
-		B245508B1B8DFF36001AC1FB /* WTRDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTRDefaults.h; path = ../WTRDefaults.h; sourceTree = "<group>"; };
-		B245508C1B8DFF36001AC1FB /* WTRDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTRDefaults.m; path = ../WTRDefaults.m; sourceTree = "<group>"; };
+		B229767F1BB2A2C300FC2772 /* WTRSocialShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRSocialShareView.h; sourceTree = "<group>"; };
+		B22976801BB2A2C300FC2772 /* WTRSocialShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSocialShareView.m; sourceTree = "<group>"; };
+		B23DEF791BBBE9CA002A7FFD /* WTRUserCustomMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRUserCustomMessages.h; sourceTree = "<group>"; };
+		B23DEF7A1BBBE9CA002A7FFD /* WTRUserCustomMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRUserCustomMessages.m; sourceTree = "<group>"; };
 		B245508F1B8E0188001AC1FB /* WTRColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRColor.h; sourceTree = "<group>"; };
 		B24550901B8E0188001AC1FB /* WTRColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRColor.m; sourceTree = "<group>"; };
-		B24550971B8F4250001AC1FB /* WTRSurvey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTRSurvey.h; path = ../WTRSurvey.h; sourceTree = "<group>"; };
-		B24550981B8F4250001AC1FB /* WTRSurvey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTRSurvey.m; path = ../WTRSurvey.m; sourceTree = "<group>"; };
 		B245509B1B909A03001AC1FB /* WTRSurveyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRSurveyViewController.h; sourceTree = "<group>"; };
 		B245509C1B909A03001AC1FB /* WTRSurveyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSurveyViewController.m; sourceTree = "<group>"; };
 		B245509F1B909A49001AC1FB /* WTRSurveyViewController+Views.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WTRSurveyViewController+Views.h"; sourceTree = "<group>"; };
@@ -91,12 +103,8 @@
 		B24550A41B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WTRSurveyViewController+Constraints.m"; sourceTree = "<group>"; };
 		B25CE75D1BAADC920063E6E5 /* WTRNPSQuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRNPSQuestionView.h; sourceTree = "<group>"; };
 		B25CE75E1BAADC920063E6E5 /* WTRNPSQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRNPSQuestionView.m; sourceTree = "<group>"; };
-		B25DDB9C1B8DD96C0051C10C /* WTRLocalizedTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTRLocalizedTexts.h; path = ../WTRLocalizedTexts.h; sourceTree = "<group>"; };
-		B25DDB9D1B8DD96C0051C10C /* WTRLocalizedTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTRLocalizedTexts.m; path = ../WTRLocalizedTexts.m; sourceTree = "<group>"; };
 		B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRFeedbackView.h; sourceTree = "<group>"; };
 		B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRFeedbackView.m; sourceTree = "<group>"; };
-		B2ADF64D1B9DBD44005403AC /* WTRCustomMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WTRCustomMessages.h; path = ../WTRCustomMessages.h; sourceTree = "<group>"; };
-		B2ADF64E1B9DBD44005403AC /* WTRCustomMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WTRCustomMessages.m; path = ../WTRCustomMessages.m; sourceTree = "<group>"; };
 		B2BED80A1BA8610900DD1EFC /* WTRSingleScoreLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRSingleScoreLabel.h; sourceTree = "<group>"; };
 		B2BED80B1BA8610900DD1EFC /* WTRSingleScoreLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSingleScoreLabel.m; sourceTree = "<group>"; };
 		B2C940591BA0723300482494 /* WTRModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRModalView.h; sourceTree = "<group>"; };
@@ -145,14 +153,16 @@
 		B2ADF6511B9DBD52005403AC /* SurveySettings */ = {
 			isa = PBXGroup;
 			children = (
+				B2102A2F1BB59ACE0025DABC /* WTRCustomMessages.h */,
+				B2102A301BB59ACE0025DABC /* WTRCustomMessages.m */,
+				B2102A311BB59ACE0025DABC /* WTRLocalizedTexts.h */,
+				B2102A321BB59ACE0025DABC /* WTRLocalizedTexts.m */,
 				B2DC6F351B82143B00F599B3 /* WTRSettings.h */,
 				B2DC6F361B82143B00F599B3 /* WTRSettings.m */,
-				B25DDB9C1B8DD96C0051C10C /* WTRLocalizedTexts.h */,
-				B25DDB9D1B8DD96C0051C10C /* WTRLocalizedTexts.m */,
-				B2ADF64D1B9DBD44005403AC /* WTRCustomMessages.h */,
-				B2ADF64E1B9DBD44005403AC /* WTRCustomMessages.m */,
 				B22976731BB1404D00FC2772 /* WTRCustomThankYou.h */,
 				B22976741BB1404D00FC2772 /* WTRCustomThankYou.m */,
+				B23DEF791BBBE9CA002A7FFD /* WTRUserCustomMessages.h */,
+				B23DEF7A1BBBE9CA002A7FFD /* WTRUserCustomMessages.m */,
 			);
 			name = SurveySettings;
 			sourceTree = "<group>";
@@ -160,8 +170,8 @@
 		B2ADF6521B9DBD73005403AC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				B245508B1B8DFF36001AC1FB /* WTRDefaults.h */,
-				B245508C1B8DFF36001AC1FB /* WTRDefaults.m */,
+				B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */,
+				B2102A2C1BB59ABC0025DABC /* WTRDefaults.m */,
 				B245508F1B8E0188001AC1FB /* WTRColor.h */,
 				B24550901B8E0188001AC1FB /* WTRColor.m */,
 				B2C940621BA30AFB00482494 /* UIImage+ImageFromColor.h */,
@@ -191,6 +201,8 @@
 				B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */,
 				B229767B1BB1901500FC2772 /* WTRThankYouButton.h */,
 				B229767C1BB1901500FC2772 /* WTRThankYouButton.m */,
+				B229767F1BB2A2C300FC2772 /* WTRSocialShareView.h */,
+				B22976801BB2A2C300FC2772 /* WTRSocialShareView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -223,12 +235,12 @@
 				B2DC6F071B81E6F900F599B3 /* WootricSDKHeaders.h */,
 				B2DC6F2C1B82000900F599B3 /* WootricSDK.h */,
 				B2DC6F2D1B82000900F599B3 /* WootricSDK.m */,
-				B24550971B8F4250001AC1FB /* WTRSurvey.h */,
-				B24550981B8F4250001AC1FB /* WTRSurvey.m */,
+				B2102A371BB59AE60025DABC /* WTRSurvey.h */,
+				B2102A381BB59AE60025DABC /* WTRSurvey.m */,
+				B2102A391BB59AE60025DABC /* WTRTrackingPixel.h */,
+				B2102A3A1BB59AE60025DABC /* WTRTrackingPixel.m */,
 				B2DC6F311B820E6B00F599B3 /* WTRApiClient.h */,
 				B2DC6F321B820E6B00F599B3 /* WTRApiClient.m */,
-				B24550871B8DF75D001AC1FB /* WTRTrackingPixel.h */,
-				B24550881B8DF75D001AC1FB /* WTRTrackingPixel.m */,
 				B2DC6F051B81E6F900F599B3 /* Supporting Files */,
 			);
 			path = WootricSDK;
@@ -283,23 +295,25 @@
 				B2C940641BA30AFB00482494 /* UIImage+ImageFromColor.h in Headers */,
 				B2C9406C1BA83E6200482494 /* WTRScoreView.h in Headers */,
 				B2DC6F081B81E6F900F599B3 /* WootricSDKHeaders.h in Headers */,
-				B25DDB9E1B8DD96C0051C10C /* WTRLocalizedTexts.h in Headers */,
+				B2102A351BB59ACE0025DABC /* WTRLocalizedTexts.h in Headers */,
 				B229767D1BB1901500FC2772 /* WTRThankYouButton.h in Headers */,
-				B24550991B8F4250001AC1FB /* WTRSurvey.h in Headers */,
-				B245508D1B8DFF36001AC1FB /* WTRDefaults.h in Headers */,
+				B22976811BB2A2C300FC2772 /* WTRSocialShareView.h in Headers */,
 				B24550A51B909AC9001AC1FB /* WTRSurveyViewController+Constraints.h in Headers */,
+				B2102A331BB59ACE0025DABC /* WTRCustomMessages.h in Headers */,
+				B2102A3B1BB59AE60025DABC /* WTRSurvey.h in Headers */,
 				B22976751BB1404D00FC2772 /* WTRCustomThankYou.h in Headers */,
-				B24550891B8DF75D001AC1FB /* WTRTrackingPixel.h in Headers */,
 				B24550911B8E0188001AC1FB /* WTRColor.h in Headers */,
 				B229766D1BB0036100FC2772 /* WTRPropertiesParser.h in Headers */,
+				B2102A2D1BB59ABC0025DABC /* WTRDefaults.h in Headers */,
 				B2DC6F371B82143B00F599B3 /* WTRSettings.h in Headers */,
 				B25CE75F1BAADC920063E6E5 /* WTRNPSQuestionView.h in Headers */,
 				B245509D1B909A03001AC1FB /* WTRSurveyViewController.h in Headers */,
-				B2ADF64F1B9DBD44005403AC /* WTRCustomMessages.h in Headers */,
 				B2BED80C1BA8610900DD1EFC /* WTRSingleScoreLabel.h in Headers */,
 				B24550A11B909A49001AC1FB /* WTRSurveyViewController+Views.h in Headers */,
 				B2C9405B1BA0723300482494 /* WTRModalView.h in Headers */,
 				B2DC6F2E1B82000900F599B3 /* WootricSDK.h in Headers */,
+				B2102A3D1BB59AE60025DABC /* WTRTrackingPixel.h in Headers */,
+				B23DEF7B1BBBE9CA002A7FFD /* WTRUserCustomMessages.h in Headers */,
 				B29A2E881BAC0B50007181D3 /* WTRFeedbackView.h in Headers */,
 				B2DC6F331B820E6B00F599B3 /* WTRApiClient.h in Headers */,
 				B2C940601BA300A000482494 /* WTRSlider.h in Headers */,
@@ -403,28 +417,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2C940691BA71A2900482494 /* WTRSliderDot.m in Sources */,
+				B2102A341BB59ACE0025DABC /* WTRCustomMessages.m in Sources */,
 				B22976761BB1404D00FC2772 /* WTRCustomThankYou.m in Sources */,
 				B229766E1BB0036100FC2772 /* WTRPropertiesParser.m in Sources */,
 				B2C940651BA30AFB00482494 /* UIImage+ImageFromColor.m in Sources */,
 				B2C9405C1BA0723300482494 /* WTRModalView.m in Sources */,
+				B22976821BB2A2C300FC2772 /* WTRSocialShareView.m in Sources */,
 				B2DC6F2F1B82000900F599B3 /* WootricSDK.m in Sources */,
-				B245509A1B8F4250001AC1FB /* WTRSurvey.m in Sources */,
-				B2ADF6501B9DBD44005403AC /* WTRCustomMessages.m in Sources */,
+				B2102A361BB59ACE0025DABC /* WTRLocalizedTexts.m in Sources */,
 				B2C9406D1BA83E6200482494 /* WTRScoreView.m in Sources */,
 				B245509E1B909A03001AC1FB /* WTRSurveyViewController.m in Sources */,
 				B24550A61B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m in Sources */,
 				B2C940611BA300A000482494 /* WTRSlider.m in Sources */,
 				B24550A21B909A49001AC1FB /* WTRSurveyViewController+Views.m in Sources */,
+				B23DEF7C1BBBE9CA002A7FFD /* WTRUserCustomMessages.m in Sources */,
 				B25CE7601BAADC920063E6E5 /* WTRNPSQuestionView.m in Sources */,
 				B2BED80D1BA8610900DD1EFC /* WTRSingleScoreLabel.m in Sources */,
 				B29A2E891BAC0B50007181D3 /* WTRFeedbackView.m in Sources */,
 				B2DC6F341B820E6B00F599B3 /* WTRApiClient.m in Sources */,
-				B25DDB9F1B8DD96C0051C10C /* WTRLocalizedTexts.m in Sources */,
 				B24550921B8E0188001AC1FB /* WTRColor.m in Sources */,
-				B245508A1B8DF75D001AC1FB /* WTRTrackingPixel.m in Sources */,
+				B2102A2E1BB59ABC0025DABC /* WTRDefaults.m in Sources */,
 				B2DC6F381B82143B00F599B3 /* WTRSettings.m in Sources */,
+				B2102A3E1BB59AE60025DABC /* WTRTrackingPixel.m in Sources */,
 				B229767E1BB1901500FC2772 /* WTRThankYouButton.m in Sources */,
-				B245508E1B8DFF36001AC1FB /* WTRDefaults.m in Sources */,
+				B2102A3C1BB59AE60025DABC /* WTRSurvey.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

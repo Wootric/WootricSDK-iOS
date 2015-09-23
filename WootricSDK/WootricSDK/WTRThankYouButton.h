@@ -26,6 +26,9 @@
 
 @interface WTRThankYouButton : UIButton
 
-- (instancetype)initWithText:(NSString *)text andURL:(NSURL *)url;
+@property (nonatomic, strong) NSURL *buttonURL;
+
+- (instancetype)initWithViewController:(UIViewController *)viewController;
+- (void)setText:(NSString *)text andURL:(NSURL *)url;
 
 @end

@@ -30,9 +30,12 @@
 - (instancetype)initWithSettings:(WTRSettings *)settings;
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
 - (void)setupSubviewsConstraints;
-- (void)setYouChoseLabelTextBasedOnScore:(int)score;
+- (void)setFollowupLabelTextBasedOnScore:(int)score;
 - (void)textViewResignFirstResponder;
 - (void)showFeedbackPlaceholder:(BOOL)flag;
 - (void)setFeedbackPlaceholderText:(NSString *)text;
+- (NSString *)feedbackText;
+- (BOOL)feedbackTextPresent;
+- (BOOL)isActive;
 
 @end

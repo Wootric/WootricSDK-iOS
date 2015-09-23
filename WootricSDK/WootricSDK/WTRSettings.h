@@ -29,6 +29,8 @@
 @property (nonatomic, strong) NSString *endUserEmail;
 @property (nonatomic, strong) NSString *originURL;
 @property (nonatomic, strong) NSString *productName;
+@property (nonatomic, strong) NSString *twitterHandler;
+@property (nonatomic, strong) NSURL *facebookPage;
 @property (nonatomic, strong) NSDictionary *language;
 @property (nonatomic, strong) NSDictionary *customProperties;
 @property (nonatomic, assign) NSInteger externalCreatedAt;
@@ -51,6 +53,9 @@
 - (NSString *)socialShareQuestionText;
 - (NSString *)socialShareDeclineText;
 
+- (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder andDetractor:(NSString *)detractorPlaceholder;
+- (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion andDetractor:(NSString *)detractorQuestion;
+
 - (void)setThankYouMessage:(NSString *)thankYouMessage;
 - (void)setDetractorThankYouMessage:(NSString *)detractorThankYouMessage;
 - (void)setPassiveThankYouMessage:(NSString *)passiveThankYouMessage;
@@ -63,5 +68,9 @@
 - (NSString *)thankYouMessageDependingOnScore:(int)score;
 - (NSString *)thankYouLinkTextDependingOnScore:(int)score;
 - (NSURL *)thankYouLinkURLDependingOnScore:(int)score;
+- (BOOL)thankYouLinkConfiguredForScore:(int)score;
+
+- (BOOL)twitterHandlerSet;
+- (BOOL)facebookPageSet;
 
 @end

@@ -25,7 +25,6 @@
 #import "WootricSDK.h"
 #import "WTRTrackingPixel.h"
 #import "WTRSurvey.h"
-#import "WTRDefaults.h"
 #import "WTRSurveyViewController.h"
 #import "WTRApiClient.h"
 
@@ -57,8 +56,6 @@
 + (void)showSurveyInViewController:(UIViewController *)viewController {
   if ([[WTRApiClient sharedInstance] checkConfiguration]) {
     [WTRTrackingPixel getPixel];
-    [WTRDefaults setLastSeenAt];
-    [WTRDefaults checkIfSurveyedDefaultExpired];
     WTRSurvey *surveyClient = [[WTRSurvey alloc] init];
     [surveyClient survey:^{
       NSLog(@"WootricSDK: presenting survey view");
@@ -76,6 +73,18 @@
   WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:surveySettings];
 
   [viewController presentViewController:surveyViewController animated:YES completion:nil];
+}
+
+#pragma mark - Social Share
+
++ (void)setTwitterHandler:(NSString *)twitterHandler {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.twitterHandler = twitterHandler;
+}
+
++ (void)setFacebookPage:(NSURL *)facebookPage {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.facebookPage = facebookPage;
 }
 
 #pragma mark - Custom Thanks
@@ -118,6 +127,18 @@
 + (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText andURL:(NSURL *)promoterThankYouLinkURL {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   [apiClient.settings setPromoterThankYouLinkWithText:promoterThankYouLinkText andURL:promoterThankYouLinkURL];
+}
+
+#pragma mark - Application Set Custom Messages
+
++ (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder andDetractor:(NSString *)detractorPlaceholder {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setCustomFollowupPlaceholderForPromoter:promoterPlaceholder passive:passivePlaceholder andDetractor:detractorPlaceholder];
+}
+
++ (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion andDetractor:(NSString *)detractorQuestion {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setCustomFollowupQuestionForPromoter:promoterQuestion passive:passiveQuestion andDetractor:detractorQuestion];
 }
 
 @end

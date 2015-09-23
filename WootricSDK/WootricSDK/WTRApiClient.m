@@ -23,7 +23,6 @@
 // THE SOFTWARE.
 
 #import "WTRApiClient.h"
-#import "WTRSurvey.h"
 #import "WTRPropertiesParser.h"
 
 @interface WTRApiClient ()

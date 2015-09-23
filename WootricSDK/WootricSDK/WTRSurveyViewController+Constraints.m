@@ -33,6 +33,9 @@
   [self.npsQuestionView setupSubviewsConstraints];
   [self setupFeedbackViewConstraints];
   [self.feedbackView setupSubviewsConstraints];
+  [self setupSocialShareViewConstraints];
+  [self.socialShareView setupSubviewsConstraints];
+  [self setupFinalThankYouLabelConstraints];
   [self setupSendButtonConstraints];
   [self setupDismissButtonConstraints];
   [self setupPoweredByWootricConstraints];
@@ -327,6 +330,73 @@
                                                            multiplier:1
                                                              constant:213];
   [self.npsQuestionView addConstraint:constH];
+}
+
+- (void)setupSocialShareViewConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.socialShareView
+                                                            attribute:NSLayoutAttributeCenterX
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.modalView
+                                                            attribute:NSLayoutAttributeCenterX
+                                                           multiplier:1
+                                                             constant:0];
+  [self.modalView addConstraint:constX];
+
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.socialShareView
+                                                            attribute:NSLayoutAttributeTop
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.modalView
+                                                            attribute:NSLayoutAttributeTop
+                                                           multiplier:1
+                                                             constant:0];
+  [self.modalView addConstraint:constY];
+
+  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.socialShareView
+                                                            attribute:NSLayoutAttributeWidth
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view
+                                                            attribute:NSLayoutAttributeWidth
+                                                           multiplier:1
+                                                             constant:2];
+  [self.view addConstraint:constW];
+
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.socialShareView
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:270];
+  [self.socialShareView addConstraint:constH];
+}
+
+- (void)setupFinalThankYouLabelConstraints {
+  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:self.finalThankYouLabel
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.modalView
+                                                              attribute:NSLayoutAttributeTop
+                                                             multiplier:1
+                                                               constant:36];
+  [self.modalView addConstraint:constTop];
+
+  NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:self.finalThankYouLabel
+                                                               attribute:NSLayoutAttributeLeft
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.modalView
+                                                               attribute:NSLayoutAttributeLeft
+                                                              multiplier:1
+                                                                constant:24];
+  [self.modalView addConstraint:constLeft];
+
+  NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:self.modalView
+                                                                attribute:NSLayoutAttributeRight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self.finalThankYouLabel
+                                                                attribute:NSLayoutAttributeRight
+                                                               multiplier:1
+                                                                 constant:24];
+  [self.modalView addConstraint:constRight];
 }
 
 @end

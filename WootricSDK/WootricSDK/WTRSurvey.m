@@ -52,6 +52,8 @@
 }
 
 - (void)survey:(void (^)())showSurvey {
+  [WTRDefaults setLastSeenAt];
+  [WTRDefaults checkIfSurveyedDefaultExpired];
   if (_apiClient.settings.forceSurvey || [self needsSurvey]) {
     [_apiClient checkEligibility:^{
       [_apiClient authenticate:^{

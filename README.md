@@ -12,7 +12,7 @@ $ gem install cocoapods
 ```
 To integrate WootricSDK into your Xcode project using CocoaPods, specify it in your `Podfile`:
 ```ruby
-pod "WootricSDK", "~> 0.1"
+pod "WootricSDK", "~> 0.2"
 ```
 Then, run the following command:
 
@@ -45,7 +45,7 @@ And you are good to go! To display the survey (if user is eligible - this check 
 ```objective-c
 [WootricSDK forceSurvey:<BOOL>];
 ```
-If forceSurvey is set to YES, the survey is displayed skipping eligibility check AND even if user was already surveyed. (This is for test purposes only as it will display the survey everytime and for every user)
+If forceSurvey is set to YES, the survey is displayed skipping eligibility check AND even if user was already surveyed. (This is for test purposes only as it will display the survey every time and for every user)
 
 ```objective-c
 [WootricSDK surveyImmediately:<BOOL>];

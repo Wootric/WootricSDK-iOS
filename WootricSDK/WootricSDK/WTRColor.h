@@ -27,28 +27,29 @@
 
 @interface WTRColor : NSObject
 
-+ (UIColor *)viewBackground;
-+ (UIColor *)dismissX;
-+ (UIColor *)sliderModalBorder;
-+ (UIColor *)grayGradientTop;
-+ (UIColor *)grayGradientBottom;
-+ (UIColor *)sliderBackground;
-+ (UIColor *)sliderDotBorder;
-+ (UIColor *)anchorAndScore;
-+ (UIColor *)sendButtonBackground;
-+ (UIColor *)sendButtonDisabledBackground;
-+ (UIColor *)poweredBy;
-+ (UIColor *)wootricText;
-+ (UIColor *)sliderValue;
-+ (UIColor *)sliderDotSelected;
-+ (UIColor *)selectedValueDot;
-+ (UIColor *)selectedValueScore;
-+ (UIColor *)selectedValueUnderline;
-+ (UIColor *)editScoreText;
-+ (UIColor *)textAreaBorder;
-+ (UIColor *)textAreaText;
-+ (UIColor *)textAreaCursor;
-+ (UIColor *)callToActionButtonBackground;
-+ (UIColor *)callToActionButtonBorder;
++ (UIColor *)viewBackgroundColor;
++ (UIColor *)dismissXColor;
++ (UIColor *)sliderModalBorderColor;
++ (UIColor *)grayGradientTopColor;
++ (UIColor *)grayGradientBottomColor;
++ (UIColor *)sliderBackgroundColor;
++ (UIColor *)sliderDotBorderColor;
++ (UIColor *)anchorAndScoreColor;
++ (UIColor *)sendButtonBackgroundColor;
++ (UIColor *)sendButtonDisabledBackgroundColor;
++ (UIColor *)poweredByColor;
++ (UIColor *)wootricTextColor;
++ (UIColor *)sliderValueColor;
++ (UIColor *)sliderDotSelectedColor;
++ (UIColor *)selectedValueDotColor;
++ (UIColor *)selectedValueScoreColor;
++ (UIColor *)selectedValueUnderlineColor;
++ (UIColor *)editScoreTextColor;
++ (UIColor *)textAreaBorderColor;
++ (UIColor *)textAreaTextColor;
++ (UIColor *)textAreaCursorColor;
++ (UIColor *)callToActionButtonBackgroundColor;
++ (UIColor *)callToActionButtonBorderColor;
++ (UIColor *)socialShareQuestionTextColor;
 
 @end

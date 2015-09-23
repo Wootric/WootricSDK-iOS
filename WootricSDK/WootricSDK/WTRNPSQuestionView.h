@@ -23,8 +23,6 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "WTRScoreView.h"
-#import "WTRSlider.h"
 #import "WTRSettings.h"
 
 @interface WTRNPSQuestionView : UIView

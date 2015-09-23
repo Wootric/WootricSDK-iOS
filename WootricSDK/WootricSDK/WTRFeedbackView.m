@@ -29,9 +29,10 @@
 @interface WTRFeedbackView ()
 
 @property (nonatomic, strong) UIButton *editScoreButton;
-@property (nonatomic, strong) UILabel *youChoseLabel;
+@property (nonatomic, strong) UILabel *followupLabel;
 @property (nonatomic, strong) UILabel *feedbackPlaceholder;
 @property (nonatomic, strong) UITextView *feedbackTextView;
+@property (nonatomic, strong) WTRSettings *settings;
 
 @end
 
@@ -39,6 +40,7 @@
 
 - (instancetype)initWithSettings:(WTRSettings *)settings {
   if (self = [super init]) {
+    _settings = settings;
     self.hidden = YES;
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
   }
@@ -48,20 +50,20 @@
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController {
   [self setupEditScoreButtonWithViewController:viewController];
   [self setupFeedbackTextViewWithViewController:(WTRSurveyViewController *)viewController];
-  [self setupYouChoseLabel];
+  [self setupFollowupLabel];
   [self setupFeedbackLabel];
   [self addSubviews];
 }
 
 - (void)setupSubviewsConstraints {
   [self setupEditScoreButtonConstraints];
-  [self setupYouChoseLabelConstraints];
+  [self setupFollowupLabelConstraints];
   [self setupFeedbackTextViewConstraints];
   [self setupFeedbackLabelConstraints];
 }
 
-- (void)setYouChoseLabelTextBasedOnScore:(int)score {
-  _youChoseLabel.text = [NSString stringWithFormat:@"You chose %d/10", score];
+- (void)setFollowupLabelTextBasedOnScore:(int)score {
+  _followupLabel.text = [_settings followupQuestionTextForScore:score];
 }
 
 - (void)textViewResignFirstResponder {
@@ -77,11 +79,27 @@
   [_feedbackPlaceholder sizeToFit];
 }
 
+- (NSString *)feedbackText {
+  if (_feedbackTextView.text) {
+    return _feedbackTextView.text;
+  }
+  return nil;
+}
+
+- (BOOL)feedbackTextPresent {
+  NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+  return !([[_feedbackTextView.text stringByTrimmingCharactersInSet:set] length] == 0);
+}
+
+- (BOOL)isActive {
+  return !self.hidden;
+}
+
 - (void)setupEditScoreButtonWithViewController:(UIViewController *)viewController {
   _editScoreButton = [[UIButton alloc] init];
   _editScoreButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
   [_editScoreButton setTitle:@"EDIT SCORE" forState:UIControlStateNormal];
-  [_editScoreButton setTitleColor:[WTRColor editScoreText] forState:UIControlStateNormal];
+  [_editScoreButton setTitleColor:[WTRColor editScoreTextColor] forState:UIControlStateNormal];
   [_editScoreButton addTarget:viewController
                        action:NSSelectorFromString(@"editScoreButtonPressed:")
              forControlEvents:UIControlEventTouchUpInside];
@@ -93,34 +111,37 @@
   _feedbackTextView.delegate = viewController;
   _feedbackTextView.backgroundColor = [UIColor whiteColor];
   _feedbackTextView.font = [UIFont systemFontOfSize:16];
-  _feedbackTextView.textColor = [WTRColor textAreaText];
-  _feedbackTextView.layer.borderColor = [WTRColor textAreaBorder].CGColor;
+  _feedbackTextView.textColor = [WTRColor textAreaTextColor];
+  _feedbackTextView.layer.borderColor = [WTRColor textAreaBorderColor].CGColor;
   _feedbackTextView.layer.borderWidth = 1;
   _feedbackTextView.layer.cornerRadius = 3;
   _feedbackTextView.textContainerInset = UIEdgeInsetsMake(16.0, 16.0, 16.0, 16.0);
-  _feedbackTextView.tintColor = [WTRColor textAreaCursor];
+  _feedbackTextView.tintColor = [WTRColor textAreaCursorColor];
   [_feedbackTextView setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupFeedbackLabel {
   _feedbackPlaceholder = [[UILabel alloc] init];
-  _feedbackPlaceholder.textColor = [WTRColor textAreaText];
+  _feedbackPlaceholder.textColor = [WTRColor textAreaTextColor];
   _feedbackPlaceholder.font = [UIFont systemFontOfSize:16];
   _feedbackPlaceholder.numberOfLines = 0;
   _feedbackPlaceholder.lineBreakMode = NSLineBreakByWordWrapping;
   [_feedbackPlaceholder setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
-- (void)setupYouChoseLabel {
-  _youChoseLabel = [[UILabel alloc] init];
-  _youChoseLabel.font = [UIFont boldSystemFontOfSize:18];
-  [_youChoseLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+- (void)setupFollowupLabel {
+  _followupLabel = [[UILabel alloc] init];
+  _followupLabel.font = [UIFont boldSystemFontOfSize:16];
+  _followupLabel.numberOfLines = 0;
+  _followupLabel.lineBreakMode = NSLineBreakByWordWrapping;
+  _followupLabel.textAlignment = NSTextAlignmentCenter;
+  [_followupLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)addSubviews {
   [self addSubview:_editScoreButton];
   [self addSubview:_feedbackTextView];
-  [self addSubview:_youChoseLabel];
+  [self addSubview:_followupLabel];
   [self addSubview:_feedbackPlaceholder];
 }
 
@@ -144,8 +165,8 @@
   [self addConstraint:constTop];
 }
 
-- (void)setupYouChoseLabelConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:_youChoseLabel
+- (void)setupFollowupLabelConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:_followupLabel
                                                             attribute:NSLayoutAttributeCenterX
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:self
@@ -154,7 +175,7 @@
                                                              constant:0];
   [self addConstraint:constX];
 
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_youChoseLabel
+  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_followupLabel
                                                               attribute:NSLayoutAttributeTop
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self
@@ -162,6 +183,24 @@
                                                              multiplier:1
                                                                constant:50];
   [self addConstraint:constTop];
+
+  NSLayoutConstraint *constR = [NSLayoutConstraint constraintWithItem:_followupLabel
+                                                            attribute:NSLayoutAttributeLeft
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1
+                                                             constant:16];
+  [self addConstraint:constR];
+
+  NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:_followupLabel
+                                                            attribute:NSLayoutAttributeRight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self
+                                                            attribute:NSLayoutAttributeRight
+                                                           multiplier:1
+                                                             constant:-16];
+  [self addConstraint:constL];
 }
 
 - (void)setupFeedbackTextViewConstraints {
@@ -186,10 +225,10 @@
   NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_feedbackTextView
                                                               attribute:NSLayoutAttributeTop
                                                               relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self
-                                                              attribute:NSLayoutAttributeTop
+                                                                 toItem:_followupLabel
+                                                              attribute:NSLayoutAttributeBottom
                                                              multiplier:1
-                                                               constant:96];
+                                                               constant:16];
   [self addConstraint:constTop];
 
   NSLayoutConstraint *constBottom = [NSLayoutConstraint constraintWithItem:_feedbackTextView

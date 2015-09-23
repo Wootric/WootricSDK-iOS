@@ -1,5 +1,5 @@
 //
-//  WTRSurveyViewController.h
+//  WTRSocialShareView.h
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -23,29 +23,13 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "WTRModalView.h"
 #import "WTRSettings.h"
-#import "WTRNPSQuestionView.h"
-#import "WTRFeedbackView.h"
-#import "WTRSocialShareView.h"
 
-#define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+@interface WTRSocialShareView : UIView
 
-@interface WTRSurveyViewController : UIViewController <UITextViewDelegate>
-
-@property (nonatomic, strong) WTRModalView *modalView;
-@property (nonatomic, strong) WTRFeedbackView *feedbackView;
-@property (nonatomic, strong) WTRNPSQuestionView *npsQuestionView;
-@property (nonatomic, strong) WTRSocialShareView *socialShareView;
-@property (nonatomic, strong) UIButton *sendButton;
-@property (nonatomic, strong) UIButton *poweredByWootric;
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) NSLayoutConstraint *constraintTopToModalTop;
-@property (nonatomic, strong) NSLayoutConstraint *sliderWidth;
-@property (nonatomic, strong) NSLayoutConstraint *constraintModalHeight;
-@property (nonatomic, strong) WTRSettings *settings;
-@property (nonatomic, strong) UILabel *finalThankYouLabel;
-
-- (instancetype)initWithSurveySettings:(WTRSettings *)settings;
+- (instancetype)initWithSettings:(WTRSettings *)settings;
+- (void)setupSubviewsConstraints;
+- (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
+- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score;
 
 @end

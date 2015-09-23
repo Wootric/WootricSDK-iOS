@@ -28,6 +28,8 @@
 #import "WTRColor.h"
 #import "UIImage+ImageFromColor.h"
 #import "WTRSurvey.h"
+#import "WTRThankYouButton.h"
+#import <Social/Social.h>
 
 @interface WTRSurveyViewController ()
 
@@ -61,7 +63,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
   [UIView animateWithDuration:0.25 animations:^{
-    self.view.backgroundColor = [WTRColor viewBackground];
+    self.view.backgroundColor = [WTRColor viewBackgroundColor];
     CGRect modalFrame = _modalView.frame;
     CGFloat modalPosition = self.view.frame.size.height - _modalView.frame.size.height;
     modalFrame.origin.y = modalPosition;
@@ -74,10 +76,18 @@
 
 #pragma mark - Button methods
 
+- (void)openThankYouURL:(WTRThankYouButton *)sender {
+  if (![[UIApplication sharedApplication] openURL:sender.buttonURL]) {
+    NSLog(@"WootricSDK: Failed to open 'thank you' url");
+  } else {
+    [self dismissViewControllerWithBackgroundFade];
+  }
+}
+
 - (void)editScoreButtonPressed:(UIButton *)sender {
   [_feedbackView textViewResignFirstResponder];
   _scrolled = NO;
-  [self changeBetweenQuestionView:NO andFeedbackView:YES];
+  [self setQuestionViewVisible:YES andFeedbackViewVisible:NO];
 }
 
 - (void)dismissButtonPressed:(UIButton *)sender {
@@ -85,25 +95,36 @@
     [self endUserDeclined];
   }
   [_feedbackView textViewResignFirstResponder];
-  [UIView animateWithDuration:0.2 animations:^{
-    self.view.backgroundColor = [UIColor clearColor];
-  } completion:^(BOOL finished) {
-    [self dismissViewControllerAnimated:YES completion:nil];
-  }];
+  [self dismissViewControllerWithBackgroundFade];
 }
 
 - (void)sendButtonPressed:(UIButton *)sender {
+  _alreadyVoted = YES;
   int score = [_npsQuestionView getScoreSliderValue];
   NSString *placeholderText = [_settings followupPlaceholderTextForScore:score];
-  [self endUserVotedWithScore:score];
-  [self changeBetweenQuestionView:YES andFeedbackView:NO];
-  [_feedbackView setYouChoseLabelTextBasedOnScore:score];
-  [_feedbackView setFeedbackPlaceholderText:placeholderText];
+  NSString *text = [_feedbackView feedbackText];
+  [self endUserVotedWithScore:score andText:text];
+  if ([_feedbackView isActive]) {
+    [_feedbackView textViewResignFirstResponder];
+    if ([self socialShareAvailableForScore:score]) {
+      [self presentSocialShareView];
+    } else {
+      [self dismissWithFinalThankYou];
+    }
+  } else {
+    [self setQuestionViewVisible:NO andFeedbackViewVisible:YES];
+    [_feedbackView setFollowupLabelTextBasedOnScore:score];
+    [_feedbackView setFeedbackPlaceholderText:placeholderText];
+  }
 }
 
-- (void)endUserVotedWithScore:(int)score {
+- (void)noThanksButtonPressed {
+  [self dismissViewControllerWithBackgroundFade];
+}
+
+- (void)endUserVotedWithScore:(int)score andText:(NSString *)text {
   WTRSurvey *survey = [[WTRSurvey alloc] init];
-  [survey endUserVotedWithScore:score andText:nil];
+  [survey endUserVotedWithScore:score andText:text];
   NSLog(@"WootricSDK: Vote");
 }
 
@@ -113,9 +134,9 @@
   NSLog(@"WootricSDK: Decline");
 }
 
-- (void)changeBetweenQuestionView:(BOOL)questionFlag andFeedbackView:(BOOL)feedbackFlag {
-  _npsQuestionView.hidden = questionFlag;
-  _feedbackView.hidden = feedbackFlag;
+- (void)setQuestionViewVisible:(BOOL)questionFlag andFeedbackViewVisible:(BOOL)feedbackFlag {
+  _npsQuestionView.hidden = !questionFlag;
+  _feedbackView.hidden = !feedbackFlag;
 }
 
 - (void)openWootricHomepage:(UIButton *)sender {
@@ -130,17 +151,60 @@
 - (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer {
   if (!_sendButton.enabled) {
     _sendButton.enabled = YES;
-    _sendButton.backgroundColor = [WTRColor sendButtonBackground];
+    _sendButton.backgroundColor = [WTRColor sendButtonBackgroundColor];
   }
   [_npsQuestionView sliderTapped:gestureRecognizer];
 }
 
 #pragma mark - Helper methods
 
+- (BOOL)socialShareAvailableForScore:(int)score {
+  return ([_settings thankYouLinkConfiguredForScore:score] ||
+          [self twitterHandlerAndFeedbackTextPresent] ||
+          [_settings facebookPageSet]);
+}
+
+- (BOOL)twitterHandlerAndFeedbackTextPresent {
+  return ([_settings twitterHandlerSet] && [_feedbackView feedbackTextPresent]);
+}
+
+- (void)presentSocialShareView {
+  [_socialShareView setThankYouButtonTextAndURLDependingOnScore:[_npsQuestionView getScoreSliderValue]];
+  [self setQuestionViewVisible:NO andFeedbackViewVisible:NO];
+  _sendButton.hidden = YES;
+  _socialShareView.hidden = NO;
+}
+
+- (void)dismissWithFinalThankYou {
+  _feedbackView.hidden = YES;
+  _npsQuestionView.hidden = YES;
+  _socialShareView.hidden = YES;
+  _sendButton.hidden = YES;
+  _poweredByWootric.hidden = YES;
+  _finalThankYouLabel.hidden = NO;
+  [_modalView hideDismissButton];
+  _constraintModalHeight.constant = 125;
+  _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
+  [UIView animateWithDuration:0.2 animations:^{
+    [self.view layoutIfNeeded];
+  }];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [self dismissViewControllerWithBackgroundFade];
+  });
+}
+
+- (void)dismissViewControllerWithBackgroundFade {
+  [UIView animateWithDuration:0.2 animations:^{
+    self.view.backgroundColor = [UIColor clearColor];
+  } completion:^(BOOL finished) {
+    [self dismissViewControllerAnimated:YES completion:nil];
+  }];
+}
+
 - (void)setModalGradient:(CGRect)bounds {
   CAGradientLayer *gradient = [CAGradientLayer layer];
   gradient.frame = bounds;
-  gradient.colors = @[(id)[WTRColor grayGradientTop].CGColor, (id)[WTRColor grayGradientBottom].CGColor];
+  gradient.colors = @[(id)[WTRColor grayGradientTopColor].CGColor, (id)[WTRColor grayGradientBottomColor].CGColor];
   [_modalView.layer insertSublayer:gradient atIndex:0];
 }
 

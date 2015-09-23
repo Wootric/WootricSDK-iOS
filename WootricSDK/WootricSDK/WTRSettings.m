@@ -26,12 +26,14 @@
 #import "WTRLocalizedTexts.h"
 #import "WTRCustomMessages.h"
 #import "WTRCustomThankYou.h"
+#import "WTRUserCustomMessages.h"
 
 @interface WTRSettings ()
 
 @property (nonatomic, strong) WTRLocalizedTexts *localizedTexts;
 @property (nonatomic, strong) WTRCustomMessages *customMessages;
 @property (nonatomic, strong) WTRCustomThankYou *customThankYou;
+@property (nonatomic, strong) WTRUserCustomMessages *userCustomMessages;
 
 @end
 
@@ -42,6 +44,8 @@
     _setDefaultAfterSurvey = YES;
     _surveyedDefaultDuration = 90;
     _firstSurveyAfter = 31;
+    _customThankYou = [[WTRCustomThankYou alloc] init];
+    _userCustomMessages = [[WTRUserCustomMessages alloc] init];
   }
   return self;
 }
@@ -65,35 +69,83 @@
 }
 
 - (NSString *)followupQuestionTextForScore:(int)score {
-  if (!_customMessages) {
+  if (!_customMessages && ![_userCustomMessages userCustomQuestionPresent]) {
     return _localizedTexts.followupQuestion;
   }
 
-  if (score <= 6 && _customMessages.detractorQuestion) {
-    return _customMessages.detractorQuestion;
-  } else if (score <= 8 && _customMessages.passiveQuestion) {
-    return _customMessages.passiveQuestion;
-  } else if (score <= 10 && _customMessages.promoterQuestion) {
-    return _customMessages.promoterQuestion;
+  if (score <= 6 && (_customMessages.detractorQuestion || _userCustomMessages.detractorQuestion)) {
+    return [self detractorFollowupQuestion];
+  } else if (score <= 8 && (_customMessages.passiveQuestion || _userCustomMessages.passiveQuestion)) {
+    return [self passiveFollowupQuestion];
+  } else if (score <= 10 && (_customMessages.promoterQuestion || _userCustomMessages.promoterQuestion)) {
+    return [self promoterFollowupQuestion];
   }
 
   return _localizedTexts.followupQuestion;
 }
 
 - (NSString *)followupPlaceholderTextForScore:(int)score {
-  if (!_customMessages) {
+  if (!_customMessages && ![_userCustomMessages userCustomPlaceholderPresent]) {
     return _localizedTexts.followupPlaceholder;
   }
 
-  if (score <= 6 && _customMessages.detractorText) {
-    return _customMessages.detractorText;
-  } else if (score <= 8 && _customMessages.passiveText) {
-    return _customMessages.passiveText;
-  } else if (score <= 10 && _customMessages.promoterText) {
-    return _customMessages.promoterText;
+  if (score <= 6 && (_customMessages.detractorText || _userCustomMessages.detractorPlaceholderText)) {
+    return [self detractorFollowupPlaceholder];
+  } else if (score <= 8 && (_customMessages.passiveText || _userCustomMessages.passivePlaceholderText)) {
+    return [self passiveFollowupPlaceholder];
+  } else if (score <= 10 && (_customMessages.promoterText || _userCustomMessages.promoterPlaceholderText)) {
+    return [self promoterFollowupPlaceholder];
   }
 
   return _localizedTexts.followupPlaceholder;
+}
+
+- (NSString *)detractorFollowupQuestion {
+  if (_userCustomMessages.detractorQuestion) {
+    return _userCustomMessages.detractorQuestion;
+  }
+
+  return _customMessages.detractorQuestion;
+}
+
+- (NSString *)passiveFollowupQuestion {
+  if (_userCustomMessages.passiveQuestion) {
+    return _userCustomMessages.passiveQuestion;
+  }
+
+  return _customMessages.passiveQuestion;
+}
+
+- (NSString *)promoterFollowupQuestion {
+  if (_userCustomMessages.promoterQuestion) {
+    return _userCustomMessages.promoterQuestion;
+  }
+
+  return _customMessages.promoterQuestion;
+}
+
+- (NSString *)detractorFollowupPlaceholder {
+  if (_userCustomMessages.detractorPlaceholderText) {
+    return _userCustomMessages.detractorPlaceholderText;
+  }
+
+  return _customMessages.detractorText;
+}
+
+- (NSString *)passiveFollowupPlaceholder {
+  if (_userCustomMessages.passivePlaceholderText) {
+    return _userCustomMessages.passivePlaceholderText;
+  }
+
+  return _customMessages.passiveText;
+}
+
+- (NSString *)promoterFollowupPlaceholder {
+  if (_userCustomMessages.promoterPlaceholderText) {
+    return _userCustomMessages.promoterPlaceholderText;
+  }
+
+  return _customMessages.promoterText;
 }
 
 - (NSString *)npsQuestionText {
@@ -164,6 +216,18 @@
   _customThankYou.promoterThankYouLinkURL = promoterThankYouLinkURL;
 }
 
+- (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion andDetractor:(NSString *)detractorQuestion {
+  _userCustomMessages.promoterQuestion = promoterQuestion;
+  _userCustomMessages.passiveQuestion = passiveQuestion;
+  _userCustomMessages.detractorQuestion = detractorQuestion;
+}
+
+- (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder andDetractor:(NSString *)detractorPlaceholder {
+  _userCustomMessages.promoterPlaceholderText = promoterPlaceholder;
+  _userCustomMessages.passivePlaceholderText = passivePlaceholder;
+  _userCustomMessages.detractorPlaceholderText = detractorPlaceholder;
+}
+
 - (NSString *)thankYouMessageDependingOnScore:(int)score {
   if (score <= 6 && _customThankYou.detractorThankYouMessage) {
     return _customThankYou.detractorThankYouMessage;
@@ -204,6 +268,52 @@
   }
 
   return nil;
+}
+
+- (BOOL)thankYouLinkConfiguredForScore:(int)score {
+  if (score <= 6 && [self detractorOrDefaultURL] && [self detractorOrDefaultText]) {
+    return YES;
+  } else if (score <= 8 && [self passiveOrDefaultURL] && [self passiveOrDefaultText]) {
+    return YES;
+  } else if (score <= 10 && [self promoterOrDefaultURL] && [self promoterOrDefaultText]) {
+    return YES;
+  } else if (_customThankYou.thankYouLinkURL && _customThankYou.thankYouLinkText) {
+    return YES;
+  }
+
+  return NO;
+}
+
+- (BOOL)detractorOrDefaultURL {
+  return (_customThankYou.detractorThankYouLinkURL || _customThankYou.thankYouLinkURL);
+}
+
+- (BOOL)detractorOrDefaultText {
+  return (_customThankYou.detractorThankYouLinkText || _customThankYou.thankYouLinkText);
+}
+
+- (BOOL)passiveOrDefaultURL {
+  return (_customThankYou.passiveThankYouLinkURL || _customThankYou.thankYouLinkURL);
+}
+
+- (BOOL)passiveOrDefaultText {
+  return (_customThankYou.passiveThankYouLinkText || _customThankYou.thankYouLinkText);
+}
+
+- (BOOL)promoterOrDefaultURL {
+  return (_customThankYou.promoterThankYouLinkURL || _customThankYou.thankYouLinkURL);
+}
+
+- (BOOL)promoterOrDefaultText {
+  return (_customThankYou.promoterThankYouLinkText || _customThankYou.thankYouLinkText);
+}
+
+- (BOOL)twitterHandlerSet {
+  return !!_twitterHandler;
+}
+
+- (BOOL)facebookPageSet {
+  return !!_facebookPage;
 }
 
 @end

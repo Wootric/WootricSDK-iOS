@@ -29,7 +29,7 @@
 
 - (instancetype)init {
   if (self = [super init]) {
-    self.textColor = [WTRColor anchorAndScore];
+    self.textColor = [WTRColor anchorAndScoreColor];
     self.font = [UIFont systemFontOfSize:16];
     self.textAlignment = NSTextAlignmentCenter;
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -38,12 +38,12 @@
 }
 
 - (void)setAsSelected {
-  self.textColor = [WTRColor selectedValueScore];
+  self.textColor = [WTRColor selectedValueScoreColor];
   self.font = [UIFont boldSystemFontOfSize:20];
 }
 
 - (void)setAsUnselected {
-  self.textColor = [WTRColor anchorAndScore];
+  self.textColor = [WTRColor anchorAndScoreColor];
   self.font = [UIFont systemFontOfSize:16];
 }
 

@@ -1,5 +1,5 @@
 //
-//  WTRCustomMessages.m
+//  WTRUserCustomMessages.h
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,28 +22,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "WTRCustomMessages.h"
+#import <Foundation/Foundation.h>
 
-@implementation WTRCustomMessages
+@interface WTRUserCustomMessages : NSObject
 
-- (instancetype)initWithCustomMessages:(NSDictionary *)customMessages {
-  if (self = [super init]) {
-    NSDictionary *followupQuestionList = customMessages[@"followup_question_list"];
-    NSDictionary *placeholderTextList = customMessages[@"placeholder_texts_list"];
+@property (nonatomic, strong) NSString *detractorQuestion;
+@property (nonatomic, strong) NSString *passiveQuestion;
+@property (nonatomic, strong) NSString *promoterQuestion;
+@property (nonatomic, strong) NSString *detractorPlaceholderText;
+@property (nonatomic, strong) NSString *passivePlaceholderText;
+@property (nonatomic, strong) NSString *promoterPlaceholderText;
 
-    if (followupQuestionList) {
-      _detractorQuestion = followupQuestionList[@"detractor_question"];
-      _passiveQuestion = followupQuestionList[@"passive_question"];
-      _promoterQuestion = followupQuestionList[@"promoter_question"];
-    }
-
-    if (placeholderTextList) {
-      _detractorText = placeholderTextList[@"detractor_text"];
-      _passiveText = placeholderTextList[@"passive_text"];
-      _promoterText = placeholderTextList[@"promoter_text"];
-    }
-  }
-  return self;
-}
+- (BOOL)userCustomQuestionPresent;
+- (BOOL)userCustomPlaceholderPresent;
 
 @end

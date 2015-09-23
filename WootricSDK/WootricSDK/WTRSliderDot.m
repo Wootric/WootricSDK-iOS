@@ -32,7 +32,7 @@
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = 4;
     self.layer.borderWidth = 1;
-    self.layer.borderColor = [WTRColor sliderDotBorder].CGColor;
+    self.layer.borderColor = [WTRColor sliderDotBorderColor].CGColor;
     self.layer.masksToBounds = YES;
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
   }
@@ -40,13 +40,13 @@
 }
 
 - (void)setAsSelected {
-  self.backgroundColor = [WTRColor sliderDotSelected];
-  self.layer.borderColor = [WTRColor sliderDotSelected].CGColor;
+  self.backgroundColor = [WTRColor sliderDotSelectedColor];
+  self.layer.borderColor = [WTRColor sliderDotSelectedColor].CGColor;
 }
 
 - (void)setAsUnselected {
   self.backgroundColor = [UIColor whiteColor];
-  self.layer.borderColor = [WTRColor sliderDotBorder].CGColor;
+  self.layer.borderColor = [WTRColor sliderDotBorderColor].CGColor;
 }
 
 - (void)addConstraintsWithLeftConstraintConstant:(CGFloat)leftConstant {

@@ -25,34 +25,25 @@
 #import "WTRThankYouButton.h"
 #import "WTRColor.h"
 
-@interface WTRThankYouButton ()
-
-@property (nonatomic, strong) NSURL *buttonURL;
-
-@end
-
 @implementation WTRThankYouButton
 
-- (instancetype)initWithText:(NSString *)text andURL:(NSURL *)url {
+- (instancetype)initWithViewController:(UIViewController *)viewController {
   if (self = [super init]) {
-    _buttonURL = url;
     self.layer.cornerRadius = 3;
     self.layer.borderWidth = 1;
-    self.backgroundColor = [WTRColor callToActionButtonBackground];
-    self.layer.borderColor = [WTRColor callToActionButtonBorder].CGColor;
+    self.backgroundColor = [WTRColor callToActionButtonBackgroundColor];
+    self.layer.borderColor = [WTRColor callToActionButtonBorderColor].CGColor;
     self.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self setTitle:text forState:UIControlStateNormal];
-    [self addTarget:self action:NSSelectorFromString(@"openURL") forControlEvents:UIControlEventTouchUpInside];
+    [self addTarget:viewController action:NSSelectorFromString(@"openThankYouURL:") forControlEvents:UIControlEventTouchUpInside];
   }
   return self;
 }
 
-- (void)openURL {
-  if (![[UIApplication sharedApplication] openURL:_buttonURL]) {
-    NSLog(@"Failed to open url");
-  }
+- (void)setText:(NSString *)text andURL:(NSURL *)url {
+  _buttonURL = url;
+  [self setTitle:[text uppercaseString] forState:UIControlStateNormal];
 }
 
 @end

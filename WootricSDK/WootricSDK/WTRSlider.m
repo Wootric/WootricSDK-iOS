@@ -41,10 +41,10 @@
     self.minimumValue = 0;
     self.maximumValue = 10;
     self.value = 0;
-    self.tintColor = [WTRColor sliderBackground];
+    self.tintColor = [WTRColor sliderBackgroundColor];
     UIImage *image = [[UIImage alloc] init];
-    UIImage *greyBackground = [UIImage imageFromColor:[WTRColor sliderBackground] withSize:24];
-    UIImage *blueBackground = [UIImage imageFromColor:[WTRColor sliderValue] withSize:24];
+    UIImage *greyBackground = [UIImage imageFromColor:[WTRColor sliderBackgroundColor] withSize:24];
+    UIImage *blueBackground = [UIImage imageFromColor:[WTRColor sliderValueColor] withSize:24];
     [self setMaximumTrackImage:[greyBackground resizableImageWithCapInsets:UIEdgeInsetsMake(12, 12, 12, 12)] forState:UIControlStateNormal];
     [self setMinimumTrackImage:[blueBackground resizableImageWithCapInsets:UIEdgeInsetsMake(12, 12, 12, 12)] forState:UIControlStateNormal];
     [self setThumbImage:image forState:UIControlStateNormal];
@@ -122,9 +122,9 @@
 }
 
 - (void)showThumb {
-  [self setThumbImage:[UIImage imageFromColor:[WTRColor sliderDotSelected] withSize:24]
+  [self setThumbImage:[UIImage imageFromColor:[WTRColor sliderDotSelectedColor] withSize:24]
              forState:UIControlStateNormal];
-  [self setThumbImage:[UIImage imageFromColor:[WTRColor sliderDotSelected] withSize:24]
+  [self setThumbImage:[UIImage imageFromColor:[WTRColor sliderDotSelectedColor] withSize:24]
               forState:UIControlStateHighlighted];
 }
 

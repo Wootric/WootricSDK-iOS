@@ -35,6 +35,9 @@
 + (void)setOriginUrl:(NSString *)originUrl;
 + (void)forceSurvey:(BOOL)flag;
 
++ (void)setFacebookPage:(NSURL *)facebookPage;
++ (void)setTwitterHandler:(NSString *)twitterHandler;
+
 + (void)setThankYouMessage:(NSString *)thankYouMessage;
 + (void)setDetractorThankYouMessage:(NSString *)detractorThankYouMessage;
 + (void)setPassiveThankYouMessage:(NSString *)passiveThankYouMessage;
@@ -43,5 +46,8 @@
 + (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText andURL:(NSURL *)detractorThankYouLinkURL;
 + (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText andURL:(NSURL *)passiveThankYouLinkURL;
 + (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText andURL:(NSURL *)promoterThankYouLinkURL;
+
++ (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder andDetractor:(NSString *)detractorPlaceholder;
++ (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion andDetractor:(NSString *)detractorQuestion;
 
 @end

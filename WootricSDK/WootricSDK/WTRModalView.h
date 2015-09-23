@@ -28,4 +28,6 @@
 
 @property (nonatomic, strong) UIButton *dismissButton;
 
+- (void)hideDismissButton;
+
 @end
