@@ -30,6 +30,10 @@
 @property (nonatomic, strong) NSString *originURL;
 @property (nonatomic, strong) NSString *productName;
 @property (nonatomic, strong) NSString *twitterHandler;
+@property (nonatomic, strong) NSNumber *registeredPercentage;
+@property (nonatomic, strong) NSNumber *visitorPercentage;
+@property (nonatomic, strong) NSNumber *resurveyThrottle;
+@property (nonatomic, strong) NSNumber *dailyResponseCap;
 @property (nonatomic, strong) NSURL *facebookPage;
 @property (nonatomic, strong) NSDictionary *language;
 @property (nonatomic, strong) NSDictionary *customProperties;
@@ -72,5 +76,10 @@
 
 - (BOOL)twitterHandlerSet;
 - (BOOL)facebookPageSet;
+
+- (void)setCustomResurveyThrottle:(NSNumber *)customResurveyThrottle;
+- (void)setCustomVisitorPercentage:(NSNumber *)customVisitorPercentage;
+- (void)setCustomRegisteredPercentage:(NSNumber *)customRegisteredPercentage;
+- (void)setCustomDailyResponseCap:(NSNumber *)customDailyResponseCap;
 
 @end

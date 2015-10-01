@@ -316,4 +316,36 @@
   return !!_facebookPage;
 }
 
+- (void)setCustomResurveyThrottle:(NSNumber *)customResurveyThrottle {
+  if ([customResurveyThrottle intValue] < 0) {
+    customResurveyThrottle = @0;
+  }
+  _resurveyThrottle = customResurveyThrottle;
+}
+
+- (void)setCustomVisitorPercentage:(NSNumber *)customVisitorPercentage {
+  if ([customVisitorPercentage intValue] < 0) {
+    customVisitorPercentage = @0;
+  } else if ([customVisitorPercentage intValue] > 100) {
+    customVisitorPercentage = @100;
+  }
+  _visitorPercentage = customVisitorPercentage;
+}
+
+- (void)setCustomRegisteredPercentage:(NSNumber *)customRegisteredPercentage {
+  if ([customRegisteredPercentage intValue] < 0) {
+    customRegisteredPercentage = @0;
+  } else if ([customRegisteredPercentage intValue] > 100) {
+    customRegisteredPercentage = @100;
+  }
+  _registeredPercentage = customRegisteredPercentage;
+}
+
+- (void)setCustomDailyResponseCap:(NSNumber *)customDailyResponseCap {
+  if ([customDailyResponseCap intValue] < 0) {
+    customDailyResponseCap = @0;
+  }
+  _dailyResponseCap = customDailyResponseCap;
+}
+
 @end

@@ -243,29 +243,10 @@
 }
 
 - (void)checkEligibility:(void (^)())eligible {
-  //REMOVE SURVEY_IMMEDIATELY FROM PARAMS!
-  NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@&email=%@&survey_immediately=%d",
-                             _surveyServerURL, _accountToken, _settings.endUserEmail, YES];
+  NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@&email=%@",
+                             _surveyServerURL, _accountToken, _settings.endUserEmail];
 
-//  if (_settings.registeredPercent) {
-//    baseURLString = [NSString stringWithFormat:@"%@&registered_percent=%ld",
-//                     baseURLString, (long)_settings.registeredPercent.integerValue];
-//  }
-//
-//  if (_settings.visitorPercent) {
-//    baseURLString = [NSString stringWithFormat:@"%@&visitor_percent=%ld",
-//                     baseURLString, (long)_settings.visitorPercent.integerValue];
-//  }
-//
-//  if (_settings.resurveyThrottle) {
-//    baseURLString = [NSString stringWithFormat:@"%@&resurvey_throttle=%ld",
-//                     baseURLString, (long)_settings.resurveyThrottle.integerValue];
-//  }
-//
-//  if (_settings.dailyResponseCap) {
-//    baseURLString = [NSString stringWithFormat:@"%@&daily_response_cap=%ld",
-//                     baseURLString, (long)_settings.dailyResponseCap.integerValue];
-//  }
+  baseURLString = [self addSurveyServerCustomSettingsToURLString:baseURLString];
 
   NSURL *url = [NSURL URLWithString:baseURLString];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -314,6 +295,35 @@
 - (BOOL)validEmailString:(NSString *)emailString {
   NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
   return !([[emailString stringByTrimmingCharactersInSet:set] length] == 0);
+}
+
+- (NSString *)addSurveyServerCustomSettingsToURLString:(NSString *)baseURLString {
+  if (_settings.surveyImmediately || _settings.forceSurvey) {
+    baseURLString = [NSString stringWithFormat:@"%@&survey_immediately=%d",
+                     baseURLString, YES];
+  }
+
+  if (_settings.registeredPercentage) {
+    baseURLString = [NSString stringWithFormat:@"%@&registered_percent=%d",
+                     baseURLString, [_settings.registeredPercentage intValue]];
+  }
+
+  if (_settings.visitorPercentage) {
+    baseURLString = [NSString stringWithFormat:@"%@&visitor_percent=%d",
+                     baseURLString, [_settings.visitorPercentage intValue]];
+  }
+
+  if (_settings.resurveyThrottle) {
+    baseURLString = [NSString stringWithFormat:@"%@&resurvey_throttle=%d",
+                     baseURLString, [_settings.resurveyThrottle intValue]];
+  }
+
+  if (_settings.dailyResponseCap) {
+    baseURLString = [NSString stringWithFormat:@"%@&daily_response_cap=%d",
+                     baseURLString, [_settings.dailyResponseCap intValue]];
+  }
+
+  return baseURLString;
 }
 
 - (NSString *)percentEscapeString:(NSString *)string {

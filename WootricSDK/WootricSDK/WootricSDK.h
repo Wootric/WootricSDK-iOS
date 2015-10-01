@@ -33,6 +33,7 @@
 + (void)showSurveyInViewController:(UIViewController *)viewController;
 + (void)setEndUserEmail:(NSString *)endUserEmail andCreatedAt:(NSInteger)externalCreatedAt;
 + (void)setOriginUrl:(NSString *)originUrl;
++ (void)endUserProperties:(NSDictionary *)customProperties;
 + (void)forceSurvey:(BOOL)flag;
 
 + (void)setFacebookPage:(NSURL *)facebookPage;
@@ -49,5 +50,7 @@
 
 + (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder andDetractor:(NSString *)detractorPlaceholder;
 + (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion andDetractor:(NSString *)detractorQuestion;
+
++ (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercentage registeredPercentage:(NSNumber *)registeredPercentage andDailyResponseCap:(NSNumber *)dailyResponseCap;
 
 @end

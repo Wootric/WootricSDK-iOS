@@ -53,6 +53,11 @@
   apiClient.settings.forceSurvey = flag;
 }
 
++ (void)endUserProperties:(NSDictionary *)customProperties {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.customProperties = customProperties;
+}
+
 + (void)showSurveyInViewController:(UIViewController *)viewController {
   if ([[WTRApiClient sharedInstance] checkConfiguration]) {
     [WTRTrackingPixel getPixel];
@@ -139,6 +144,16 @@
 + (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion andDetractor:(NSString *)detractorQuestion {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   [apiClient.settings setCustomFollowupQuestionForPromoter:promoterQuestion passive:passiveQuestion andDetractor:detractorQuestion];
+}
+
+#pragma mark - Custom Values For Eligibility
+
++ (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercentage registeredPercentage:(NSNumber *)registeredPercentage andDailyResponseCap:(NSNumber *)dailyResponseCap {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setCustomResurveyThrottle:resurveyThrottle];
+  [apiClient.settings setCustomVisitorPercentage:visitorPercentage];
+  [apiClient.settings setCustomRegisteredPercentage:registeredPercentage];
+  [apiClient.settings setCustomDailyResponseCap:dailyResponseCap];
 }
 
 @end
