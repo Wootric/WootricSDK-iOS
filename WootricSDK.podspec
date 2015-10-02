@@ -11,6 +11,6 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '7.0'
 
   s.source_files = "WootricSDK/WootricSDK/*.{h,m}"
-  #s.resources = "WootricSDK/WootricSDK/Images.xcassets", "WootricSDK/WootricSDKObjC/Localization/*.lproj"
+  s.resources = "WootricSDK/WootricSDK/Images.xcassets"
   s.public_header_files = "WootricSDK/WootricSDK/WootricSDK.h"
 end
