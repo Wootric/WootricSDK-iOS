@@ -53,6 +53,11 @@
   apiClient.settings.forceSurvey = flag;
 }
 
++ (void)surveyImmediately:(BOOL)flag {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.surveyImmediately = flag;
+}
+
 + (void)endUserProperties:(NSDictionary *)customProperties {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.customProperties = customProperties;

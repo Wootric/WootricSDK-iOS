@@ -35,6 +35,7 @@
 + (void)setOriginUrl:(NSString *)originUrl;
 + (void)endUserProperties:(NSDictionary *)customProperties;
 + (void)forceSurvey:(BOOL)flag;
++ (void)surveyImmediately:(BOOL)flag;
 
 + (void)setFacebookPage:(NSURL *)facebookPage;
 + (void)setTwitterHandler:(NSString *)twitterHandler;

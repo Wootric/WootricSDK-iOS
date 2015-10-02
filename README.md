@@ -33,7 +33,8 @@ Then you need to configure the SDK with your client ID, secret and account token
 ```
 Next thing to do is to set the surveyed end user's email and origin URL:
 ```objective-c
-[WootricSDK setEndUserEmail:<END_USER_EMAIL> andOriginURL:<ORIGIN_URL>];
+[WootricSDK setEndUserEmail:<END_USER_EMAIL>];
+[WootricSDK setOriginUrl:<ORIGIN_URL>];
 ```
 And you are good to go! To display the survey (if user is eligible - this check is built in the method) use:
 ```objective-c
@@ -65,59 +66,36 @@ When creating a new end user for survey, it will set his/hers external creation 
 This value is also used in eligibility check, to determine if end user should be surveyed.
 
 ```objective-c
-[WootricSDK productName:<YOUR_PRODUCT_NAME>];
+[WootricSDK setCustomFollowupQuestionForPromoter:<CUSTOM_QUESTION> passive:<CUSTOM_QUESTION> andDetractor:<CUSTOM_QUESTION>];
 ```
-Adds 'product_name' property to end user.
+This method allows you to set custom question for each type of end user (detractor, passive or promoter). Passing ```nil``` for any of the parameters will result in using default returned from admin panel for that type of end user.
 
 ```objective-c
-[WootricSDK endUserProperties:<PROPERTIES_DICTIONARY>];
+[WootricSDK setCustomFollowupPlaceholderForPromoter:<CUSTOM_PLACEHOLDER> passive:<CUSTOM_PLACEHOLDER> andDetractor:<CUSTOM_PLACEHOLDER>];
 ```
-Adds custom properties to end user.
+Same as with custom question, it allows you to set custom placeholder text in feedback text view for each type of end user. Be advised that this setting takes precedence over values returned from admin panel.
+
+####Custom Thank You
 
 ```objective-c
-[WootricSDK firstSurveyAfter:<NUMBER_OF_DAYS>];
-```
-Specify number of days, end user will be checked for survey eligibility, only, after the specified time has passed since his/hers creation date within your iOS application (which is set with [WootricSDK endUserCreatedAt:];). Defaults to 31 days.
+// Social share setup
+[WootricSDK setFacebookPage:<NSURL>];
+[WootricSDK setTwitterHandler:<NSSTRING>];
 
-```objective-c
-[WootricSDK setSurveyedDefaultAfterSurvey:<BOOL>];
-[WootricSDK setSurveyedDefaultAfterSurvey:<BOOL> withDuration:<NUMBER_OF_DAYS>];
-```
-By default, after end user is surveyed, the SDK sets a "cookie" (NSUserDefaults) valid for 90 days, during which end user won't be checked if eligible for survey.
+// Custom thank you messages setup
+[WootricSDK setThankYouMessage:<NSSTRING>];
+[WootricSDK setDetractorThankYouMessage:<NSSTRING>];
+[WootricSDK setPassiveThankYouMessage:<NSSTRING>];
+[WootricSDK setPromoterThankYouMessage:<NSSTRING>];
 
-```objective-c
-[WootricSDK setCustomQuestion:<CUSTOM_QUESTION>];
-```
-This method allows you to set custom question instead of default: "Thank you! Care to tell us why?".
+// Custom thank you button setup
+[WootricSDK setThankYouLinkWithText:<NSSTRING> andURL:<NSURL>];
+[WootricSDK setDetractorThankYouLinkWithText:<NSSTRING> andURL:<NSURL>];
+[WootricSDK setPassiveThankYouLinkWithText:<NSSTRING> andURL:<NSURL>];
+[WootricSDK setPromoterThankYouLinkWithText:<NSSTRING> andURL:<NSURL>];
 
-```objective-c
-[WootricSDK setCustomPlaceholder:<CUSTOM_PLACEHOLDER>];
 ```
-This method allows you to set custom placeholder instead of default: "Help us by explaining your score."
-
-```objective-c
-[WootricSDK setCustomDetractorQuestion:<CUSTOM_QUESTION> passiveQuestion:<CUSTOM_QUESTION> andPromoterQuestion:<CUSTOM_QUESTION>];
-```
-This method allows you to set custom question for each type of end user (detractor, passive or promoter). Default question asked after end user submits the score is "Thank you! Care to tell us why?". Passing ```nil``` for any of the parameters will result in using default for that type of end user. Be advised that this setting takes precedence over ```[WootricSDK setCustomQuestion]```
-
-```objective-c
-[WootricSDK setCustomDetractorPlaceholder:<CUSTOM_PLACEHOLDER> passivePlaceholder:<CUSTOM_PLACEHOLDER> andPromoterPlaceholder:<CUSTOM_PLACEHOLDER>];
-```
-Same as with custom question, it allows you to set custom placeholder text in feedback text view for each type of end user. Be advised that this setting takes precedence over ```[WootricSDK setCustomPlaceholder]```
-
-```objective-c
-[WootricSDK setCustomWootricRecommendTo:<RECOMMEND_TO>];
-```
-You can use this method to modify the default "How likely are you to recommend us to a friend or co-worker?" question. The ```friend or co-worker``` is replaced by RECOMMEND_TO value.
-
-```objective-c
-[WootricSDK setCustomWootricRecommendProduct:<RECOMMEND_PRODUCT>];
-```
-You can use this method to modify the default "How likely are you to recommend us to a friend or co-worker?" question. The ```us``` is replaced by RECOMMEND_PRODUCT value.
-
 ####Additional information:
 ---
-#####"Forcing" eligibility check:
-If you want to check end user for survey eligibility everytime the ```showSurveyInViewController:``` method is fired, set ```firstSurveyAfter``` to "0" and ```setSurveyedDefaultAfterSurvey``` to "NO". This doesn't mean your end user will be surveyed everytime, it is just forcing eligibility check.
 #####First survey after & end user created at setting:
 While it is not required, setting ```endUserCreatedAt``` is highly recommended for proper checking if end user needs survey and skipping uneccessary eligibility checks.
