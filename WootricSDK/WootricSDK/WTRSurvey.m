@@ -67,6 +67,8 @@
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   if ([defaults boolForKey:@"surveyed"]) {
     return NO;
+  } else if (_apiClient.settings.surveyImmediately) {
+    return YES;
   } else {
     if (_apiClient.settings.firstSurveyAfter != 0) {
       NSInteger age = [[NSDate date] timeIntervalSince1970] - _apiClient.settings.externalCreatedAt;

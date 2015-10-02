@@ -49,8 +49,8 @@
 
 - (instancetype)init {
   if (self = [super init]) {
-    _baseAPIURL = @"http://localhost:3001";//@"https://api.wootric.com";
-    _surveyServerURL = @"http://localhost:9292/eligible.json";//@"http://wootric-eligibility.herokuapp.com/eligible.json";
+    _baseAPIURL = @"https://api.wootric.com";
+    _surveyServerURL = @"http://wootric-eligibility.herokuapp.com/eligible.json";
     _wootricSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     _settings = [[WTRSettings alloc] init];
     _apiVersion = @"api/v1";
