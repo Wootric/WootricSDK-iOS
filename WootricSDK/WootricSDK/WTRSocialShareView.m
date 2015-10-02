@@ -31,9 +31,13 @@
 @property (nonatomic, strong) WTRSettings *settings;
 @property (nonatomic, strong) WTRThankYouButton *thankYouButton;
 @property (nonatomic, strong) UIButton *noThanksButton;
+@property (nonatomic, strong) UIButton *facebookButton;
+@property (nonatomic, strong) UIButton *twitterButton;
 @property (nonatomic, strong) UILabel *finalThankYouLabel;
 @property (nonatomic, strong) UILabel *socialShareQuestionLabel;
 @property (nonatomic, strong) UILabel *customThankYouLabel;
+@property (nonatomic, strong) NSLayoutConstraint *facebookXConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *twitterXConstraint;
 
 @end
 
@@ -59,11 +63,30 @@
   [_thankYouButton setText:text andURL:url];
 }
 
+- (void)displayShareButtonsWithTwitterAvailable:(BOOL)twitterAvailable andFacebookAvailable:(BOOL)facebookAvailable {
+  if (facebookAvailable) {
+    _facebookButton.hidden = NO;
+  }
+
+  if (twitterAvailable) {
+    _twitterButton.hidden = NO;
+  }
+
+  if (twitterAvailable && facebookAvailable) {
+    _twitterXConstraint.constant = 32;
+    _facebookXConstraint.constant = -32;
+  } else if (!twitterAvailable && !facebookAvailable) {
+    _socialShareQuestionLabel.hidden = YES;
+  }
+}
+
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController {
   [self setupThankYouButtonWithTargetViewController:viewController];
   [self setupNoThanksButtonWithTargetViewController:viewController];
   [self setupSocialShareQuestionLabel];
   [self setupFinalThankYouLabel];
+  [self setupFacebookButtonWithTargetViewController:viewController];
+  [self setupTwitterButtonWithTargetViewController:viewController];
   [self addSubviews];
 }
 
@@ -72,6 +95,8 @@
   [self setupThankYouButtonConstraints];
   [self setupNoThanksButtonConstraints];
   [self setupSocialShareQuestionLabelConstraints];
+  [self setupFacebookButtonConstraints];
+  [self setupTwitterButtonConstraints];
 }
 
 - (void)addSubviews {
@@ -79,10 +104,32 @@
   [self addSubview:_noThanksButton];
   [self addSubview:_socialShareQuestionLabel];
   [self addSubview:_finalThankYouLabel];
+  [self addSubview:_facebookButton];
+  [self addSubview:_twitterButton];
 }
 
 - (void)setupThankYouButtonWithTargetViewController:(UIViewController *)viewController {
   _thankYouButton = [[WTRThankYouButton alloc] initWithViewController:viewController];
+}
+
+- (void)setupFacebookButtonWithTargetViewController:(UIViewController *)viewController {
+  _facebookButton = [[UIButton alloc] init];
+  _facebookButton.hidden = YES;
+  [_facebookButton setImage:[UIImage imageNamed:@"facebook_icon"] forState:UIControlStateNormal];
+  [_facebookButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [_facebookButton addTarget:viewController
+                      action:NSSelectorFromString(@"facebookButtonPressed")
+            forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)setupTwitterButtonWithTargetViewController:(UIViewController *)viewController {
+  _twitterButton = [[UIButton alloc] init];
+  _twitterButton.hidden = YES;
+  [_twitterButton setImage:[UIImage imageNamed:@"twitter_icon"] forState:UIControlStateNormal];
+  [_twitterButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [_twitterButton addTarget:viewController
+                      action:NSSelectorFromString(@"twitterButtonPressed")
+            forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupNoThanksButtonWithTargetViewController:(UIViewController *)viewController {
@@ -120,6 +167,82 @@
   _socialShareQuestionLabel.font = [UIFont boldSystemFontOfSize:12];
   _socialShareQuestionLabel.text = [_settings socialShareQuestionText];
   [_socialShareQuestionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
+- (void)setupFacebookButtonConstraints {
+  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_facebookButton
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:_socialShareQuestionLabel
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1
+                                                               constant:24];
+  [self addConstraint:constTop];
+
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:_facebookButton
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:32];
+  [_facebookButton addConstraint:constH];
+
+  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:_facebookButton
+                                                            attribute:NSLayoutAttributeWidth
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:32];
+  [_facebookButton addConstraint:constW];
+
+  _facebookXConstraint = [NSLayoutConstraint constraintWithItem:_facebookButton
+                                                      attribute:NSLayoutAttributeCenterX
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:self
+                                                      attribute:NSLayoutAttributeCenterX
+                                                     multiplier:1
+                                                       constant:0];
+  [self addConstraint:_facebookXConstraint];
+}
+
+- (void)setupTwitterButtonConstraints {
+  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_twitterButton
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:_socialShareQuestionLabel
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1
+                                                               constant:24];
+  [self addConstraint:constTop];
+
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:_twitterButton
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:32];
+  [_twitterButton addConstraint:constH];
+
+  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:_twitterButton
+                                                            attribute:NSLayoutAttributeWidth
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:32];
+  [_twitterButton addConstraint:constW];
+
+  _twitterXConstraint = [NSLayoutConstraint constraintWithItem:_twitterButton
+                                                     attribute:NSLayoutAttributeCenterX
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:self
+                                                     attribute:NSLayoutAttributeCenterX
+                                                    multiplier:1
+                                                      constant:0];
+  [self addConstraint:_twitterXConstraint];
 }
 
 - (void)setupSocialShareQuestionLabelConstraints {

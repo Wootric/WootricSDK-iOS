@@ -41,7 +41,7 @@
 @property (nonatomic, strong) UIButton *poweredByWootric;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSLayoutConstraint *constraintTopToModalTop;
-@property (nonatomic, strong) NSLayoutConstraint *sliderWidth;
+@property (nonatomic, strong) NSLayoutConstraint *socialShareViewHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *constraintModalHeight;
 @property (nonatomic, strong) WTRSettings *settings;
 @property (nonatomic, strong) UILabel *finalThankYouLabel;

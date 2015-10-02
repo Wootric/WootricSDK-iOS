@@ -35,6 +35,7 @@
 
 @property (nonatomic, assign) BOOL scrolled;
 @property (nonatomic, assign) BOOL alreadyVoted;
+@property (nonatomic, strong) CAGradientLayer *gradient;
 
 @end
 
@@ -42,6 +43,7 @@
 
 - (instancetype)initWithSurveySettings:(WTRSettings *)settings {
   if (self = [super init]) {
+    _gradient = [CAGradientLayer layer];
     _settings = settings;
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
@@ -71,6 +73,7 @@
     _constraintTopToModalTop.constant = modalPosition;
   }];
   [self setModalGradient:_modalView.bounds];
+  [_modalView.layer insertSublayer:_gradient atIndex:0];
   [_npsQuestionView addDotsAndScores];
 }
 
@@ -107,6 +110,7 @@
   if ([_feedbackView isActive]) {
     [_feedbackView textViewResignFirstResponder];
     if ([self socialShareAvailableForScore:score]) {
+      [self setupFacebookAndTwitterForScore:score];
       [self presentSocialShareView];
     } else {
       [self dismissWithFinalThankYou];
@@ -146,6 +150,29 @@
   }
 }
 
+- (void)facebookButtonPressed {
+  NSURL *url = _settings.facebookPage;
+  if (![[UIApplication sharedApplication] openURL:url]) {
+    NSLog(@"Failed to open facebook page");
+  }
+}
+
+- (void)twitterButtonPressed {
+  if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+    SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+    [tweetSheet setInitialText:[NSString stringWithFormat:@"%@ @%@", [_feedbackView feedbackText], _settings.twitterHandler]];
+    [self presentViewController:tweetSheet animated:YES completion:nil];
+  } else {
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle:@"Sorry"
+                              message:@"You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup"
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+    [alertView show];
+  }
+}
+
 #pragma mark - Slider methods
 
 - (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer {
@@ -158,10 +185,24 @@
 
 #pragma mark - Helper methods
 
+- (void)setupFacebookAndTwitterForScore:(int)score {
+  BOOL twitterAvailable = ([self twitterHandlerAndFeedbackTextPresent] && score >= 9);
+  BOOL facebookAvailable = ([_settings facebookPageSet] && score >= 9);
+  if (!twitterAvailable && !facebookAvailable) {
+    _constraintModalHeight.constant = 220;
+    _socialShareViewHeightConstraint.constant = 180;
+    _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
+    [UIView animateWithDuration:0.2 animations:^{
+      [self.view layoutIfNeeded];
+    }];
+  }
+  [_socialShareView displayShareButtonsWithTwitterAvailable:twitterAvailable andFacebookAvailable:facebookAvailable];
+}
+
 - (BOOL)socialShareAvailableForScore:(int)score {
   return ([_settings thankYouLinkConfiguredForScore:score] ||
-          [self twitterHandlerAndFeedbackTextPresent] ||
-          [_settings facebookPageSet]);
+          ([self twitterHandlerAndFeedbackTextPresent] && score >= 9) ||
+          ([_settings facebookPageSet] && score >= 9));
 }
 
 - (BOOL)twitterHandlerAndFeedbackTextPresent {
@@ -202,10 +243,8 @@
 }
 
 - (void)setModalGradient:(CGRect)bounds {
-  CAGradientLayer *gradient = [CAGradientLayer layer];
-  gradient.frame = bounds;
-  gradient.colors = @[(id)[WTRColor grayGradientTopColor].CGColor, (id)[WTRColor grayGradientBottomColor].CGColor];
-  [_modalView.layer insertSublayer:gradient atIndex:0];
+  _gradient.frame = bounds;
+  _gradient.colors = @[(id)[WTRColor grayGradientTopColor].CGColor, (id)[WTRColor grayGradientBottomColor].CGColor];
 }
 
 - (void)getSizeAndRecalculatePositionsBasedOnOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -226,12 +265,18 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
   [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
-  CGRect bounds = self.view.bounds;
-  CGRect rotatedBounds = CGRectMake(bounds.origin.y, bounds.origin.x, bounds.size.height, bounds.size.width);
   CGFloat modalPosition = self.view.bounds.size.width - _modalView.frame.size.height;
   _constraintTopToModalTop.constant = modalPosition;
   [self getSizeAndRecalculatePositionsBasedOnOrientation:toInterfaceOrientation];
-  [self setModalGradient:rotatedBounds];
+  BOOL isToLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
+  CGRect gradientBounds;
+  CGRect bounds = self.view.bounds;
+  if ((bounds.size.height > bounds.size.width) && isToLandscape) {
+    gradientBounds = CGRectMake(bounds.origin.y, bounds.origin.x, bounds.size.height, bounds.size.width);
+  } else {
+    gradientBounds = bounds;
+  }
+  [self setModalGradient:gradientBounds];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {

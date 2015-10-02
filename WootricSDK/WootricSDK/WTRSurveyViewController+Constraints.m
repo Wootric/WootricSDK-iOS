@@ -360,14 +360,14 @@
                                                              constant:2];
   [self.view addConstraint:constW];
 
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.socialShareView
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:270];
-  [self.socialShareView addConstraint:constH];
+  self.socialShareViewHeightConstraint = [NSLayoutConstraint constraintWithItem:self.socialShareView
+                                                                      attribute:NSLayoutAttributeHeight
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:nil
+                                                                      attribute:NSLayoutAttributeNotAnAttribute
+                                                                     multiplier:1
+                                                                       constant:270];
+  [self.socialShareView addConstraint:self.socialShareViewHeightConstraint];
 }
 
 - (void)setupFinalThankYouLabelConstraints {
