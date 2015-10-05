@@ -2,8 +2,8 @@
 ##Requirements
 - iOS 7.0+
 
-##Demo Videos
-- View the [iOS demo](http://cl.ly/3N0N2n0F1i0N) and the [Android demo.](http://cl.ly/392z1r2v181J)
+##Demo
+- View the iOS demo video [here.](http://cl.ly/3N0N2n0F1i0N) 
 
 ##Installation
 ---
