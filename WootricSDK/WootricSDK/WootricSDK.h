@@ -27,13 +27,16 @@
 
 @interface WootricSDK : NSObject
 
-+ (void)configureWithClientID:(NSString *)clientID
-                 clientSecret:(NSString *)clientSecret
-              andAccountToken:(NSString *)accountToken;
++ (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret accountToken:(NSString *)accountToken;
 + (void)showSurveyInViewController:(UIViewController *)viewController;
-+ (void)setEndUserEmail:(NSString *)endUserEmail andCreatedAt:(NSInteger)externalCreatedAt;
++ (void)setEndUserEmail:(NSString *)endUserEmail;
++ (void)setEndUserCreatedAt:(NSNumber *)externalCreatedAt;
 + (void)setOriginUrl:(NSString *)originUrl;
-+ (void)endUserProperties:(NSDictionary *)customProperties;
++ (void)setProductNameForEndUser:(NSString *)productName;
++ (void)setCustomLanguage:(NSString *)languageCode;
++ (void)setCustomAudience:(NSString *)audience;
++ (void)setCustomProductName:(NSString *)productName;
++ (void)setEndUserProperties:(NSDictionary *)customProperties;
 + (void)forceSurvey:(BOOL)flag;
 + (void)surveyImmediately:(BOOL)flag;
 
@@ -44,14 +47,14 @@
 + (void)setDetractorThankYouMessage:(NSString *)detractorThankYouMessage;
 + (void)setPassiveThankYouMessage:(NSString *)passiveThankYouMessage;
 + (void)setPromoterThankYouMessage:(NSString *)promoterThankYouMessage;
-+ (void)setThankYouLinkWithText:(NSString *)thankYouLinkText andURL:(NSURL *)thankYouLinkURL;
-+ (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText andURL:(NSURL *)detractorThankYouLinkURL;
-+ (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText andURL:(NSURL *)passiveThankYouLinkURL;
-+ (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText andURL:(NSURL *)promoterThankYouLinkURL;
++ (void)setThankYouLinkWithText:(NSString *)thankYouLinkText URL:(NSURL *)thankYouLinkURL;
++ (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText URL:(NSURL *)detractorThankYouLinkURL;
++ (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText URL:(NSURL *)passiveThankYouLinkURL;
++ (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText URL:(NSURL *)promoterThankYouLinkURL;
 
-+ (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder andDetractor:(NSString *)detractorPlaceholder;
-+ (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion andDetractor:(NSString *)detractorQuestion;
++ (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder detractor:(NSString *)detractorPlaceholder;
++ (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion detractor:(NSString *)detractorQuestion;
 
-+ (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercentage registeredPercentage:(NSNumber *)registeredPercentage andDailyResponseCap:(NSNumber *)dailyResponseCap;
++ (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercentage registeredPercentage:(NSNumber *)registeredPercentage dailyResponseCap:(NSNumber *)dailyResponseCap;
 
 @end

@@ -71,7 +71,7 @@
     return YES;
   } else {
     if (_apiClient.settings.firstSurveyAfter != 0) {
-      NSInteger age = [[NSDate date] timeIntervalSince1970] - _apiClient.settings.externalCreatedAt;
+      NSInteger age = [[NSDate date] timeIntervalSince1970] - [_apiClient.settings.externalCreatedAt intValue];
       if (age > (_apiClient.settings.firstSurveyAfter * 60 * 60 * 24)) {
         return YES;
       } else {

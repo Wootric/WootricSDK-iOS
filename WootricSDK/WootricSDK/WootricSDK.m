@@ -30,22 +30,41 @@
 
 @implementation WootricSDK
 
-+ (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret andAccountToken:(NSString *)accountToken {
++ (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret accountToken:(NSString *)accountToken {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.clientID = clientID;
   apiClient.clientSecret = clientSecret;
   apiClient.accountToken = accountToken;
 }
 
-+ (void)setEndUserEmail:(NSString *)endUserEmail andCreatedAt:(NSInteger)externalCreatedAt {
++ (void)setEndUserEmail:(NSString *)endUserEmail {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.endUserEmail = endUserEmail;
+}
+
++ (void)setEndUserCreatedAt:(NSNumber *)externalCreatedAt {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.externalCreatedAt = externalCreatedAt;
 }
 
 + (void)setOriginUrl:(NSString *)originUrl {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.originURL = originUrl;
+}
+
++ (void)setCustomAudience:(NSString *)audience {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.customAudience = audience;
+}
+
++ (void)setCustomLanguage:(NSString *)languageCode {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.languageCode = languageCode;
+}
+
++ (void)setCustomProductName:(NSString *)productName {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.customProductName = productName;
 }
 
 + (void)forceSurvey:(BOOL)flag {
@@ -58,9 +77,14 @@
   apiClient.settings.surveyImmediately = flag;
 }
 
-+ (void)endUserProperties:(NSDictionary *)customProperties {
++ (void)setEndUserProperties:(NSDictionary *)customProperties {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.customProperties = customProperties;
+}
+
++ (void)setProductNameForEndUser:(NSString *)productName {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.productName = productName;
 }
 
 + (void)showSurveyInViewController:(UIViewController *)viewController {
@@ -119,41 +143,41 @@
   [apiClient.settings setPromoterThankYouMessage:promoterThankYouMessage];
 }
 
-+ (void)setThankYouLinkWithText:(NSString *)thankYouLinkText andURL:(NSURL *)thankYouLinkURL {
++ (void)setThankYouLinkWithText:(NSString *)thankYouLinkText URL:(NSURL *)thankYouLinkURL {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setThankYouLinkWithText:thankYouLinkText andURL:thankYouLinkURL];
+  [apiClient.settings setThankYouLinkWithText:thankYouLinkText URL:thankYouLinkURL];
 }
 
-+ (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText andURL:(NSURL *)detractorThankYouLinkURL {
++ (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText URL:(NSURL *)detractorThankYouLinkURL {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setDetractorThankYouLinkWithText:detractorThankYouLinkText andURL:detractorThankYouLinkURL];
+  [apiClient.settings setDetractorThankYouLinkWithText:detractorThankYouLinkText URL:detractorThankYouLinkURL];
 }
 
-+ (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText andURL:(NSURL *)passiveThankYouLinkURL {
++ (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText URL:(NSURL *)passiveThankYouLinkURL {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setPassiveThankYouLinkWithText:passiveThankYouLinkText andURL:passiveThankYouLinkURL];
+  [apiClient.settings setPassiveThankYouLinkWithText:passiveThankYouLinkText URL:passiveThankYouLinkURL];
 }
 
-+ (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText andURL:(NSURL *)promoterThankYouLinkURL {
++ (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText URL:(NSURL *)promoterThankYouLinkURL {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setPromoterThankYouLinkWithText:promoterThankYouLinkText andURL:promoterThankYouLinkURL];
+  [apiClient.settings setPromoterThankYouLinkWithText:promoterThankYouLinkText URL:promoterThankYouLinkURL];
 }
 
 #pragma mark - Application Set Custom Messages
 
-+ (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder andDetractor:(NSString *)detractorPlaceholder {
++ (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder detractor:(NSString *)detractorPlaceholder {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setCustomFollowupPlaceholderForPromoter:promoterPlaceholder passive:passivePlaceholder andDetractor:detractorPlaceholder];
+  [apiClient.settings setCustomFollowupPlaceholderForPromoter:promoterPlaceholder passive:passivePlaceholder detractor:detractorPlaceholder];
 }
 
-+ (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion andDetractor:(NSString *)detractorQuestion {
++ (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion detractor:(NSString *)detractorQuestion {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setCustomFollowupQuestionForPromoter:promoterQuestion passive:passiveQuestion andDetractor:detractorQuestion];
+  [apiClient.settings setCustomFollowupQuestionForPromoter:promoterQuestion passive:passiveQuestion detractor:detractorQuestion];
 }
 
 #pragma mark - Custom Values For Eligibility
 
-+ (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercentage registeredPercentage:(NSNumber *)registeredPercentage andDailyResponseCap:(NSNumber *)dailyResponseCap {
++ (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercentage registeredPercentage:(NSNumber *)registeredPercentage dailyResponseCap:(NSNumber *)dailyResponseCap {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   [apiClient.settings setCustomResurveyThrottle:resurveyThrottle];
   [apiClient.settings setCustomVisitorPercentage:visitorPercentage];

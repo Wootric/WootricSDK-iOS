@@ -196,33 +196,33 @@
   _customThankYou.promoterThankYouMessage = promoterThankYouMessage;
 }
 
-- (void)setThankYouLinkWithText:(NSString *)thankYouLinkText andURL:(NSURL *)thankYouLinkURL {
+- (void)setThankYouLinkWithText:(NSString *)thankYouLinkText URL:(NSURL *)thankYouLinkURL {
   _customThankYou.thankYouLinkText = thankYouLinkText;
   _customThankYou.thankYouLinkURL = thankYouLinkURL;
 }
 
-- (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText andURL:(NSURL *)detractorThankYouLinkURL {
+- (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText URL:(NSURL *)detractorThankYouLinkURL {
   _customThankYou.detractorThankYouLinkText = detractorThankYouLinkText;
   _customThankYou.detractorThankYouLinkURL = detractorThankYouLinkURL;
 }
 
-- (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText andURL:(NSURL *)passiveThankYouLinkURL {
+- (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText URL:(NSURL *)passiveThankYouLinkURL {
   _customThankYou.passiveThankYouLinkText = passiveThankYouLinkText;
   _customThankYou.passiveThankYouLinkURL = passiveThankYouLinkURL;
 }
 
-- (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText andURL:(NSURL *)promoterThankYouLinkURL {
+- (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText URL:(NSURL *)promoterThankYouLinkURL {
   _customThankYou.promoterThankYouLinkText = promoterThankYouLinkText;
   _customThankYou.promoterThankYouLinkURL = promoterThankYouLinkURL;
 }
 
-- (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion andDetractor:(NSString *)detractorQuestion {
+- (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion detractor:(NSString *)detractorQuestion {
   _userCustomMessages.promoterQuestion = promoterQuestion;
   _userCustomMessages.passiveQuestion = passiveQuestion;
   _userCustomMessages.detractorQuestion = detractorQuestion;
 }
 
-- (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder andDetractor:(NSString *)detractorPlaceholder {
+- (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder detractor:(NSString *)detractorPlaceholder {
   _userCustomMessages.promoterPlaceholderText = promoterPlaceholder;
   _userCustomMessages.passivePlaceholderText = passivePlaceholder;
   _userCustomMessages.detractorPlaceholderText = detractorPlaceholder;

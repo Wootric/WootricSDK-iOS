@@ -149,8 +149,8 @@
   NSString *escapedEmail = [self percentEscapeString:_settings.endUserEmail];
   NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
 
-  if (_settings.externalCreatedAt != 0) {
-    params = [NSString stringWithFormat:@"%@&external_created_at=%ld", params, (long)_settings.externalCreatedAt];
+  if (_settings.externalCreatedAt) {
+    params = [NSString stringWithFormat:@"%@&external_created_at=%dd", params, [_settings.externalCreatedAt intValue]];
   }
 
   if (_settings.productName) {
@@ -321,6 +321,26 @@
   if (_settings.dailyResponseCap) {
     baseURLString = [NSString stringWithFormat:@"%@&daily_response_cap=%d",
                      baseURLString, [_settings.dailyResponseCap intValue]];
+  }
+
+  if (_settings.externalCreatedAt) {
+    baseURLString = [NSString stringWithFormat:@"%@&end_user_created_at=%@",
+                     baseURLString, _settings.externalCreatedAt];
+  }
+
+  if (_settings.languageCode) {
+    baseURLString = [NSString stringWithFormat:@"%@&language[code]=%@",
+                     baseURLString, _settings.languageCode];
+  }
+
+  if (_settings.customProductName) {
+    baseURLString = [NSString stringWithFormat:@"%@&language[product_name]=%@",
+                     baseURLString, _settings.customProductName];
+  }
+
+  if (_settings.customAudience) {
+    baseURLString = [NSString stringWithFormat:@"%@&language[audience_text]=%@",
+                     baseURLString, _settings.customAudience];
   }
 
   return baseURLString;

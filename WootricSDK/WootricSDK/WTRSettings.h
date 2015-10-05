@@ -30,14 +30,16 @@
 @property (nonatomic, strong) NSString *originURL;
 @property (nonatomic, strong) NSString *productName;
 @property (nonatomic, strong) NSString *twitterHandler;
+@property (nonatomic, strong) NSString *customProductName;
+@property (nonatomic, strong) NSString *languageCode;
+@property (nonatomic, strong) NSString *customAudience;
 @property (nonatomic, strong) NSNumber *registeredPercentage;
 @property (nonatomic, strong) NSNumber *visitorPercentage;
 @property (nonatomic, strong) NSNumber *resurveyThrottle;
 @property (nonatomic, strong) NSNumber *dailyResponseCap;
+@property (nonatomic, strong) NSNumber *externalCreatedAt;
 @property (nonatomic, strong) NSURL *facebookPage;
-@property (nonatomic, strong) NSDictionary *language;
 @property (nonatomic, strong) NSDictionary *customProperties;
-@property (nonatomic, assign) NSInteger externalCreatedAt;
 @property (nonatomic, assign) NSInteger firstSurveyAfter;
 @property (nonatomic, assign) NSInteger surveyedDefaultDuration;
 @property (nonatomic, assign) BOOL surveyImmediately;
@@ -57,17 +59,17 @@
 - (NSString *)socialShareQuestionText;
 - (NSString *)socialShareDeclineText;
 
-- (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder andDetractor:(NSString *)detractorPlaceholder;
-- (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion andDetractor:(NSString *)detractorQuestion;
+- (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder detractor:(NSString *)detractorPlaceholder;
+- (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion detractor:(NSString *)detractorQuestion;
 
 - (void)setThankYouMessage:(NSString *)thankYouMessage;
 - (void)setDetractorThankYouMessage:(NSString *)detractorThankYouMessage;
 - (void)setPassiveThankYouMessage:(NSString *)passiveThankYouMessage;
 - (void)setPromoterThankYouMessage:(NSString *)promoterThankYouMessage;
-- (void)setThankYouLinkWithText:(NSString *)thankYouLinkText andURL:(NSURL *)thankYouLinkURL;
-- (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText andURL:(NSURL *)detractorThankYouLinkURL;
-- (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText andURL:(NSURL *)passiveThankYouLinkURL;
-- (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText andURL:(NSURL *)promoterThankYouLinkURL;
+- (void)setThankYouLinkWithText:(NSString *)thankYouLinkText URL:(NSURL *)thankYouLinkURL;
+- (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText URL:(NSURL *)detractorThankYouLinkURL;
+- (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText URL:(NSURL *)passiveThankYouLinkURL;
+- (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText URL:(NSURL *)promoterThankYouLinkURL;
 
 - (NSString *)thankYouMessageDependingOnScore:(int)score;
 - (NSString *)thankYouLinkTextDependingOnScore:(int)score;
