@@ -36,6 +36,8 @@ $ pod install
 + setCustomLanguage:
 + setCustomAudience:
 + setCustomProductName:
++ setCustomFinalThankYou:
++ setCustomNPSQuestion:
 + setFirstSurveyAfter:
 + forceSurvey:
 + surveyImmediately:
@@ -74,7 +76,7 @@ Next thing to do is to set the surveyed end user email and origin URL:
 ```
 And you are good to go! To display the survey (if user is eligible - this check is built in the method) use:
 ```objective-c
-[WootricSDK showSurveyInViewController:<YOUR_VIEW_CONTROLLER>];
+[WootricSDK showSurve]InViewController:<YOUR_VIEW_CONTROLLER>];
 ```
 
 ####Additional configuration:
@@ -116,6 +118,17 @@ Directly adds a product name to end user's properties.
 While WootricSDK is using values you have set in admin panel, it is possible to override these values directly in code.
 
 ---
+
+```objective-c
+[WootricSDK setCustomNPSQuestion:<NPS_QUESTION>];
+```
+Changes NPS Question from admin panel to provided value (English default is "How likely are you to recommend this product or service to a friend or co-worker?").
+
+```objective-c
+[WootricSDK setCustomFinalThankYou:<FINAL_THANK_YOU>];
+```
+
+Changes final thank you from admin panel to provided value (English default is "Thank you for your response, and your feedback!).
 
 ```objective-c
 // You can pass nil value for any of the parameters - it will use defaults for eligibility check if you do so.

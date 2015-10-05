@@ -80,11 +80,16 @@
   }
 }
 
+- (void)setThankYouMessageDependingOnScore:(int)score {
+  _customThankYouLabel.text = [_settings thankYouMessageDependingOnScore:score];
+}
+
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController {
   [self setupThankYouButtonWithTargetViewController:viewController];
   [self setupNoThanksButtonWithTargetViewController:viewController];
   [self setupSocialShareQuestionLabel];
   [self setupFinalThankYouLabel];
+  [self setupCustomThankYouLabel];
   [self setupFacebookButtonWithTargetViewController:viewController];
   [self setupTwitterButtonWithTargetViewController:viewController];
   [self addSubviews];
@@ -92,6 +97,7 @@
 
 - (void)setupSubviewsConstraints {
   [self setupFinalThankYouLabelConstraints];
+  [self setupCustomThankYouLabelConstraints];
   [self setupThankYouButtonConstraints];
   [self setupNoThanksButtonConstraints];
   [self setupSocialShareQuestionLabelConstraints];
@@ -104,8 +110,19 @@
   [self addSubview:_noThanksButton];
   [self addSubview:_socialShareQuestionLabel];
   [self addSubview:_finalThankYouLabel];
+  [self addSubview:_customThankYouLabel];
   [self addSubview:_facebookButton];
   [self addSubview:_twitterButton];
+}
+
+- (void)setupCustomThankYouLabel {
+  _customThankYouLabel = [[UILabel alloc] init];
+  _customThankYouLabel.textAlignment = NSTextAlignmentCenter;
+  _customThankYouLabel.textColor = [UIColor blackColor];
+  _customThankYouLabel.numberOfLines = 0;
+  _customThankYouLabel.lineBreakMode = NSLineBreakByWordWrapping;
+  _customThankYouLabel.font = [UIFont boldSystemFontOfSize:12];
+  [_customThankYouLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupThankYouButtonWithTargetViewController:(UIViewController *)viewController {
@@ -169,6 +186,35 @@
   [_socialShareQuestionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
+- (void)setupCustomThankYouLabelConstraints {
+  NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:_customThankYouLabel
+                                                            attribute:NSLayoutAttributeLeft
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1
+                                                             constant:24];
+  [self addConstraint:constL];
+
+  NSLayoutConstraint *constR = [NSLayoutConstraint constraintWithItem:_customThankYouLabel
+                                                            attribute:NSLayoutAttributeRight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self
+                                                            attribute:NSLayoutAttributeRight
+                                                           multiplier:1
+                                                             constant:-24];
+  [self addConstraint:constR];
+
+  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_customThankYouLabel
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:_finalThankYouLabel
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1
+                                                               constant:8];
+  [self addConstraint:constTop];
+}
+
 - (void)setupFacebookButtonConstraints {
   NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_facebookButton
                                                               attribute:NSLayoutAttributeTop
@@ -176,7 +222,7 @@
                                                                  toItem:_socialShareQuestionLabel
                                                               attribute:NSLayoutAttributeBottom
                                                              multiplier:1
-                                                               constant:24];
+                                                               constant:18];
   [self addConstraint:constTop];
 
   NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:_facebookButton
@@ -214,7 +260,7 @@
                                                                  toItem:_socialShareQuestionLabel
                                                               attribute:NSLayoutAttributeBottom
                                                              multiplier:1
-                                                               constant:24];
+                                                               constant:18];
   [self addConstraint:constTop];
 
   NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:_twitterButton
@@ -346,7 +392,7 @@
                                                                  toItem:_finalThankYouLabel
                                                               attribute:NSLayoutAttributeBottom
                                                              multiplier:1
-                                                               constant:24];
+                                                               constant:38];
   [self addConstraint:constTop];
 }
 

@@ -33,6 +33,8 @@
 @property (nonatomic, strong) NSString *customProductName;
 @property (nonatomic, strong) NSString *languageCode;
 @property (nonatomic, strong) NSString *customAudience;
+@property (nonatomic, strong) NSString *customFinalThankYou;
+@property (nonatomic, strong) NSString *customNPSQuestion;
 @property (nonatomic, strong) NSNumber *registeredPercentage;
 @property (nonatomic, strong) NSNumber *visitorPercentage;
 @property (nonatomic, strong) NSNumber *resurveyThrottle;

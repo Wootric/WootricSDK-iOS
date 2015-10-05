@@ -67,6 +67,16 @@
   apiClient.settings.customProductName = productName;
 }
 
++ (void)setCustomFinalThankYou:(NSString *)finalThankYou {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.customFinalThankYou = finalThankYou;
+}
+
++ (void)setCustomNPSQuestion:(NSString *)npsQuestion {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.customNPSQuestion = npsQuestion;
+}
+
 + (void)forceSurvey:(BOOL)flag {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.forceSurvey = flag;

@@ -149,6 +149,9 @@
 }
 
 - (NSString *)npsQuestionText {
+  if (_customNPSQuestion) {
+    return _customNPSQuestion;
+  }
   return _localizedTexts.npsQuestion;
 }
 
@@ -161,6 +164,9 @@
 }
 
 - (NSString *)finalThankYouText {
+  if (_customFinalThankYou) {
+    return _customFinalThankYou;
+  }
   return _localizedTexts.finalThankYou;
 }
 

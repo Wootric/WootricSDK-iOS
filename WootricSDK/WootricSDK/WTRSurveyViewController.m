@@ -111,7 +111,7 @@
     [_feedbackView textViewResignFirstResponder];
     if ([self socialShareAvailableForScore:score]) {
       [self setupFacebookAndTwitterForScore:score];
-      [self presentSocialShareView];
+      [self presentSocialShareViewWithScore:score];
     } else {
       [self dismissWithFinalThankYou];
     }
@@ -189,8 +189,8 @@
   BOOL twitterAvailable = ([self twitterHandlerAndFeedbackTextPresent] && score >= 9);
   BOOL facebookAvailable = ([_settings facebookPageSet] && score >= 9);
   if (!twitterAvailable && !facebookAvailable) {
-    _constraintModalHeight.constant = 220;
-    _socialShareViewHeightConstraint.constant = 180;
+    _constraintModalHeight.constant = 230;
+    _socialShareViewHeightConstraint.constant = 190;
     _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
     [UIView animateWithDuration:0.2 animations:^{
       [self.view layoutIfNeeded];
@@ -209,8 +209,9 @@
   return ([_settings twitterHandlerSet] && [_feedbackView feedbackTextPresent]);
 }
 
-- (void)presentSocialShareView {
-  [_socialShareView setThankYouButtonTextAndURLDependingOnScore:[_npsQuestionView getScoreSliderValue]];
+- (void)presentSocialShareViewWithScore:(int)score {
+  [_socialShareView setThankYouButtonTextAndURLDependingOnScore:score];
+  [_socialShareView setThankYouMessageDependingOnScore:score];
   [self setQuestionViewVisible:NO andFeedbackViewVisible:NO];
   _sendButton.hidden = YES;
   _socialShareView.hidden = NO;

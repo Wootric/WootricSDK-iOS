@@ -36,6 +36,8 @@
 + (void)setCustomLanguage:(NSString *)languageCode;
 + (void)setCustomAudience:(NSString *)audience;
 + (void)setCustomProductName:(NSString *)productName;
++ (void)setCustomFinalThankYou:(NSString *)finalThankYou;
++ (void)setCustomNPSQuestion:(NSString *)npsQuestion;
 + (void)setEndUserProperties:(NSDictionary *)customProperties;
 + (void)setFirstSurveyAfter:(NSNumber *)firstSurveyAfter;
 + (void)forceSurvey:(BOOL)flag;
