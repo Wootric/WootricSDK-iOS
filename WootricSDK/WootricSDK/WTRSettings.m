@@ -43,7 +43,7 @@
   if (self = [super init]) {
     _setDefaultAfterSurvey = YES;
     _surveyedDefaultDuration = 90;
-    _firstSurveyAfter = 31;
+    _firstSurveyAfter = @31;
     _customThankYou = [[WTRCustomThankYou alloc] init];
     _userCustomMessages = [[WTRUserCustomMessages alloc] init];
   }

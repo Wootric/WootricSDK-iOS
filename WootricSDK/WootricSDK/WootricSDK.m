@@ -87,6 +87,11 @@
   apiClient.settings.productName = productName;
 }
 
++ (void)setFirstSurveyAfter:(NSNumber *)firstSurveyAfter {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.firstSurveyAfter = firstSurveyAfter;
+}
+
 + (void)showSurveyInViewController:(UIViewController *)viewController {
   if ([[WTRApiClient sharedInstance] checkConfiguration]) {
     [WTRTrackingPixel getPixel];

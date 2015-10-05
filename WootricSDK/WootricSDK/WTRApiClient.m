@@ -343,6 +343,11 @@
                      baseURLString, _settings.customAudience];
   }
 
+  if ([_settings.firstSurveyAfter intValue] != 31) {
+    baseURLString = [NSString stringWithFormat:@"%@&first_survey_delay=%d",
+                     baseURLString, [_settings.firstSurveyAfter intValue]];
+  }
+
   return baseURLString;
 }
 

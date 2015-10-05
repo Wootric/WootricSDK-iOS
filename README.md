@@ -36,6 +36,7 @@ $ pod install
 + setCustomLanguage:
 + setCustomAudience:
 + setCustomProductName:
++ setFirstSurveyAfter:
 + forceSurvey:
 + surveyImmediately:
 + setFacebookPage:
@@ -94,6 +95,11 @@ If surveyImmediately is set to YES and user wasn't surveyed yet - eligibility ch
 ```
 When creating a new end user for survey, it will set his/hers external creation date (so for example, date, when end user was created in your iOS application).
 This value is also used in eligibility check, to determine if end user should be surveyed.
+
+```objective-c
+[WootricSDK setFirstSurveyAfter:<NUMBER_OF_DAYS>];
+```
+If not set, defaults to 31 days. Used to check if end user was created/last seen earlier than <NUMBER_OF_DAYS> ago and therefore if survey is required.
 
 ```objective-c
 [WootricSDK setEndUserProperties:<NSDICTIONARY>];

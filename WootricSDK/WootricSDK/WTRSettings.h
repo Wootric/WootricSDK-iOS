@@ -38,9 +38,9 @@
 @property (nonatomic, strong) NSNumber *resurveyThrottle;
 @property (nonatomic, strong) NSNumber *dailyResponseCap;
 @property (nonatomic, strong) NSNumber *externalCreatedAt;
+@property (nonatomic, strong) NSNumber *firstSurveyAfter;
 @property (nonatomic, strong) NSURL *facebookPage;
 @property (nonatomic, strong) NSDictionary *customProperties;
-@property (nonatomic, assign) NSInteger firstSurveyAfter;
 @property (nonatomic, assign) NSInteger surveyedDefaultDuration;
 @property (nonatomic, assign) BOOL surveyImmediately;
 @property (nonatomic, assign) BOOL forceSurvey;

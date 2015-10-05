@@ -37,6 +37,7 @@
 + (void)setCustomAudience:(NSString *)audience;
 + (void)setCustomProductName:(NSString *)productName;
 + (void)setEndUserProperties:(NSDictionary *)customProperties;
++ (void)setFirstSurveyAfter:(NSNumber *)firstSurveyAfter;
 + (void)forceSurvey:(BOOL)flag;
 + (void)surveyImmediately:(BOOL)flag;
 

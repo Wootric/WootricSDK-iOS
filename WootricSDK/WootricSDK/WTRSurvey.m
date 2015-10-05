@@ -69,13 +69,15 @@
     return NO;
   } else if (_apiClient.settings.surveyImmediately) {
     return YES;
+  } else if (!_apiClient.settings.externalCreatedAt) {
+    return YES;
   } else {
-    if (_apiClient.settings.firstSurveyAfter != 0) {
+    if ([_apiClient.settings.firstSurveyAfter intValue] > 0) {
       NSInteger age = [[NSDate date] timeIntervalSince1970] - [_apiClient.settings.externalCreatedAt intValue];
-      if (age > (_apiClient.settings.firstSurveyAfter * 60 * 60 * 24)) {
+      if (age > ([_apiClient.settings.firstSurveyAfter intValue] * 60 * 60 * 24)) {
         return YES;
       } else {
-        if (([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"lastSeenAt"]) >= (_apiClient.settings.firstSurveyAfter * 60 * 60 * 24)) {
+        if (([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"lastSeenAt"]) >= ([_apiClient.settings.firstSurveyAfter intValue] * 60 * 60 * 24)) {
           return YES;
         }
       }
