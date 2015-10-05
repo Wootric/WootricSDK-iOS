@@ -12,7 +12,7 @@ $ gem install cocoapods
 ```
 To integrate WootricSDK into your Xcode project using CocoaPods, specify it in your `Podfile`:
 ```ruby
-pod "WootricSDK", "~> 0.2.1"
+pod "WootricSDK", "~> 0.2.2"
 ```
 Then, run the following command:
 
