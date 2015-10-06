@@ -2,6 +2,9 @@
 ##Requirements
 - iOS 7.0+
 
+##Demo
+- View the iOS demo video [here.](http://cl.ly/3N0N2n0F1i0N) 
+
 ##Installation
 ---
 ###Using CocoaPods
@@ -62,17 +65,20 @@ $ pod install
 #####ATS notice:
 
 WootricSDK is communicating with three endpoints:
-https://api.wootric.com/
-http://wootric-eligibility.herokuapp.com/
-https://*.cloudfront.net/
+
+* https://api.wootric.com/
+* http://wootric-eligibility.herokuapp.com/
+* https://*.cloudfront.net/
 
 either "enable" them in NSAppTransportSecurity or allow all loads by adding to your .plist:
 
+```
 <key>NSAppTransportSecurity</key>
 <dict>
 <key>NSAllowsArbitraryLoads</key>
 <true/>
 </dict>
+```
 
 ---
 
