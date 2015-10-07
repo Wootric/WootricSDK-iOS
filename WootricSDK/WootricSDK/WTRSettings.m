@@ -75,9 +75,9 @@
 
   if (score <= 6 && (_customMessages.detractorQuestion || _userCustomMessages.detractorQuestion)) {
     return [self detractorFollowupQuestion];
-  } else if (score <= 8 && (_customMessages.passiveQuestion || _userCustomMessages.passiveQuestion)) {
+  } else if (score > 6 && score <= 8 && (_customMessages.passiveQuestion || _userCustomMessages.passiveQuestion)) {
     return [self passiveFollowupQuestion];
-  } else if (score <= 10 && (_customMessages.promoterQuestion || _userCustomMessages.promoterQuestion)) {
+  } else if (score > 8 && score <= 10 && (_customMessages.promoterQuestion || _userCustomMessages.promoterQuestion)) {
     return [self promoterFollowupQuestion];
   }
 
@@ -91,9 +91,9 @@
 
   if (score <= 6 && (_customMessages.detractorText || _userCustomMessages.detractorPlaceholderText)) {
     return [self detractorFollowupPlaceholder];
-  } else if (score <= 8 && (_customMessages.passiveText || _userCustomMessages.passivePlaceholderText)) {
+  } else if (score > 6 && score <= 8 && (_customMessages.passiveText || _userCustomMessages.passivePlaceholderText)) {
     return [self passiveFollowupPlaceholder];
-  } else if (score <= 10 && (_customMessages.promoterText || _userCustomMessages.promoterPlaceholderText)) {
+  } else if (score > 8 && score <= 10 && (_customMessages.promoterText || _userCustomMessages.promoterPlaceholderText)) {
     return [self promoterFollowupPlaceholder];
   }
 
@@ -237,9 +237,9 @@
 - (NSString *)thankYouMessageDependingOnScore:(int)score {
   if (score <= 6 && _customThankYou.detractorThankYouMessage) {
     return _customThankYou.detractorThankYouMessage;
-  } else if (score <= 8 && _customThankYou.passiveThankYouMessage) {
+  } else if (score > 6 && score <= 8 && _customThankYou.passiveThankYouMessage) {
     return _customThankYou.passiveThankYouMessage;
-  } else if (score <= 10 && _customThankYou.promoterThankYouMessage) {
+  } else if (score > 8 && score <= 10 && _customThankYou.promoterThankYouMessage) {
     return _customThankYou.promoterThankYouMessage;
   } else if (_customThankYou.thankYouMessage) {
     return _customThankYou.thankYouMessage;
@@ -251,9 +251,9 @@
 - (NSString *)thankYouLinkTextDependingOnScore:(int)score {
   if (score <= 6 && _customThankYou.detractorThankYouLinkText) {
     return _customThankYou.detractorThankYouLinkText;
-  } else if (score <= 8 && _customThankYou.passiveThankYouLinkText) {
+  } else if (score > 6 && score <= 8 && _customThankYou.passiveThankYouLinkText) {
     return _customThankYou.passiveThankYouLinkText;
-  } else if (score <= 10 && _customThankYou.promoterThankYouLinkText) {
+  } else if (score > 8 && score <= 10 && _customThankYou.promoterThankYouLinkText) {
     return _customThankYou.promoterThankYouLinkText;
   } else if (_customThankYou.thankYouLinkText) {
     return _customThankYou.thankYouLinkText;
@@ -265,9 +265,9 @@
 - (NSURL *)thankYouLinkURLDependingOnScore:(int)score {
   if (score <= 6 && _customThankYou.detractorThankYouLinkURL) {
     return _customThankYou.detractorThankYouLinkURL;
-  } else if (score <= 8 && _customThankYou.passiveThankYouLinkURL) {
+  } else if (score > 6 && score <= 8 && _customThankYou.passiveThankYouLinkURL) {
     return _customThankYou.passiveThankYouLinkURL;
-  } else if (score <= 10 && _customThankYou.promoterThankYouLinkURL) {
+  } else if (score > 8 && score <= 10 && _customThankYou.promoterThankYouLinkURL) {
     return _customThankYou.promoterThankYouLinkURL;
   } else if (_customThankYou.thankYouLinkURL) {
     return _customThankYou.thankYouLinkURL;
@@ -279,9 +279,9 @@
 - (BOOL)thankYouLinkConfiguredForScore:(int)score {
   if (score <= 6 && [self detractorOrDefaultURL] && [self detractorOrDefaultText]) {
     return YES;
-  } else if (score <= 8 && [self passiveOrDefaultURL] && [self passiveOrDefaultText]) {
+  } else if (score > 6 && score <= 8 && [self passiveOrDefaultURL] && [self passiveOrDefaultText]) {
     return YES;
-  } else if (score <= 10 && [self promoterOrDefaultURL] && [self promoterOrDefaultText]) {
+  } else if (score > 8 && score <= 10 && [self promoterOrDefaultURL] && [self promoterOrDefaultText]) {
     return YES;
   } else if (_customThankYou.thankYouLinkURL && _customThankYou.thankYouLinkText) {
     return YES;

@@ -39,6 +39,7 @@
 		B25CE7601BAADC920063E6E5 /* WTRNPSQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B25CE75E1BAADC920063E6E5 /* WTRNPSQuestionView.m */; };
 		B29A2E881BAC0B50007181D3 /* WTRFeedbackView.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */; settings = {ASSET_TAGS = (); }; };
 		B29A2E891BAC0B50007181D3 /* WTRFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */; settings = {ASSET_TAGS = (); }; };
+		B29D63CA1BC3CEEB00F0C98C /* WTRSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */; settings = {ASSET_TAGS = (); }; };
 		B2A4810D1BBE781E00BC9E13 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2A4810C1BBE781E00BC9E13 /* Images.xcassets */; settings = {ASSET_TAGS = (); }; };
 		B2BED80C1BA8610900DD1EFC /* WTRSingleScoreLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = B2BED80A1BA8610900DD1EFC /* WTRSingleScoreLabel.h */; };
 		B2BED80D1BA8610900DD1EFC /* WTRSingleScoreLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B2BED80B1BA8610900DD1EFC /* WTRSingleScoreLabel.m */; };
@@ -106,6 +107,7 @@
 		B25CE75E1BAADC920063E6E5 /* WTRNPSQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRNPSQuestionView.m; sourceTree = "<group>"; };
 		B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRFeedbackView.h; sourceTree = "<group>"; };
 		B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRFeedbackView.m; sourceTree = "<group>"; };
+		B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSettingsTests.m; sourceTree = "<group>"; };
 		B2A4810C1BBE781E00BC9E13 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B2BED80A1BA8610900DD1EFC /* WTRSingleScoreLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRSingleScoreLabel.h; sourceTree = "<group>"; };
 		B2BED80B1BA8610900DD1EFC /* WTRSingleScoreLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSingleScoreLabel.m; sourceTree = "<group>"; };
@@ -152,6 +154,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B29D63C81BC3CEC200F0C98C /* SurveySettingsTests */ = {
+			isa = PBXGroup;
+			children = (
+				B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */,
+			);
+			name = SurveySettingsTests;
+			sourceTree = "<group>";
+		};
 		B2ADF6511B9DBD52005403AC /* SurveySettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,6 +270,7 @@
 		B2DC6F111B81E6F900F599B3 /* WootricSDKTests */ = {
 			isa = PBXGroup;
 			children = (
+				B29D63C81BC3CEC200F0C98C /* SurveySettingsTests */,
 				B2DC6F141B81E6F900F599B3 /* WootricSDKTests.m */,
 				B2DC6F121B81E6F900F599B3 /* Supporting Files */,
 			);
@@ -452,6 +463,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B29D63CA1BC3CEEB00F0C98C /* WTRSettingsTests.m in Sources */,
 				B2DC6F151B81E6F900F599B3 /* WootricSDKTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
