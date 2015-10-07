@@ -62,7 +62,6 @@
   if ([_clientID length] != 0 &&
       [_clientSecret length] != 0 &&
       [_accountToken length] != 0 &&
-      [self validEmailString:_settings.endUserEmail] &&
       [_settings.originURL length] != 0) {
     return YES;
   }
@@ -82,7 +81,7 @@
 }
 
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID {
-  NSString *escapedEmail = [self percentEscapeString:_settings.endUserEmail];
+  NSString *escapedEmail = [self percentEscapeString:[_settings getEndUserEmailOrUnknown]];
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", _baseAPIURL, _apiVersion, escapedEmail]];
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:nil andHTTPBody:nil];
 
@@ -113,7 +112,7 @@
 
 - (void)updateExistingEndUser:(NSInteger)endUserID {
   BOOL needsUpdate = NO;
-  NSString *escapedEmail = [self percentEscapeString:_settings.endUserEmail];
+  NSString *escapedEmail = [self percentEscapeString:[_settings getEndUserEmailOrUnknown]];
   NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
 
   if (_settings.productName) {
@@ -146,7 +145,7 @@
 
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", _baseAPIURL, _apiVersion]];
-  NSString *escapedEmail = [self percentEscapeString:_settings.endUserEmail];
+  NSString *escapedEmail = [self percentEscapeString:[_settings getEndUserEmailOrUnknown]];
   NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
 
   if (_settings.externalCreatedAt) {
@@ -244,7 +243,7 @@
 
 - (void)checkEligibility:(void (^)())eligible {
   NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@&email=%@",
-                             _surveyServerURL, _accountToken, _settings.endUserEmail];
+                             _surveyServerURL, _accountToken, [_settings getEndUserEmailOrUnknown]];
 
   baseURLString = [self addSurveyServerCustomSettingsToURLString:baseURLString];
 
@@ -290,11 +289,6 @@
   }
 
   return urlRequest;
-}
-
-- (BOOL)validEmailString:(NSString *)emailString {
-  NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-  return !([[emailString stringByTrimmingCharactersInSet:set] length] == 0);
 }
 
 - (NSString *)addSurveyServerCustomSettingsToURLString:(NSString *)baseURLString {

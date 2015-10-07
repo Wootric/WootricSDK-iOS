@@ -68,6 +68,13 @@
   }
 }
 
+- (NSString *)getEndUserEmailOrUnknown {
+  if (!_endUserEmail || ![self validEmailString]) {
+    return @"Unknown";
+  }
+  return _endUserEmail;
+}
+
 - (NSString *)followupQuestionTextForScore:(int)score {
   if (!_customMessages && ![_userCustomMessages userCustomQuestionPresent]) {
     return _localizedTexts.followupQuestion;
@@ -352,6 +359,11 @@
     customDailyResponseCap = @0;
   }
   _dailyResponseCap = customDailyResponseCap;
+}
+
+- (BOOL)validEmailString {
+  NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+  return !([[_endUserEmail stringByTrimmingCharactersInSet:set] length] == 0);
 }
 
 @end

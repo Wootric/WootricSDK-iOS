@@ -92,9 +92,8 @@ Then you need to configure the SDK with your client ID, secret and account token
 ```objective-c
 [WootricSDK configureWithClientID:<YOUR_CLIENT_ID> clientSecret:<YOUR_CLIENT_SECRET> accountToken:<YOUR_TOKEN>];
 ```
-Next thing to do is to set the surveyed end user email and origin URL:
+Next thing to do is to set origin URL:
 ```objective-c
-[WootricSDK setEndUserEmail:<END_USER_EMAIL>];
 [WootricSDK setOriginUrl:<ORIGIN_URL>];
 ```
 And you are good to go! To display the survey (if user is eligible - this check is built in the method) use:
@@ -104,6 +103,11 @@ And you are good to go! To display the survey (if user is eligible - this check 
 
 ####Additional configuration:
 ---
+
+```objective-c
+[WootricSDK setEndUserEmail:<END_USER_EMAIL>];
+```
+While end user email is not required it is HIGHLY recommended to set it if possible.
 
 ```objective-c
 [WootricSDK forceSurvey:<BOOL>];

@@ -267,6 +267,15 @@
   XCTAssertTrue(flag);
 }
 
+- (void)testGetEndUserEmailOrUnknown {
+  _settings.endUserEmail = @"   ";
+  XCTAssertEqualObjects(@"Unknown", [_settings getEndUserEmailOrUnknown]);
+  _settings.endUserEmail = nil;
+  XCTAssertEqualObjects(@"Unknown", [_settings getEndUserEmailOrUnknown]);
+  _settings.endUserEmail = @"mail@example.com";
+  XCTAssertEqualObjects(@"mail@example.com", [_settings getEndUserEmailOrUnknown]);
+}
+
 - (NSDictionary *)surveyServerSettings {
   NSDictionary *settings = @{
     @"eligible": @1,

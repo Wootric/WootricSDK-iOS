@@ -49,6 +49,7 @@
 @property (nonatomic, assign) BOOL setDefaultAfterSurvey;
 
 - (void)parseDataFromSurveyServer:(NSDictionary *)surveyServerSettings;
+- (NSString *)getEndUserEmailOrUnknown;
 
 - (NSString *)followupQuestionTextForScore:(int)score;
 - (NSString *)followupPlaceholderTextForScore:(int)score;
