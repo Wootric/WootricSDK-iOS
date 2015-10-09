@@ -47,11 +47,6 @@
   apiClient.settings.externalCreatedAt = externalCreatedAt;
 }
 
-+ (void)setOriginUrl:(NSString *)originUrl {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.originURL = originUrl;
-}
-
 + (void)setCustomAudience:(NSString *)audience {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.customAudience = audience;

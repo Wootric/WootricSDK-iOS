@@ -44,6 +44,7 @@
     _setDefaultAfterSurvey = YES;
     _surveyedDefaultDuration = 90;
     _firstSurveyAfter = @31;
+    _originURL = [[NSBundle mainBundle] bundleIdentifier];
     _customThankYou = [[WTRCustomThankYou alloc] init];
     _userCustomMessages = [[WTRUserCustomMessages alloc] init];
   }

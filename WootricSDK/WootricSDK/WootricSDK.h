@@ -31,7 +31,6 @@
 + (void)showSurveyInViewController:(UIViewController *)viewController;
 + (void)setEndUserEmail:(NSString *)endUserEmail;
 + (void)setEndUserCreatedAt:(NSNumber *)externalCreatedAt;
-+ (void)setOriginUrl:(NSString *)originUrl;
 + (void)setProductNameForEndUser:(NSString *)productName;
 + (void)setCustomLanguage:(NSString *)languageCode;
 + (void)setCustomAudience:(NSString *)audience;

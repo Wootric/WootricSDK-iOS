@@ -33,7 +33,6 @@ $ pod install
 + showSurveyInViewController:
 + setEndUserEmail:
 + setEndUserCreatedAt:
-+ setOriginUrl:
 + setProductNameForEndUser:
 + setEndUserProperties:
 + setCustomLanguage:
@@ -91,10 +90,6 @@ First import the SDK's header:
 Then you need to configure the SDK with your client ID, secret and account token:
 ```objective-c
 [WootricSDK configureWithClientID:<YOUR_CLIENT_ID> clientSecret:<YOUR_CLIENT_SECRET> accountToken:<YOUR_TOKEN>];
-```
-Next thing to do is to set origin URL:
-```objective-c
-[WootricSDK setOriginUrl:<ORIGIN_URL>];
 ```
 And you are good to go! To display the survey (if user is eligible - this check is built in the method) use:
 ```objective-c

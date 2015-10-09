@@ -61,8 +61,7 @@
 - (BOOL)checkConfiguration {
   if ([_clientID length] != 0 &&
       [_clientSecret length] != 0 &&
-      [_accountToken length] != 0 &&
-      [_settings.originURL length] != 0) {
+      [_accountToken length] != 0) {
     return YES;
   }
   return NO;
