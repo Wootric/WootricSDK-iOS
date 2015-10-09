@@ -22,12 +22,10 @@
   NSString *clientID = @"YOUR_CLIENT_ID";
   NSString *clientSecret = @"YOUR_CLIENT_SECRET";
   NSString *accountToken = @"YOUR_ACCOUNT_TOKEN";
-  NSString *originUrl = @"ORIGIN_URL";
 
   [WootricSDK configureWithClientID:clientID clientSecret:clientSecret accountToken:accountToken];
   [WootricSDK setEndUserEmail:@"END_USER_EMAIL"];
   [WootricSDK setEndUserCreatedAt:@1234567890];
-  [WootricSDK setOriginUrl:originUrl];
   [WootricSDK forceSurvey:YES];
 
   [WootricSDK showSurveyInViewController:self];

@@ -71,8 +71,10 @@
 - (void)highlightAnchorForScore:(int)currentScore {
   if (currentScore == 0) {
     _notLikelyAnchor.textColor = [WTRColor selectedValueScoreColor];
+    _likelyAnchor.textColor = [WTRColor anchorAndScoreColor];
   } else if (currentScore == 10) {
     _likelyAnchor.textColor = [WTRColor selectedValueScoreColor];
+    _notLikelyAnchor.textColor = [WTRColor anchorAndScoreColor];
   } else {
     _notLikelyAnchor.textColor = [WTRColor anchorAndScoreColor];
     _likelyAnchor.textColor = [WTRColor anchorAndScoreColor];
