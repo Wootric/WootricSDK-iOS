@@ -3,7 +3,7 @@
 - iOS 7.0+
 
 ##Demo
-- View the iOS demo video [here.](http://cl.ly/3N0N2n0F1i0N) 
+- View the iOS demo video [here.](https://cl.ly/dVaI) 
 
 ##Installation
 ---
