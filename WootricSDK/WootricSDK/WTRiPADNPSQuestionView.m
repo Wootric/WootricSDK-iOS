@@ -1,0 +1,205 @@
+//
+//  WTRiPADNPSQuestionView.m
+//  WootricSDK
+//
+// Copyright (c) 2015 Wootric (https://wootric.com)
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#import "WTRiPADNPSQuestionView.h"
+#import "WTRCircleScoreView.h"
+#import "WTRColor.h"
+
+@interface WTRiPADNPSQuestionView ()
+
+@property (nonatomic, assign) BOOL firstTap;
+@property (nonatomic, strong) UILabel *npsQuestionLabel;
+@property (nonatomic, strong) UILabel *likelyAnchor;
+@property (nonatomic, strong) UILabel *notLikelyAnchor;
+@property (nonatomic, strong) UIButton *poweredByWootric;
+@property (nonatomic, strong) WTRCircleScoreView *scoreView;
+@property (nonatomic, strong) WTRSettings *settings;
+
+@end
+
+@implementation WTRiPADNPSQuestionView
+
+- (instancetype)initWithSettings:(WTRSettings *)settings {
+  if (self = [super init]) {
+    self.backgroundColor = [UIColor whiteColor];
+//    self.layer.borderWidth = 1;
+//    self.layer.borderColor = [WTRColor sliderModalBorderColor].CGColor;
+    _settings = settings;
+    _firstTap = YES;
+    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+  }
+  return self;
+}
+
+- (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController {
+  [self setupNpsQuestionLabel];
+  [self setupLikelyAnchor];
+  [self setupNotLikelyAnchor];
+  [self setupCircleScoreViewWithViewController:viewController];
+  [self addSubviews];
+}
+
+- (void)setupSubviewsConstraints {
+  [self setupNpsQuestionLabelConstraints];
+  [self setupScoreViewConstraints];
+  [self setupLikelyAnchorConstraints];
+  [self setupNotLikelyAnchorConstraints];
+}
+
+- (void)addSubviews {
+  [self addSubview:_npsQuestionLabel];
+  [self addSubview:_scoreView];
+  [self addSubview:_likelyAnchor];
+  [self addSubview:_notLikelyAnchor];
+}
+
+- (void)selectCircleButton:(WTRCircleScoreButton *)button {
+  [_scoreView selectCircleButton:button];
+}
+
+- (void)setupLikelyAnchorConstraints {
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:_likelyAnchor
+                                                            attribute:NSLayoutAttributeCenterY
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:_scoreView
+                                                            attribute:NSLayoutAttributeCenterY
+                                                           multiplier:1
+                                                             constant:0];
+  [self addConstraint:constY];
+
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:_likelyAnchor
+                                                            attribute:NSLayoutAttributeRight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:_scoreView
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1
+                                                             constant:-10];
+  [self addConstraint:constX];
+}
+
+- (void)setupNotLikelyAnchorConstraints {
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:_notLikelyAnchor
+                                                            attribute:NSLayoutAttributeCenterY
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:_scoreView
+                                                            attribute:NSLayoutAttributeCenterY
+                                                           multiplier:1
+                                                             constant:0];
+  [self addConstraint:constY];
+
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:_scoreView
+                                                            attribute:NSLayoutAttributeRight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:_notLikelyAnchor
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1
+                                                             constant:-10];
+  [self addConstraint:constX];
+}
+
+- (void)setupNpsQuestionLabelConstraints {
+  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_npsQuestionLabel
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self
+                                                              attribute:NSLayoutAttributeTop
+                                                             multiplier:1
+                                                               constant:20];
+  [self addConstraint:constTop];
+
+  NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:_npsQuestionLabel
+                                                               attribute:NSLayoutAttributeLeft
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self
+                                                               attribute:NSLayoutAttributeLeft
+                                                              multiplier:1
+                                                                constant:25];
+  [self addConstraint:constLeft];
+
+  NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:self
+                                                                attribute:NSLayoutAttributeRight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:_npsQuestionLabel
+                                                                attribute:NSLayoutAttributeRight
+                                                               multiplier:1
+                                                                 constant:25];
+  [self addConstraint:constRight];
+}
+
+- (void)setupScoreViewConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:_scoreView
+                                                            attribute:NSLayoutAttributeCenterX
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self
+                                                            attribute:NSLayoutAttributeCenterX
+                                                           multiplier:1
+                                                             constant:0];
+  [self addConstraint:constX];
+
+  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_scoreView
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:_npsQuestionLabel
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1
+                                                               constant:20];
+  [self addConstraint:constTop];
+}
+
+- (void)setupCircleScoreViewWithViewController:(UIViewController *)viewController {
+  _scoreView = [[WTRCircleScoreView alloc] initWithViewController:viewController];
+}
+
+- (void)setupNpsQuestionLabel {
+  _npsQuestionLabel = [[UILabel alloc] init];
+  _npsQuestionLabel.textAlignment = NSTextAlignmentCenter;
+  _npsQuestionLabel.textColor = [UIColor blackColor];
+  _npsQuestionLabel.numberOfLines = 0;
+  _npsQuestionLabel.lineBreakMode = NSLineBreakByWordWrapping;
+  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+    _npsQuestionLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightMedium];
+  } else {
+    _npsQuestionLabel.font = [UIFont systemFontOfSize:18];
+  }
+  _npsQuestionLabel.text = [_settings npsQuestionText];
+  [_npsQuestionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
+- (void)setupLikelyAnchor {
+  _likelyAnchor = [[UILabel alloc] init];
+  _likelyAnchor.textColor = [WTRColor anchorAndScoreColor];
+  _likelyAnchor.text = [self.settings likelyAnchorText];
+  _likelyAnchor.font = [UIFont italicSystemFontOfSize:12];
+  [_likelyAnchor setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
+- (void)setupNotLikelyAnchor {
+  _notLikelyAnchor = [[UILabel alloc] init];
+  _notLikelyAnchor.textColor = [WTRColor anchorAndScoreColor];
+  _notLikelyAnchor.text = [self.settings notLikelyAnchorText];
+  _notLikelyAnchor.font = [UIFont italicSystemFontOfSize:12];
+  [_notLikelyAnchor setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
+@end

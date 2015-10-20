@@ -122,6 +122,26 @@
   return [self colorWithHexString:@"#13AF68"];
 }
 
++ (UIColor *)iPadCircleButtonBorderColor {
+  return [self colorWithHexString:@"#CBCBCB"];
+}
+
++ (UIColor *)iPadCircleButtonTextColor {
+  return [self colorWithHexString:@"#737373"];
+}
+
++ (UIColor *)iPadCircleButtonSelectedBackgroundColor {
+  return [self colorWithHexString:@"#2D91D7"];
+}
+
++ (UIColor *)iPadCircleButtonSelectedBorderColor {
+  return [self colorWithHexString:@"#2475AE"];
+}
+
++ (UIColor *)iPadPoweredByWootricTextColor {
+  return [self colorWithHexString:@"#82BED3"];
+}
+
 + (UIColor *)colorWithHexString:(NSString *)hexString {
   NSString *noHashString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
   NSScanner *scanner = [NSScanner scannerWithString:noHashString];

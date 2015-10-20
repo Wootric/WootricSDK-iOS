@@ -95,7 +95,7 @@
   [self.poweredByWootric setTranslatesAutoresizingMaskIntoConstraints:NO];
   NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"Powered by Wootric"]];
   [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, 10)];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColor] range:NSMakeRange(11, 6)];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColor] range:NSMakeRange(11, 7)];
   [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, 18)];
   [self.poweredByWootric setAttributedTitle:attrStr forState:UIControlStateNormal];
   [self.poweredByWootric addTarget:self

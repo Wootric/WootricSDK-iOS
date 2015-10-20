@@ -52,4 +52,10 @@
 + (UIColor *)callToActionButtonBorderColor;
 + (UIColor *)socialShareQuestionTextColor;
 
++ (UIColor *)iPadCircleButtonBorderColor;
++ (UIColor *)iPadCircleButtonTextColor;
++ (UIColor *)iPadCircleButtonSelectedBackgroundColor;
++ (UIColor *)iPadCircleButtonSelectedBorderColor;
++ (UIColor *)iPadPoweredByWootricTextColor;
+
 @end
