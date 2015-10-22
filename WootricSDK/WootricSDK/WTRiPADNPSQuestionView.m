@@ -32,7 +32,6 @@
 @property (nonatomic, strong) UILabel *npsQuestionLabel;
 @property (nonatomic, strong) UILabel *likelyAnchor;
 @property (nonatomic, strong) UILabel *notLikelyAnchor;
-@property (nonatomic, strong) UIButton *poweredByWootric;
 @property (nonatomic, strong) WTRCircleScoreView *scoreView;
 @property (nonatomic, strong) WTRSettings *settings;
 
@@ -134,7 +133,7 @@
                                                                   toItem:self
                                                                attribute:NSLayoutAttributeLeft
                                                               multiplier:1
-                                                                constant:25];
+                                                                constant:45];
   [self addConstraint:constLeft];
 
   NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:self
@@ -143,7 +142,7 @@
                                                                    toItem:_npsQuestionLabel
                                                                 attribute:NSLayoutAttributeRight
                                                                multiplier:1
-                                                                 constant:25];
+                                                                 constant:45];
   [self addConstraint:constRight];
 }
 
@@ -177,11 +176,7 @@
   _npsQuestionLabel.textColor = [UIColor blackColor];
   _npsQuestionLabel.numberOfLines = 0;
   _npsQuestionLabel.lineBreakMode = NSLineBreakByWordWrapping;
-  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    _npsQuestionLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightMedium];
-  } else {
-    _npsQuestionLabel.font = [UIFont systemFontOfSize:18];
-  }
+  _npsQuestionLabel.font = [UIFont systemFontOfSize:18];
   _npsQuestionLabel.text = [_settings npsQuestionText];
   [_npsQuestionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }

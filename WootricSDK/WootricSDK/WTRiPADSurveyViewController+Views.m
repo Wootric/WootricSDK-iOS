@@ -31,6 +31,7 @@
   [self setupModalView];
   [self setupScrollView];
   [self setupNPSQuestionView];
+  [self setupDismissButton];
   [self setupPoweredByWootric];
 
   [self addViewsToModal];
@@ -41,11 +42,24 @@
 - (void)addViewsToModal {
   [self.modalView addSubview:self.npsQuestionView];
   [self.modalView addSubview:self.poweredByWootric];
+  [self.modalView addSubview:self.dismissButton];
 }
 
 - (void)setupNPSQuestionView {
   self.npsQuestionView = [[WTRiPADNPSQuestionView alloc] initWithSettings:self.settings];
   [self.npsQuestionView initializeSubviewsWithTargetViewController:self];
+}
+
+- (void)setupDismissButton {
+  self.dismissButton = [[UIButton alloc] init];
+  self.dismissButton.layer.cornerRadius = 15;
+  self.dismissButton.layer.borderWidth = 1;
+  self.dismissButton.layer.borderColor = [WTRColor iPadCircleButtonBorderColor].CGColor;
+  self.dismissButton.titleLabel.font = [UIFont systemFontOfSize:20];
+  [self.dismissButton setTitle:@"\u00D7" forState:UIControlStateNormal];
+  [self.dismissButton setTitleColor:[WTRColor iPadCircleButtonTextColor] forState:UIControlStateNormal];
+  [self.dismissButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [self.dismissButton addTarget:self action:NSSelectorFromString(@"dismissButtonPressed:") forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupPoweredByWootric {

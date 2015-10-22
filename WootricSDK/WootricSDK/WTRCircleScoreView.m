@@ -24,6 +24,7 @@
 
 #import "WTRCircleScoreView.h"
 #import "WTRCircleScoreButton.h"
+#import "SimpleConstraints.h"
 
 @implementation WTRCircleScoreView
 
@@ -37,29 +38,15 @@
 }
 
 - (void)setupConstraints {
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:42];
-  [self addConstraint:constH];
-
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:492];
-  [self addConstraint:constW];
+  [self constraintHeight:42];
+  [self constraintWidth:492];
 }
 
 - (void)addCircleButtonsWithViewController:(UIViewController *)viewController {
   for (int i = 0; i <= 10; i++) {
     WTRCircleScoreButton *circleButton = [[WTRCircleScoreButton alloc] initWithViewController:viewController];
     circleButton.tag = 9000 + i;
+    circleButton.assignedScore = i;
     [circleButton setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];
     [self addSubview:circleButton];
 

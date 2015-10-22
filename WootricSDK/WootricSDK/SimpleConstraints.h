@@ -1,5 +1,5 @@
 //
-//  WTRiPADSurveyViewController.h
+//  SimpleConstraints.h
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,22 +22,5 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import "WTRSettings.h"
-#import "WTRiPADModalView.h"
-#import "WTRiPADNPSQuestionView.h"
-
-@interface WTRiPADSurveyViewController : UIViewController
-
-@property (nonatomic, strong) WTRSettings *settings;
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIButton *poweredByWootric;
-@property (nonatomic, strong) UIButton *dismissButton;
-@property (nonatomic, strong) WTRiPADModalView *modalView;
-@property (nonatomic, strong) WTRiPADNPSQuestionView *npsQuestionView;
-@property (nonatomic, strong) NSLayoutConstraint *constraintTopToModalTop;
-@property (nonatomic, strong) NSLayoutConstraint *constraintModalHeight;
-
-- (instancetype)initWithSurveySettings:(WTRSettings *)settings;
-
-@end
+#import "NSLayoutConstraint+Simple.h"
+#import "UIView+Constraints.h"

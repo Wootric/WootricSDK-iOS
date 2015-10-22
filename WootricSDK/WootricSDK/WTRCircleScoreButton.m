@@ -33,7 +33,7 @@
     self.layer.cornerRadius = 21;
     self.layer.borderWidth = 1;
     self.layer.borderColor = [WTRColor iPadCircleButtonBorderColor].CGColor;
-    self.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    self.titleLabel.font = [UIFont systemFontOfSize:14];
     [self setTitleColor:[WTRColor iPadCircleButtonTextColor] forState:UIControlStateNormal];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self setupConstraints];
@@ -85,12 +85,14 @@
 }
 
 - (void)markAsSelected {
+  _isSelected = YES;
   self.backgroundColor = [WTRColor iPadCircleButtonSelectedBackgroundColor];
   self.layer.borderColor = [WTRColor iPadCircleButtonSelectedBorderColor].CGColor;
   [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
 - (void)markAsUnselected {
+  _isSelected = NO;
   self.backgroundColor = [UIColor whiteColor];
   self.layer.borderColor = [WTRColor iPadCircleButtonBorderColor].CGColor;
   [self setTitleColor:[WTRColor iPadCircleButtonTextColor] forState:UIControlStateNormal];

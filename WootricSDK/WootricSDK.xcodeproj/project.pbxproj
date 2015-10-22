@@ -7,26 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B2102A2D1BB59ABC0025DABC /* WTRDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */; settings = {ASSET_TAGS = (); }; };
-		B2102A2E1BB59ABC0025DABC /* WTRDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A2C1BB59ABC0025DABC /* WTRDefaults.m */; settings = {ASSET_TAGS = (); }; };
-		B2102A331BB59ACE0025DABC /* WTRCustomMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2F1BB59ACE0025DABC /* WTRCustomMessages.h */; settings = {ASSET_TAGS = (); }; };
-		B2102A341BB59ACE0025DABC /* WTRCustomMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A301BB59ACE0025DABC /* WTRCustomMessages.m */; settings = {ASSET_TAGS = (); }; };
-		B2102A351BB59ACE0025DABC /* WTRLocalizedTexts.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A311BB59ACE0025DABC /* WTRLocalizedTexts.h */; settings = {ASSET_TAGS = (); }; };
-		B2102A361BB59ACE0025DABC /* WTRLocalizedTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A321BB59ACE0025DABC /* WTRLocalizedTexts.m */; settings = {ASSET_TAGS = (); }; };
-		B2102A3B1BB59AE60025DABC /* WTRSurvey.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A371BB59AE60025DABC /* WTRSurvey.h */; settings = {ASSET_TAGS = (); }; };
-		B2102A3C1BB59AE60025DABC /* WTRSurvey.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A381BB59AE60025DABC /* WTRSurvey.m */; settings = {ASSET_TAGS = (); }; };
-		B2102A3D1BB59AE60025DABC /* WTRTrackingPixel.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A391BB59AE60025DABC /* WTRTrackingPixel.h */; settings = {ASSET_TAGS = (); }; };
-		B2102A3E1BB59AE60025DABC /* WTRTrackingPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A3A1BB59AE60025DABC /* WTRTrackingPixel.m */; settings = {ASSET_TAGS = (); }; };
-		B229766D1BB0036100FC2772 /* WTRPropertiesParser.h in Headers */ = {isa = PBXBuildFile; fileRef = B229766B1BB0036100FC2772 /* WTRPropertiesParser.h */; settings = {ASSET_TAGS = (); }; };
-		B229766E1BB0036100FC2772 /* WTRPropertiesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B229766C1BB0036100FC2772 /* WTRPropertiesParser.m */; settings = {ASSET_TAGS = (); }; };
-		B22976751BB1404D00FC2772 /* WTRCustomThankYou.h in Headers */ = {isa = PBXBuildFile; fileRef = B22976731BB1404D00FC2772 /* WTRCustomThankYou.h */; settings = {ASSET_TAGS = (); }; };
-		B22976761BB1404D00FC2772 /* WTRCustomThankYou.m in Sources */ = {isa = PBXBuildFile; fileRef = B22976741BB1404D00FC2772 /* WTRCustomThankYou.m */; settings = {ASSET_TAGS = (); }; };
-		B229767D1BB1901500FC2772 /* WTRThankYouButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B229767B1BB1901500FC2772 /* WTRThankYouButton.h */; settings = {ASSET_TAGS = (); }; };
-		B229767E1BB1901500FC2772 /* WTRThankYouButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B229767C1BB1901500FC2772 /* WTRThankYouButton.m */; settings = {ASSET_TAGS = (); }; };
-		B22976811BB2A2C300FC2772 /* WTRSocialShareView.h in Headers */ = {isa = PBXBuildFile; fileRef = B229767F1BB2A2C300FC2772 /* WTRSocialShareView.h */; settings = {ASSET_TAGS = (); }; };
-		B22976821BB2A2C300FC2772 /* WTRSocialShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = B22976801BB2A2C300FC2772 /* WTRSocialShareView.m */; settings = {ASSET_TAGS = (); }; };
-		B23DEF7B1BBBE9CA002A7FFD /* WTRUserCustomMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = B23DEF791BBBE9CA002A7FFD /* WTRUserCustomMessages.h */; settings = {ASSET_TAGS = (); }; };
-		B23DEF7C1BBBE9CA002A7FFD /* WTRUserCustomMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = B23DEF7A1BBBE9CA002A7FFD /* WTRUserCustomMessages.m */; settings = {ASSET_TAGS = (); }; };
+		B2102A2D1BB59ABC0025DABC /* WTRDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */; };
+		B2102A2E1BB59ABC0025DABC /* WTRDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A2C1BB59ABC0025DABC /* WTRDefaults.m */; };
+		B2102A331BB59ACE0025DABC /* WTRCustomMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2F1BB59ACE0025DABC /* WTRCustomMessages.h */; };
+		B2102A341BB59ACE0025DABC /* WTRCustomMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A301BB59ACE0025DABC /* WTRCustomMessages.m */; };
+		B2102A351BB59ACE0025DABC /* WTRLocalizedTexts.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A311BB59ACE0025DABC /* WTRLocalizedTexts.h */; };
+		B2102A361BB59ACE0025DABC /* WTRLocalizedTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A321BB59ACE0025DABC /* WTRLocalizedTexts.m */; };
+		B2102A3B1BB59AE60025DABC /* WTRSurvey.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A371BB59AE60025DABC /* WTRSurvey.h */; };
+		B2102A3C1BB59AE60025DABC /* WTRSurvey.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A381BB59AE60025DABC /* WTRSurvey.m */; };
+		B2102A3D1BB59AE60025DABC /* WTRTrackingPixel.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A391BB59AE60025DABC /* WTRTrackingPixel.h */; };
+		B2102A3E1BB59AE60025DABC /* WTRTrackingPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A3A1BB59AE60025DABC /* WTRTrackingPixel.m */; };
+		B229766D1BB0036100FC2772 /* WTRPropertiesParser.h in Headers */ = {isa = PBXBuildFile; fileRef = B229766B1BB0036100FC2772 /* WTRPropertiesParser.h */; };
+		B229766E1BB0036100FC2772 /* WTRPropertiesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B229766C1BB0036100FC2772 /* WTRPropertiesParser.m */; };
+		B22976751BB1404D00FC2772 /* WTRCustomThankYou.h in Headers */ = {isa = PBXBuildFile; fileRef = B22976731BB1404D00FC2772 /* WTRCustomThankYou.h */; };
+		B22976761BB1404D00FC2772 /* WTRCustomThankYou.m in Sources */ = {isa = PBXBuildFile; fileRef = B22976741BB1404D00FC2772 /* WTRCustomThankYou.m */; };
+		B229767D1BB1901500FC2772 /* WTRThankYouButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B229767B1BB1901500FC2772 /* WTRThankYouButton.h */; };
+		B229767E1BB1901500FC2772 /* WTRThankYouButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B229767C1BB1901500FC2772 /* WTRThankYouButton.m */; };
+		B22976811BB2A2C300FC2772 /* WTRSocialShareView.h in Headers */ = {isa = PBXBuildFile; fileRef = B229767F1BB2A2C300FC2772 /* WTRSocialShareView.h */; };
+		B22976821BB2A2C300FC2772 /* WTRSocialShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = B22976801BB2A2C300FC2772 /* WTRSocialShareView.m */; };
+		B23DEF7B1BBBE9CA002A7FFD /* WTRUserCustomMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = B23DEF791BBBE9CA002A7FFD /* WTRUserCustomMessages.h */; };
+		B23DEF7C1BBBE9CA002A7FFD /* WTRUserCustomMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = B23DEF7A1BBBE9CA002A7FFD /* WTRUserCustomMessages.m */; };
 		B24550911B8E0188001AC1FB /* WTRColor.h in Headers */ = {isa = PBXBuildFile; fileRef = B245508F1B8E0188001AC1FB /* WTRColor.h */; };
 		B24550921B8E0188001AC1FB /* WTRColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B24550901B8E0188001AC1FB /* WTRColor.m */; };
 		B245509D1B909A03001AC1FB /* WTRSurveyViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B245509B1B909A03001AC1FB /* WTRSurveyViewController.h */; };
@@ -37,24 +37,29 @@
 		B24550A61B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m in Sources */ = {isa = PBXBuildFile; fileRef = B24550A41B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m */; };
 		B25CE75F1BAADC920063E6E5 /* WTRNPSQuestionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B25CE75D1BAADC920063E6E5 /* WTRNPSQuestionView.h */; };
 		B25CE7601BAADC920063E6E5 /* WTRNPSQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B25CE75E1BAADC920063E6E5 /* WTRNPSQuestionView.m */; };
-		B268666E1BD5339800A4288D /* WTRiPADSurveyViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B268666C1BD5339800A4288D /* WTRiPADSurveyViewController.h */; settings = {ASSET_TAGS = (); }; };
-		B268666F1BD5339800A4288D /* WTRiPADSurveyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B268666D1BD5339800A4288D /* WTRiPADSurveyViewController.m */; settings = {ASSET_TAGS = (); }; };
-		B26866721BD5443000A4288D /* WTRiPADSurveyViewController+Views.h in Headers */ = {isa = PBXBuildFile; fileRef = B26866701BD5443000A4288D /* WTRiPADSurveyViewController+Views.h */; settings = {ASSET_TAGS = (); }; };
-		B26866731BD5443000A4288D /* WTRiPADSurveyViewController+Views.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866711BD5443000A4288D /* WTRiPADSurveyViewController+Views.m */; settings = {ASSET_TAGS = (); }; };
-		B26866761BD5444F00A4288D /* WTRiPADSurveyViewController+Constraints.h in Headers */ = {isa = PBXBuildFile; fileRef = B26866741BD5444F00A4288D /* WTRiPADSurveyViewController+Constraints.h */; settings = {ASSET_TAGS = (); }; };
-		B26866771BD5444F00A4288D /* WTRiPADSurveyViewController+Constraints.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866751BD5444F00A4288D /* WTRiPADSurveyViewController+Constraints.m */; settings = {ASSET_TAGS = (); }; };
-		B268667E1BD63B7000A4288D /* WTRCircleScoreButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B268667C1BD63B7000A4288D /* WTRCircleScoreButton.h */; settings = {ASSET_TAGS = (); }; };
-		B268667F1BD63B7000A4288D /* WTRCircleScoreButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B268667D1BD63B7000A4288D /* WTRCircleScoreButton.m */; settings = {ASSET_TAGS = (); }; };
-		B26866821BD63ED100A4288D /* WTRCircleScoreView.h in Headers */ = {isa = PBXBuildFile; fileRef = B26866801BD63ED100A4288D /* WTRCircleScoreView.h */; settings = {ASSET_TAGS = (); }; };
-		B26866831BD63ED100A4288D /* WTRCircleScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866811BD63ED100A4288D /* WTRCircleScoreView.m */; settings = {ASSET_TAGS = (); }; };
-		B26866861BD63F8B00A4288D /* WTRiPADModalView.h in Headers */ = {isa = PBXBuildFile; fileRef = B26866841BD63F8B00A4288D /* WTRiPADModalView.h */; settings = {ASSET_TAGS = (); }; };
-		B26866871BD63F8B00A4288D /* WTRiPADModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866851BD63F8B00A4288D /* WTRiPADModalView.m */; settings = {ASSET_TAGS = (); }; };
-		B268668A1BD671D200A4288D /* WTRiPADNPSQuestionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B26866881BD671D200A4288D /* WTRiPADNPSQuestionView.h */; settings = {ASSET_TAGS = (); }; };
-		B268668B1BD671D200A4288D /* WTRiPADNPSQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866891BD671D200A4288D /* WTRiPADNPSQuestionView.m */; settings = {ASSET_TAGS = (); }; };
-		B29A2E881BAC0B50007181D3 /* WTRFeedbackView.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */; settings = {ASSET_TAGS = (); }; };
-		B29A2E891BAC0B50007181D3 /* WTRFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */; settings = {ASSET_TAGS = (); }; };
-		B29D63CA1BC3CEEB00F0C98C /* WTRSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */; settings = {ASSET_TAGS = (); }; };
-		B2A4810D1BBE781E00BC9E13 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2A4810C1BBE781E00BC9E13 /* Images.xcassets */; settings = {ASSET_TAGS = (); }; };
+		B260ECDD1BD7E5B200E29CD5 /* UIView+Constraints.h in Headers */ = {isa = PBXBuildFile; fileRef = B260ECDB1BD7E5B200E29CD5 /* UIView+Constraints.h */; };
+		B260ECDE1BD7E5B200E29CD5 /* UIView+Constraints.m in Sources */ = {isa = PBXBuildFile; fileRef = B260ECDC1BD7E5B200E29CD5 /* UIView+Constraints.m */; };
+		B260ECE11BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.h in Headers */ = {isa = PBXBuildFile; fileRef = B260ECDF1BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.h */; };
+		B260ECE21BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.m in Sources */ = {isa = PBXBuildFile; fileRef = B260ECE01BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.m */; };
+		B268666E1BD5339800A4288D /* WTRiPADSurveyViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B268666C1BD5339800A4288D /* WTRiPADSurveyViewController.h */; };
+		B268666F1BD5339800A4288D /* WTRiPADSurveyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B268666D1BD5339800A4288D /* WTRiPADSurveyViewController.m */; };
+		B26866721BD5443000A4288D /* WTRiPADSurveyViewController+Views.h in Headers */ = {isa = PBXBuildFile; fileRef = B26866701BD5443000A4288D /* WTRiPADSurveyViewController+Views.h */; };
+		B26866731BD5443000A4288D /* WTRiPADSurveyViewController+Views.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866711BD5443000A4288D /* WTRiPADSurveyViewController+Views.m */; };
+		B26866761BD5444F00A4288D /* WTRiPADSurveyViewController+Constraints.h in Headers */ = {isa = PBXBuildFile; fileRef = B26866741BD5444F00A4288D /* WTRiPADSurveyViewController+Constraints.h */; };
+		B26866771BD5444F00A4288D /* WTRiPADSurveyViewController+Constraints.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866751BD5444F00A4288D /* WTRiPADSurveyViewController+Constraints.m */; };
+		B268667E1BD63B7000A4288D /* WTRCircleScoreButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B268667C1BD63B7000A4288D /* WTRCircleScoreButton.h */; };
+		B268667F1BD63B7000A4288D /* WTRCircleScoreButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B268667D1BD63B7000A4288D /* WTRCircleScoreButton.m */; };
+		B26866821BD63ED100A4288D /* WTRCircleScoreView.h in Headers */ = {isa = PBXBuildFile; fileRef = B26866801BD63ED100A4288D /* WTRCircleScoreView.h */; };
+		B26866831BD63ED100A4288D /* WTRCircleScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866811BD63ED100A4288D /* WTRCircleScoreView.m */; };
+		B26866861BD63F8B00A4288D /* WTRiPADModalView.h in Headers */ = {isa = PBXBuildFile; fileRef = B26866841BD63F8B00A4288D /* WTRiPADModalView.h */; };
+		B26866871BD63F8B00A4288D /* WTRiPADModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866851BD63F8B00A4288D /* WTRiPADModalView.m */; };
+		B268668A1BD671D200A4288D /* WTRiPADNPSQuestionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B26866881BD671D200A4288D /* WTRiPADNPSQuestionView.h */; };
+		B268668B1BD671D200A4288D /* WTRiPADNPSQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866891BD671D200A4288D /* WTRiPADNPSQuestionView.m */; };
+		B278896D1BD914F2001D5696 /* SimpleConstraints.h in Headers */ = {isa = PBXBuildFile; fileRef = B278896C1BD914F2001D5696 /* SimpleConstraints.h */; };
+		B29A2E881BAC0B50007181D3 /* WTRFeedbackView.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */; };
+		B29A2E891BAC0B50007181D3 /* WTRFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */; };
+		B29D63CA1BC3CEEB00F0C98C /* WTRSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */; };
+		B2A4810D1BBE781E00BC9E13 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2A4810C1BBE781E00BC9E13 /* Images.xcassets */; };
 		B2BED80C1BA8610900DD1EFC /* WTRSingleScoreLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = B2BED80A1BA8610900DD1EFC /* WTRSingleScoreLabel.h */; };
 		B2BED80D1BA8610900DD1EFC /* WTRSingleScoreLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B2BED80B1BA8610900DD1EFC /* WTRSingleScoreLabel.m */; };
 		B2C9405B1BA0723300482494 /* WTRModalView.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C940591BA0723300482494 /* WTRModalView.h */; };
@@ -119,6 +124,10 @@
 		B24550A41B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WTRSurveyViewController+Constraints.m"; sourceTree = "<group>"; };
 		B25CE75D1BAADC920063E6E5 /* WTRNPSQuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRNPSQuestionView.h; sourceTree = "<group>"; };
 		B25CE75E1BAADC920063E6E5 /* WTRNPSQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRNPSQuestionView.m; sourceTree = "<group>"; };
+		B260ECDB1BD7E5B200E29CD5 /* UIView+Constraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Constraints.h"; path = "WootricSDK/UIView+Constraints.h"; sourceTree = "<group>"; };
+		B260ECDC1BD7E5B200E29CD5 /* UIView+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Constraints.m"; path = "WootricSDK/UIView+Constraints.m"; sourceTree = "<group>"; };
+		B260ECDF1BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+Simple.h"; path = "WootricSDK/NSLayoutConstraint+Simple.h"; sourceTree = "<group>"; };
+		B260ECE01BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+Simple.m"; path = "WootricSDK/NSLayoutConstraint+Simple.m"; sourceTree = "<group>"; };
 		B268666C1BD5339800A4288D /* WTRiPADSurveyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRiPADSurveyViewController.h; sourceTree = "<group>"; };
 		B268666D1BD5339800A4288D /* WTRiPADSurveyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRiPADSurveyViewController.m; sourceTree = "<group>"; };
 		B26866701BD5443000A4288D /* WTRiPADSurveyViewController+Views.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WTRiPADSurveyViewController+Views.h"; sourceTree = "<group>"; };
@@ -133,6 +142,7 @@
 		B26866851BD63F8B00A4288D /* WTRiPADModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRiPADModalView.m; sourceTree = "<group>"; };
 		B26866881BD671D200A4288D /* WTRiPADNPSQuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRiPADNPSQuestionView.h; sourceTree = "<group>"; };
 		B26866891BD671D200A4288D /* WTRiPADNPSQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRiPADNPSQuestionView.m; sourceTree = "<group>"; };
+		B278896C1BD914F2001D5696 /* SimpleConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleConstraints.h; path = WootricSDK/SimpleConstraints.h; sourceTree = "<group>"; };
 		B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRFeedbackView.h; sourceTree = "<group>"; };
 		B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRFeedbackView.m; sourceTree = "<group>"; };
 		B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSettingsTests.m; sourceTree = "<group>"; };
@@ -182,6 +192,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B260ECE31BD8D7F200E29CD5 /* SimpleConstraints */ = {
+			isa = PBXGroup;
+			children = (
+				B260ECDB1BD7E5B200E29CD5 /* UIView+Constraints.h */,
+				B260ECDC1BD7E5B200E29CD5 /* UIView+Constraints.m */,
+				B260ECDF1BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.h */,
+				B260ECE01BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.m */,
+				B278896C1BD914F2001D5696 /* SimpleConstraints.h */,
+			);
+			name = SimpleConstraints;
+			sourceTree = "<group>";
+		};
 		B26866781BD5471A00A4288D /* iPhone */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,6 +322,7 @@
 		B2DC6EF81B81E6F900F599B3 = {
 			isa = PBXGroup;
 			children = (
+				B260ECE31BD8D7F200E29CD5 /* SimpleConstraints */,
 				B2DC6F041B81E6F900F599B3 /* WootricSDK */,
 				B2DC6F111B81E6F900F599B3 /* WootricSDKTests */,
 				B2DC6F031B81E6F900F599B3 /* Products */,
@@ -388,11 +411,13 @@
 				B229767D1BB1901500FC2772 /* WTRThankYouButton.h in Headers */,
 				B22976811BB2A2C300FC2772 /* WTRSocialShareView.h in Headers */,
 				B26866761BD5444F00A4288D /* WTRiPADSurveyViewController+Constraints.h in Headers */,
+				B260ECDD1BD7E5B200E29CD5 /* UIView+Constraints.h in Headers */,
 				B268667E1BD63B7000A4288D /* WTRCircleScoreButton.h in Headers */,
 				B24550A51B909AC9001AC1FB /* WTRSurveyViewController+Constraints.h in Headers */,
 				B26866861BD63F8B00A4288D /* WTRiPADModalView.h in Headers */,
 				B2102A331BB59ACE0025DABC /* WTRCustomMessages.h in Headers */,
 				B2102A3B1BB59AE60025DABC /* WTRSurvey.h in Headers */,
+				B260ECE11BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.h in Headers */,
 				B22976751BB1404D00FC2772 /* WTRCustomThankYou.h in Headers */,
 				B24550911B8E0188001AC1FB /* WTRColor.h in Headers */,
 				B229766D1BB0036100FC2772 /* WTRPropertiesParser.h in Headers */,
@@ -412,6 +437,7 @@
 				B29A2E881BAC0B50007181D3 /* WTRFeedbackView.h in Headers */,
 				B2DC6F331B820E6B00F599B3 /* WTRApiClient.h in Headers */,
 				B2C940601BA300A000482494 /* WTRSlider.h in Headers */,
+				B278896D1BD914F2001D5696 /* SimpleConstraints.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +544,7 @@
 				B2102A341BB59ACE0025DABC /* WTRCustomMessages.m in Sources */,
 				B22976761BB1404D00FC2772 /* WTRCustomThankYou.m in Sources */,
 				B229766E1BB0036100FC2772 /* WTRPropertiesParser.m in Sources */,
+				B260ECDE1BD7E5B200E29CD5 /* UIView+Constraints.m in Sources */,
 				B268666F1BD5339800A4288D /* WTRiPADSurveyViewController.m in Sources */,
 				B2C940651BA30AFB00482494 /* UIImage+ImageFromColor.m in Sources */,
 				B2C9405C1BA0723300482494 /* WTRModalView.m in Sources */,
@@ -542,6 +569,7 @@
 				B2102A2E1BB59ABC0025DABC /* WTRDefaults.m in Sources */,
 				B2DC6F381B82143B00F599B3 /* WTRSettings.m in Sources */,
 				B2102A3E1BB59AE60025DABC /* WTRTrackingPixel.m in Sources */,
+				B260ECE21BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.m in Sources */,
 				B229767E1BB1901500FC2772 /* WTRThankYouButton.m in Sources */,
 				B2102A3C1BB59AE60025DABC /* WTRSurvey.m in Sources */,
 			);

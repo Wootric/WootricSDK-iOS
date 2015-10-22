@@ -1,5 +1,5 @@
 //
-//  WTRiPADSurveyViewController.h
+//  NSLayoutConstraint+Simple.h
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -23,21 +23,17 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "WTRSettings.h"
-#import "WTRiPADModalView.h"
-#import "WTRiPADNPSQuestionView.h"
 
-@interface WTRiPADSurveyViewController : UIViewController
+@interface NSLayoutConstraint (Simple)
 
-@property (nonatomic, strong) WTRSettings *settings;
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIButton *poweredByWootric;
-@property (nonatomic, strong) UIButton *dismissButton;
-@property (nonatomic, strong) WTRiPADModalView *modalView;
-@property (nonatomic, strong) WTRiPADNPSQuestionView *npsQuestionView;
-@property (nonatomic, strong) NSLayoutConstraint *constraintTopToModalTop;
-@property (nonatomic, strong) NSLayoutConstraint *constraintModalHeight;
-
-- (instancetype)initWithSurveySettings:(WTRSettings *)settings;
+- (NSLayoutConstraint *)withConstant:(CGFloat)constant;
+- (NSLayoutConstraint *)toSecondViewTop:(UIView *)secondView;
+- (NSLayoutConstraint *)toSecondViewBottom:(UIView *)secondView;
+- (NSLayoutConstraint *)toSecondViewLeft:(UIView *)secondView;
+- (NSLayoutConstraint *)toSecondViewRight:(UIView *)secondView;
+- (NSLayoutConstraint *)toSecondViewCenterX:(UIView *)secondView;
+- (NSLayoutConstraint *)toSecondViewCenterY:(UIView *)secondView;
+- (void)addToView:(UIView *)view;
+- (void)addConstraint;
 
 @end

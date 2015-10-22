@@ -23,6 +23,7 @@
 // THE SOFTWARE.
 
 #import "WTRiPADSurveyViewController+Constraints.h"
+#import "SimpleConstraints.h"
 
 @implementation WTRiPADSurveyViewController (Constraints)
 
@@ -32,111 +33,32 @@
   [self setupNpsQuestionViewConstraints];
   [self.npsQuestionView setupSubviewsConstraints];
   [self setupPoweredByWootricConstraints];
+  [self setupDismissButtonConstraints];
 }
 
 - (void)setupPoweredByWootricConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.poweredByWootric
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.modalView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self.modalView addConstraint:constX];
-
-  NSLayoutConstraint *constBottom = [NSLayoutConstraint constraintWithItem:self.poweredByWootric
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.modalView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1
-                                                                  constant:-14];
-  [self.modalView addConstraint:constBottom];
-
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.poweredByWootric
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:12];
-  [self.poweredByWootric addConstraint:constH];
+  [self.poweredByWootric constraintHeight:12];
+  [[[self.poweredByWootric centerX] toSecondViewCenterX:self.modalView] addToView:self.modalView];
+  [[[[self.poweredByWootric bottom] toSecondViewBottom:self.modalView] withConstant:-14] addToView:self.modalView];
 }
 
 - (void)setupScrollViewConstraints {
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.scrollView
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeWidth
-                                                           multiplier:1
-                                                             constant:0];
-  [self.view addConstraint:constW];
-
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.scrollView
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeHeight
-                                                           multiplier:1
-                                                             constant:0];
-  [self.view addConstraint:constH];
-
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.scrollView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self.view addConstraint:constX];
-
-  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.scrollView
-                                                            attribute:NSLayoutAttributeCenterY
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeCenterY
-                                                           multiplier:1
-                                                             constant:0];
-  [self.view addConstraint:constY];
+  [self.scrollView constraintWidthEqualSecondViewWidth:self.view];
+  [self.scrollView constraintHeightEqualSecondViewHeight:self.view];
+  [[[self.scrollView centerX] toSecondViewCenterX:self.view] addConstraint];
+  [[[self.scrollView centerY] toSecondViewCenterY:self.view] addConstraint];
 }
 
 - (void)setupModalConstraints {
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.modalView
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeWidth
-                                                           multiplier:1
-                                                             constant:0];
-  [self.view addConstraint:constW];
-
   self.constraintModalHeight = [NSLayoutConstraint constraintWithItem:self.modalView
                                                             attribute:NSLayoutAttributeHeight
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
-                                                             constant:150];
+                                                             constant:165];
+
   [self.modalView addConstraint:self.constraintModalHeight];
-
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.modalView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self.view addConstraint:constX];
-
-  NSLayoutConstraint *constB = [NSLayoutConstraint constraintWithItem:self.modalView
-                                                            attribute:NSLayoutAttributeBottom
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.scrollView
-                                                            attribute:NSLayoutAttributeBottom
-                                                           multiplier:1
-                                                             constant:0];
-  [self.scrollView addConstraint:constB];
 
   self.constraintTopToModalTop = [NSLayoutConstraint constraintWithItem:self.modalView
                                                               attribute:NSLayoutAttributeTop
@@ -148,61 +70,25 @@
 
   [self.scrollView addConstraint:self.constraintTopToModalTop];
 
-  NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:self.modalView
-                                                            attribute:NSLayoutAttributeLeft
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.scrollView
-                                                            attribute:NSLayoutAttributeLeft
-                                                           multiplier:1
-                                                             constant:0];
-  [self.scrollView addConstraint:constL];
-
-  NSLayoutConstraint *constR = [NSLayoutConstraint constraintWithItem:self.modalView
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.scrollView
-                                                            attribute:NSLayoutAttributeRight
-                                                           multiplier:1
-                                                             constant:0];
-  [self.scrollView addConstraint:constR];
+  [self.modalView constraintWidthEqualSecondViewWidth:self.view];
+  [[[self.modalView centerX] toSecondViewCenterX:self.view] addToView:self.view];
+  [[[self.modalView bottom] toSecondViewBottom:self.scrollView] addToView:self.scrollView];
+  [[[self.modalView left] toSecondViewLeft:self.scrollView] addToView:self.scrollView];
+  [[[self.modalView right] toSecondViewRight:self.scrollView] addToView:self.scrollView];
 }
 
 - (void)setupNpsQuestionViewConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.npsQuestionView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.modalView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self.modalView addConstraint:constX];
+  [self.npsQuestionView constraintWidthEqualSecondViewWidth:self.view];
+  [self.npsQuestionView constraintHeight:100];
+  [[[self.npsQuestionView centerX] toSecondViewCenterX:self.modalView] addToView:self.modalView];
+  [[[self.npsQuestionView top] toSecondViewTop:self.modalView] addToView:self.modalView];
+}
 
-  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.npsQuestionView
-                                                            attribute:NSLayoutAttributeTop
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.modalView
-                                                            attribute:NSLayoutAttributeTop
-                                                           multiplier:1
-                                                             constant:0];
-  [self.modalView addConstraint:constY];
-
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.npsQuestionView
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeWidth
-                                                           multiplier:1
-                                                             constant:0];
-  [self.view addConstraint:constW];
-
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.npsQuestionView
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:100];
-  [self.npsQuestionView addConstraint:constH];
+- (void)setupDismissButtonConstraints {
+  [self.dismissButton constraintHeight:30];
+  [self.dismissButton constraintWidth:30];
+  [[[[self.dismissButton top] toSecondViewTop:self.modalView] withConstant:8] addToView:self.view];
+  [[[[self.dismissButton right] toSecondViewRight:self.modalView] withConstant:-8] addToView:self.view];
 }
 
 @end
