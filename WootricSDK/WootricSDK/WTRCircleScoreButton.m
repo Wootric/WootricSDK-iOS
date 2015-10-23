@@ -24,6 +24,7 @@
 
 #import "WTRCircleScoreButton.h"
 #import "WTRColor.h"
+#import "SimpleConstraints.h"
 
 @implementation WTRCircleScoreButton
 
@@ -43,23 +44,8 @@
 }
 
 - (void)setupConstraints {
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:42];
-  [self addConstraint:constH];
-
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:42];
-  [self addConstraint:constW];
+  [self constraintHeight:42];
+  [self constraintWidth:42];
 }
 
 - (void)addConstraintsWithSuperview:(UIView *)superView andLeftConstraintConstant:(CGFloat)leftConstant {
@@ -74,12 +60,12 @@
   [superView addConstraint:constY];
 
   NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:self
-                                                     attribute:NSLayoutAttributeLeft
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:superView
-                                                     attribute:NSLayoutAttributeLeft
-                                                    multiplier:1
-                                                      constant:leftConstant];
+                                                                    attribute:NSLayoutAttributeLeft
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:superView
+                                                                    attribute:NSLayoutAttributeLeft
+                                                                   multiplier:1
+                                                                     constant:leftConstant];
 
   [superView addConstraint:leftConstraint];
 }

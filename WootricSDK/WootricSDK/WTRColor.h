@@ -57,5 +57,7 @@
 + (UIColor *)iPadCircleButtonSelectedBackgroundColor;
 + (UIColor *)iPadCircleButtonSelectedBorderColor;
 + (UIColor *)iPadPoweredByWootricTextColor;
++ (UIColor *)iPadQuestionsTextColor;
++ (UIColor *)iPadFeedbackTextViewBackgroundColor;
 
 @end

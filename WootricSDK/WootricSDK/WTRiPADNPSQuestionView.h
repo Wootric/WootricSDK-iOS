@@ -33,5 +33,6 @@
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
 - (void)setupSubviewsConstraints;
 - (void)selectCircleButton:(WTRCircleScoreButton *)button;
+- (void)hideQuestionLabel;
 
 @end

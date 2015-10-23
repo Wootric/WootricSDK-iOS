@@ -32,6 +32,8 @@
   [self setupModalConstraints];
   [self setupNpsQuestionViewConstraints];
   [self.npsQuestionView setupSubviewsConstraints];
+  [self setupFeedbackViewConstraints];
+  [self.feedbackView setupSubviewsConstraints];
   [self setupPoweredByWootricConstraints];
   [self setupDismissButtonConstraints];
 }
@@ -79,9 +81,48 @@
 
 - (void)setupNpsQuestionViewConstraints {
   [self.npsQuestionView constraintWidthEqualSecondViewWidth:self.view];
-  [self.npsQuestionView constraintHeight:100];
+  [self.npsQuestionView constraintHeight:110];
   [[[self.npsQuestionView centerX] toSecondViewCenterX:self.modalView] addToView:self.modalView];
-  [[[self.npsQuestionView top] toSecondViewTop:self.modalView] addToView:self.modalView];
+  self.constraintNPSTopToModalTop = [[self.npsQuestionView top] toSecondViewTop:self.modalView];
+  [self.constraintNPSTopToModalTop addToView:self.modalView];
+}
+
+- (void)setupFeedbackViewConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.feedbackView
+                                                            attribute:NSLayoutAttributeCenterX
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.modalView
+                                                            attribute:NSLayoutAttributeCenterX
+                                                           multiplier:1
+                                                             constant:0];
+  [self.modalView addConstraint:constX];
+
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.feedbackView
+                                                            attribute:NSLayoutAttributeTop
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.modalView
+                                                            attribute:NSLayoutAttributeTop
+                                                           multiplier:1
+                                                             constant:0];
+  [self.modalView addConstraint:constY];
+
+  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.feedbackView
+                                                            attribute:NSLayoutAttributeWidth
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view
+                                                            attribute:NSLayoutAttributeWidth
+                                                           multiplier:1
+                                                             constant:-80];
+  [self.view addConstraint:constW];
+
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.feedbackView
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:100];
+  [self.feedbackView addConstraint:constH];
 }
 
 - (void)setupDismissButtonConstraints {

@@ -142,6 +142,14 @@
   return [self colorWithHexString:@"#82BED3"];
 }
 
++ (UIColor *)iPadQuestionsTextColor {
+  return [self colorWithHexString:@"#7DA52D"];
+}
+
++ (UIColor *)iPadFeedbackTextViewBackgroundColor {
+  return [self colorWithHexString:@"#FAFAFA"];
+}
+
 + (UIColor *)colorWithHexString:(NSString *)hexString {
   NSString *noHashString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
   NSScanner *scanner = [NSScanner scannerWithString:noHashString];

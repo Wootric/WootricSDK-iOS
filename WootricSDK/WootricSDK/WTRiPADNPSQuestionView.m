@@ -25,6 +25,7 @@
 #import "WTRiPADNPSQuestionView.h"
 #import "WTRCircleScoreView.h"
 #import "WTRColor.h"
+#import "SimpleConstraints.h"
 
 @interface WTRiPADNPSQuestionView ()
 
@@ -42,8 +43,6 @@
 - (instancetype)initWithSettings:(WTRSettings *)settings {
   if (self = [super init]) {
     self.backgroundColor = [UIColor whiteColor];
-//    self.layer.borderWidth = 1;
-//    self.layer.borderColor = [WTRColor sliderModalBorderColor].CGColor;
     _settings = settings;
     _firstTap = YES;
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -73,97 +72,33 @@
   [self addSubview:_notLikelyAnchor];
 }
 
+- (void)hideQuestionLabel {
+  _npsQuestionLabel.hidden = YES;
+}
+
 - (void)selectCircleButton:(WTRCircleScoreButton *)button {
   [_scoreView selectCircleButton:button];
 }
 
 - (void)setupLikelyAnchorConstraints {
-  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:_likelyAnchor
-                                                            attribute:NSLayoutAttributeCenterY
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:_scoreView
-                                                            attribute:NSLayoutAttributeCenterY
-                                                           multiplier:1
-                                                             constant:0];
-  [self addConstraint:constY];
-
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:_likelyAnchor
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:_scoreView
-                                                            attribute:NSLayoutAttributeLeft
-                                                           multiplier:1
-                                                             constant:-10];
-  [self addConstraint:constX];
+  [[[_likelyAnchor centerY] toSecondViewCenterY:_scoreView] addToView:self];
+  [[[[_likelyAnchor left] toSecondViewRight:_scoreView] withConstant:10] addToView:self];
 }
 
 - (void)setupNotLikelyAnchorConstraints {
-  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:_notLikelyAnchor
-                                                            attribute:NSLayoutAttributeCenterY
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:_scoreView
-                                                            attribute:NSLayoutAttributeCenterY
-                                                           multiplier:1
-                                                             constant:0];
-  [self addConstraint:constY];
-
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:_scoreView
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:_notLikelyAnchor
-                                                            attribute:NSLayoutAttributeLeft
-                                                           multiplier:1
-                                                             constant:-10];
-  [self addConstraint:constX];
+  [[[_notLikelyAnchor centerY] toSecondViewCenterY:_scoreView] addToView:self];
+  [[[[_notLikelyAnchor right] toSecondViewLeft:_scoreView] withConstant:-10] addToView:self];
 }
 
 - (void)setupNpsQuestionLabelConstraints {
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_npsQuestionLabel
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self
-                                                              attribute:NSLayoutAttributeTop
-                                                             multiplier:1
-                                                               constant:20];
-  [self addConstraint:constTop];
-
-  NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:_npsQuestionLabel
-                                                               attribute:NSLayoutAttributeLeft
-                                                               relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self
-                                                               attribute:NSLayoutAttributeLeft
-                                                              multiplier:1
-                                                                constant:45];
-  [self addConstraint:constLeft];
-
-  NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:self
-                                                                attribute:NSLayoutAttributeRight
-                                                                relatedBy:NSLayoutRelationEqual
-                                                                   toItem:_npsQuestionLabel
-                                                                attribute:NSLayoutAttributeRight
-                                                               multiplier:1
-                                                                 constant:45];
-  [self addConstraint:constRight];
+  [[[[_npsQuestionLabel top] toSecondViewTop:self] withConstant:20] addToView:self];
+  [[[[_npsQuestionLabel left] toSecondViewLeft:self] withConstant:45] addToView:self];
+  [[[[self right] toSecondViewRight:_npsQuestionLabel] withConstant:45] addToView:self];
 }
 
 - (void)setupScoreViewConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:_scoreView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self addConstraint:constX];
-
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_scoreView
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:_npsQuestionLabel
-                                                              attribute:NSLayoutAttributeBottom
-                                                             multiplier:1
-                                                               constant:20];
-  [self addConstraint:constTop];
+  [[[_scoreView centerX] toSecondViewCenterX:self] addToView:self];
+  [[[[_scoreView top] toSecondViewBottom:_npsQuestionLabel] withConstant:20] addToView:self];
 }
 
 - (void)setupCircleScoreViewWithViewController:(UIViewController *)viewController {

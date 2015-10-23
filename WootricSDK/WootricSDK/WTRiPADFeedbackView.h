@@ -1,5 +1,5 @@
 //
-//  WTRiPADSurveyViewController.h
+//  WTRiPADFeedbackView.h
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -19,28 +19,22 @@
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+// OUT OF OR IN CONNE
 
 #import <UIKit/UIKit.h>
 #import "WTRSettings.h"
-#import "WTRiPADModalView.h"
-#import "WTRiPADNPSQuestionView.h"
-#import "WTRiPADFeedbackView.h"
 
-@interface WTRiPADSurveyViewController : UIViewController <UITextViewDelegate>
+@interface WTRiPADFeedbackView : UIView
 
-@property (nonatomic, strong) WTRSettings *settings;
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIButton *poweredByWootric;
-@property (nonatomic, strong) UIButton *dismissButton;
-@property (nonatomic, strong) WTRiPADModalView *modalView;
-@property (nonatomic, strong) WTRiPADNPSQuestionView *npsQuestionView;
-@property (nonatomic, strong) WTRiPADFeedbackView *feedbackView;
-@property (nonatomic, strong) NSLayoutConstraint *constraintTopToModalTop;
-@property (nonatomic, strong) NSLayoutConstraint *constraintNPSTopToModalTop;
-@property (nonatomic, strong) NSLayoutConstraint *constraintModalHeight;
-
-- (instancetype)initWithSurveySettings:(WTRSettings *)settings;
+- (instancetype)initWithSettings:(WTRSettings *)settings;
+- (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
+- (void)setupSubviewsConstraints;
+- (void)setFollowupLabelTextBasedOnScore:(int)score;
+- (void)textViewResignFirstResponder;
+- (void)showFeedbackPlaceholder:(BOOL)flag;
+- (void)setFeedbackPlaceholderText:(NSString *)text;
+- (NSString *)feedbackText;
+- (BOOL)feedbackTextPresent;
+- (BOOL)isActive;
 
 @end

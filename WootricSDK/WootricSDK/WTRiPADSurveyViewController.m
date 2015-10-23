@@ -27,8 +27,12 @@
 #import "WTRiPADSurveyViewController+Views.h"
 #import "WTRCircleScoreButton.h"
 #import "WTRColor.h"
+#import "WTRSurvey.h"
 
 @interface WTRiPADSurveyViewController ()
+
+@property (nonatomic, assign) BOOL scrolled;
+@property (nonatomic, assign) BOOL alreadyVoted;
 
 @end
 
@@ -46,6 +50,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [self registerForKeyboardNotification];
   [self setupViews];
   [self setupConstraints];
 }
@@ -66,7 +71,36 @@
 }
 
 - (void)selectScore:(WTRCircleScoreButton *)sender {
+  NSString *placeholderText = [_settings followupPlaceholderTextForScore:sender.assignedScore];
   [_npsQuestionView selectCircleButton:sender];
+  [self endUserVotedWithScore:sender.assignedScore andText:nil];
+  [_feedbackView setFollowupLabelTextBasedOnScore:sender.assignedScore];
+  [_feedbackView setFeedbackPlaceholderText:placeholderText];
+  if (_feedbackView.hidden) {
+    [self showFeedbackView];
+  }
+}
+
+- (void)showFeedbackView {
+  [_npsQuestionView hideQuestionLabel];
+  _feedbackView.hidden = NO;
+  _constraintModalHeight.constant = 215;
+  _constraintNPSTopToModalTop.constant = 50;
+  _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
+  [UIView animateWithDuration:0.2 animations:^{
+    [self.view layoutIfNeeded];
+  } completion:^(BOOL finished) {
+    [UIView animateWithDuration:0.2 animations:^{
+      _feedbackView.alpha = 1;
+    }];
+  }];
+}
+
+- (void)endUserVotedWithScore:(int)score andText:(NSString *)text {
+  WTRSurvey *survey = [[WTRSurvey alloc] init];
+  [survey endUserVotedWithScore:score andText:text];
+  _alreadyVoted = YES;
+  NSLog(@"WootricSDK: Vote");
 }
 
 - (void)openWootricHomepage:(UIButton *)sender {
@@ -74,6 +108,82 @@
   if (![[UIApplication sharedApplication] openURL:url]) {
     NSLog(@"Failed to open wootric page");
   }
+}
+
+- (void)dismissButtonPressed {
+  if (!_alreadyVoted) {
+    WTRSurvey *survey = [[WTRSurvey alloc] init];
+    [survey endUserDeclined];
+  }
+  [self dismissViewControllerWithBackgroundFade];
+}
+
+- (void)dismissViewControllerWithBackgroundFade {
+  [UIView animateWithDuration:0.2 animations:^{
+    self.view.backgroundColor = [UIColor clearColor];
+  } completion:^(BOOL finished) {
+    [self dismissViewControllerAnimated:YES completion:nil];
+  }];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+  [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
+  CGFloat modalPosition = self.view.bounds.size.width - _modalView.frame.size.height;
+  _constraintTopToModalTop.constant = modalPosition;
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+  [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+
+  [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
+}
+
+- (void)registerForKeyboardNotification {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:NSSelectorFromString(@"keyboardWillShow:")
+                                               name:UIKeyboardWillShowNotification
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:NSSelectorFromString(@"keyboardWillHide:")
+                                               name:UIKeyboardWillHideNotification
+                                             object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+  [self adjustInsetForKeyboardShow:YES notification:notification];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+  [self adjustInsetForKeyboardShow:NO notification:notification];
+}
+
+- (void)adjustInsetForKeyboardShow:(BOOL)show notification:(NSNotification *)notification {
+  NSDictionary *userInfo = notification.userInfo ? notification.userInfo : @{};
+  CGRect keyboardFrame = [userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+  double adjustmentHeight = CGRectGetHeight(keyboardFrame) * (show ? 1 : -1);
+  UIEdgeInsets contentInsets = UIEdgeInsetsMake(0, 0, adjustmentHeight, 0);
+  _scrollView.contentInset = contentInsets;
+  _scrollView.scrollIndicatorInsets = contentInsets;
+
+  if (!_scrolled) {
+    [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
+    _scrolled = YES;
+  }
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+  if (textView.text.length == 0) {
+    [_feedbackView showFeedbackPlaceholder:YES];
+  } else {
+    [_feedbackView showFeedbackPlaceholder:NO];
+  }
+}
+
+#pragma mark - dealloc
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
