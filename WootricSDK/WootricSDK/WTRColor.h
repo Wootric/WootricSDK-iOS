@@ -59,5 +59,6 @@
 + (UIColor *)iPadPoweredByWootricTextColor;
 + (UIColor *)iPadQuestionsTextColor;
 + (UIColor *)iPadFeedbackTextViewBackgroundColor;
++ (UIColor *)iPadSendButtonBackgroundColor;
 
 @end

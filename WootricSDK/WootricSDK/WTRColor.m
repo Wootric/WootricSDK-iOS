@@ -150,6 +150,10 @@
   return [self colorWithHexString:@"#FAFAFA"];
 }
 
++ (UIColor *)iPadSendButtonBackgroundColor {
+  return [self colorWithHexString:@"#808080"];
+}
+
 + (UIColor *)colorWithHexString:(NSString *)hexString {
   NSString *noHashString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
   NSScanner *scanner = [NSScanner scannerWithString:noHashString];

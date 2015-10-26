@@ -32,7 +32,9 @@
 @interface WTRiPADSurveyViewController ()
 
 @property (nonatomic, assign) BOOL scrolled;
+@property (nonatomic, assign) int currentScore;
 @property (nonatomic, assign) BOOL alreadyVoted;
+@property (nonatomic, assign) CGFloat keyboardHeight;
 
 @end
 
@@ -72,6 +74,7 @@
 
 - (void)selectScore:(WTRCircleScoreButton *)sender {
   NSString *placeholderText = [_settings followupPlaceholderTextForScore:sender.assignedScore];
+  _currentScore = sender.assignedScore;
   [_npsQuestionView selectCircleButton:sender];
   [self endUserVotedWithScore:sender.assignedScore andText:nil];
   [_feedbackView setFollowupLabelTextBasedOnScore:sender.assignedScore];
@@ -110,6 +113,14 @@
   }
 }
 
+- (void)sendButtonPressed {
+  NSString *text = nil;
+  if ([_feedbackView feedbackTextPresent]) {
+    text = [_feedbackView feedbackText];
+  }
+  [self endUserVotedWithScore:_currentScore andText:text];
+}
+
 - (void)dismissButtonPressed {
   if (!_alreadyVoted) {
     WTRSurvey *survey = [[WTRSurvey alloc] init];
@@ -136,7 +147,9 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
   [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 
-  [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
+  if (_keyboardHeight == 0) {
+    [_scrollView setContentOffset:CGPointMake(0, _keyboardHeight) animated:YES];
+  }
 }
 
 - (void)registerForKeyboardNotification {
@@ -166,9 +179,9 @@
   _scrollView.contentInset = contentInsets;
   _scrollView.scrollIndicatorInsets = contentInsets;
 
-  if (!_scrolled) {
-    [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
-    _scrolled = YES;
+  if ((_keyboardHeight != keyboardFrame.size.height)) {
+    _keyboardHeight = keyboardFrame.size.height;
+    [_scrollView setContentOffset:CGPointMake(0, _keyboardHeight) animated:YES];
   }
 }
 

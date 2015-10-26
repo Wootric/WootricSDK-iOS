@@ -25,6 +25,7 @@
 #import "WTRiPADFeedbackView.h"
 #import "WTRColor.h"
 #import "WTRSurveyViewController.h"
+#import "SimpleConstraints.h"
 
 @interface WTRiPADFeedbackView ()
 
@@ -52,6 +53,7 @@
   [self setupFeedbackTextViewWithViewController:(WTRSurveyViewController *)viewController];
   [self setupFollowupLabel];
   [self setupFeedbackLabel];
+  [self setupSendButtonViewWithViewController:(UIViewController *)viewController];
   [self addSubviews];
 }
 
@@ -59,6 +61,7 @@
   [self setupFollowupLabelConstraints];
   [self setupFeedbackTextViewConstraints];
   [self setupFeedbackLabelConstraints];
+  [self setupSendButtonConstraints];
 }
 
 - (void)setFollowupLabelTextBasedOnScore:(int)score {
@@ -91,6 +94,20 @@
 
 - (BOOL)isActive {
   return !self.hidden;
+}
+
+- (void)setupSendButtonViewWithViewController:(UIViewController *)viewController {
+  _sendButton = [[UIButton alloc] init];
+  _sendButton.backgroundColor = [WTRColor iPadSendButtonBackgroundColor];
+  _sendButton.layer.cornerRadius = 3;
+  _sendButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+  [_sendButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [_sendButton setTitle:[self.settings sendButtonText] forState:UIControlStateNormal];
+  [_sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [_sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
+  [_sendButton addTarget:viewController
+                  action:NSSelectorFromString(@"sendButtonPressed")
+        forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupFeedbackTextViewWithViewController:(WTRSurveyViewController *)viewController {
@@ -130,6 +147,14 @@
   [self addSubview:_feedbackTextView];
   [self addSubview:_followupLabel];
   [self addSubview:_feedbackPlaceholder];
+  [self addSubview:_sendButton];
+}
+
+- (void)setupSendButtonConstraints {
+  [_sendButton constraintWidth:100];
+  [[[[_sendButton top] toSecondViewBottom:_followupLabel] withConstant:8] addToView:self];
+  [[[_sendButton bottom] toSecondViewBottom:self] addToView:self];
+  [[[_sendButton left] toSecondViewRight:_feedbackTextView] addToView:self];
 }
 
 - (void)setupFollowupLabelConstraints {
@@ -186,7 +211,7 @@
                                                                toItem:self
                                                             attribute:NSLayoutAttributeRight
                                                            multiplier:1
-                                                             constant:-16];
+                                                             constant:-116];
   [self addConstraint:constR];
 
   NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_feedbackTextView

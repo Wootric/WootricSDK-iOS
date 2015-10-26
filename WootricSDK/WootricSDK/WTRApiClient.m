@@ -148,7 +148,7 @@
   NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
 
   if (_settings.externalCreatedAt) {
-    params = [NSString stringWithFormat:@"%@&external_created_at=%dd", params, [_settings.externalCreatedAt intValue]];
+    params = [NSString stringWithFormat:@"%@&external_created_at=%d", params, [_settings.externalCreatedAt intValue]];
   }
 
   if (_settings.productName) {
