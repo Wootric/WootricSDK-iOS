@@ -58,6 +58,8 @@
 		B278896D1BD914F2001D5696 /* SimpleConstraints.h in Headers */ = {isa = PBXBuildFile; fileRef = B278896C1BD914F2001D5696 /* SimpleConstraints.h */; };
 		B27889701BDA5520001D5696 /* WTRiPADFeedbackView.h in Headers */ = {isa = PBXBuildFile; fileRef = B278896E1BDA5520001D5696 /* WTRiPADFeedbackView.h */; };
 		B27889711BDA5520001D5696 /* WTRiPADFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B278896F1BDA5520001D5696 /* WTRiPADFeedbackView.m */; };
+		B27889751BDF85FD001D5696 /* UIItems.h in Headers */ = {isa = PBXBuildFile; fileRef = B27889731BDF85FD001D5696 /* UIItems.h */; };
+		B27889761BDF85FD001D5696 /* UIItems.m in Sources */ = {isa = PBXBuildFile; fileRef = B27889741BDF85FD001D5696 /* UIItems.m */; };
 		B29A2E881BAC0B50007181D3 /* WTRFeedbackView.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */; };
 		B29A2E891BAC0B50007181D3 /* WTRFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */; };
 		B29D63CA1BC3CEEB00F0C98C /* WTRSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */; };
@@ -147,6 +149,8 @@
 		B278896C1BD914F2001D5696 /* SimpleConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleConstraints.h; path = WootricSDK/SimpleConstraints.h; sourceTree = "<group>"; };
 		B278896E1BDA5520001D5696 /* WTRiPADFeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRiPADFeedbackView.h; sourceTree = "<group>"; };
 		B278896F1BDA5520001D5696 /* WTRiPADFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRiPADFeedbackView.m; sourceTree = "<group>"; };
+		B27889731BDF85FD001D5696 /* UIItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIItems.h; sourceTree = "<group>"; };
+		B27889741BDF85FD001D5696 /* UIItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIItems.m; sourceTree = "<group>"; };
 		B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRFeedbackView.h; sourceTree = "<group>"; };
 		B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRFeedbackView.m; sourceTree = "<group>"; };
 		B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSettingsTests.m; sourceTree = "<group>"; };
@@ -276,6 +280,15 @@
 			name = iPhone;
 			sourceTree = "<group>";
 		};
+		B27889721BDF855E001D5696 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				B27889731BDF85FD001D5696 /* UIItems.h */,
+				B27889741BDF85FD001D5696 /* UIItems.m */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
 		B29D63C81BC3CEC200F0C98C /* SurveySettingsTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,6 +332,7 @@
 		B2C9405D1BA0853700482494 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B27889721BDF855E001D5696 /* Shared */,
 				B268667B1BD5475100A4288D /* iPhone */,
 				B268667A1BD5474200A4288D /* iPad */,
 			);
@@ -433,6 +447,7 @@
 				B245509D1B909A03001AC1FB /* WTRSurveyViewController.h in Headers */,
 				B27889701BDA5520001D5696 /* WTRiPADFeedbackView.h in Headers */,
 				B2BED80C1BA8610900DD1EFC /* WTRSingleScoreLabel.h in Headers */,
+				B27889751BDF85FD001D5696 /* UIItems.h in Headers */,
 				B24550A11B909A49001AC1FB /* WTRSurveyViewController+Views.h in Headers */,
 				B2C9405B1BA0723300482494 /* WTRModalView.h in Headers */,
 				B2DC6F2E1B82000900F599B3 /* WootricSDK.h in Headers */,
@@ -565,6 +580,7 @@
 				B24550A61B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m in Sources */,
 				B2C940611BA300A000482494 /* WTRSlider.m in Sources */,
 				B27889711BDA5520001D5696 /* WTRiPADFeedbackView.m in Sources */,
+				B27889761BDF85FD001D5696 /* UIItems.m in Sources */,
 				B268668B1BD671D200A4288D /* WTRiPADNPSQuestionView.m in Sources */,
 				B24550A21B909A49001AC1FB /* WTRSurveyViewController+Views.m in Sources */,
 				B23DEF7C1BBBE9CA002A7FFD /* WTRUserCustomMessages.m in Sources */,

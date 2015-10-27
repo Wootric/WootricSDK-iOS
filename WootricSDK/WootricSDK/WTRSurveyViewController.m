@@ -35,6 +35,7 @@
 
 @property (nonatomic, assign) BOOL scrolled;
 @property (nonatomic, assign) BOOL alreadyVoted;
+@property (nonatomic, assign) CGFloat keyboardHeight;
 @property (nonatomic, strong) CAGradientLayer *gradient;
 
 @end
@@ -266,24 +267,37 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
   [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
-  CGFloat modalPosition = self.view.bounds.size.width - _modalView.frame.size.height;
-  _constraintTopToModalTop.constant = modalPosition;
-  [self getSizeAndRecalculatePositionsBasedOnOrientation:toInterfaceOrientation];
   BOOL isToLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
-  CGRect gradientBounds;
+  CGFloat modalPosition;
   CGRect bounds = self.view.bounds;
+  CGRect gradientBounds;
+
+  if ((bounds.size.width > bounds.size.height) && isToLandscape) {
+    modalPosition = bounds.size.height - _modalView.frame.size.height;
+  } else {
+    modalPosition = bounds.size.width - _modalView.frame.size.height;
+  }
+
   if ((bounds.size.height > bounds.size.width) && isToLandscape) {
     gradientBounds = CGRectMake(bounds.origin.y, bounds.origin.x, bounds.size.height, bounds.size.width);
   } else {
     gradientBounds = bounds;
   }
+
+  _constraintTopToModalTop.constant = modalPosition;
+  [self getSizeAndRecalculatePositionsBasedOnOrientation:toInterfaceOrientation];
   [self setModalGradient:gradientBounds];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
   [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+  _scrolled = NO;
 
-  [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
+  BOOL isFromLandscape = UIInterfaceOrientationIsLandscape(fromInterfaceOrientation);
+  CGRect bounds = self.view.bounds;
+  if (_keyboardHeight == 0 && isFromLandscape && (bounds.size.width > bounds.size.height)) {
+    [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
+  }
 }
 
 - (void)registerForKeyboardNotification {
@@ -313,7 +327,10 @@
   _scrollView.contentInset = contentInsets;
   _scrollView.scrollIndicatorInsets = contentInsets;
 
-  if (!_scrolled) {
+  if ((_keyboardHeight != keyboardFrame.size.height)) {
+    _keyboardHeight = keyboardFrame.size.height;
+    [_scrollView setContentOffset:CGPointMake(0, _keyboardHeight) animated:YES];
+  } else if (!_scrolled) {
     [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
     _scrolled = YES;
   }

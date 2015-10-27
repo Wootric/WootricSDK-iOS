@@ -126,6 +126,7 @@
     WTRSurvey *survey = [[WTRSurvey alloc] init];
     [survey endUserDeclined];
   }
+  [_feedbackView textViewResignFirstResponder];
   [self dismissViewControllerWithBackgroundFade];
 }
 
@@ -140,7 +141,16 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
   [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
-  CGFloat modalPosition = self.view.bounds.size.width - _modalView.frame.size.height;
+  BOOL isToLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
+  CGFloat modalPosition;
+  CGRect bounds = self.view.bounds;
+
+  if ((bounds.size.width > bounds.size.height) && isToLandscape) {
+    modalPosition = bounds.size.height - _modalView.frame.size.height;
+  } else {
+    modalPosition = bounds.size.width - _modalView.frame.size.height;
+  }
+
   _constraintTopToModalTop.constant = modalPosition;
 }
 
