@@ -25,6 +25,8 @@
 #import "WTRSocialShareView.h"
 #import "WTRThankYouButton.h"
 #import "WTRColor.h"
+#import "SimpleConstraints.h"
+#import "UIItems.h"
 
 @interface WTRSocialShareView ()
 
@@ -116,13 +118,7 @@
 }
 
 - (void)setupCustomThankYouLabel {
-  _customThankYouLabel = [[UILabel alloc] init];
-  _customThankYouLabel.textAlignment = NSTextAlignmentCenter;
-  _customThankYouLabel.textColor = [UIColor blackColor];
-  _customThankYouLabel.numberOfLines = 0;
-  _customThankYouLabel.lineBreakMode = NSLineBreakByWordWrapping;
-  _customThankYouLabel.font = [UIFont boldSystemFontOfSize:12];
-  [_customThankYouLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  _customThankYouLabel = [UIItems customThankYouLabelWithFont:[UIFont boldSystemFontOfSize:12]];
 }
 
 - (void)setupThankYouButtonWithTargetViewController:(UIViewController *)viewController {
@@ -130,23 +126,11 @@
 }
 
 - (void)setupFacebookButtonWithTargetViewController:(UIViewController *)viewController {
-  _facebookButton = [[UIButton alloc] init];
-  _facebookButton.hidden = YES;
-  [_facebookButton setImage:[UIImage imageNamed:@"facebook_icon"] forState:UIControlStateNormal];
-  [_facebookButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [_facebookButton addTarget:viewController
-                      action:NSSelectorFromString(@"facebookButtonPressed")
-            forControlEvents:UIControlEventTouchUpInside];
+  _facebookButton = [UIItems facebookButtonWithTargetViewController:viewController];
 }
 
 - (void)setupTwitterButtonWithTargetViewController:(UIViewController *)viewController {
-  _twitterButton = [[UIButton alloc] init];
-  _twitterButton.hidden = YES;
-  [_twitterButton setImage:[UIImage imageNamed:@"twitter_icon"] forState:UIControlStateNormal];
-  [_twitterButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [_twitterButton addTarget:viewController
-                      action:NSSelectorFromString(@"twitterButtonPressed")
-            forControlEvents:UIControlEventTouchUpInside];
+  _twitterButton = [UIItems twitterButtonWithTargetViewController:viewController];
 }
 
 - (void)setupNoThanksButtonWithTargetViewController:(UIViewController *)viewController {
@@ -161,18 +145,15 @@
 }
 
 - (void)setupFinalThankYouLabel {
-  _finalThankYouLabel = [[UILabel alloc] init];
-  _finalThankYouLabel.textAlignment = NSTextAlignmentCenter;
-  _finalThankYouLabel.textColor = [UIColor blackColor];
-  _finalThankYouLabel.numberOfLines = 0;
-  _finalThankYouLabel.lineBreakMode = NSLineBreakByWordWrapping;
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    _finalThankYouLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightMedium];
+    _finalThankYouLabel = [UIItems finalThankYouLabelWithSettings:_settings
+                                                        textColor:[UIColor blackColor]
+                                                          andFont:[UIFont systemFontOfSize:18 weight:UIFontWeightMedium]];
   } else {
-    _finalThankYouLabel.font = [UIFont systemFontOfSize:18];
+    _finalThankYouLabel = [UIItems finalThankYouLabelWithSettings:_settings
+                                                        textColor:[UIColor blackColor]
+                                                          andFont:[UIFont systemFontOfSize:18]];
   }
-  _finalThankYouLabel.text = [_settings finalThankYouText];
-  [_finalThankYouLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupSocialShareQuestionLabel {
@@ -187,61 +168,15 @@
 }
 
 - (void)setupCustomThankYouLabelConstraints {
-  NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:_customThankYouLabel
-                                                            attribute:NSLayoutAttributeLeft
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeLeft
-                                                           multiplier:1
-                                                             constant:24];
-  [self addConstraint:constL];
-
-  NSLayoutConstraint *constR = [NSLayoutConstraint constraintWithItem:_customThankYouLabel
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeRight
-                                                           multiplier:1
-                                                             constant:-24];
-  [self addConstraint:constR];
-
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_customThankYouLabel
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:_finalThankYouLabel
-                                                              attribute:NSLayoutAttributeBottom
-                                                             multiplier:1
-                                                               constant:8];
-  [self addConstraint:constTop];
+  [[[[_customThankYouLabel left] toSecondViewLeft:self] withConstant:24] addToView:self];
+  [[[[_customThankYouLabel right] toSecondViewRight:self] withConstant:-24] addToView:self];
+  [[[[_customThankYouLabel top] toSecondViewBottom:_finalThankYouLabel] withConstant:8] addToView:self];
 }
 
 - (void)setupFacebookButtonConstraints {
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_facebookButton
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:_socialShareQuestionLabel
-                                                              attribute:NSLayoutAttributeBottom
-                                                             multiplier:1
-                                                               constant:18];
-  [self addConstraint:constTop];
-
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:_facebookButton
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:32];
-  [_facebookButton addConstraint:constH];
-
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:_facebookButton
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:32];
-  [_facebookButton addConstraint:constW];
+  [_facebookButton constraintWidth:32];
+  [_facebookButton constraintHeight:32];
+  [[[[_facebookButton top] toSecondViewBottom:_socialShareQuestionLabel] withConstant:18] addToView:self];
 
   _facebookXConstraint = [NSLayoutConstraint constraintWithItem:_facebookButton
                                                       attribute:NSLayoutAttributeCenterX
@@ -254,32 +189,9 @@
 }
 
 - (void)setupTwitterButtonConstraints {
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_twitterButton
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:_socialShareQuestionLabel
-                                                              attribute:NSLayoutAttributeBottom
-                                                             multiplier:1
-                                                               constant:18];
-  [self addConstraint:constTop];
-
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:_twitterButton
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:32];
-  [_twitterButton addConstraint:constH];
-
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:_twitterButton
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:32];
-  [_twitterButton addConstraint:constW];
+  [_twitterButton constraintWidth:32];
+  [_twitterButton constraintHeight:32];
+  [[[[_twitterButton top] toSecondViewBottom:_socialShareQuestionLabel] withConstant:18] addToView:self];
 
   _twitterXConstraint = [NSLayoutConstraint constraintWithItem:_twitterButton
                                                      attribute:NSLayoutAttributeCenterX
@@ -292,128 +204,28 @@
 }
 
 - (void)setupSocialShareQuestionLabelConstraints {
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_socialShareQuestionLabel
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:_thankYouButton
-                                                              attribute:NSLayoutAttributeBottom
-                                                             multiplier:1
-                                                               constant:16];
-  [self addConstraint:constTop];
-
-  NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:_socialShareQuestionLabel
-                                                               attribute:NSLayoutAttributeLeft
-                                                               relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self
-                                                               attribute:NSLayoutAttributeLeft
-                                                              multiplier:1
-                                                                constant:24];
-  [self addConstraint:constLeft];
-
-  NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:_socialShareQuestionLabel
-                                                                attribute:NSLayoutAttributeRight
-                                                                relatedBy:NSLayoutRelationEqual
-                                                                   toItem:self
-                                                                attribute:NSLayoutAttributeRight
-                                                               multiplier:1
-                                                                 constant:-24];
-  [self addConstraint:constRight];
+  [[[[_socialShareQuestionLabel left] toSecondViewLeft:self] withConstant:24] addToView:self];
+  [[[[_socialShareQuestionLabel right] toSecondViewRight:self] withConstant:-24] addToView:self];
+  [[[[_socialShareQuestionLabel top] toSecondViewBottom:_thankYouButton] withConstant:16] addToView:self];
 }
 
 - (void)setupFinalThankYouLabelConstraints {
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_finalThankYouLabel
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self
-                                                              attribute:NSLayoutAttributeTop
-                                                             multiplier:1
-                                                               constant:16];
-  [self addConstraint:constTop];
-
-  NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:_finalThankYouLabel
-                                                               attribute:NSLayoutAttributeLeft
-                                                               relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self
-                                                               attribute:NSLayoutAttributeLeft
-                                                              multiplier:1
-                                                                constant:24];
-  [self addConstraint:constLeft];
-
-  NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:self
-                                                                attribute:NSLayoutAttributeRight
-                                                                relatedBy:NSLayoutRelationEqual
-                                                                   toItem:_finalThankYouLabel
-                                                                attribute:NSLayoutAttributeRight
-                                                               multiplier:1
-                                                                 constant:24];
-  [self addConstraint:constRight];
+  [[[[_finalThankYouLabel top] toSecondViewTop:self] withConstant:16] addToView:self];
+  [[[[_finalThankYouLabel left] toSecondViewLeft:self] withConstant:24] addToView:self];
+  [[[[self right] toSecondViewRight:_finalThankYouLabel] withConstant:24] addToView:self];
 }
 
 - (void)setupThankYouButtonConstraints {
-  NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:_thankYouButton
-                                                            attribute:NSLayoutAttributeLeft
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeLeft
-                                                           multiplier:1
-                                                             constant:24];
-  [self addConstraint:constL];
-
-  NSLayoutConstraint *constR = [NSLayoutConstraint constraintWithItem:_thankYouButton
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeRight
-                                                           multiplier:1
-                                                             constant:-24];
-  [self addConstraint:constR];
-
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:_thankYouButton
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:50];
-  [_thankYouButton addConstraint:constH];
-
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:_thankYouButton
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self addConstraint:constX];
-
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_thankYouButton
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:_finalThankYouLabel
-                                                              attribute:NSLayoutAttributeBottom
-                                                             multiplier:1
-                                                               constant:38];
-  [self addConstraint:constTop];
+  [_thankYouButton constraintHeight:50];
+  [[[_thankYouButton centerX] toSecondViewCenterX:self] addToView:self];
+  [[[[_thankYouButton left] toSecondViewLeft:self] withConstant:24] addToView:self];
+  [[[[_thankYouButton right] toSecondViewRight:self] withConstant:-24] addToView:self];
+  [[[[_thankYouButton top] toSecondViewBottom:_finalThankYouLabel] withConstant:38] addToView:self];
 }
 
 - (void)setupNoThanksButtonConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:_noThanksButton
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self addConstraint:constX];
-
-  NSLayoutConstraint *constB = [NSLayoutConstraint constraintWithItem:_noThanksButton
-                                                            attribute:NSLayoutAttributeBottom
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeBottom
-                                                           multiplier:1
-                                                             constant:-8];
-  [self addConstraint:constB];
+  [[[_noThanksButton centerX] toSecondViewCenterX:self] addToView:self];
+  [[[[_noThanksButton bottom] toSecondViewBottom:self] withConstant:-8] addToView:self];
 }
 
 @end

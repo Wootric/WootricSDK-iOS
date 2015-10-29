@@ -98,4 +98,53 @@
   return tempLabel;
 }
 
++ (UILabel *)finalThankYouLabelWithSettings:(WTRSettings *)settings textColor:(UIColor *)textColor andFont:(UIFont *)font {
+  UILabel *tempLabel = [[UILabel alloc] init];
+  tempLabel.textAlignment = NSTextAlignmentCenter;
+  tempLabel.textColor = textColor;
+  tempLabel.numberOfLines = 0;
+  tempLabel.lineBreakMode = NSLineBreakByWordWrapping;
+  tempLabel.font = font;
+  tempLabel.text = [settings finalThankYouText];
+  [tempLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+  return tempLabel;
+}
+
++ (UILabel *)customThankYouLabelWithFont:(UIFont *)font {
+  UILabel *tempLabel = [[UILabel alloc] init];
+  tempLabel.textAlignment = NSTextAlignmentCenter;
+  tempLabel.textColor = [UIColor blackColor];
+  tempLabel.numberOfLines = 0;
+  tempLabel.lineBreakMode = NSLineBreakByWordWrapping;
+  tempLabel.font = font;
+  [tempLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+  return tempLabel;
+}
+
++ (UIButton *)facebookButtonWithTargetViewController:(UIViewController *)viewController {
+  UIButton *tempButton = [[UIButton alloc] init];
+  tempButton.hidden = YES;
+  [tempButton setImage:[UIImage imageNamed:@"facebook_icon"] forState:UIControlStateNormal];
+  [tempButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [tempButton addTarget:viewController
+                 action:NSSelectorFromString(@"facebookButtonPressed")
+       forControlEvents:UIControlEventTouchUpInside];
+
+  return tempButton;
+}
+
++ (UIButton *)twitterButtonWithTargetViewController:(UIViewController *)viewController {
+  UIButton *tempButton = [[UIButton alloc] init];
+  tempButton.hidden = YES;
+  [tempButton setImage:[UIImage imageNamed:@"twitter_icon"] forState:UIControlStateNormal];
+  [tempButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [tempButton addTarget:viewController
+                 action:NSSelectorFromString(@"twitterButtonPressed")
+       forControlEvents:UIControlEventTouchUpInside];
+
+  return tempButton;
+}
+
 @end

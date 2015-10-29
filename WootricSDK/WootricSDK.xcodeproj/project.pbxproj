@@ -60,6 +60,10 @@
 		B27889711BDA5520001D5696 /* WTRiPADFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B278896F1BDA5520001D5696 /* WTRiPADFeedbackView.m */; };
 		B27889751BDF85FD001D5696 /* UIItems.h in Headers */ = {isa = PBXBuildFile; fileRef = B27889731BDF85FD001D5696 /* UIItems.h */; };
 		B27889761BDF85FD001D5696 /* UIItems.m in Sources */ = {isa = PBXBuildFile; fileRef = B27889741BDF85FD001D5696 /* UIItems.m */; };
+		B27889791BE0E168001D5696 /* WTRiPADSocialShareView.h in Headers */ = {isa = PBXBuildFile; fileRef = B27889771BE0E168001D5696 /* WTRiPADSocialShareView.h */; };
+		B278897A1BE0E168001D5696 /* WTRiPADSocialShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = B27889781BE0E168001D5696 /* WTRiPADSocialShareView.m */; };
+		B278897D1BE105D6001D5696 /* WTRiPADThankYouButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B278897B1BE105D6001D5696 /* WTRiPADThankYouButton.h */; };
+		B278897E1BE105D6001D5696 /* WTRiPADThankYouButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B278897C1BE105D6001D5696 /* WTRiPADThankYouButton.m */; };
 		B29A2E881BAC0B50007181D3 /* WTRFeedbackView.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */; };
 		B29A2E891BAC0B50007181D3 /* WTRFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */; };
 		B29D63CA1BC3CEEB00F0C98C /* WTRSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */; };
@@ -151,6 +155,10 @@
 		B278896F1BDA5520001D5696 /* WTRiPADFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRiPADFeedbackView.m; sourceTree = "<group>"; };
 		B27889731BDF85FD001D5696 /* UIItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIItems.h; sourceTree = "<group>"; };
 		B27889741BDF85FD001D5696 /* UIItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIItems.m; sourceTree = "<group>"; };
+		B27889771BE0E168001D5696 /* WTRiPADSocialShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRiPADSocialShareView.h; sourceTree = "<group>"; };
+		B27889781BE0E168001D5696 /* WTRiPADSocialShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRiPADSocialShareView.m; sourceTree = "<group>"; };
+		B278897B1BE105D6001D5696 /* WTRiPADThankYouButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRiPADThankYouButton.h; sourceTree = "<group>"; };
+		B278897C1BE105D6001D5696 /* WTRiPADThankYouButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRiPADThankYouButton.m; sourceTree = "<group>"; };
 		B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRFeedbackView.h; sourceTree = "<group>"; };
 		B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRFeedbackView.m; sourceTree = "<group>"; };
 		B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSettingsTests.m; sourceTree = "<group>"; };
@@ -251,6 +259,10 @@
 				B278896F1BDA5520001D5696 /* WTRiPADFeedbackView.m */,
 				B26866881BD671D200A4288D /* WTRiPADNPSQuestionView.h */,
 				B26866891BD671D200A4288D /* WTRiPADNPSQuestionView.m */,
+				B278897B1BE105D6001D5696 /* WTRiPADThankYouButton.h */,
+				B278897C1BE105D6001D5696 /* WTRiPADThankYouButton.m */,
+				B27889771BE0E168001D5696 /* WTRiPADSocialShareView.h */,
+				B27889781BE0E168001D5696 /* WTRiPADSocialShareView.m */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -434,6 +446,7 @@
 				B260ECDD1BD7E5B200E29CD5 /* UIView+Constraints.h in Headers */,
 				B268667E1BD63B7000A4288D /* WTRCircleScoreButton.h in Headers */,
 				B24550A51B909AC9001AC1FB /* WTRSurveyViewController+Constraints.h in Headers */,
+				B27889791BE0E168001D5696 /* WTRiPADSocialShareView.h in Headers */,
 				B26866861BD63F8B00A4288D /* WTRiPADModalView.h in Headers */,
 				B2102A331BB59ACE0025DABC /* WTRCustomMessages.h in Headers */,
 				B2102A3B1BB59AE60025DABC /* WTRSurvey.h in Headers */,
@@ -452,6 +465,7 @@
 				B2C9405B1BA0723300482494 /* WTRModalView.h in Headers */,
 				B2DC6F2E1B82000900F599B3 /* WootricSDK.h in Headers */,
 				B26866821BD63ED100A4288D /* WTRCircleScoreView.h in Headers */,
+				B278897D1BE105D6001D5696 /* WTRiPADThankYouButton.h in Headers */,
 				B26866721BD5443000A4288D /* WTRiPADSurveyViewController+Views.h in Headers */,
 				B2102A3D1BB59AE60025DABC /* WTRTrackingPixel.h in Headers */,
 				B268668A1BD671D200A4288D /* WTRiPADNPSQuestionView.h in Headers */,
@@ -575,10 +589,12 @@
 				B2DC6F2F1B82000900F599B3 /* WootricSDK.m in Sources */,
 				B2102A361BB59ACE0025DABC /* WTRLocalizedTexts.m in Sources */,
 				B2C9406D1BA83E6200482494 /* WTRScoreView.m in Sources */,
+				B278897A1BE0E168001D5696 /* WTRiPADSocialShareView.m in Sources */,
 				B26866731BD5443000A4288D /* WTRiPADSurveyViewController+Views.m in Sources */,
 				B245509E1B909A03001AC1FB /* WTRSurveyViewController.m in Sources */,
 				B24550A61B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m in Sources */,
 				B2C940611BA300A000482494 /* WTRSlider.m in Sources */,
+				B278897E1BE105D6001D5696 /* WTRiPADThankYouButton.m in Sources */,
 				B27889711BDA5520001D5696 /* WTRiPADFeedbackView.m in Sources */,
 				B27889761BDF85FD001D5696 /* UIItems.m in Sources */,
 				B268668B1BD671D200A4288D /* WTRiPADNPSQuestionView.m in Sources */,

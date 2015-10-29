@@ -26,8 +26,10 @@
 #import "WTRiPADSurveyViewController+Constraints.h"
 #import "WTRiPADSurveyViewController+Views.h"
 #import "WTRCircleScoreButton.h"
+#import "WTRiPADThankYouButton.h"
 #import "WTRColor.h"
 #import "WTRSurvey.h"
+#import <Social/Social.h>
 
 @interface WTRiPADSurveyViewController ()
 
@@ -113,10 +115,26 @@
   }
 }
 
+- (void)openThankYouURL:(WTRiPADThankYouButton *)sender {
+  if (![[UIApplication sharedApplication] openURL:sender.buttonURL]) {
+    NSLog(@"WootricSDK: Failed to open 'thank you' url");
+  } else {
+    [self dismissViewControllerWithBackgroundFade];
+  }
+}
+
 - (void)sendButtonPressed {
   NSString *text = nil;
   if ([_feedbackView feedbackTextPresent]) {
     text = [_feedbackView feedbackText];
+  }
+  if ([self socialShareAvailableForScore:_currentScore]) {
+    [_socialShareView setThankYouButtonTextAndURLDependingOnScore:_currentScore];
+    [_socialShareView setThankYouMessageDependingOnScore:_currentScore];
+    [self setupFacebookAndTwitterForScore:_currentScore];
+    [self presentSocialShareViewWithScore:_currentScore];
+  } else {
+    [self dismissWithFinalThankYou];
   }
   [self endUserVotedWithScore:_currentScore andText:text];
 }
@@ -130,12 +148,96 @@
   [self dismissViewControllerWithBackgroundFade];
 }
 
+- (void)noThanksButtonPressed {
+  [self dismissViewControllerWithBackgroundFade];
+}
+
 - (void)dismissViewControllerWithBackgroundFade {
   [UIView animateWithDuration:0.2 animations:^{
     self.view.backgroundColor = [UIColor clearColor];
   } completion:^(BOOL finished) {
     [self dismissViewControllerAnimated:YES completion:nil];
   }];
+}
+
+- (void)facebookButtonPressed {
+  NSURL *url = _settings.facebookPage;
+  if (![[UIApplication sharedApplication] openURL:url]) {
+    NSLog(@"Failed to open facebook page");
+  }
+}
+
+- (void)twitterButtonPressed {
+  if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+    SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+    [tweetSheet setInitialText:[NSString stringWithFormat:@"%@ @%@", [_feedbackView feedbackText], _settings.twitterHandler]];
+    [self presentViewController:tweetSheet animated:YES completion:nil];
+  } else {
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle:@"Sorry"
+                              message:@"You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup"
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+    [alertView show];
+  }
+}
+
+- (void)setupFacebookAndTwitterForScore:(int)score {
+  BOOL twitterAvailable = ([self twitterHandlerAndFeedbackTextPresent] && score >= 9);
+  BOOL facebookAvailable = ([_settings facebookPageSet] && score >= 9);
+  if (![_settings thankYouLinkConfiguredForScore:score]) {
+    [_socialShareView noThankYouButton];
+  }
+  [self.view layoutIfNeeded];
+  [_socialShareView displayShareButtonsWithTwitterAvailable:twitterAvailable andFacebookAvailable:facebookAvailable];
+}
+
+- (BOOL)socialShareAvailableForScore:(int)score {
+  return ([_settings thankYouLinkConfiguredForScore:score] ||
+          ([self twitterHandlerAndFeedbackTextPresent] && score >= 9) ||
+          ([_settings facebookPageSet] && score >= 9));
+}
+
+- (BOOL)twitterHandlerAndFeedbackTextPresent {
+  return ([_settings twitterHandlerSet] && [_feedbackView feedbackTextPresent]);
+}
+
+- (void)presentSocialShareViewWithScore:(int)score {
+  _constraintModalHeight.constant = 165;
+  _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
+  [self setQuestionViewVisible:NO andFeedbackViewVisible:NO];
+  [_feedbackView textViewResignFirstResponder];
+  _socialShareView.hidden = NO;
+  [UIView animateWithDuration:0.2 animations:^{
+    [self.view layoutIfNeeded];
+  } completion:^(BOOL finished) {
+    [UIView animateWithDuration:0.1 animations:^{
+      _socialShareView.alpha = 1;
+    }];
+  }];
+}
+
+- (void)dismissWithFinalThankYou {
+  _feedbackView.hidden = YES;
+  _npsQuestionView.hidden = YES;
+  _socialShareView.hidden = YES;
+  _poweredByWootric.hidden = YES;
+  _finalThankYouLabel.hidden = NO;
+  _dismissButton.hidden = YES;
+  _constraintModalHeight.constant = 125;
+  _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
+  [UIView animateWithDuration:0.2 animations:^{
+    [self.view layoutIfNeeded];
+  }];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [self dismissViewControllerWithBackgroundFade];
+  });
+}
+
+- (void)setQuestionViewVisible:(BOOL)questionFlag andFeedbackViewVisible:(BOOL)feedbackFlag {
+  _npsQuestionView.hidden = !questionFlag;
+  _feedbackView.hidden = !feedbackFlag;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {

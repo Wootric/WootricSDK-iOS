@@ -1,5 +1,5 @@
 //
-//  UIView+UIView_Constraints.h
+//  WTRiPADSocialShareView.h
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -23,20 +23,16 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import "WTRSettings.h"
 
-@interface UIView (Constraints)
+@interface WTRiPADSocialShareView : UIView
 
-- (NSLayoutConstraint *)top;
-- (NSLayoutConstraint *)bottom;
-- (NSLayoutConstraint *)left;
-- (NSLayoutConstraint *)right;
-- (NSLayoutConstraint *)centerX;
-- (NSLayoutConstraint *)centerY;
-- (void)constraintHeight:(CGFloat)height;
-- (void)constraintWidth:(CGFloat)width;
-- (void)constraintHeightEqualSecondViewHeight:(UIView *)secondView;
-- (void)constraintWidthEqualSecondViewWidth:(UIView *)secondView;
-- (void)constraintHeightToSecondViewHeight:(UIView *)secondView withConstant:(CGFloat)constant;
-- (void)constraintWidthToSecondViewWidth:(UIView *)secondView withConstant:(CGFloat)constant;
+- (instancetype)initWithSettings:(WTRSettings *)settings;
+- (void)setupSubviewsConstraints;
+- (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
+- (void)noThankYouButton;
+- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score;
+- (void)setThankYouMessageDependingOnScore:(int)score;
+- (void)displayShareButtonsWithTwitterAvailable:(BOOL)twitterAvailable andFacebookAvailable:(BOOL)facebookAvailable;
 
 @end

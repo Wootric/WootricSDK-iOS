@@ -27,6 +27,7 @@
 #import "WTRiPADModalView.h"
 #import "WTRiPADNPSQuestionView.h"
 #import "WTRiPADFeedbackView.h"
+#import "WTRiPADSocialShareView.h"
 
 @interface WTRiPADSurveyViewController : UIViewController <UITextViewDelegate>
 
@@ -37,9 +38,12 @@
 @property (nonatomic, strong) WTRiPADModalView *modalView;
 @property (nonatomic, strong) WTRiPADNPSQuestionView *npsQuestionView;
 @property (nonatomic, strong) WTRiPADFeedbackView *feedbackView;
+@property (nonatomic, strong) WTRiPADSocialShareView *socialShareView;
 @property (nonatomic, strong) NSLayoutConstraint *constraintTopToModalTop;
 @property (nonatomic, strong) NSLayoutConstraint *constraintNPSTopToModalTop;
 @property (nonatomic, strong) NSLayoutConstraint *constraintModalHeight;
+@property (nonatomic, strong) NSLayoutConstraint *socialShareViewHeightConstraint;
+@property (nonatomic, strong) UILabel *finalThankYouLabel;
 
 - (instancetype)initWithSurveySettings:(WTRSettings *)settings;
 

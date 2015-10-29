@@ -154,6 +154,22 @@
   return [self colorWithHexString:@"#808080"];
 }
 
++ (UIColor *)iPadThankYouButtonBorderColor {
+  return [self colorWithHexString:@"#97C7E8"];
+}
+
++ (UIColor *)iPadThankYouButtonTextColor {
+  return [self colorWithHexString:@"#3492D5"];
+}
+
++ (UIColor *)iPadNoThanksButtonBorderColor {
+  return [self colorWithHexString:@"#E6E6E6"];
+}
+
++ (UIColor *)iPadNoThanksButtonTextColor {
+  return [self colorWithHexString:@"#888888"];
+}
+
 + (UIColor *)colorWithHexString:(NSString *)hexString {
   NSString *noHashString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
   NSScanner *scanner = [NSScanner scannerWithString:noHashString];

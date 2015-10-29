@@ -32,6 +32,10 @@
 + (UILabel *)followupLabelWithTextColor:(UIColor *)textColor;
 + (UILabel *)feedbackPlaceholder;
 + (UILabel *)npsQuestionLabelWithSettings:(WTRSettings *)settings andFont:(UIFont *)font;
++ (UILabel *)finalThankYouLabelWithSettings:(WTRSettings *)settings textColor:(UIColor *)textColor andFont:(UIFont *)font;
++ (UILabel *)customThankYouLabelWithFont:(UIFont *)font;
++ (UIButton *)facebookButtonWithTargetViewController:(UIViewController *)viewController;
++ (UIButton *)twitterButtonWithTargetViewController:(UIViewController *)viewController;
 + (UITextView *)feedbackTextViewWithBackgroundColor:(UIColor *)backgroundColor;
 
 @end

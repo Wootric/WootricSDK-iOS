@@ -32,6 +32,8 @@
   [self setupScrollView];
   [self setupNPSQuestionView];
   [self setupFeedbackView];
+  [self setupSocialShareView];
+  [self setupFinalThankYouLabel];
   [self setupDismissButton];
   [self setupPoweredByWootric];
 
@@ -43,6 +45,8 @@
 - (void)addViewsToModal {
   [self.modalView addSubview:self.npsQuestionView];
   [self.modalView addSubview:self.feedbackView];
+  [self.modalView addSubview:self.socialShareView];
+  [self.modalView addSubview:self.finalThankYouLabel];
   [self.modalView addSubview:self.poweredByWootric];
   [self.modalView addSubview:self.dismissButton];
 }
@@ -57,6 +61,11 @@
   [self.feedbackView initializeSubviewsWithTargetViewController:self];
 }
 
+- (void)setupSocialShareView {
+  self.socialShareView = [[WTRiPADSocialShareView alloc] initWithSettings:self.settings];
+  [self.socialShareView initializeSubviewsWithTargetViewController:self];
+}
+
 - (void)setupDismissButton {
   self.dismissButton = [[UIButton alloc] init];
   self.dismissButton.layer.cornerRadius = 15;
@@ -67,6 +76,18 @@
   [self.dismissButton setTitleColor:[WTRColor iPadCircleButtonTextColor] forState:UIControlStateNormal];
   [self.dismissButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.dismissButton addTarget:self action:NSSelectorFromString(@"dismissButtonPressed") forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)setupFinalThankYouLabel {
+  self.finalThankYouLabel = [[UILabel alloc] init];
+  self.finalThankYouLabel.textAlignment = NSTextAlignmentCenter;
+  self.finalThankYouLabel.textColor = [WTRColor iPadQuestionsTextColor];
+  self.finalThankYouLabel.numberOfLines = 0;
+  self.finalThankYouLabel.lineBreakMode = NSLineBreakByWordWrapping;
+  self.finalThankYouLabel.hidden = YES;
+  self.finalThankYouLabel.font = [UIFont systemFontOfSize:18];
+  self.finalThankYouLabel.text = [self.settings finalThankYouText];
+  [self.finalThankYouLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupPoweredByWootric {

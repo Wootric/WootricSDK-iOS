@@ -34,6 +34,9 @@
   [self.npsQuestionView setupSubviewsConstraints];
   [self setupFeedbackViewConstraints];
   [self.feedbackView setupSubviewsConstraints];
+  [self setupSocialShareViewConstraints];
+  [self.socialShareView setupSubviewsConstraints];
+  [self setupFinalThankYouLabelConstraints];
   [self setupPoweredByWootricConstraints];
   [self setupDismissButtonConstraints];
 }
@@ -88,41 +91,32 @@
 }
 
 - (void)setupFeedbackViewConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.feedbackView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.modalView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self.modalView addConstraint:constX];
+  [self.feedbackView constraintHeight:100];
+  [self.feedbackView constraintWidthToSecondViewWidth:self.view withConstant:-80];
+  [[[self.feedbackView top] toSecondViewTop:self.modalView] addToView:self.modalView];
+  [[[self.feedbackView centerX] toSecondViewCenterX:self.modalView] addToView:self.modalView];
+}
 
-  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.feedbackView
-                                                            attribute:NSLayoutAttributeTop
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.modalView
-                                                            attribute:NSLayoutAttributeTop
-                                                           multiplier:1
-                                                             constant:0];
-  [self.modalView addConstraint:constY];
+- (void)setupSocialShareViewConstraints {
+  [self.socialShareView constraintWidthEqualSecondViewWidth:self.view];
+  [[[self.socialShareView top] toSecondViewTop:self.modalView] addToView:self.modalView];
+  [[[self.socialShareView centerX] toSecondViewCenterX:self.modalView] addToView:self.modalView];
 
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.feedbackView
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeWidth
-                                                           multiplier:1
-                                                             constant:-80];
-  [self.view addConstraint:constW];
+  self.socialShareViewHeightConstraint = [NSLayoutConstraint constraintWithItem:self.socialShareView
+                                                                      attribute:NSLayoutAttributeHeight
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:nil
+                                                                      attribute:NSLayoutAttributeNotAnAttribute
+                                                                     multiplier:1
+                                                                       constant:165];
 
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.feedbackView
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:100];
-  [self.feedbackView addConstraint:constH];
+  [self.socialShareView addConstraint:self.socialShareViewHeightConstraint];
+}
+
+- (void)setupFinalThankYouLabelConstraints {
+  [[[[self.finalThankYouLabel top] toSecondViewTop:self.modalView] withConstant:36] addToView:self.modalView];
+  [[[[self.finalThankYouLabel left] toSecondViewLeft:self.modalView] withConstant:24] addToView:self.modalView];
+  [[[[self.finalThankYouLabel right] toSecondViewRight:self.modalView] withConstant:-24] addToView:self.modalView];
 }
 
 - (void)setupDismissButtonConstraints {

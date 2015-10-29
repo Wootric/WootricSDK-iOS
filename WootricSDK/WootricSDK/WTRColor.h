@@ -60,5 +60,9 @@
 + (UIColor *)iPadQuestionsTextColor;
 + (UIColor *)iPadFeedbackTextViewBackgroundColor;
 + (UIColor *)iPadSendButtonBackgroundColor;
++ (UIColor *)iPadThankYouButtonBorderColor;
++ (UIColor *)iPadThankYouButtonTextColor;
++ (UIColor *)iPadNoThanksButtonBorderColor;
++ (UIColor *)iPadNoThanksButtonTextColor;
 
 @end

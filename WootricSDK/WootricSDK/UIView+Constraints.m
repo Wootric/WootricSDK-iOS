@@ -146,4 +146,28 @@
   [secondView addConstraint:constraint];
 }
 
+- (void)constraintHeightToSecondViewHeight:(UIView *)secondView withConstant:(CGFloat)constant {
+  NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
+                                                                attribute:NSLayoutAttributeHeight
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:secondView
+                                                                attribute:NSLayoutAttributeHeight
+                                                               multiplier:1
+                                                                 constant:constant];
+
+  [secondView addConstraint:constraint];
+}
+
+- (void)constraintWidthToSecondViewWidth:(UIView *)secondView withConstant:(CGFloat)constant {
+  NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
+                                                                attribute:NSLayoutAttributeWidth
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:secondView
+                                                                attribute:NSLayoutAttributeWidth
+                                                               multiplier:1
+                                                                 constant:constant];
+
+  [secondView addConstraint:constraint];
+}
+
 @end
