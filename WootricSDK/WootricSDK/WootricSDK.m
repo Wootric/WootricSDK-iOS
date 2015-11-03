@@ -26,7 +26,10 @@
 #import "WTRTrackingPixel.h"
 #import "WTRSurvey.h"
 #import "WTRSurveyViewController.h"
+#import "WTRiPADSurveyViewController.h"
 #import "WTRApiClient.h"
+
+#define IPAD UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
 
 @implementation WootricSDK
 
@@ -114,9 +117,15 @@
 
 + (void)presentSurveyInViewController:(UIViewController *)viewController {
   WTRSettings *surveySettings = [WTRApiClient sharedInstance].settings;
-  WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:surveySettings];
 
-  [viewController presentViewController:surveyViewController animated:YES completion:nil];
+  if (IPAD) {
+    WTRiPADSurveyViewController *surveyViewController = [[WTRiPADSurveyViewController alloc] initWithSurveySettings:surveySettings];
+    [viewController presentViewController:surveyViewController animated:YES completion:nil];
+  } else {
+    WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:surveySettings];
+    [viewController presentViewController:surveyViewController animated:YES completion:nil];
+  }
+
 }
 
 #pragma mark - Social Share

@@ -26,6 +26,7 @@
   [WootricSDK configureWithClientID:clientID clientSecret:clientSecret accountToken:accountToken];
   [WootricSDK setEndUserEmail:@"END_USER_EMAIL"];
   [WootricSDK setEndUserCreatedAt:@1234567890];
+
   [WootricSDK forceSurvey:YES];
 
   [WootricSDK showSurveyInViewController:self];

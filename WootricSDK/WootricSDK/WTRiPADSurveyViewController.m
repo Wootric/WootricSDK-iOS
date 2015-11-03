@@ -1,5 +1,5 @@
 //
-//  WTRSurveyViewController.m
+//  WTRiPADSurveyViewController.m
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,29 +22,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "WTRSurveyViewController.h"
-#import "WTRSurveyViewController+Constraints.h"
-#import "WTRSurveyViewController+Views.h"
+#import "WTRiPADSurveyViewController.h"
+#import "WTRiPADSurveyViewController+Constraints.h"
+#import "WTRiPADSurveyViewController+Views.h"
+#import "WTRCircleScoreButton.h"
+#import "WTRiPADThankYouButton.h"
 #import "WTRColor.h"
-#import "UIImage+ImageFromColor.h"
 #import "WTRSurvey.h"
-#import "WTRThankYouButton.h"
 #import <Social/Social.h>
 
-@interface WTRSurveyViewController ()
+@interface WTRiPADSurveyViewController ()
 
 @property (nonatomic, assign) BOOL scrolled;
+@property (nonatomic, assign) int currentScore;
 @property (nonatomic, assign) BOOL alreadyVoted;
 @property (nonatomic, assign) CGFloat keyboardHeight;
-@property (nonatomic, strong) CAGradientLayer *gradient;
 
 @end
 
-@implementation WTRSurveyViewController
+@implementation WTRiPADSurveyViewController
 
 - (instancetype)initWithSurveySettings:(WTRSettings *)settings {
   if (self = [super init]) {
-    _gradient = [CAGradientLayer layer];
     _settings = settings;
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
@@ -73,75 +72,40 @@
     _modalView.frame = modalFrame;
     _constraintTopToModalTop.constant = modalPosition;
   }];
-  [self setModalGradient:_modalView.bounds];
-  [_modalView.layer insertSublayer:_gradient atIndex:0];
-  [_npsQuestionView addDotsAndScores];
 }
 
-#pragma mark - Button methods
-
-- (void)openThankYouURL:(WTRThankYouButton *)sender {
-  if (![[UIApplication sharedApplication] openURL:sender.buttonURL]) {
-    NSLog(@"WootricSDK: Failed to open 'thank you' url");
-  } else {
-    [self dismissViewControllerWithBackgroundFade];
+- (void)selectScore:(WTRCircleScoreButton *)sender {
+  NSString *placeholderText = [_settings followupPlaceholderTextForScore:sender.assignedScore];
+  _currentScore = sender.assignedScore;
+  [_npsQuestionView selectCircleButton:sender];
+  [self endUserVotedWithScore:sender.assignedScore andText:nil];
+  [_feedbackView setFollowupLabelTextBasedOnScore:sender.assignedScore];
+  [_feedbackView setFeedbackPlaceholderText:placeholderText];
+  if (_feedbackView.hidden) {
+    [self showFeedbackView];
   }
 }
 
-- (void)editScoreButtonPressed:(UIButton *)sender {
-  [_feedbackView textViewResignFirstResponder];
-  _scrolled = NO;
-  [self setQuestionViewVisible:YES andFeedbackViewVisible:NO];
-}
-
-- (void)dismissButtonPressed:(UIButton *)sender {
-  if (!_alreadyVoted) {
-    [self endUserDeclined];
-  }
-  [_feedbackView textViewResignFirstResponder];
-  [self dismissViewControllerWithBackgroundFade];
-}
-
-- (void)sendButtonPressed:(UIButton *)sender {
-  _alreadyVoted = YES;
-  int score = [_npsQuestionView getScoreSliderValue];
-  NSString *placeholderText = [_settings followupPlaceholderTextForScore:score];
-  NSString *text = [_feedbackView feedbackText];
-  [self endUserVotedWithScore:score andText:text];
-  if ([_feedbackView isActive]) {
-    [_feedbackView textViewResignFirstResponder];
-    if ([self socialShareAvailableForScore:score]) {
-      [self setupFacebookAndTwitterForScore:score];
-      [self presentSocialShareViewWithScore:score];
-    } else {
-      [self dismissWithFinalThankYou];
-    }
-  } else {
-    [self setQuestionViewVisible:NO andFeedbackViewVisible:YES];
-    [_feedbackView setFollowupLabelTextBasedOnScore:score];
-    [_feedbackView setFeedbackPlaceholderText:placeholderText];
-  }
-}
-
-- (void)noThanksButtonPressed {
-  [self dismissViewControllerWithBackgroundFade];
+- (void)showFeedbackView {
+  [_npsQuestionView hideQuestionLabel];
+  _feedbackView.hidden = NO;
+  _constraintModalHeight.constant = 215;
+  _constraintNPSTopToModalTop.constant = 50;
+  _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
+  [UIView animateWithDuration:0.2 animations:^{
+    [self.view layoutIfNeeded];
+  } completion:^(BOOL finished) {
+    [UIView animateWithDuration:0.2 animations:^{
+      _feedbackView.alpha = 1;
+    }];
+  }];
 }
 
 - (void)endUserVotedWithScore:(int)score andText:(NSString *)text {
   WTRSurvey *survey = [[WTRSurvey alloc] init];
   [survey endUserVotedWithScore:score andText:text];
+  _alreadyVoted = YES;
   NSLog(@"WootricSDK: Vote");
-}
-
-- (void)endUserDeclined {
-  WTRSurvey *survey = [[WTRSurvey alloc] init];
-  [survey endUserDeclined];
-  NSLog(@"WootricSDK: Decline");
-}
-
-- (void)setQuestionViewVisible:(BOOL)questionFlag andFeedbackViewVisible:(BOOL)feedbackFlag {
-  _npsQuestionView.hidden = !questionFlag;
-  _feedbackView.hidden = !feedbackFlag;
 }
 
 - (void)openWootricHomepage:(UIButton *)sender {
@@ -149,6 +113,51 @@
   if (![[UIApplication sharedApplication] openURL:url]) {
     NSLog(@"Failed to open wootric page");
   }
+}
+
+- (void)openThankYouURL:(WTRiPADThankYouButton *)sender {
+  if (![[UIApplication sharedApplication] openURL:sender.buttonURL]) {
+    NSLog(@"WootricSDK: Failed to open 'thank you' url");
+  } else {
+    [self dismissViewControllerWithBackgroundFade];
+  }
+}
+
+- (void)sendButtonPressed {
+  NSString *text = nil;
+  if ([_feedbackView feedbackTextPresent]) {
+    text = [_feedbackView feedbackText];
+  }
+  if ([self socialShareAvailableForScore:_currentScore]) {
+    [_socialShareView setThankYouButtonTextAndURLDependingOnScore:_currentScore];
+    [_socialShareView setThankYouMessageDependingOnScore:_currentScore];
+    [self setupFacebookAndTwitterForScore:_currentScore];
+    [self presentSocialShareViewWithScore:_currentScore];
+  } else {
+    [self dismissWithFinalThankYou];
+  }
+  [self endUserVotedWithScore:_currentScore andText:text];
+}
+
+- (void)dismissButtonPressed {
+  if (!_alreadyVoted) {
+    WTRSurvey *survey = [[WTRSurvey alloc] init];
+    [survey endUserDeclined];
+  }
+  [_feedbackView textViewResignFirstResponder];
+  [self dismissViewControllerWithBackgroundFade];
+}
+
+- (void)noThanksButtonPressed {
+  [self dismissViewControllerWithBackgroundFade];
+}
+
+- (void)dismissViewControllerWithBackgroundFade {
+  [UIView animateWithDuration:0.2 animations:^{
+    self.view.backgroundColor = [UIColor clearColor];
+  } completion:^(BOOL finished) {
+    [self dismissViewControllerAnimated:YES completion:nil];
+  }];
 }
 
 - (void)facebookButtonPressed {
@@ -174,29 +183,13 @@
   }
 }
 
-#pragma mark - Slider methods
-
-- (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer {
-  if (!_sendButton.enabled) {
-    _sendButton.enabled = YES;
-    _sendButton.backgroundColor = [WTRColor sendButtonBackgroundColor];
-  }
-  [_npsQuestionView sliderTapped:gestureRecognizer];
-}
-
-#pragma mark - Helper methods
-
 - (void)setupFacebookAndTwitterForScore:(int)score {
   BOOL twitterAvailable = ([self twitterHandlerAndFeedbackTextPresent] && score >= 9);
   BOOL facebookAvailable = ([_settings facebookPageSet] && score >= 9);
-  if (!twitterAvailable && !facebookAvailable) {
-    _constraintModalHeight.constant = 230;
-    _socialShareViewHeightConstraint.constant = 190;
-    _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
-    [UIView animateWithDuration:0.2 animations:^{
-      [self.view layoutIfNeeded];
-    }];
+  if (![_settings thankYouLinkConfiguredForScore:score]) {
+    [_socialShareView noThankYouButton];
   }
+  [self.view layoutIfNeeded];
   [_socialShareView displayShareButtonsWithTwitterAvailable:twitterAvailable andFacebookAvailable:facebookAvailable];
 }
 
@@ -211,21 +204,27 @@
 }
 
 - (void)presentSocialShareViewWithScore:(int)score {
-  [_socialShareView setThankYouButtonTextAndURLDependingOnScore:score];
-  [_socialShareView setThankYouMessageDependingOnScore:score];
+  _constraintModalHeight.constant = 165;
+  _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
   [self setQuestionViewVisible:NO andFeedbackViewVisible:NO];
-  _sendButton.hidden = YES;
+  [_feedbackView textViewResignFirstResponder];
   _socialShareView.hidden = NO;
+  [UIView animateWithDuration:0.2 animations:^{
+    [self.view layoutIfNeeded];
+  } completion:^(BOOL finished) {
+    [UIView animateWithDuration:0.1 animations:^{
+      _socialShareView.alpha = 1;
+    }];
+  }];
 }
 
 - (void)dismissWithFinalThankYou {
   _feedbackView.hidden = YES;
   _npsQuestionView.hidden = YES;
   _socialShareView.hidden = YES;
-  _sendButton.hidden = YES;
   _poweredByWootric.hidden = YES;
   _finalThankYouLabel.hidden = NO;
-  [_modalView hideDismissButton];
+  _dismissButton.hidden = YES;
   _constraintModalHeight.constant = 125;
   _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
   [UIView animateWithDuration:0.2 animations:^{
@@ -236,32 +235,9 @@
   });
 }
 
-- (void)dismissViewControllerWithBackgroundFade {
-  [UIView animateWithDuration:0.2 animations:^{
-    self.view.backgroundColor = [UIColor clearColor];
-  } completion:^(BOOL finished) {
-    [self dismissViewControllerAnimated:YES completion:nil];
-  }];
-}
-
-- (void)setModalGradient:(CGRect)bounds {
-  _gradient.frame = bounds;
-  _gradient.colors = @[(id)[WTRColor grayGradientTopColor].CGColor, (id)[WTRColor grayGradientBottomColor].CGColor];
-}
-
-- (void)getSizeAndRecalculatePositionsBasedOnOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  BOOL isFromLandscape = UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
-  BOOL isToLandscape = UIInterfaceOrientationIsLandscape(interfaceOrientation);
-  if ((!isFromLandscape && isToLandscape) || (isFromLandscape && !isToLandscape)) {
-    CGFloat widthAfterRotation;
-    CGFloat leftAndRightMargins = 28;
-    if (IS_OS_8_OR_LATER || isToLandscape) {
-      widthAfterRotation = self.view.frame.size.height - leftAndRightMargins;
-    } else {
-      widthAfterRotation = self.view.frame.size.width - leftAndRightMargins;
-    }
-    [_npsQuestionView recalculateDotsAndScorePositionForWidth:widthAfterRotation];
-  }
+- (void)setQuestionViewVisible:(BOOL)questionFlag andFeedbackViewVisible:(BOOL)feedbackFlag {
+  _npsQuestionView.hidden = !questionFlag;
+  _feedbackView.hidden = !feedbackFlag;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -270,7 +246,6 @@
   BOOL isToLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
   CGFloat modalPosition;
   CGRect bounds = self.view.bounds;
-  CGRect gradientBounds;
 
   if ((bounds.size.width > bounds.size.height) && isToLandscape) {
     modalPosition = bounds.size.height - _modalView.frame.size.height;
@@ -278,25 +253,14 @@
     modalPosition = bounds.size.width - _modalView.frame.size.height;
   }
 
-  if ((bounds.size.height > bounds.size.width) && isToLandscape) {
-    gradientBounds = CGRectMake(bounds.origin.y, bounds.origin.x, bounds.size.height, bounds.size.width);
-  } else {
-    gradientBounds = bounds;
-  }
-
   _constraintTopToModalTop.constant = modalPosition;
-  [self getSizeAndRecalculatePositionsBasedOnOrientation:toInterfaceOrientation];
-  [self setModalGradient:gradientBounds];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
   [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-  _scrolled = NO;
 
-  BOOL isFromLandscape = UIInterfaceOrientationIsLandscape(fromInterfaceOrientation);
-  CGRect bounds = self.view.bounds;
-  if (_keyboardHeight == 0 && isFromLandscape && (bounds.size.width > bounds.size.height)) {
-    [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
+  if (_keyboardHeight == 0) {
+    [_scrollView setContentOffset:CGPointMake(0, _keyboardHeight) animated:YES];
   }
 }
 
@@ -330,9 +294,6 @@
   if ((_keyboardHeight != keyboardFrame.size.height)) {
     _keyboardHeight = keyboardFrame.size.height;
     [_scrollView setContentOffset:CGPointMake(0, _keyboardHeight) animated:YES];
-  } else if (!_scrolled) {
-    [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
-    _scrolled = YES;
   }
 }
 

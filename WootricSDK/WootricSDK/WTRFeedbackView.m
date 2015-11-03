@@ -25,6 +25,7 @@
 #import "WTRFeedbackView.h"
 #import "WTRColor.h"
 #import "WTRSurveyViewController.h"
+#import "UIItems.h"
 
 @interface WTRFeedbackView ()
 
@@ -107,35 +108,16 @@
 }
 
 - (void)setupFeedbackTextViewWithViewController:(WTRSurveyViewController *)viewController {
-  _feedbackTextView = [[UITextView alloc] init];
+  _feedbackTextView = [UIItems feedbackTextViewWithBackgroundColor:[UIColor whiteColor]];
   _feedbackTextView.delegate = viewController;
-  _feedbackTextView.backgroundColor = [UIColor whiteColor];
-  _feedbackTextView.font = [UIFont systemFontOfSize:16];
-  _feedbackTextView.textColor = [WTRColor textAreaTextColor];
-  _feedbackTextView.layer.borderColor = [WTRColor textAreaBorderColor].CGColor;
-  _feedbackTextView.layer.borderWidth = 1;
-  _feedbackTextView.layer.cornerRadius = 3;
-  _feedbackTextView.textContainerInset = UIEdgeInsetsMake(16.0, 16.0, 16.0, 16.0);
-  _feedbackTextView.tintColor = [WTRColor textAreaCursorColor];
-  [_feedbackTextView setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupFeedbackLabel {
-  _feedbackPlaceholder = [[UILabel alloc] init];
-  _feedbackPlaceholder.textColor = [WTRColor textAreaTextColor];
-  _feedbackPlaceholder.font = [UIFont systemFontOfSize:16];
-  _feedbackPlaceholder.numberOfLines = 0;
-  _feedbackPlaceholder.lineBreakMode = NSLineBreakByWordWrapping;
-  [_feedbackPlaceholder setTranslatesAutoresizingMaskIntoConstraints:NO];
+  _feedbackPlaceholder = [UIItems feedbackPlaceholder];
 }
 
 - (void)setupFollowupLabel {
-  _followupLabel = [[UILabel alloc] init];
-  _followupLabel.font = [UIFont boldSystemFontOfSize:16];
-  _followupLabel.numberOfLines = 0;
-  _followupLabel.lineBreakMode = NSLineBreakByWordWrapping;
-  _followupLabel.textAlignment = NSTextAlignmentCenter;
-  [_followupLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  _followupLabel = [UIItems followupLabelWithTextColor:[UIColor blackColor]];
 }
 
 - (void)addSubviews {

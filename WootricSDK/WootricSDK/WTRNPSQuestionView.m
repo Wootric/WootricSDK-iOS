@@ -26,6 +26,7 @@
 #import "WTRColor.h"
 #import "WTRScoreView.h"
 #import "WTRSlider.h"
+#import "UIItems.h"
 
 @interface WTRNPSQuestionView ()
 
@@ -118,34 +119,23 @@
 #pragma mark - Subviews setup
 
 - (void)setupNpsQuestionLabel {
-  _npsQuestionLabel = [[UILabel alloc] init];
-  _npsQuestionLabel.textAlignment = NSTextAlignmentCenter;
-  _npsQuestionLabel.textColor = [UIColor blackColor];
-  _npsQuestionLabel.numberOfLines = 0;
-  _npsQuestionLabel.lineBreakMode = NSLineBreakByWordWrapping;
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    _npsQuestionLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightMedium];
+    _npsQuestionLabel = [UIItems npsQuestionLabelWithSettings:_settings
+                                                      andFont:[UIFont systemFontOfSize:18 weight:UIFontWeightMedium]];
   } else {
-    _npsQuestionLabel.font = [UIFont systemFontOfSize:18];
+    _npsQuestionLabel = [UIItems npsQuestionLabelWithSettings:_settings
+                                                      andFont:[UIFont systemFontOfSize:18]];
   }
-  _npsQuestionLabel.text = [_settings npsQuestionText];
-  [_npsQuestionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupLikelyAnchor {
-  _likelyAnchor = [[UILabel alloc] init];
-  _likelyAnchor.textColor = [WTRColor anchorAndScoreColor];
-  _likelyAnchor.text = [self.settings likelyAnchorText];
-  _likelyAnchor.font = [UIFont systemFontOfSize:14];
-  [_likelyAnchor setTranslatesAutoresizingMaskIntoConstraints:NO];
+  _likelyAnchor = [UIItems likelyAnchorWithSettings:_settings
+                                            andFont:[UIFont systemFontOfSize:14]];
 }
 
 - (void)setupNotLikelyAnchor {
-  _notLikelyAnchor = [[UILabel alloc] init];
-  _notLikelyAnchor.textColor = [WTRColor anchorAndScoreColor];
-  _notLikelyAnchor.text = [self.settings notLikelyAnchorText];
-  _notLikelyAnchor.font = [UIFont systemFontOfSize:14];
-  [_notLikelyAnchor setTranslatesAutoresizingMaskIntoConstraints:NO];
+  _notLikelyAnchor = [UIItems notLikelyAnchorWithSettings:_settings
+                                                  andFont:[UIFont systemFontOfSize:14]];
 }
 
 - (void)setupSliderWithSuperview:(UIView *)superview andViewController:(UIViewController *)viewController {
