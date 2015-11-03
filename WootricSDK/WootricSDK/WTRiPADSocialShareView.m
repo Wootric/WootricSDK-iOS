@@ -107,7 +107,7 @@
   CGFloat spacing = 15.0;
   CGFloat socialButtonWidth = _facebookButton.frame.size.width / 2;
   CGFloat totalSpacing = spacing;
-  CGFloat buttonsWidth;
+  CGFloat buttonsWidth = 0.0;
   CGFloat totalWidth;
 
   if (facebookAvailable) {
