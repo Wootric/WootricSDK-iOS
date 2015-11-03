@@ -43,7 +43,7 @@
   if (self = [super init]) {
     _setDefaultAfterSurvey = YES;
     _surveyedDefaultDuration = 90;
-    _firstSurveyAfter = @30;
+    _firstSurveyAfter = @0;
     _originURL = [[NSBundle mainBundle] bundleIdentifier];
     _customThankYou = [[WTRCustomThankYou alloc] init];
     _userCustomMessages = [[WTRUserCustomMessages alloc] init];

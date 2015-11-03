@@ -87,7 +87,7 @@
         }
       }
     } else {
-      NSLog(@"WootricSDK: needsSurvey(YES) - firstSurveyAfter is set to less than 0");
+      NSLog(@"WootricSDK: needsSurvey(YES) - firstSurveyAfter is set to less than or equal 0");
       return YES;
     }
   }
