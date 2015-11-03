@@ -43,7 +43,7 @@
   if (self = [super init]) {
     _setDefaultAfterSurvey = YES;
     _surveyedDefaultDuration = 90;
-    _firstSurveyAfter = @31;
+    _firstSurveyAfter = @30;
     _originURL = [[NSBundle mainBundle] bundleIdentifier];
     _customThankYou = [[WTRCustomThankYou alloc] init];
     _userCustomMessages = [[WTRUserCustomMessages alloc] init];
@@ -58,6 +58,7 @@
   if (surveyServerSettings[@"settings"]) {
     localizedTextsFromSurvey = surveyServerSettings[@"settings"][@"localized_texts"];
     customMessagesFromSurvey = surveyServerSettings[@"settings"][@"messages"];
+    NSNumber *firstSurvey = surveyServerSettings[@"settings"][@"first_survey"];
 
     if (localizedTextsFromSurvey) {
       _localizedTexts = [[WTRLocalizedTexts alloc] initWithLocalizedTexts:localizedTextsFromSurvey];
@@ -65,6 +66,10 @@
 
     if (customMessagesFromSurvey) {
       _customMessages = [[WTRCustomMessages alloc] initWithCustomMessages:customMessagesFromSurvey];
+    }
+
+    if (firstSurvey) {
+      _firstSurveyAfter = firstSurvey;
     }
   }
 }

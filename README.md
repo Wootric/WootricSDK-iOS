@@ -41,6 +41,7 @@ $ pod install
 + setCustomFinalThankYou:
 + setCustomNPSQuestion:
 + setFirstSurveyAfter:
++ setSurveyedDefault:
 + forceSurvey:
 + surveyImmediately:
 + setFacebookPage:
@@ -123,7 +124,7 @@ This value is also used in eligibility check, to determine if end user should be
 ```objective-c
 [WootricSDK setFirstSurveyAfter:<NUMBER_OF_DAYS>];
 ```
-If not set, defaults to 31 days. Used to check if end user was created/last seen earlier than <NUMBER_OF_DAYS> ago and therefore if survey is required.
+If not set, defaults to value from admin panel. Used to check if end user was created/last seen earlier than <NUMBER_OF_DAYS> ago and therefore if survey is required.
 
 ```objective-c
 [WootricSDK setEndUserProperties:<NSDICTIONARY>];
@@ -134,6 +135,12 @@ Adds properties object to end user.
 [WootricSDK setProductNameForEndUser:<PRODUCT_NAME>];
 ```
 Directly adds a product name to end user's properties.
+
+```objective-c
+[WootricSDK setSurveyedDefault:<BOOL>];
+```
+Right after a vote or dismiss we are setting a NSUserDefault that lasts for 90 days and indicates that end user was already surveyed on this device. We are doing this to lower the requests amount to our eligibility server.
+If your survey throttle is different than 90 days and/or you don't want to set the surveyed "cookie" you can set this option to ```NO```.
 
 ####Per view configuration:
 

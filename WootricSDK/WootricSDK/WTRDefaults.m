@@ -40,10 +40,11 @@
 }
 
 + (void)setSurveyed {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
 
   if (apiClient.settings.setDefaultAfterSurvey) {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
     [defaults setBool:YES forKey:@"surveyed"];
     [defaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:@"surveyedAt"];
   }

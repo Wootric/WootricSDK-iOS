@@ -39,8 +39,9 @@
 + (void)setCustomNPSQuestion:(NSString *)npsQuestion;
 + (void)setEndUserProperties:(NSDictionary *)customProperties;
 + (void)setFirstSurveyAfter:(NSNumber *)firstSurveyAfter;
-+ (void)forceSurvey:(BOOL)flag;
++ (void)setSurveyedDefault:(BOOL)flag;
 + (void)surveyImmediately:(BOOL)flag;
++ (void)forceSurvey:(BOOL)flag;
 
 + (void)setFacebookPage:(NSURL *)facebookPage;
 + (void)setTwitterHandler:(NSString *)twitterHandler;

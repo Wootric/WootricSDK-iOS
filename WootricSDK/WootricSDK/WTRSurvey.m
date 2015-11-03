@@ -66,25 +66,32 @@
 - (BOOL)needsSurvey {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   if ([defaults boolForKey:@"surveyed"]) {
+    NSLog(@"WootricSDK: needsSurvey(NO) - Already surveyed in last %d days", (int)_apiClient.settings.surveyedDefaultDuration);
     return NO;
   } else if (_apiClient.settings.surveyImmediately) {
+    NSLog(@"WootricSDK: needsSurvey(YES) - surveyImmediately");
     return YES;
   } else if (!_apiClient.settings.externalCreatedAt) {
+    NSLog(@"WootricSDK: needsSurvey(YES) - no externalCreatedAt");
     return YES;
   } else {
     if ([_apiClient.settings.firstSurveyAfter intValue] > 0) {
       NSInteger age = [[NSDate date] timeIntervalSince1970] - [_apiClient.settings.externalCreatedAt intValue];
       if (age > ([_apiClient.settings.firstSurveyAfter intValue] * 60 * 60 * 24)) {
+        NSLog(@"WootricSDK: needsSurvey(YES) - end user's account older than firstSurveyAfter value");
         return YES;
       } else {
         if (([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"lastSeenAt"]) >= ([_apiClient.settings.firstSurveyAfter intValue] * 60 * 60 * 24)) {
+          NSLog(@"WootricSDK: needsSurvey(YES) - end user's lastSeenAt greater or equal than firstSurveyAfter value");
           return YES;
         }
       }
     } else {
+      NSLog(@"WootricSDK: needsSurvey(YES) - firstSurveyAfter is set to less than 0");
       return YES;
     }
   }
+  NSLog(@"WootricSDK: needsSurvey(NO) - No check passed");
   return NO;
 }
 

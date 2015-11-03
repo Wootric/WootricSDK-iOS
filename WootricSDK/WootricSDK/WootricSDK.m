@@ -75,6 +75,11 @@
   apiClient.settings.customNPSQuestion = npsQuestion;
 }
 
++ (void)setSurveyedDefault:(BOOL)flag {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.setDefaultAfterSurvey = flag;
+}
+
 + (void)forceSurvey:(BOOL)flag {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.forceSurvey = flag;
@@ -125,7 +130,6 @@
     WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:surveySettings];
     [viewController presentViewController:surveyViewController animated:YES completion:nil];
   }
-
 }
 
 #pragma mark - Social Share
