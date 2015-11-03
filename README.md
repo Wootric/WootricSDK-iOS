@@ -67,7 +67,7 @@ $ pod install
 WootricSDK is communicating with three endpoints:
 
 * https://api.wootric.com/
-* http://wootric-eligibility.herokuapp.com/
+* https://survey.wootric.com/eligible.json
 * https://*.cloudfront.net/
 
 either "enable" them in NSAppTransportSecurity or allow all loads by adding to your .plist:
