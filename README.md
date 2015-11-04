@@ -62,26 +62,6 @@ $ pod install
 ####Required configuration:
 ---
 
-#####ATS notice:
-
-WootricSDK is communicating with three endpoints:
-
-* https://api.wootric.com/
-* https://survey.wootric.com/eligible.json
-* https://*.cloudfront.net/
-
-either "enable" them in NSAppTransportSecurity or allow all loads by adding to your .plist:
-
-```
-<key>NSAppTransportSecurity</key>
-<dict>
-<key>NSAllowsArbitraryLoads</key>
-<true/>
-</dict>
-```
-
----
-
 WootricSDK task is to present a fully functional survey view with just a few lines of code.
 
 First import the SDK's header:
