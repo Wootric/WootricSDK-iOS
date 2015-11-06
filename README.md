@@ -2,8 +2,9 @@
 ##Requirements
 - iOS 7.0+
 
-##Demo
-- View the iOS demo video [here.](https://cl.ly/dVaI) 
+##Demos
+- View the iOS demo video with referral prompt [here.](https://cl.ly/dVaI) 
+- View the iOS demo with App Store rating prompt [here.] (http://cl.ly/2g2W2P1c240U)
 
 ##Installation
 ---
