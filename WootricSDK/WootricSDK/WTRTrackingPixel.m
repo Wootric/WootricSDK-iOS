@@ -35,8 +35,9 @@
   NSString *stringToFormat = @"https://d8myem934l1zi.cloudfront.net/pixel.gif?account_token=%@&email=%@&url=%@&random=%@";
   NSString *params = [NSString stringWithFormat:stringToFormat, apiClient.accountToken, apiClient.settings.endUserEmail, apiClient.settings.originURL, formattedRandom];
 
-  if (apiClient.settings.externalCreatedAt != 0) {
-    params = [NSString stringWithFormat:@"%@&created_at=%ld", params, (long)apiClient.settings.externalCreatedAt];
+  if (apiClient.settings.externalCreatedAt) {
+    NSLog(@"WootricSDK: externalCreatedAt: %ld", (long)[apiClient.settings.externalCreatedAt intValue]);
+    params = [NSString stringWithFormat:@"%@&created_at=%ld", params, (long)[apiClient.settings.externalCreatedAt intValue]];
   }
 
   NSURL *pixelUrl = [NSURL URLWithString:params];
@@ -47,7 +48,7 @@
     if (error) {
       NSLog(@"WootricSDK: tracking pixel error: %@", error);
     } else {
-      NSLog(@"WootricSDK: tracking pixel GET success");
+      NSLog(@"WootricSDK: tracking pixel GET success (with params: %@)", params);
     }
   }];
 

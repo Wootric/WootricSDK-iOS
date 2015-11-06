@@ -27,10 +27,24 @@
 
 @interface WootricSDK : NSObject
 
+/*!
+ @brief It configures the SDK with required parameters.
+ @param clientID Found in API section of the Wootric's admin panel.
+ @param clientSecret Found in API section of the Wootric's admin panel.
+ @param accountToken Found in Install section of the Wootric's admin panel.
+*/
 + (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret accountToken:(NSString *)accountToken;
+/*!
+ @brief It shows survey if end user is eligible.
+ @param viewController View controller in which you would like to display the survey.
+*/
 + (void)showSurveyInViewController:(UIViewController *)viewController;
-+ (void)setEndUserEmail:(NSString *)endUserEmail;
+/*!
+ @brief It sets end user's account creation date to provided value (UNIX Timestamp truncated to seconds).
+ @param externalCreatedAt UNIX Timestamp truncated to seconds.
+ */
 + (void)setEndUserCreatedAt:(NSNumber *)externalCreatedAt;
++ (void)setEndUserEmail:(NSString *)endUserEmail;
 + (void)setProductNameForEndUser:(NSString *)productName;
 + (void)setCustomLanguage:(NSString *)languageCode;
 + (void)setCustomAudience:(NSString *)audience;

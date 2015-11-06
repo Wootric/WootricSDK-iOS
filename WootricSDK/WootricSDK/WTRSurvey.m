@@ -82,12 +82,12 @@
         return YES;
       } else {
         if (([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"lastSeenAt"]) >= ([_apiClient.settings.firstSurveyAfter intValue] * 60 * 60 * 24)) {
-          NSLog(@"WootricSDK: needsSurvey(YES) - end user's lastSeenAt greater or equal than firstSurveyAfter value");
+          NSLog(@"WootricSDK: needsSurvey(YES) - end user's lastSeenAt greater than or equal firstSurveyAfter value");
           return YES;
         }
       }
     } else {
-      NSLog(@"WootricSDK: needsSurvey(YES) - firstSurveyAfter is set to less than or equal 0");
+      NSLog(@"WootricSDK: needsSurvey(YES) - firstSurveyAfter is set to less than or equal 0 in SDK (will be compared to admin panel value)");
       return YES;
     }
   }
