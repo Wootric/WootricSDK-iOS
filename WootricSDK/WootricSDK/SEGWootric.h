@@ -1,5 +1,5 @@
 //
-//  SegmentWootric.h
+//  SEGWootric.h
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -28,7 +28,7 @@
 // This class sole purpose is to make accessing Wootric configuration from Segment-Wootric easier for user of the latter
 // It is subject to change as the amount of code duplicated is making me sad, but hey, deadlines.
 
-@interface SegmentWootric : NSObject
+@interface SEGWootric : NSObject
 
 /*!
  @brief It configures the SDK with required parameters.

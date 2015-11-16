@@ -1,5 +1,5 @@
 //
-//  SegmentWootric.m
+//  SEGWootric.m
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,10 +22,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "SegmentWootric.h"
+#import "SEGWootric.h"
 #import "Wootric.h"
 
-@implementation SegmentWootric
+@implementation SEGWootric
 
 - (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret accountToken:(NSString *)accountToken {
   [Wootric configureWithClientID:clientID clientSecret:clientSecret accountToken:accountToken];

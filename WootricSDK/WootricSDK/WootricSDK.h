@@ -1,6 +1,6 @@
 //
-//  WootricSDKHeaders.h
-//  WootricSDKHeaders
+//  WootricSDK.h
+//  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
 //
@@ -23,7 +23,7 @@
 // THE SOFTWARE.
 
 #import "Wootric.h"
-#import "SegmentWootric.h"
+#import "SEGWootric.h"
 
 FOUNDATION_EXPORT double WootricSDKMainVersionNumber;
 FOUNDATION_EXPORT const unsigned char WootricSDKMainVersionString[];

@@ -1,3 +1,9 @@
+## 0.4.1 (2015-11-16)
+
+### Hotfix:
+
+- Renamed SegmentWootric to SEGWootric.
+
 ## 0.4.0 (2015-11-16)
 
 ### Added:
