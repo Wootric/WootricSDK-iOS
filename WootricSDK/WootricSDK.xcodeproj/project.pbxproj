@@ -81,11 +81,13 @@
 		B2C940691BA71A2900482494 /* WTRSliderDot.m in Sources */ = {isa = PBXBuildFile; fileRef = B2C940671BA71A2900482494 /* WTRSliderDot.m */; };
 		B2C9406C1BA83E6200482494 /* WTRScoreView.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C9406A1BA83E6200482494 /* WTRScoreView.h */; };
 		B2C9406D1BA83E6200482494 /* WTRScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = B2C9406B1BA83E6200482494 /* WTRScoreView.m */; };
-		B2DC6F081B81E6F900F599B3 /* WootricSDKHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = B2DC6F071B81E6F900F599B3 /* WootricSDKHeaders.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B2D9FCDF1BF9F18E00479F9F /* SegmentWootric.h in Headers */ = {isa = PBXBuildFile; fileRef = B2D9FCDD1BF9F18E00479F9F /* SegmentWootric.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B2D9FCE01BF9F18E00479F9F /* SegmentWootric.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D9FCDE1BF9F18E00479F9F /* SegmentWootric.m */; };
+		B2DC6F081B81E6F900F599B3 /* WootricSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = B2DC6F071B81E6F900F599B3 /* WootricSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B2DC6F0E1B81E6F900F599B3 /* WootricSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DC6F021B81E6F900F599B3 /* WootricSDK.framework */; };
 		B2DC6F151B81E6F900F599B3 /* WootricSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6F141B81E6F900F599B3 /* WootricSDKTests.m */; };
-		B2DC6F2E1B82000900F599B3 /* WootricSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = B2DC6F2C1B82000900F599B3 /* WootricSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B2DC6F2F1B82000900F599B3 /* WootricSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6F2D1B82000900F599B3 /* WootricSDK.m */; };
+		B2DC6F2E1B82000900F599B3 /* Wootric.h in Headers */ = {isa = PBXBuildFile; fileRef = B2DC6F2C1B82000900F599B3 /* Wootric.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B2DC6F2F1B82000900F599B3 /* Wootric.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6F2D1B82000900F599B3 /* Wootric.m */; };
 		B2DC6F331B820E6B00F599B3 /* WTRApiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = B2DC6F311B820E6B00F599B3 /* WTRApiClient.h */; };
 		B2DC6F341B820E6B00F599B3 /* WTRApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6F321B820E6B00F599B3 /* WTRApiClient.m */; };
 		B2DC6F371B82143B00F599B3 /* WTRSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = B2DC6F351B82143B00F599B3 /* WTRSettings.h */; };
@@ -177,14 +179,16 @@
 		B2C940671BA71A2900482494 /* WTRSliderDot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSliderDot.m; sourceTree = "<group>"; };
 		B2C9406A1BA83E6200482494 /* WTRScoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRScoreView.h; sourceTree = "<group>"; };
 		B2C9406B1BA83E6200482494 /* WTRScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRScoreView.m; sourceTree = "<group>"; };
+		B2D9FCDD1BF9F18E00479F9F /* SegmentWootric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentWootric.h; sourceTree = "<group>"; };
+		B2D9FCDE1BF9F18E00479F9F /* SegmentWootric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentWootric.m; sourceTree = "<group>"; };
 		B2DC6F021B81E6F900F599B3 /* WootricSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WootricSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DC6F061B81E6F900F599B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B2DC6F071B81E6F900F599B3 /* WootricSDKHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WootricSDKHeaders.h; sourceTree = "<group>"; };
+		B2DC6F071B81E6F900F599B3 /* WootricSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WootricSDK.h; sourceTree = "<group>"; };
 		B2DC6F0D1B81E6F900F599B3 /* WootricSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WootricSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DC6F131B81E6F900F599B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2DC6F141B81E6F900F599B3 /* WootricSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WootricSDKTests.m; sourceTree = "<group>"; };
-		B2DC6F2C1B82000900F599B3 /* WootricSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WootricSDK.h; sourceTree = "<group>"; };
-		B2DC6F2D1B82000900F599B3 /* WootricSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WootricSDK.m; sourceTree = "<group>"; };
+		B2DC6F2C1B82000900F599B3 /* Wootric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wootric.h; sourceTree = "<group>"; };
+		B2DC6F2D1B82000900F599B3 /* Wootric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wootric.m; sourceTree = "<group>"; };
 		B2DC6F311B820E6B00F599B3 /* WTRApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRApiClient.h; sourceTree = "<group>"; };
 		B2DC6F321B820E6B00F599B3 /* WTRApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRApiClient.m; sourceTree = "<group>"; };
 		B2DC6F351B82143B00F599B3 /* WTRSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRSettings.h; sourceTree = "<group>"; };
@@ -371,15 +375,17 @@
 				B2ADF6521B9DBD73005403AC /* Utils */,
 				B2ADF6511B9DBD52005403AC /* SurveySettings */,
 				B2DC6F301B82034100F599B3 /* ViewControllers */,
-				B2DC6F071B81E6F900F599B3 /* WootricSDKHeaders.h */,
-				B2DC6F2C1B82000900F599B3 /* WootricSDK.h */,
-				B2DC6F2D1B82000900F599B3 /* WootricSDK.m */,
+				B2DC6F071B81E6F900F599B3 /* WootricSDK.h */,
+				B2DC6F2C1B82000900F599B3 /* Wootric.h */,
+				B2DC6F2D1B82000900F599B3 /* Wootric.m */,
 				B2102A371BB59AE60025DABC /* WTRSurvey.h */,
 				B2102A381BB59AE60025DABC /* WTRSurvey.m */,
 				B2102A391BB59AE60025DABC /* WTRTrackingPixel.h */,
 				B2102A3A1BB59AE60025DABC /* WTRTrackingPixel.m */,
 				B2DC6F311B820E6B00F599B3 /* WTRApiClient.h */,
 				B2DC6F321B820E6B00F599B3 /* WTRApiClient.m */,
+				B2D9FCDD1BF9F18E00479F9F /* SegmentWootric.h */,
+				B2D9FCDE1BF9F18E00479F9F /* SegmentWootric.m */,
 				B2DC6F051B81E6F900F599B3 /* Supporting Files */,
 			);
 			path = WootricSDK;
@@ -430,10 +436,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2C940681BA71A2900482494 /* WTRSliderDot.h in Headers */,
+				B2DC6F2E1B82000900F599B3 /* Wootric.h in Headers */,
+				B2D9FCDF1BF9F18E00479F9F /* SegmentWootric.h in Headers */,
 				B2C940641BA30AFB00482494 /* UIImage+ImageFromColor.h in Headers */,
 				B2C9406C1BA83E6200482494 /* WTRScoreView.h in Headers */,
 				B268666E1BD5339800A4288D /* WTRiPADSurveyViewController.h in Headers */,
-				B2DC6F081B81E6F900F599B3 /* WootricSDKHeaders.h in Headers */,
+				B2DC6F081B81E6F900F599B3 /* WootricSDK.h in Headers */,
 				B2102A351BB59ACE0025DABC /* WTRLocalizedTexts.h in Headers */,
 				B229767D1BB1901500FC2772 /* WTRThankYouButton.h in Headers */,
 				B22976811BB2A2C300FC2772 /* WTRSocialShareView.h in Headers */,
@@ -458,7 +466,6 @@
 				B27889751BDF85FD001D5696 /* UIItems.h in Headers */,
 				B24550A11B909A49001AC1FB /* WTRSurveyViewController+Views.h in Headers */,
 				B2C9405B1BA0723300482494 /* WTRModalView.h in Headers */,
-				B2DC6F2E1B82000900F599B3 /* WootricSDK.h in Headers */,
 				B26866821BD63ED100A4288D /* WTRCircleScoreView.h in Headers */,
 				B278897D1BE105D6001D5696 /* WTRiPADThankYouButton.h in Headers */,
 				B26866721BD5443000A4288D /* WTRiPADSurveyViewController+Views.h in Headers */,
@@ -581,7 +588,7 @@
 				B2C9405C1BA0723300482494 /* WTRModalView.m in Sources */,
 				B26866771BD5444F00A4288D /* WTRiPADSurveyViewController+Constraints.m in Sources */,
 				B22976821BB2A2C300FC2772 /* WTRSocialShareView.m in Sources */,
-				B2DC6F2F1B82000900F599B3 /* WootricSDK.m in Sources */,
+				B2DC6F2F1B82000900F599B3 /* Wootric.m in Sources */,
 				B2102A361BB59ACE0025DABC /* WTRLocalizedTexts.m in Sources */,
 				B2C9406D1BA83E6200482494 /* WTRScoreView.m in Sources */,
 				B278897A1BE0E168001D5696 /* WTRiPADSocialShareView.m in Sources */,
@@ -589,6 +596,7 @@
 				B245509E1B909A03001AC1FB /* WTRSurveyViewController.m in Sources */,
 				B24550A61B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m in Sources */,
 				B2C940611BA300A000482494 /* WTRSlider.m in Sources */,
+				B2D9FCE01BF9F18E00479F9F /* SegmentWootric.m in Sources */,
 				B278897E1BE105D6001D5696 /* WTRiPADThankYouButton.m in Sources */,
 				B27889711BDA5520001D5696 /* WTRiPADFeedbackView.m in Sources */,
 				B27889761BDF85FD001D5696 /* UIItems.m in Sources */,
@@ -731,6 +739,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wootric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -748,6 +757,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wootric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

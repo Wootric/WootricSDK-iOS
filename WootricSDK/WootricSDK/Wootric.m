@@ -22,7 +22,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "WootricSDK.h"
+#import "Wootric.h"
 #import "WTRTrackingPixel.h"
 #import "WTRSurvey.h"
 #import "WTRSurveyViewController.h"
@@ -31,7 +31,7 @@
 
 #define IPAD UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
 
-@implementation WootricSDK
+@implementation Wootric
 
 + (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret accountToken:(NSString *)accountToken {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
@@ -112,7 +112,7 @@
     [surveyClient survey:^{
       NSLog(@"WootricSDK: presenting survey view");
       dispatch_async(dispatch_get_main_queue(), ^{
-        [WootricSDK presentSurveyInViewController:viewController];
+        [self presentSurveyInViewController:viewController];
       });
     }];
   } else {

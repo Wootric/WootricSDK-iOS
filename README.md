@@ -16,7 +16,7 @@ $ gem install cocoapods
 ```
 To integrate WootricSDK into your Xcode project using CocoaPods, specify it in your `Podfile`:
 ```ruby
-pod "WootricSDK", "~> 0.3.3"
+pod "WootricSDK", "~> 0.4.0"
 ```
 Then, run the following command:
 
@@ -67,101 +67,105 @@ WootricSDK task is to present a fully functional survey view with just a few lin
 
 First import the SDK's header:
 ```objective-c
-#import "WootricSDK.h"
+@import WootricSDK;
+
+// or
+
+#import <WootricSDK/WootricSDK.h>
 ```
 Then you need to configure the SDK with your client ID, secret and account token:
 ```objective-c
-[WootricSDK configureWithClientID:<YOUR_CLIENT_ID> clientSecret:<YOUR_CLIENT_SECRET> accountToken:<YOUR_TOKEN>];
+[Wootric configureWithClientID:<YOUR_CLIENT_ID> clientSecret:<YOUR_CLIENT_SECRET> accountToken:<YOUR_TOKEN>];
 ```
 And you are good to go! To display the survey (if user is eligible - this check is built in the method) use:
 ```objective-c
-[WootricSDK showSurve]InViewController:<YOUR_VIEW_CONTROLLER>];
+[Wootric showSurveyInViewController:<YOUR_VIEW_CONTROLLER>];
 ```
 
 ####Additional configuration:
 ---
 
 ```objective-c
-[WootricSDK setEndUserEmail:<END_USER_EMAIL>];
+[Wootric setEndUserEmail:<END_USER_EMAIL>];
 ```
 While end user email is not required it is HIGHLY recommended to set it if possible.
 
 ```objective-c
-[WootricSDK forceSurvey:<BOOL>];
+[Wootric forceSurvey:<BOOL>];
 ```
 If forceSurvey is set to YES, the survey is displayed skipping eligibility check AND even if user was already surveyed. This is for test purposes only as it will display the survey every time and for every user.
 
 ```objective-c
-[WootricSDK surveyImmediately:<BOOL>];
+[Wootric surveyImmediately:<BOOL>];
 ```
 If surveyImmediately is set to YES and user wasn't surveyed yet - eligibility check will return "true" and survey will be displayed. This shouldn't be used on production.
 
 ```objective-c
-[WootricSDK setEndUserCreatedAt:<UNIX Timestamp>];
+[Wootric setEndUserCreatedAt:<UNIX Timestamp>];
 ```
 When creating a new end user for survey, it will set his/hers external creation date (so for example, date, when end user was created in your iOS application).
 This value is also used in eligibility check, to determine if end user should be surveyed.
 
 ```objective-c
-[WootricSDK setFirstSurveyAfter:<NUMBER_OF_DAYS>];
+[Wootric setFirstSurveyAfter:<NUMBER_OF_DAYS>];
 ```
 If not set, defaults to value from admin panel. Used to check if end user was created/last seen earlier than <NUMBER_OF_DAYS> ago and therefore if survey is required.
 
 ```objective-c
-[WootricSDK setEndUserProperties:<NSDICTIONARY>];
+[Wootric setEndUserProperties:<NSDICTIONARY>];
 ```
 Adds properties object to end user.
 
 ```objective-c
-[WootricSDK setProductNameForEndUser:<PRODUCT_NAME>];
+[Wootric setProductNameForEndUser:<PRODUCT_NAME>];
 ```
 Directly adds a product name to end user's properties.
 
 ```objective-c
-[WootricSDK setSurveyedDefault:<BOOL>];
+[Wootric setSurveyedDefault:<BOOL>];
 ```
 Right after a vote or dismiss we are setting a NSUserDefault that lasts for 90 days and indicates that end user was already surveyed on this device. We are doing this to lower the requests amount to our eligibility server.
 If your survey throttle is different than 90 days and/or you don't want to set the surveyed "cookie" you can set this option to ```NO```.
 
 ####Per view configuration:
 
-While WootricSDK is using values you have set in admin panel, it is possible to override these values directly in code.
+While Wootric is using values you have set in admin panel, it is possible to override these values directly in code.
 
 ---
 
 ```objective-c
-[WootricSDK setCustomNPSQuestion:<NPS_QUESTION>];
+[Wootric setCustomNPSQuestion:<NPS_QUESTION>];
 ```
 Changes NPS Question from admin panel to provided value (English default is "How likely are you to recommend this product or service to a friend or co-worker?").
 
 ```objective-c
-[WootricSDK setCustomFinalThankYou:<FINAL_THANK_YOU>];
+[Wootric setCustomFinalThankYou:<FINAL_THANK_YOU>];
 ```
 
 Changes final thank you from admin panel to provided value (English default is "Thank you for your response, and your feedback!).
 
 ```objective-c
 // You can pass nil value for any of the parameters - it will use defaults for eligibility check if you do so.
-[WootricSDK setCustomValueForResurveyThrottle:<NUMBER_OF_DAYS> visitorPercentage:<0-100> registeredPercentage:<0-100> dailyResponseCap:<0-...>];
+[Wootric setCustomValueForResurveyThrottle:<NUMBER_OF_DAYS> visitorPercentage:<0-100> registeredPercentage:<0-100> dailyResponseCap:<0-...>];
 ```
 This method will alter the values of resurvey throttle, tested visitor, registered users percentage and daily response cap used for eligibility check.
 
 ```objective-c
-[WootricSDK setCustomFollowupQuestionForPromoter:<CUSTOM_QUESTION> passive:<CUSTOM_QUESTION> detractor:<CUSTOM_QUESTION>];
+[Wootric setCustomFollowupQuestionForPromoter:<CUSTOM_QUESTION> passive:<CUSTOM_QUESTION> detractor:<CUSTOM_QUESTION>];
 ```
 This method allows you to set custom question for each type of end user (detractor, passive or promoter). Passing ```nil``` for any of the parameters will result in using defaults set in Wootric's admin panel for that type of end user.
 
 ```objective-c
-[WootricSDK setCustomFollowupPlaceholderForPromoter:<CUSTOM_PLACEHOLDER> passive:<CUSTOM_PLACEHOLDER> detractor:<CUSTOM_PLACEHOLDER>];
+[Wootric setCustomFollowupPlaceholderForPromoter:<CUSTOM_PLACEHOLDER> passive:<CUSTOM_PLACEHOLDER> detractor:<CUSTOM_PLACEHOLDER>];
 ```
 Same as with custom question, it allows you to set custom placeholder text in feedback text view for each type of end user. Be advised that this setting takes precedence over values set in Wootric's from admin panel.
 
 ####Custom language, audience text and product name configuration:
 ---
 ```objective-c
-[WootricSDK setCustomLanguage:<LANGUAGE_CODE>];
-[WootricSDK setCustomAudience:<CUSTOM_AUDIENCE>];
-[WootricSDK setCustomProductName:<CUSTOM_PRODUCT_NAME>];
+[Wootric setCustomLanguage:<LANGUAGE_CODE>];
+[Wootric setCustomAudience:<CUSTOM_AUDIENCE>];
+[Wootric setCustomProductName:<CUSTOM_PRODUCT_NAME>];
 ```
 Please refer to our [docs](http://docs.wootric.com/install/#custom-language-setting) for available languages.
 
@@ -174,20 +178,20 @@ if custom product name is set it will substitute "this product or service" text,
 
 ```objective-c
 // Social share setup
-[WootricSDK setFacebookPage:<FACEBOOK_PAGE_URL>];
-[WootricSDK setTwitterHandler:<TWITTER_HANDLER>];
+[Wootric setFacebookPage:<FACEBOOK_PAGE_URL>];
+[Wootric setTwitterHandler:<TWITTER_HANDLER>];
 
 // Custom thank you messages setup
-[WootricSDK setThankYouMessage:<THANK_YOU_MESSAGE>];
-[WootricSDK setDetractorThankYouMessage:<THANK_YOU_MESSAGE>];
-[WootricSDK setPassiveThankYouMessage:<THANK_YOU_MESSAGE>];
-[WootricSDK setPromoterThankYouMessage:<THANK_YOU_MESSAGE>];
+[Wootric setThankYouMessage:<THANK_YOU_MESSAGE>];
+[Wootric setDetractorThankYouMessage:<THANK_YOU_MESSAGE>];
+[Wootric setPassiveThankYouMessage:<THANK_YOU_MESSAGE>];
+[Wootric setPromoterThankYouMessage:<THANK_YOU_MESSAGE>];
 
 // Custom thank you button setup
-[WootricSDK setThankYouLinkWithText:<THANK_YOU_TEXT> URL:<THANK_YOU_URL>];
-[WootricSDK setDetractorThankYouLinkWithText:<THANK_YOU_TEXT> URL:<THANK_YOU_URL>];
-[WootricSDK setPassiveThankYouLinkWithText:<THANK_YOU_TEXT> URL:<THANK_YOU_URL>];
-[WootricSDK setPromoterThankYouLinkWithText:<THANK_YOU_TEXT> URL:<THANK_YOU_URL>];
+[Wootric setThankYouLinkWithText:<THANK_YOU_TEXT> URL:<THANK_YOU_URL>];
+[Wootric setDetractorThankYouLinkWithText:<THANK_YOU_TEXT> URL:<THANK_YOU_URL>];
+[Wootric setPassiveThankYouLinkWithText:<THANK_YOU_TEXT> URL:<THANK_YOU_URL>];
+[Wootric setPromoterThankYouLinkWithText:<THANK_YOU_TEXT> URL:<THANK_YOU_URL>];
 
 ```
 

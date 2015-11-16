@@ -23,13 +23,13 @@
   NSString *clientSecret = @"YOUR_CLIENT_SECRET";
   NSString *accountToken = @"YOUR_ACCOUNT_TOKEN";
 
-  [WootricSDK configureWithClientID:clientID clientSecret:clientSecret accountToken:accountToken];
-  [WootricSDK setEndUserEmail:@"END_USER_EMAIL"];
-  [WootricSDK setEndUserCreatedAt:@1234567890];
+  [Wootric configureWithClientID:clientID clientSecret:clientSecret accountToken:accountToken];
+  [Wootric setEndUserEmail:@"END_USER_EMAIL"];
+  [Wootric setEndUserCreatedAt:@1234567890];
 
-  [WootricSDK forceSurvey:YES];
+  [Wootric forceSurvey:YES];
 
-  [WootricSDK showSurveyInViewController:self];
+  [Wootric showSurveyInViewController:self];
 }
 
 - (void)didReceiveMemoryWarning {
