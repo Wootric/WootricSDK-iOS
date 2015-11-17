@@ -1,3 +1,9 @@
+## 0.4.2 (2015-11-17)
+
+### Added:
+
+- Public header files to podspec
+
 ## 0.4.1 (2015-11-16)
 
 ### Hotfix:
