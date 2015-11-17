@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'WootricSDK'
-  s.version  = '0.4.1'
+  s.version  = '0.4.2'
   s.license  = 'MIT'
   s.summary  = 'Wootric SDK for displaying survey for end user'
   s.homepage = 'https://github.com/Wootric/WootricSDK-iOS'
@@ -12,5 +12,5 @@ Pod::Spec.new do |s|
 
   s.source_files = "WootricSDK/WootricSDK/*.{h,m}"
   s.resources = "WootricSDK/WootricSDK/Images.xcassets"
-  s.public_header_files = "WootricSDK/WootricSDK/WootricSDK.h"
+  s.public_header_files = "WootricSDK/WootricSDK/WootricSDK.h", "WootricSDK/WootricSDK/Wootric.h", "WootricSDK/WootricSDK/SEGWootric.h"
 end
