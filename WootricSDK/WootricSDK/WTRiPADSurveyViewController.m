@@ -82,7 +82,11 @@
   [_feedbackView setFollowupLabelTextBasedOnScore:sender.assignedScore];
   [_feedbackView setFeedbackPlaceholderText:placeholderText];
   if (_feedbackView.hidden) {
-    [self showFeedbackView];
+    if (_settings.skipFeedbackScreen && _currentScore >= 9) {
+      [self sendButtonPressed];
+    } else {
+      [self showFeedbackView];
+    }
   }
 }
 
@@ -124,12 +128,12 @@
 }
 
 - (void)sendButtonPressed {
-  NSString *text = nil;
+  NSString *text;
   if ([_feedbackView feedbackTextPresent]) {
     text = [_feedbackView feedbackText];
   }
   if ([self socialShareAvailableForScore:_currentScore]) {
-    [_socialShareView setThankYouButtonTextAndURLDependingOnScore:_currentScore];
+    [_socialShareView setThankYouButtonTextAndURLDependingOnScore:_currentScore andText:text];
     [_socialShareView setThankYouMessageDependingOnScore:_currentScore];
     [self setupFacebookAndTwitterForScore:_currentScore];
     [self presentSocialShareViewWithScore:_currentScore];

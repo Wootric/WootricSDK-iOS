@@ -214,7 +214,7 @@
                                                                   toItem:self
                                                                attribute:NSLayoutAttributeLeft
                                                               multiplier:1
-                                                                constant:39];
+                                                                constant:20];
   [self addConstraint:constLeft];
 
   NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:self
@@ -223,7 +223,7 @@
                                                                    toItem:_npsQuestionLabel
                                                                 attribute:NSLayoutAttributeRight
                                                                multiplier:1
-                                                                 constant:39];
+                                                                 constant:20];
   [self addConstraint:constRight];
 }
 
@@ -243,7 +243,7 @@
                                                                  toItem:_npsQuestionLabel
                                                               attribute:NSLayoutAttributeBottom
                                                              multiplier:1
-                                                               constant:70];
+                                                               constant:60];
   [self addConstraint:constTop];
 
   NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:_scoreSlider

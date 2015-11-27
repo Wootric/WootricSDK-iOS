@@ -105,6 +105,16 @@
   apiClient.settings.firstSurveyAfter = firstSurveyAfter;
 }
 
++ (void)skipFeedbackScreenForPromoter:(BOOL)flag {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.skipFeedbackScreen = flag;
+}
+
++ (void)passScoreAndTextToURL:(BOOL)flag {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.passScoreAndTextToURL = flag;
+}
+
 + (void)showSurveyInViewController:(UIViewController *)viewController {
   if ([[WTRApiClient sharedInstance] checkConfiguration]) {
     [WTRTrackingPixel getPixel];

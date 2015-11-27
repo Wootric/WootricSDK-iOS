@@ -16,7 +16,7 @@ $ gem install cocoapods
 ```
 To integrate WootricSDK into your Xcode project using CocoaPods, specify it in your `Podfile`:
 ```ruby
-pod "WootricSDK", "~> 0.4.2"
+pod "WootricSDK", "~> 0.4.3"
 ```
 Then, run the following command:
 
@@ -45,6 +45,8 @@ $ pod install
 + setSurveyedDefault:
 + forceSurvey:
 + surveyImmediately:
++ passScoreAndTextToURL:
++ skipFeedbackScreenForPromoter:
 + setFacebookPage:
 + setTwitterHandler:
 + setThankYouMessage:
@@ -126,6 +128,16 @@ Directly adds a product name to end user's properties.
 ```
 Right after a vote or dismiss we are setting a NSUserDefault that lasts for 90 days and indicates that end user was already surveyed on this device. We are doing this to lower the requests amount to our eligibility server.
 If your survey throttle is different than 90 days and/or you don't want to set the surveyed "cookie" you can set this option to ```NO```.
+
+```objective-c
+[Wootric passScoreAndTextToURL:<BOOL>];
+```
+If you enable this setting, score and feedback text will be added as wootric_score and wootric_text params to the "thank you" URL you have provided. (Check "Custom Thank You" section)
+
+```objective-c
+[Wootric skipFeedbackScreenForPromoter:<BOOL>];
+```
+With this option enabled, promoters (score 9-10) will be taken directly to third (social share) screen, skipping the second (feedback) one.
 
 ####Per view configuration:
 

@@ -87,6 +87,14 @@
   [Wootric forceSurvey:flag];
 }
 
+- (void)skipFeedbackScreenForPromoter:(BOOL)flag {
+  [Wootric skipFeedbackScreenForPromoter:flag];
+}
+
+- (void)passScoreAndTextToURL:(BOOL)flag {
+  [Wootric passScoreAndTextToURL:flag];
+}
+
 - (void)setFacebookPage:(NSURL *)facebookPage {
   [Wootric setFacebookPage:facebookPage];
 }

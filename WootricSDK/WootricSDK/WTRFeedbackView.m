@@ -25,6 +25,7 @@
 #import "WTRFeedbackView.h"
 #import "WTRColor.h"
 #import "WTRSurveyViewController.h"
+#import "SimpleConstraints.h"
 #import "UIItems.h"
 
 @interface WTRFeedbackView ()
@@ -81,7 +82,7 @@
 }
 
 - (NSString *)feedbackText {
-  if (_feedbackTextView.text) {
+  if ([self feedbackTextPresent]) {
     return _feedbackTextView.text;
   }
   return nil;
@@ -128,128 +129,28 @@
 }
 
 - (void)setupEditScoreButtonConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:_editScoreButton
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self addConstraint:constX];
-
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_editScoreButton
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self
-                                                              attribute:NSLayoutAttributeTop
-                                                             multiplier:1
-                                                               constant:16];
-  [self addConstraint:constTop];
+  [[[_editScoreButton centerX] toSecondViewCenterX:self] addToView:self];
+  [[[[_editScoreButton top] toSecondViewTop:self] withConstant:16] addToView:self];
 }
 
 - (void)setupFollowupLabelConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:_followupLabel
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self addConstraint:constX];
-
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_followupLabel
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self
-                                                              attribute:NSLayoutAttributeTop
-                                                             multiplier:1
-                                                               constant:50];
-  [self addConstraint:constTop];
-
-  NSLayoutConstraint *constR = [NSLayoutConstraint constraintWithItem:_followupLabel
-                                                            attribute:NSLayoutAttributeLeft
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeLeft
-                                                           multiplier:1
-                                                             constant:16];
-  [self addConstraint:constR];
-
-  NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:_followupLabel
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeRight
-                                                           multiplier:1
-                                                             constant:-16];
-  [self addConstraint:constL];
+  [[[_followupLabel centerX] toSecondViewCenterX:self] addToView:self];
+  [[[[_followupLabel top] toSecondViewTop:self] withConstant:50] addToView:self];
+  [[[[_followupLabel left] toSecondViewLeft:self] withConstant:16] addToView:self];
+  [[[[_followupLabel right] toSecondViewRight:self] withConstant:-16] addToView:self];
 }
 
 - (void)setupFeedbackTextViewConstraints {
-  NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:_feedbackTextView
-                                                            attribute:NSLayoutAttributeLeft
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeLeft
-                                                           multiplier:1
-                                                             constant:16];
-  [self addConstraint:constL];
-
-  NSLayoutConstraint *constR = [NSLayoutConstraint constraintWithItem:_feedbackTextView
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
-                                                            attribute:NSLayoutAttributeRight
-                                                           multiplier:1
-                                                             constant:-16];
-  [self addConstraint:constR];
-
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_feedbackTextView
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:_followupLabel
-                                                              attribute:NSLayoutAttributeBottom
-                                                             multiplier:1
-                                                               constant:16];
-  [self addConstraint:constTop];
-
-  NSLayoutConstraint *constBottom = [NSLayoutConstraint constraintWithItem:_feedbackTextView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1
-                                                                  constant:0];
-  [self addConstraint:constBottom];
+  [[[[_feedbackTextView left] toSecondViewLeft:self] withConstant:16] addToView:self];
+  [[[[_feedbackTextView right] toSecondViewRight:self] withConstant:-16] addToView:self];
+  [[[[_feedbackTextView top] toSecondViewBottom:_followupLabel] withConstant:16] addToView:self];
+  [[[_feedbackTextView bottom] toSecondViewBottom:self] addToView:self];
 }
 
 - (void)setupFeedbackLabelConstraints {
-  NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:_feedbackPlaceholder
-                                                            attribute:NSLayoutAttributeLeft
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:_feedbackTextView
-                                                            attribute:NSLayoutAttributeLeft
-                                                           multiplier:1
-                                                             constant:20];
-  [self addConstraint:constL];
-
-  NSLayoutConstraint *constR = [NSLayoutConstraint constraintWithItem:_feedbackPlaceholder
-                                                            attribute:NSLayoutAttributeRight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:_feedbackTextView
-                                                            attribute:NSLayoutAttributeRight
-                                                           multiplier:1
-                                                             constant:-20];
-  [self addConstraint:constR];
-
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_feedbackPlaceholder
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:_feedbackTextView
-                                                              attribute:NSLayoutAttributeTop
-                                                             multiplier:1
-                                                               constant:17];
-  [self addConstraint:constTop];
+  [[[[_feedbackPlaceholder left] toSecondViewLeft:_feedbackTextView] withConstant:20] addToView:self];
+  [[[[_feedbackPlaceholder right] toSecondViewRight:_feedbackTextView] withConstant:-20] addToView:self];
+  [[[[_feedbackPlaceholder top] toSecondViewTop:_feedbackTextView] withConstant:17] addToView:self];
 }
 
 @end

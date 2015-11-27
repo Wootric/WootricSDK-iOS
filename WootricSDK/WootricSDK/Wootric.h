@@ -56,6 +56,8 @@
 + (void)setSurveyedDefault:(BOOL)flag;
 + (void)surveyImmediately:(BOOL)flag;
 + (void)forceSurvey:(BOOL)flag;
++ (void)skipFeedbackScreenForPromoter:(BOOL)flag;
++ (void)passScoreAndTextToURL:(BOOL)flag;
 
 + (void)setFacebookPage:(NSURL *)facebookPage;
 + (void)setTwitterHandler:(NSString *)twitterHandler;

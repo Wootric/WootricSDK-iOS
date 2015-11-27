@@ -81,6 +81,7 @@
 #pragma mark - Button methods
 
 - (void)openThankYouURL:(WTRThankYouButton *)sender {
+  NSLog(@"%@", sender.buttonURL);
   if (![[UIApplication sharedApplication] openURL:sender.buttonURL]) {
     NSLog(@"WootricSDK: Failed to open 'thank you' url");
   } else {
@@ -110,16 +111,24 @@
   [self endUserVotedWithScore:score andText:text];
   if ([_feedbackView isActive]) {
     [_feedbackView textViewResignFirstResponder];
-    if ([self socialShareAvailableForScore:score]) {
-      [self setupFacebookAndTwitterForScore:score];
-      [self presentSocialShareViewWithScore:score];
-    } else {
-      [self dismissWithFinalThankYou];
-    }
+    [self presentShareScreenOrDismissForScore:score];
   } else {
-    [self setQuestionViewVisible:NO andFeedbackViewVisible:YES];
-    [_feedbackView setFollowupLabelTextBasedOnScore:score];
-    [_feedbackView setFeedbackPlaceholderText:placeholderText];
+    if (_settings.skipFeedbackScreen && score >= 9) {
+      [self presentShareScreenOrDismissForScore:score];
+    } else {
+      [self setQuestionViewVisible:NO andFeedbackViewVisible:YES];
+      [_feedbackView setFollowupLabelTextBasedOnScore:score];
+      [_feedbackView setFeedbackPlaceholderText:placeholderText];
+    }
+  }
+}
+
+- (void)presentShareScreenOrDismissForScore:(int)score {
+  if ([self socialShareAvailableForScore:score]) {
+    [self setupFacebookAndTwitterForScore:score];
+    [self presentSocialShareViewWithScore:score];
+  } else {
+    [self dismissWithFinalThankYou];
   }
 }
 
@@ -211,7 +220,8 @@
 }
 
 - (void)presentSocialShareViewWithScore:(int)score {
-  [_socialShareView setThankYouButtonTextAndURLDependingOnScore:score];
+  NSString *text = [_feedbackView feedbackText];
+  [_socialShareView setThankYouButtonTextAndURLDependingOnScore:score andText:text];
   [_socialShareView setThankYouMessageDependingOnScore:score];
   [self setQuestionViewVisible:NO andFeedbackViewVisible:NO];
   _sendButton.hidden = YES;

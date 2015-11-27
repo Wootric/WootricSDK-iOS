@@ -96,11 +96,11 @@
   }
 }
 
-- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score {
-  NSString *text = [_settings thankYouLinkTextDependingOnScore:score];
-  NSURL *url = [_settings thankYouLinkURLDependingOnScore:score];
+- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score andText:(NSString *)text {
+  NSString *thankYouText = [_settings thankYouLinkTextDependingOnScore:score];
+  NSURL *url = [_settings thankYouLinkURLDependingOnScore:score andText:text];
 
-  [_thankYouButton setText:text andURL:url];
+  [_thankYouButton setText:thankYouText andURL:url];
 }
 
 - (void)displayShareButtonsWithTwitterAvailable:(BOOL)twitterAvailable andFacebookAvailable:(BOOL)facebookAvailable {

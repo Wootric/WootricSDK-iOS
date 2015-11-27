@@ -23,6 +23,7 @@
 // THE SOFTWARE.
 
 #import "WTRSingleScoreLabel.h"
+#import "SimpleConstraints.h"
 #import "WTRColor.h"
 
 @implementation WTRSingleScoreLabel
@@ -47,7 +48,6 @@
   self.font = [UIFont systemFontOfSize:16];
 }
 
-
 - (void)addConstraintsWithLeftConstraintConstant:(CGFloat)leftConstant {
   UIView *superView = self.superview;
 
@@ -61,33 +61,9 @@
 
   [superView addConstraint:self.leftConstraint];
 
-  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self
-                                                            attribute:NSLayoutAttributeCenterY
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:superView
-                                                            attribute:NSLayoutAttributeCenterY
-                                                           multiplier:1
-                                                             constant:0];
-
-  [superView addConstraint:constY];
-
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:24];
-  [self addConstraint:constW];
-
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:16];
-  [self addConstraint:constH];
+  [[[self centerY] toSecondViewCenterY:superView] addToView:superView];
+  [self constraintWidth:24];
+  [self constraintHeight:16];
 }
 
 @end

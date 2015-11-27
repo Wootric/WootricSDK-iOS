@@ -275,14 +275,26 @@
   return nil;
 }
 
-- (NSURL *)thankYouLinkURLDependingOnScore:(int)score {
+- (NSURL *)thankYouLinkURLDependingOnScore:(int)score andText:(NSString *)text {
   if (score <= 6 && _customThankYou.detractorThankYouLinkURL) {
+    if (_passScoreAndTextToURL) {
+      return [self url:_customThankYou.detractorThankYouLinkURL withScore:score andText:text];
+    }
     return _customThankYou.detractorThankYouLinkURL;
   } else if (score > 6 && score <= 8 && _customThankYou.passiveThankYouLinkURL) {
+    if (_passScoreAndTextToURL) {
+      return [self url:_customThankYou.passiveThankYouLinkURL withScore:score andText:text];
+    }
     return _customThankYou.passiveThankYouLinkURL;
   } else if (score > 8 && score <= 10 && _customThankYou.promoterThankYouLinkURL) {
+    if (_passScoreAndTextToURL) {
+      return [self url:_customThankYou.promoterThankYouLinkURL withScore:score andText:text];
+    }
     return _customThankYou.promoterThankYouLinkURL;
   } else if (_customThankYou.thankYouLinkURL) {
+    if (_passScoreAndTextToURL) {
+      return [self url:_customThankYou.thankYouLinkURL withScore:score andText:text];
+    }
     return _customThankYou.thankYouLinkURL;
   }
 
@@ -370,6 +382,23 @@
 - (BOOL)validEmailString {
   NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
   return !([[_endUserEmail stringByTrimmingCharactersInSet:set] length] == 0);
+}
+
+- (NSURL *)url:(NSURL *)baseUrl withScore:(int)score andText:(NSString *)text {
+  NSString *paramsString;
+  NSString *escapedText = [text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+  if (!escapedText) {
+    escapedText = @"";
+  }
+
+  if ([[baseUrl absoluteString] rangeOfString:@"?"].location == NSNotFound) {
+    paramsString = [NSString stringWithFormat:@"?wootric_score=%d&wootric_text=%@", score, escapedText];
+    return [NSURL URLWithString:paramsString relativeToURL:baseUrl];
+  } else {
+    paramsString = [NSString stringWithFormat:@"&wootric_score=%d&wootric_text=%@", score, escapedText];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseUrl, paramsString]];
+  }
 }
 
 @end

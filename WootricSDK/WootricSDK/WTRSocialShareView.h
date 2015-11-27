@@ -30,7 +30,7 @@
 - (instancetype)initWithSettings:(WTRSettings *)settings;
 - (void)setupSubviewsConstraints;
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
-- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score;
+- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score andText:(NSString *)feedbackText;
 - (void)setThankYouMessageDependingOnScore:(int)score;
 - (void)displayShareButtonsWithTwitterAvailable:(BOOL)twitterAvailable andFacebookAvailable:(BOOL)facebookAvailable;
 

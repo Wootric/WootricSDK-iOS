@@ -47,6 +47,8 @@
 @property (nonatomic, assign) BOOL surveyImmediately;
 @property (nonatomic, assign) BOOL forceSurvey;
 @property (nonatomic, assign) BOOL setDefaultAfterSurvey;
+@property (nonatomic, assign) BOOL skipFeedbackScreen;
+@property (nonatomic, assign) BOOL passScoreAndTextToURL;
 
 - (void)parseDataFromSurveyServer:(NSDictionary *)surveyServerSettings;
 - (NSString *)getEndUserEmailOrUnknown;
@@ -76,7 +78,7 @@
 
 - (NSString *)thankYouMessageDependingOnScore:(int)score;
 - (NSString *)thankYouLinkTextDependingOnScore:(int)score;
-- (NSURL *)thankYouLinkURLDependingOnScore:(int)score;
+- (NSURL *)thankYouLinkURLDependingOnScore:(int)score andText:(NSString *)text;
 - (BOOL)thankYouLinkConfiguredForScore:(int)score;
 
 - (BOOL)twitterHandlerSet;
