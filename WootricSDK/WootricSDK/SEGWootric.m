@@ -71,6 +71,10 @@
   [Wootric setEndUserProperties:customProperties];
 }
 
+- (NSDictionary *)endUserProperties {
+  return [Wootric endUserProperties];
+}
+
 - (void)setFirstSurveyAfter:(NSNumber *)firstSurveyAfter {
   [Wootric setFirstSurveyAfter:firstSurveyAfter];
 }

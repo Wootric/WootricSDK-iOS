@@ -55,6 +55,7 @@
 - (void)setCustomFinalThankYou:(NSString *)finalThankYou;
 - (void)setCustomNPSQuestion:(NSString *)npsQuestion;
 - (void)setEndUserProperties:(NSDictionary *)customProperties;
+- (NSDictionary *)endUserProperties;
 - (void)setFirstSurveyAfter:(NSNumber *)firstSurveyAfter;
 - (void)setSurveyedDefault:(BOOL)flag;
 - (void)surveyImmediately:(BOOL)flag;

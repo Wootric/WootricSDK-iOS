@@ -95,6 +95,11 @@
   apiClient.settings.customProperties = customProperties;
 }
 
++ (NSDictionary *)endUserProperties {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  return apiClient.settings.customProperties;
+}
+
 + (void)setProductNameForEndUser:(NSString *)productName {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.productName = productName;
