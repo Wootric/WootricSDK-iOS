@@ -241,8 +241,13 @@
 }
 
 - (void)checkEligibility:(void (^)())eligible {
-  NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@&email=%@",
-                             _surveyServerURL, _accountToken, [_settings getEndUserEmailOrUnknown]];
+  NSString *endUserEmail = [_settings getEndUserEmailOrUnknown];
+  NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@",
+                             _surveyServerURL, _accountToken];
+
+  if (![endUserEmail isEqual: @"Unknown"]) {
+    baseURLString = [NSString stringWithFormat:@"%@&email=%@", baseURLString, endUserEmail];
+  }
 
   baseURLString = [self addSurveyServerCustomSettingsToURLString:baseURLString];
 
