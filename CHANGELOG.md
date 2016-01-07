@@ -1,3 +1,15 @@
+## 0.4.5 (2016-01-07)
+
+### Fixed:
+
+- There will be no email send to eligibility server if no email is provided, instead of sending "Unknown" email.
+
+## 0.4.4 (2015-12-18)
+
+### Added:
+
+- Tweak for mParticle integration.
+
 ## 0.4.3 (2015-11-27)
 
 ### Added:
