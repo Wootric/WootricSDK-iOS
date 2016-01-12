@@ -53,6 +53,7 @@
   }];
 
   [dataTask resume];
+  [urlSession finishTasksAndInvalidate];
 }
 
 @end
