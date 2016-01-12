@@ -1,3 +1,9 @@
+## 0.4.6 (2016-01-12)
+
+### Fixed:
+
+- Invalidate NSURLSession after tracking pixel get request.
+
 ## 0.4.5 (2016-01-07)
 
 ### Fixed:
