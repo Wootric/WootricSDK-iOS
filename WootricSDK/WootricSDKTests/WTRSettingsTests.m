@@ -172,7 +172,7 @@
   NSURL *thankYouURL = [NSURL URLWithString:@"http://thankyou.com"];
   [_settings setThankYouLinkWithText:@"thank you text" URL:thankYouURL];
   NSString *thankYouLinkText = [_settings thankYouLinkTextDependingOnScore:1];
-  NSURL *thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:1];
+  NSURL *thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:1 andText:@""];
   XCTAssertEqualObjects(thankYouLinkText, @"thank you text");
   XCTAssertEqualObjects(thankYouURL, thankYouLinkURL);
 }
@@ -183,7 +183,7 @@
   [_settings setThankYouLinkWithText:@"thank you text" URL:thankYouURL];
   [_settings setDetractorThankYouLinkWithText:@"detractor thank you" URL:detractorThankYouURL];
   NSString *thankYouLinkText = [_settings thankYouLinkTextDependingOnScore:1];
-  NSURL *thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:1];
+  NSURL *thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:1 andText:@""];
   XCTAssertEqualObjects(thankYouLinkText, @"detractor thank you");
   XCTAssertEqualObjects(thankYouLinkURL, detractorThankYouURL);
 }
@@ -194,7 +194,7 @@
   [_settings setThankYouLinkWithText:@"thank you text" URL:thankYouURL];
   [_settings setPassiveThankYouLinkWithText:@"passive thank you" URL:passiveThankYouURL];
   NSString *thankYouLinkText = [_settings thankYouLinkTextDependingOnScore:8];
-  NSURL *thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:8];
+  NSURL *thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:8 andText:@""];
   XCTAssertEqualObjects(thankYouLinkText, @"passive thank you");
   XCTAssertEqualObjects(thankYouLinkURL, passiveThankYouURL);
 }
@@ -205,7 +205,7 @@
   [_settings setThankYouLinkWithText:@"thank you text" URL:thankYouURL];
   [_settings setPromoterThankYouLinkWithText:@"promoter thank you" URL:promoterThankYouURL];
   NSString *thankYouLinkText = [_settings thankYouLinkTextDependingOnScore:10];
-  NSURL *thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:10];
+  NSURL *thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:10 andText:@""];
   XCTAssertEqualObjects(thankYouLinkText, @"promoter thank you");
   XCTAssertEqualObjects(thankYouLinkURL, promoterThankYouURL);
 }
@@ -233,11 +233,11 @@
   [_settings setDetractorThankYouLinkWithText:@"detractor thank you" URL:detractorThankYouURL];
   [_settings setPassiveThankYouLinkWithText:@"passive thank you" URL:passiveThankYouURL];
   [_settings setPromoterThankYouLinkWithText:@"promoter thank you" URL:promoterThankYouURL];
-  NSURL *thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:1];
+  NSURL *thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:1 andText:@""];
   XCTAssertEqualObjects(thankYouLinkURL, detractorThankYouURL);
-  thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:8];
+  thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:8 andText:@""];
   XCTAssertEqualObjects(thankYouLinkURL, passiveThankYouURL);
-  thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:10];
+  thankYouLinkURL = [_settings thankYouLinkURLDependingOnScore:10 andText:@""];
   XCTAssertEqualObjects(thankYouLinkURL, promoterThankYouURL);
 }
 
@@ -257,7 +257,7 @@
   NSURL *thankYouURL = [NSURL URLWithString:@"http://thankyou.com"];
   [_settings setThankYouLinkWithText:nil URL:thankYouURL];
   [_settings setPromoterThankYouLinkWithText:@"thank you message" URL:nil];
-  NSLog(@"%@", [_settings thankYouLinkURLDependingOnScore:1]);
+  NSLog(@"%@", [_settings thankYouLinkURLDependingOnScore:1 andText:@""]);
   NSLog(@"%@", [_settings thankYouLinkTextDependingOnScore:1]);
   BOOL flag = [_settings thankYouLinkConfiguredForScore:1];
   XCTAssertFalse(flag);

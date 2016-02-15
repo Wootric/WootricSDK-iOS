@@ -148,7 +148,7 @@
   NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
 
   if (_settings.externalCreatedAt) {
-    params = [NSString stringWithFormat:@"%@&external_created_at=%d", params, [_settings.externalCreatedAt intValue]];
+    params = [NSString stringWithFormat:@"%@&external_created_at=%ld", params, (long)[_settings.externalCreatedAt integerValue]];
   }
 
   if (_settings.productName) {
@@ -250,7 +250,7 @@
   }
 
   baseURLString = [self addSurveyServerCustomSettingsToURLString:baseURLString];
-
+      NSLog(@"params: %@", baseURLString);
   NSURL *url = [NSURL URLWithString:baseURLString];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"USER_AGENT"];
@@ -322,8 +322,8 @@
   }
 
   if (_settings.externalCreatedAt) {
-    baseURLString = [NSString stringWithFormat:@"%@&end_user_created_at=%@",
-                     baseURLString, _settings.externalCreatedAt];
+    baseURLString = [NSString stringWithFormat:@"%@&end_user_created_at=%ld",
+                     baseURLString, (long)[_settings.externalCreatedAt integerValue]];
   }
 
   if (_settings.languageCode) {
