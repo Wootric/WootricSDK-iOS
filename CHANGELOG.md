@@ -1,3 +1,9 @@
+## 0.4.7 (2016-02-15)
+
+### Fixed:
+
+- Cast externalCreatedAt to long while building eligibility check URL.
+
 ## 0.4.6 (2016-01-12)
 
 ### Fixed:
