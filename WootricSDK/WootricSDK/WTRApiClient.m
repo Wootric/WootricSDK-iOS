@@ -250,7 +250,7 @@
   }
 
   baseURLString = [self addSurveyServerCustomSettingsToURLString:baseURLString];
-      NSLog(@"params: %@", baseURLString);
+
   NSURL *url = [NSURL URLWithString:baseURLString];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"USER_AGENT"];
