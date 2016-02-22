@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "E6FBC6CB7821B30FF48CCB0343B50DB5422ABF6B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "A60695BC6486CFC9F979D71ADCBA711493B8FC3B" : 0,
+    "E6FBC6CB7821B30FF48CCB0343B50DB5422ABF6B" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1CDE18A1-21A4-402B-88DD-C558FB4E7ED8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "A60695BC6486CFC9F979D71ADCBA711493B8FC3B" : "WootricSDK2",
+    "E6FBC6CB7821B30FF48CCB0343B50DB5422ABF6B" : "WootricSDK-iOS\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "WootricSDK",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "WootricSDK.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:Wootric\/WootricSDK-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A60695BC6486CFC9F979D71ADCBA711493B8FC3B"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Wootric\/WootricSDK-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E6FBC6CB7821B30FF48CCB0343B50DB5422ABF6B"
+    }
+  ]
+}

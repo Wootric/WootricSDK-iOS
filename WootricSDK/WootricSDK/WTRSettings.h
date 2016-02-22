@@ -44,6 +44,7 @@
 @property (nonatomic, strong) NSURL *facebookPage;
 @property (nonatomic, strong) NSDictionary *customProperties;
 @property (nonatomic, assign) NSInteger surveyedDefaultDuration;
+@property (nonatomic, assign) NSInteger timeDelay;
 @property (nonatomic, assign) BOOL surveyImmediately;
 @property (nonatomic, assign) BOOL forceSurvey;
 @property (nonatomic, assign) BOOL setDefaultAfterSurvey;

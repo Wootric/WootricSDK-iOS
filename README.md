@@ -3,7 +3,7 @@
 - iOS 7.0+
 
 ##Demos
-- View the iOS demo video with referral prompt [here.](https://cl.ly/dVaI) 
+- View the iOS demo video with referral prompt [here.](https://cl.ly/dVaI)
 - View the iOS demo with App Store rating prompt [here.] (http://cl.ly/2g2W2P1c240U)
 
 ##Installation
@@ -16,7 +16,7 @@ $ gem install cocoapods
 ```
 To integrate WootricSDK into your Xcode project using CocoaPods, specify it in your `Podfile`:
 ```ruby
-pod "WootricSDK", "~> 0.4.8"
+pod "WootricSDK", "~> 0.4.9"
 ```
 Then, run the following command:
 

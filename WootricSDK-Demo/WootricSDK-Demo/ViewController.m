@@ -16,24 +16,24 @@
 @implementation ViewController
 
 - (void)viewDidLoad {
-  [super viewDidLoad];
-  self.view.backgroundColor = [UIColor colorWithRed:58.0/255.0 green:57.0/255.0 blue:57.0/255.0 alpha:1];
-
-  NSString *clientID = @"YOUR_CLIENT_ID";
-  NSString *clientSecret = @"YOUR_CLIENT_SECRET";
-  NSString *accountToken = @"YOUR_ACCOUNT_TOKEN";
-
-  [Wootric configureWithClientID:clientID clientSecret:clientSecret accountToken:accountToken];
-  [Wootric setEndUserEmail:@"END_USER_EMAIL"];
-  [Wootric setEndUserCreatedAt:@1234567890];
-
-  [Wootric forceSurvey:YES];
-
-  [Wootric showSurveyInViewController:self];
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithRed:58.0/255.0 green:57.0/255.0 blue:57.0/255.0 alpha:1];
+    
+    NSString *clientID = @"YOUR_CLIENT_ID";
+    NSString *clientSecret = @"YOUR_CLIENT_SECRET";
+    NSString *accountToken = @"YOUR_ACCOUNT_TOKEN";
+    
+    [Wootric configureWithClientID:clientID clientSecret:clientSecret accountToken:accountToken];
+    [Wootric setEndUserEmail:@"END_USER_EMAIL"];
+    [Wootric setEndUserCreatedAt:@1234567890];
+    
+    [Wootric forceSurvey:YES];
+    
+    [Wootric showSurveyInViewController:self];
 }
 
 - (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
+    [super didReceiveMemoryWarning];
 }
 
 @end

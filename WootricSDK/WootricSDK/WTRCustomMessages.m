@@ -27,23 +27,23 @@
 @implementation WTRCustomMessages
 
 - (instancetype)initWithCustomMessages:(NSDictionary *)customMessages {
-  if (self = [super init]) {
-    NSDictionary *followupQuestionList = customMessages[@"followup_questions_list"];
-    NSDictionary *placeholderTextList = customMessages[@"placeholder_texts_list"];
-
-    if (followupQuestionList) {
-      _detractorQuestion = followupQuestionList[@"detractor_question"];
-      _passiveQuestion = followupQuestionList[@"passive_question"];
-      _promoterQuestion = followupQuestionList[@"promoter_question"];
+    if (self = [super init]) {
+        NSDictionary *followupQuestionList = customMessages[@"followup_questions_list"];
+        NSDictionary *placeholderTextList = customMessages[@"placeholder_texts_list"];
+        
+        if (followupQuestionList) {
+            _detractorQuestion = followupQuestionList[@"detractor_question"];
+            _passiveQuestion = followupQuestionList[@"passive_question"];
+            _promoterQuestion = followupQuestionList[@"promoter_question"];
+        }
+        
+        if (placeholderTextList) {
+            _detractorText = placeholderTextList[@"detractor_text"];
+            _passiveText = placeholderTextList[@"passive_text"];
+            _promoterText = placeholderTextList[@"promoter_text"];
+        }
     }
-
-    if (placeholderTextList) {
-      _detractorText = placeholderTextList[@"detractor_text"];
-      _passiveText = placeholderTextList[@"passive_text"];
-      _promoterText = placeholderTextList[@"promoter_text"];
-    }
-  }
-  return self;
+    return self;
 }
 
 @end
