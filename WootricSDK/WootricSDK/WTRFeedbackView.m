@@ -78,7 +78,6 @@
 
 - (void)setFeedbackPlaceholderText:(NSString *)text {
   _feedbackPlaceholder.text = text;
-  [_feedbackPlaceholder sizeToFit];
 }
 
 - (NSString *)feedbackText {
