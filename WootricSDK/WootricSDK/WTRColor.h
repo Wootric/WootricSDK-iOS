@@ -51,6 +51,8 @@
 + (UIColor *)callToActionButtonBackgroundColor;
 + (UIColor *)callToActionButtonBorderColor;
 + (UIColor *)socialShareQuestionTextColor;
++ (UIColor *)facebookLogoTextColor;
++ (UIColor *)twitterLogoTextColor;
 
 + (UIColor *)iPadCircleButtonBorderColor;
 + (UIColor *)iPadCircleButtonTextColor;

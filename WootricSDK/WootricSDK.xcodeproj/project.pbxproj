@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E74E3361C8E987000BCB84F /* NSString+FontAwesome.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E74E3341C8E986F00BCB84F /* NSString+FontAwesome.h */; };
+		7E74E3371C8E987000BCB84F /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E74E3351C8E987000BCB84F /* NSString+FontAwesome.m */; };
+		7E74E3391C8E99C300BCB84F /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E74E3381C8E99C300BCB84F /* fontawesome-webfont.ttf */; };
 		B2102A2D1BB59ABC0025DABC /* WTRDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */; };
 		B2102A2E1BB59ABC0025DABC /* WTRDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A2C1BB59ABC0025DABC /* WTRDefaults.m */; };
 		B2102A331BB59ACE0025DABC /* WTRCustomMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2F1BB59ACE0025DABC /* WTRCustomMessages.h */; };
@@ -105,6 +108,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E74E3341C8E986F00BCB84F /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
+		7E74E3351C8E987000BCB84F /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
+		7E74E3381C8E99C300BCB84F /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.ttf"; sourceTree = "<group>"; };
 		B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRDefaults.h; sourceTree = "<group>"; };
 		B2102A2C1BB59ABC0025DABC /* WTRDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRDefaults.m; sourceTree = "<group>"; };
 		B2102A2F1BB59ACE0025DABC /* WTRCustomMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRCustomMessages.h; sourceTree = "<group>"; };
@@ -327,6 +333,8 @@
 		B2ADF6521B9DBD73005403AC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				7E74E3341C8E986F00BCB84F /* NSString+FontAwesome.h */,
+				7E74E3351C8E987000BCB84F /* NSString+FontAwesome.m */,
 				B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */,
 				B2102A2C1BB59ABC0025DABC /* WTRDefaults.m */,
 				B245508F1B8E0188001AC1FB /* WTRColor.h */,
@@ -394,6 +402,7 @@
 		B2DC6F051B81E6F900F599B3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7E74E3381C8E99C300BCB84F /* fontawesome-webfont.ttf */,
 				B2DC6F061B81E6F900F599B3 /* Info.plist */,
 				B2A4810C1BBE781E00BC9E13 /* Images.xcassets */,
 			);
@@ -448,6 +457,7 @@
 				B26866761BD5444F00A4288D /* WTRiPADSurveyViewController+Constraints.h in Headers */,
 				B260ECDD1BD7E5B200E29CD5 /* UIView+Constraints.h in Headers */,
 				B268667E1BD63B7000A4288D /* WTRCircleScoreButton.h in Headers */,
+				7E74E3361C8E987000BCB84F /* NSString+FontAwesome.h in Headers */,
 				B24550A51B909AC9001AC1FB /* WTRSurveyViewController+Constraints.h in Headers */,
 				B27889791BE0E168001D5696 /* WTRiPADSocialShareView.h in Headers */,
 				B26866861BD63F8B00A4288D /* WTRiPADModalView.h in Headers */,
@@ -559,6 +569,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2A4810D1BBE781E00BC9E13 /* Images.xcassets in Resources */,
+				7E74E3391C8E99C300BCB84F /* fontawesome-webfont.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,6 +607,7 @@
 				B245509E1B909A03001AC1FB /* WTRSurveyViewController.m in Sources */,
 				B24550A61B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m in Sources */,
 				B2C940611BA300A000482494 /* WTRSlider.m in Sources */,
+				7E74E3371C8E987000BCB84F /* NSString+FontAwesome.m in Sources */,
 				B2D9FCE01BF9F18E00479F9F /* SEGWootric.m in Sources */,
 				B278897E1BE105D6001D5696 /* WTRiPADThankYouButton.m in Sources */,
 				B27889711BDA5520001D5696 /* WTRiPADFeedbackView.m in Sources */,

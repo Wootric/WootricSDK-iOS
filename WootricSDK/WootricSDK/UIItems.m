@@ -24,8 +24,27 @@
 
 #import "UIItems.h"
 #import "WTRColor.h"
+#import "NSString+FontAwesome.h"
+#import <CoreText/CTFontManager.h>
 
 @implementation UIItems
+
++ (void)dynamicallyAddFont {
+    NSString *fontPath = [[NSBundle bundleForClass:[UIItems class]] pathForResource:@"fontawesome-webfont" ofType:@"ttf"];
+    NSData *fontData = [NSData dataWithContentsOfFile:fontPath];
+    
+    CFErrorRef error;
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef) fontData);
+    CGFontRef font = CGFontCreateWithDataProvider(provider);
+    if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
+        if (CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) { return; }
+        CFStringRef errorDescription = CFErrorCopyDescription(error);
+        NSLog(@"WootricSDK: Failed to load font: %@", errorDescription);
+        CFRelease(errorDescription);
+    }
+    CFRelease(font);
+    CFRelease(provider);
+}
 
 + (UILabel *)likelyAnchorWithSettings:(WTRSettings *)settings andFont:(UIFont *)font {
   UILabel *tempLabel = [[UILabel alloc] init];
@@ -123,28 +142,21 @@
   return tempLabel;
 }
 
-+ (UIButton *)facebookButtonWithTargetViewController:(UIViewController *)viewController {
-  UIButton *tempButton = [[UIButton alloc] init];
-  tempButton.hidden = YES;
-  [tempButton setImage:[UIImage imageNamed:@"facebook_icon"] forState:UIControlStateNormal];
-  [tempButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [tempButton addTarget:viewController
-                 action:NSSelectorFromString(@"facebookButtonPressed")
-       forControlEvents:UIControlEventTouchUpInside];
-
-  return tempButton;
-}
-
-+ (UIButton *)twitterButtonWithTargetViewController:(UIViewController *)viewController {
-  UIButton *tempButton = [[UIButton alloc] init];
-  tempButton.hidden = YES;
-  [tempButton setImage:[UIImage imageNamed:@"twitter_icon"] forState:UIControlStateNormal];
-  [tempButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [tempButton addTarget:viewController
-                 action:NSSelectorFromString(@"twitterButtonPressed")
-       forControlEvents:UIControlEventTouchUpInside];
-
-  return tempButton;
++ (UIButton *)socialButtonWithTargetViewController:(UIViewController *)viewController title:(NSString *)title textColor:(UIColor *)textColor andActionString:(NSString *)actionString {
+    [self dynamicallyAddFont];
+    
+    UIButton *tempButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    tempButton.hidden = YES;
+    
+    [tempButton.titleLabel setFont:[UIFont fontWithName:kFontAwesomeFamilyName size:20]];
+    [tempButton setTitle:title forState:UIControlStateNormal];
+    [tempButton.titleLabel setTextColor:textColor];
+    [tempButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [tempButton addTarget:viewController
+                   action:NSSelectorFromString(actionString)
+         forControlEvents:UIControlEventTouchUpInside];
+    
+    return tempButton;
 }
 
 @end

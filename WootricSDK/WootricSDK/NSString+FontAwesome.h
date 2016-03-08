@@ -1,5 +1,5 @@
 //
-//  UIItems.h
+//  NSString+FontAwesome.h
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,21 +22,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import "WTRSettings.h"
+#import <Foundation/Foundation.h>
 
-@interface UIItems : NSObject
+static NSString *const kFontAwesomeFamilyName = @"FontAwesome";
 
-+ (UILabel *)likelyAnchorWithSettings:(WTRSettings *)settings andFont:(UIFont *)font;
-+ (UILabel *)notLikelyAnchorWithSettings:(WTRSettings *)settings andFont:(UIFont *)font;
-+ (UILabel *)followupLabelWithTextColor:(UIColor *)textColor;
-+ (UILabel *)feedbackPlaceholder;
-+ (UILabel *)npsQuestionLabelWithSettings:(WTRSettings *)settings andFont:(UIFont *)font;
-+ (UILabel *)finalThankYouLabelWithSettings:(WTRSettings *)settings textColor:(UIColor *)textColor andFont:(UIFont *)font;
-+ (UILabel *)customThankYouLabelWithFont:(UIFont *)font;
-+ (UIButton *)facebookButtonWithTargetViewController:(UIViewController *)viewController;
-+ (UIButton *)twitterButtonWithTargetViewController:(UIViewController *)viewController;
-+ (UIButton *)socialButtonWithTargetViewController:(UIViewController *)viewController title:(NSString *)title textColor:(UIColor *)textColor andActionString:(NSString *)actionString;
-+ (UITextView *)feedbackTextViewWithBackgroundColor:(UIColor *)backgroundColor;
+/**
+ @abstract FontAwesome Facebook and Twitter Icons.
+ */
+typedef NS_ENUM(NSInteger, FAIcon) {
+    FATwitter,
+    FAFacebook,
+    FATwitterSquare,
+    FAFacebookSquare,
+    FAFacebookOfficial,
+    FAThumbsUp,
+    FAThumbsOUp
+};
+
+@interface NSString (FontAwesome)
+
+/**
+ @abstract Returns the correct enum for a font-awesome icon.
+ @discussion The list of identifiers can be found here: http://fortawesome.github.io/Font-Awesome/icons
+ */
++ (FAIcon)fontAwesomeEnumForIconIdentifier:(NSString*)string;
+
+/**
+ @abstract Returns the font-awesome character associated to the icon enum passed as argument 
+ */
++ (NSString*)fontAwesomeIconStringForEnum:(FAIcon)value;
+
+/* 
+ @abstract Returns the font-awesome character associated to the font-awesome identifier.
+ @discussion The list of identifiers can be found here: http://fortawesome.github.io/Font-Awesome/icons
+ */
++ (NSString*)fontAwesomeIconStringForIconIdentifier:(NSString*)identifier;
 
 @end

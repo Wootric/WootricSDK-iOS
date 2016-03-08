@@ -25,6 +25,7 @@
 #import "WTRSocialShareView.h"
 #import "WTRThankYouButton.h"
 #import "WTRColor.h"
+#import "NSString+FontAwesome.h"
 #import "SimpleConstraints.h"
 #import "UIItems.h"
 
@@ -126,11 +127,11 @@
 }
 
 - (void)setupFacebookButtonWithTargetViewController:(UIViewController *)viewController {
-  _facebookButton = [UIItems facebookButtonWithTargetViewController:viewController];
+    _facebookButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAFacebook] textColor:[WTRColor facebookLogoTextColor] andActionString:@"facebookButtonPressed"];
 }
 
 - (void)setupTwitterButtonWithTargetViewController:(UIViewController *)viewController {
-  _twitterButton = [UIItems twitterButtonWithTargetViewController:viewController];
+    _twitterButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FATwitter] textColor:[WTRColor twitterLogoTextColor] andActionString:@"twitterButtonPressed"];
 }
 
 - (void)setupNoThanksButtonWithTargetViewController:(UIViewController *)viewController {
