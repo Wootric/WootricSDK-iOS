@@ -142,21 +142,21 @@
   return tempLabel;
 }
 
-+ (UIButton *)socialButtonWithTargetViewController:(UIViewController *)viewController title:(NSString *)title textColor:(UIColor *)textColor andActionString:(NSString *)actionString {
-    [self dynamicallyAddFont];
++ (UIButton *)socialButtonWithTargetViewController:(UIViewController *)viewController title:(NSString *)title textColor:(UIColor *)textColor {
+  [self dynamicallyAddFont];
+  
+  UIButton *tempButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  tempButton.hidden = YES;
     
-    UIButton *tempButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    tempButton.hidden = YES;
-    
-    [tempButton.titleLabel setFont:[UIFont fontWithName:kFontAwesomeFamilyName size:20]];
-    [tempButton setTitle:title forState:UIControlStateNormal];
-    [tempButton.titleLabel setTextColor:textColor];
-    [tempButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [tempButton addTarget:viewController
-                   action:NSSelectorFromString(actionString)
-         forControlEvents:UIControlEventTouchUpInside];
-    
-    return tempButton;
+  [tempButton.titleLabel setFont:[UIFont fontWithName:kFontAwesomeFamilyName size:20]];
+  [tempButton setTitle:title forState:UIControlStateNormal];
+  [tempButton.titleLabel setTextColor:textColor];
+  [tempButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [tempButton addTarget:viewController
+                 action:NSSelectorFromString(@"socialButtonPressedForService:")
+       forControlEvents:UIControlEventTouchUpInside];
+  
+  return tempButton;
 }
 
 @end

@@ -34,9 +34,7 @@
 + (UILabel *)npsQuestionLabelWithSettings:(WTRSettings *)settings andFont:(UIFont *)font;
 + (UILabel *)finalThankYouLabelWithSettings:(WTRSettings *)settings textColor:(UIColor *)textColor andFont:(UIFont *)font;
 + (UILabel *)customThankYouLabelWithFont:(UIFont *)font;
-+ (UIButton *)facebookButtonWithTargetViewController:(UIViewController *)viewController;
-+ (UIButton *)twitterButtonWithTargetViewController:(UIViewController *)viewController;
-+ (UIButton *)socialButtonWithTargetViewController:(UIViewController *)viewController title:(NSString *)title textColor:(UIColor *)textColor andActionString:(NSString *)actionString;
++ (UIButton *)socialButtonWithTargetViewController:(UIViewController *)viewController title:(NSString *)title textColor:(UIColor *)textColor;
 + (UITextView *)feedbackTextViewWithBackgroundColor:(UIColor *)backgroundColor;
 
 @end

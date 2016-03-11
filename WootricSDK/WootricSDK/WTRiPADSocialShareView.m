@@ -35,12 +35,14 @@
 @property (nonatomic, strong) UIButton *twitterButton;
 @property (nonatomic, strong) UIButton *noThanksButton;
 @property (nonatomic, strong) UIButton *facebookButton;
+@property (nonatomic, strong) UIButton *facebookLikeButton;
 @property (nonatomic, strong) UILabel *finalThankYouLabel;
 @property (nonatomic, strong) UILabel *customThankYouLabel;
 @property (nonatomic, strong) UILabel *socialShareQuestionLabel;
 @property (nonatomic, strong) WTRiPADThankYouButton *thankYouButton;
 @property (nonatomic, strong) NSLayoutConstraint *twitterXConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *facebookXConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *facebookLikeXConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *noThanksXConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *thankYouXConstraint;
 
@@ -67,6 +69,7 @@
   [self setupThankYouButtonWithTargetViewController:viewController];
   [self setupNoThanksButtonWithTargetViewController:viewController];
   [self setupFacebookButtonWithTargetViewController:viewController];
+  [self setupFacebookLikeButtonWithTargetViewController:viewController];
   [self addSubviews];
 }
 
@@ -77,9 +80,11 @@
   [self setupNoThanksButtonConstraints];
   [self setupFacebookButtonConstraints];
   [self setupTwitterButtonConstraints];
+  [self setupFacebookLikeButtonConstraints];
 }
 
 - (void)addSubviews {
+  [self addSubview:_facebookLikeButton];
   [self addSubview:_twitterButton];
   [self addSubview:_facebookButton];
   [self addSubview:_thankYouButton];
@@ -112,9 +117,10 @@
   CGFloat totalWidth;
 
   if (facebookAvailable) {
-    totalSpacing += 15.0;
-    buttonsWidth += 32.0;
+    totalSpacing += 30.0;
+    buttonsWidth += 64.0;
     _facebookButton.hidden = NO;
+    _facebookLikeButton.hidden = NO;
   }
 
   if (twitterAvailable) {
@@ -139,7 +145,8 @@
 
 - (void)setXConstraintsForFacebook:(BOOL)facebookAvailable twitter:(BOOL)twitterAvailable withTotalWidth:(CGFloat)totalWidth spacing:(CGFloat)spacing andSocialButtonWidth:(CGFloat)socialButtonWidth {
   if (twitterAvailable && facebookAvailable) {
-    _twitterXConstraint.constant = -(totalWidth / 2) + socialButtonWidth;
+    _facebookLikeXConstraint.constant = -(totalWidth / 2) + socialButtonWidth;
+    _twitterXConstraint.constant = _facebookLikeXConstraint.constant + (socialButtonWidth * 2) + spacing;
     _facebookXConstraint.constant = _twitterXConstraint.constant + (socialButtonWidth * 2) + spacing;
     _noThanksXConstraint.constant = _facebookXConstraint.constant + socialButtonWidth + spacing + (_noThanksButton.frame.size.width / 2);
   } else {
@@ -147,7 +154,8 @@
       _twitterXConstraint.constant = -(totalWidth / 2) + socialButtonWidth;
       _noThanksXConstraint.constant = _twitterXConstraint.constant + socialButtonWidth + spacing + (_noThanksButton.frame.size.width / 2);
     } else if (facebookAvailable) {
-      _facebookXConstraint.constant = -(totalWidth / 2) + socialButtonWidth;
+      _facebookLikeXConstraint.constant = -(totalWidth / 2) + socialButtonWidth;
+      _facebookXConstraint.constant = _facebookLikeXConstraint.constant + (socialButtonWidth * 2) + spacing;
       _noThanksXConstraint.constant = _facebookXConstraint.constant + socialButtonWidth + spacing + (_noThanksButton.frame.size.width / 2);
     } else {
       _noThanksXConstraint.constant = -(totalWidth / 2) + (_noThanksButton.frame.size.width / 2);
@@ -159,11 +167,15 @@
 #pragma mark - Setup Views
 
 - (void)setupFacebookButtonWithTargetViewController:(UIViewController *)viewController {
-  _facebookButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAFacebook] textColor:[WTRColor facebookLogoTextColor] andActionString:@"facebookButtonPressed"];
+  _facebookButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAFacebook] textColor:[WTRColor facebookLogoTextColor]];
 }
 
 - (void)setupTwitterButtonWithTargetViewController:(UIViewController *)viewController {
-  _twitterButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FATwitter] textColor:[WTRColor twitterLogoTextColor] andActionString:@"twitterButtonPressed"];
+  _twitterButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FATwitter] textColor:[WTRColor twitterLogoTextColor]];
+}
+
+- (void)setupFacebookLikeButtonWithTargetViewController:(UIViewController *)viewController {
+  _facebookLikeButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] textColor:[WTRColor facebookLogoTextColor]];
 }
 
 - (void)setupNoThanksButtonWithTargetViewController:(UIViewController *)viewController {
@@ -265,6 +277,21 @@
                                                     multiplier:1
                                                       constant:0];
   [self addConstraint:_twitterXConstraint];
+}
+
+- (void)setupFacebookLikeButtonConstraints {
+  [_facebookLikeButton constraintWidth:32];
+  [_facebookLikeButton constraintHeight:32];
+  [[[[_facebookLikeButton bottom] toSecondViewBottom:self] withConstant:-48] addToView:self];
+    
+  _facebookLikeXConstraint = [NSLayoutConstraint constraintWithItem:_facebookLikeButton
+                                                          attribute:NSLayoutAttributeCenterX
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeCenterX
+                                                         multiplier:1
+                                                           constant:0];
+    [self addConstraint:_facebookLikeXConstraint];
 }
 
 - (void)noThankYouButton {

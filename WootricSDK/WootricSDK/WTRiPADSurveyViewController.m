@@ -29,6 +29,7 @@
 #import "WTRiPADThankYouButton.h"
 #import "WTRColor.h"
 #import "WTRSurvey.h"
+#import "NSString+FontAwesome.h"
 #import <Social/Social.h>
 
 @interface WTRiPADSurveyViewController ()
@@ -164,26 +165,51 @@
   }];
 }
 
-- (void)facebookButtonPressed {
-  NSURL *url = _settings.facebookPage;
-  if (![[UIApplication sharedApplication] openURL:url]) {
-    NSLog(@"Failed to open facebook page");
-  }
-}
-
-- (void)twitterButtonPressed {
-  if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
-    SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-    [tweetSheet setInitialText:[NSString stringWithFormat:@"%@ @%@", [_feedbackView feedbackText], _settings.twitterHandler]];
-    [self presentViewController:tweetSheet animated:YES completion:nil];
+-(void)socialButtonPressedForService:(UIButton *)sender {
+  if ([sender.titleLabel.text isEqualToString:[NSString fontAwesomeIconStringForEnum:FAThumbsUp]]) {
+    NSURL *url = _settings.facebookPage;
+    if (![[UIApplication sharedApplication] openURL:url]) {
+      NSLog(@"Failed to open facebook page");
+    }
   } else {
-    UIAlertView *alertView = [[UIAlertView alloc]
-                              initWithTitle:@"Sorry"
-                              message:@"You can't send a tweet right now, make sure your device has an internet connection and you have at least one Twitter account setup"
-                              delegate:self
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-    [alertView show];
+    NSString *serviceType;
+    NSString *socialNetwork;
+    if ([sender.titleLabel.text isEqualToString:[NSString fontAwesomeIconStringForEnum:FATwitter]]) {
+      serviceType = SLServiceTypeTwitter;
+      socialNetwork = @"Twitter";
+    } else {
+      serviceType = SLServiceTypeFacebook;
+      socialNetwork = @"Facebook";
+    }
+    if ([SLComposeViewController isAvailableForServiceType:serviceType]) {
+      SLComposeViewController *sheet = [SLComposeViewController composeViewControllerForServiceType:serviceType];
+      if ([serviceType isEqualToString:SLServiceTypeFacebook]) {
+        [sheet addURL:_settings.facebookPage];
+      } else {
+        [sheet setInitialText:[NSString stringWithFormat:@"%@ @%@", [_feedbackView feedbackText], _settings.twitterHandler]];
+      }
+      [sheet setCompletionHandler:^(SLComposeViewControllerResult result){
+        switch (result) {
+          case SLComposeViewControllerResultCancelled:
+            NSLog(@"WootricSDK: Post cancelled");
+            break;
+          case SLComposeViewControllerResultDone:
+            NSLog(@"WootricSDK: Post successful");
+            break;
+          default:
+            break;
+        }
+      }];
+      [self presentViewController:sheet animated:YES completion:nil];
+    } else {
+      NSString *message = [NSString stringWithFormat:@"You can't post right now, make sure your device has an internet connection and you have at least one %@ account setup", socialNetwork];
+      UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Sorry"
+                                                          message:message
+                                                         delegate:self
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+      [alertView show];
+    }
   }
 }
 

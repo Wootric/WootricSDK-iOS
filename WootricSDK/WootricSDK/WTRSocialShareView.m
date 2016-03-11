@@ -36,11 +36,13 @@
 @property (nonatomic, strong) UIButton *noThanksButton;
 @property (nonatomic, strong) UIButton *facebookButton;
 @property (nonatomic, strong) UIButton *twitterButton;
+@property (nonatomic, strong) UIButton *facebookLikeButton;
 @property (nonatomic, strong) UILabel *finalThankYouLabel;
 @property (nonatomic, strong) UILabel *socialShareQuestionLabel;
 @property (nonatomic, strong) UILabel *customThankYouLabel;
 @property (nonatomic, strong) NSLayoutConstraint *facebookXConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *twitterXConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *facebookLikeXConstraint;
 
 @end
 
@@ -69,6 +71,7 @@
 - (void)displayShareButtonsWithTwitterAvailable:(BOOL)twitterAvailable andFacebookAvailable:(BOOL)facebookAvailable {
   if (facebookAvailable) {
     _facebookButton.hidden = NO;
+    _facebookLikeButton.hidden = NO;
   }
 
   if (twitterAvailable) {
@@ -76,7 +79,11 @@
   }
 
   if (twitterAvailable && facebookAvailable) {
-    _twitterXConstraint.constant = 32;
+    _facebookLikeXConstraint.constant = 64;
+    _twitterXConstraint.constant = 0;
+    _facebookXConstraint.constant = -64;
+  } else if (!twitterAvailable && facebookAvailable) {
+    _facebookLikeXConstraint.constant = 32;
     _facebookXConstraint.constant = -32;
   } else if (!twitterAvailable && !facebookAvailable) {
     _socialShareQuestionLabel.hidden = YES;
@@ -95,6 +102,7 @@
   [self setupCustomThankYouLabel];
   [self setupFacebookButtonWithTargetViewController:viewController];
   [self setupTwitterButtonWithTargetViewController:viewController];
+  [self setupFacebookLikeButtonWithTargetViewController:viewController];
   [self addSubviews];
 }
 
@@ -106,6 +114,7 @@
   [self setupSocialShareQuestionLabelConstraints];
   [self setupFacebookButtonConstraints];
   [self setupTwitterButtonConstraints];
+  [self setupFacebookLikeButtonConstraints];
 }
 
 - (void)addSubviews {
@@ -116,6 +125,7 @@
   [self addSubview:_customThankYouLabel];
   [self addSubview:_facebookButton];
   [self addSubview:_twitterButton];
+  [self addSubview:_facebookLikeButton];
 }
 
 - (void)setupCustomThankYouLabel {
@@ -127,11 +137,15 @@
 }
 
 - (void)setupFacebookButtonWithTargetViewController:(UIViewController *)viewController {
-    _facebookButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAFacebook] textColor:[WTRColor facebookLogoTextColor] andActionString:@"facebookButtonPressed"];
+    _facebookButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAFacebook] textColor:[WTRColor facebookLogoTextColor]];
 }
 
 - (void)setupTwitterButtonWithTargetViewController:(UIViewController *)viewController {
-    _twitterButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FATwitter] textColor:[WTRColor twitterLogoTextColor] andActionString:@"twitterButtonPressed"];
+    _twitterButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FATwitter] textColor:[WTRColor twitterLogoTextColor]];
+}
+
+- (void)setupFacebookLikeButtonWithTargetViewController:(UIViewController *)viewController {
+    _facebookLikeButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] textColor:[WTRColor facebookLogoTextColor]];
 }
 
 - (void)setupNoThanksButtonWithTargetViewController:(UIViewController *)viewController {
@@ -202,6 +216,21 @@
                                                     multiplier:1
                                                       constant:0];
   [self addConstraint:_twitterXConstraint];
+}
+
+- (void)setupFacebookLikeButtonConstraints {
+    [_facebookLikeButton constraintWidth:32];
+    [_facebookLikeButton constraintHeight:32];
+    [[[[_facebookLikeButton top] toSecondViewBottom:_socialShareQuestionLabel] withConstant:18] addToView:self];
+    
+    _facebookLikeXConstraint = [NSLayoutConstraint constraintWithItem:_facebookLikeButton
+                                                        attribute:NSLayoutAttributeCenterX
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1
+                                                         constant:0];
+    [self addConstraint:_facebookLikeXConstraint];
 }
 
 - (void)setupSocialShareQuestionLabelConstraints {
