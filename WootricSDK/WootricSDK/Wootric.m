@@ -236,4 +236,26 @@
     [apiClient.settings setCustomDailyResponseCap:dailyResponseCap];
 }
 
+#pragma mark - Color Customization
+
++ (void)setSendButtonBackgroundColor:(UIColor *)color {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setSendButtonBackgroundColor:color];
+}
+
++ (void)setSliderColor:(UIColor *)color {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setSliderColor:color];
+}
+
++ (void)setSocialSharingColor:(UIColor *)color {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setSocialSharingColor:color];
+}
+
++ (void)setThankYouButtonBackgroundColor:(UIColor *)color {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setThankYouButtonBackgroundColor:color];
+}
+
 @end

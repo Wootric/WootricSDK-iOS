@@ -29,13 +29,19 @@
 @interface WTRScoreView ()
 
 @property (nonatomic, assign) int currentValue;
+@property (nonatomic, strong) UIColor *labelColor;
 
 @end
 
 @implementation WTRScoreView
 
 - (instancetype)init {
+  return [self initWithColor:[WTRColor selectedValueScoreColor]];
+}
+
+- (instancetype)initWithColor:(UIColor *)color {
   if (self = [super init]) {
+    _labelColor = color;
     _currentValue = -1;
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
   }
@@ -46,7 +52,7 @@
   float scoreLabelWidth = self.frame.size.width;
 
   for (int i = 0; i <= 10; i++) {
-    WTRSingleScoreLabel *label = [[WTRSingleScoreLabel alloc] init];
+    WTRSingleScoreLabel *label = [[WTRSingleScoreLabel alloc] initWithColor:_labelColor];
     label.tag = 9000 + i;
     label.text = [NSString stringWithFormat:@"%d", i];
     [self addSubview:label];

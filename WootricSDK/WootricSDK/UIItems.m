@@ -150,7 +150,7 @@
     
   [tempButton.titleLabel setFont:[UIFont fontWithName:kFontAwesomeFamilyName size:20]];
   [tempButton setTitle:title forState:UIControlStateNormal];
-  [tempButton.titleLabel setTextColor:textColor];
+  [tempButton setTitleColor:textColor forState:UIControlStateNormal];
   [tempButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [tempButton addTarget:viewController
                  action:NSSelectorFromString(@"socialButtonPressedForService:")

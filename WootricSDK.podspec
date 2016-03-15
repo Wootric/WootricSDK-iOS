@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
   s.name     = 'WootricSDK'
-  s.version  = '0.4.9'
+  s.version  = '0.5.0'
   s.license  = 'MIT'
   s.summary  = 'Wootric SDK for displaying survey for end user'
   s.homepage = 'https://github.com/Wootric/WootricSDK-iOS'
-  s.authors  = { 'Carlos Arenas' => 'clsarenas@gmail.com' }
+  s.authors  = { 'Diego Serrano' => 'mail@diegoserranoa.com' }
   s.source   = { :git => 'https://github.com/Wootric/WootricSDK-iOS.git', :tag => s.version.to_s }
   s.requires_arc = true
   s.platform = :ios

@@ -25,10 +25,21 @@
 #import "WTRSliderDot.h"
 #import "WTRColor.h"
 
+@interface WTRSliderDot ()
+
+@property (nonatomic, strong) UIColor *dotSelectedColor;
+
+@end
+
 @implementation WTRSliderDot
 
 - (instancetype)init {
+  return [self initWithColor:[WTRColor sliderDotBorderColor]];
+}
+
+- (instancetype)initWithColor:(UIColor *)color {
   if (self = [super init]) {
+    _dotSelectedColor = color;
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = 4;
     self.layer.borderWidth = 1;
@@ -40,8 +51,8 @@
 }
 
 - (void)setAsSelected {
-  self.backgroundColor = [WTRColor sliderDotSelectedColor];
-  self.layer.borderColor = [WTRColor sliderDotSelectedColor].CGColor;
+  self.backgroundColor = _dotSelectedColor;
+  self.layer.borderColor = _dotSelectedColor.CGColor;
 }
 
 - (void)setAsUnselected {

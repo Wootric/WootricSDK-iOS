@@ -28,6 +28,8 @@
 
 @property (nonatomic, strong) NSLayoutConstraint *leftConstraint;
 
+- (instancetype)initWithColor:(UIColor *)color;
+
 - (void)addConstraintsWithLeftConstraintConstant:(CGFloat)leftConstant;
 - (void)setAsSelected;
 - (void)setAsUnselected;

@@ -26,6 +26,8 @@
 
 @interface WTRScoreView : UIView
 
+- (instancetype)initWithColor:(UIColor *)color;
+
 - (void)addScores;
 - (void)recalculateScorePositionForScoreLabelWidth:(CGFloat)scoreLabelWidth;
 - (void)highlightCurrentScore:(int)score;

@@ -77,7 +77,7 @@
 
 - (void)setupSendButton {
   self.sendButton = [[UIButton alloc] init];
-  self.sendButton.backgroundColor = [WTRColor sendButtonDisabledBackgroundColor];
+  self.sendButton.backgroundColor = [[self.settings sendButtonBackgroundColor] colorWithAlphaComponent:0.4f];
   self.sendButton.enabled = NO;
   self.sendButton.layer.cornerRadius = 3;
   self.sendButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];

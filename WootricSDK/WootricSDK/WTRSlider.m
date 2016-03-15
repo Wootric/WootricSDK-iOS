@@ -30,13 +30,20 @@
 @interface WTRSlider ()
 
 @property (nonatomic, assign) int currentValue;
+@property (nonatomic, strong) UIColor *sliderColor;
+
 
 @end
 
 @implementation WTRSlider
 
 - (instancetype)initWithSuperview:(UIView *)superview andViewController:(UIViewController *)viewController {
+  return [self initWithSuperview:superview viewController:viewController andColor:[WTRColor sliderValueColor]];
+}
+
+- (instancetype)initWithSuperview:(UIView *)superview viewController:(UIViewController *)viewController andColor:(UIColor *)color {
   if (self = [super init]) {
+    _sliderColor = color;
     _currentValue = -1;
     self.minimumValue = 0;
     self.maximumValue = 10;
@@ -44,9 +51,9 @@
     self.tintColor = [WTRColor sliderBackgroundColor];
     UIImage *image = [[UIImage alloc] init];
     UIImage *greyBackground = [UIImage imageFromColor:[WTRColor sliderBackgroundColor] withSize:24];
-    UIImage *blueBackground = [UIImage imageFromColor:[WTRColor sliderValueColor] withSize:24];
+    UIImage *selectedBackground = [UIImage imageFromColor:[_sliderColor colorWithAlphaComponent:0.65f] withSize:24];
     [self setMaximumTrackImage:[greyBackground resizableImageWithCapInsets:UIEdgeInsetsMake(12, 12, 12, 12)] forState:UIControlStateNormal];
-    [self setMinimumTrackImage:[blueBackground resizableImageWithCapInsets:UIEdgeInsetsMake(12, 12, 12, 12)] forState:UIControlStateNormal];
+    [self setMinimumTrackImage:[selectedBackground resizableImageWithCapInsets:UIEdgeInsetsMake(12, 12, 12, 12)] forState:UIControlStateNormal];
     [self setThumbImage:image forState:UIControlStateNormal];
     [self setThumbImage:image forState:UIControlStateHighlighted];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -78,7 +85,7 @@
   float sliderWidth = self.frame.size.width;
 
   for (int i = 0; i <= 10; i++) {
-    WTRSliderDot *dot = [[WTRSliderDot alloc] init];
+    WTRSliderDot *dot = [[WTRSliderDot alloc] initWithColor:_sliderColor];
     dot.tag = 9000 + i;
     [self addSubview:dot];
 
@@ -122,9 +129,9 @@
 }
 
 - (void)showThumb {
-  [self setThumbImage:[UIImage imageFromColor:[WTRColor sliderDotSelectedColor] withSize:24]
+  [self setThumbImage:[UIImage imageFromColor:_sliderColor withSize:24]
              forState:UIControlStateNormal];
-  [self setThumbImage:[UIImage imageFromColor:[WTRColor sliderDotSelectedColor] withSize:24]
+  [self setThumbImage:[UIImage imageFromColor:_sliderColor withSize:24]
               forState:UIControlStateHighlighted];
 }
 

@@ -27,12 +27,12 @@
 
 @implementation WTRThankYouButton
 
-- (instancetype)initWithViewController:(UIViewController *)viewController {
+- (instancetype)initWithViewController:(UIViewController *)viewController backgroundColor:(UIColor *)backgroundColor {
   if (self = [super init]) {
     self.layer.cornerRadius = 3;
     self.layer.borderWidth = 1;
-    self.backgroundColor = [WTRColor callToActionButtonBackgroundColor];
-    self.layer.borderColor = [WTRColor callToActionButtonBorderColor].CGColor;
+    self.backgroundColor = backgroundColor;
+    self.layer.borderColor = [backgroundColor colorWithAlphaComponent:0.65f].CGColor;
     self.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];

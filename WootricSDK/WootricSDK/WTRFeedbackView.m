@@ -100,7 +100,7 @@
   _editScoreButton = [[UIButton alloc] init];
   _editScoreButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
   [_editScoreButton setTitle:@"EDIT SCORE" forState:UIControlStateNormal];
-  [_editScoreButton setTitleColor:[WTRColor editScoreTextColor] forState:UIControlStateNormal];
+  [_editScoreButton setTitleColor:[_settings sliderColor] forState:UIControlStateNormal];
   [_editScoreButton addTarget:viewController
                        action:NSSelectorFromString(@"editScoreButtonPressed:")
              forControlEvents:UIControlEventTouchUpInside];

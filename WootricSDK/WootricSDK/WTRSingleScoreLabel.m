@@ -26,10 +26,21 @@
 #import "SimpleConstraints.h"
 #import "WTRColor.h"
 
+@interface WTRSingleScoreLabel ()
+
+@property (nonatomic, strong) UIColor *selectedColor;
+
+@end
+
 @implementation WTRSingleScoreLabel
 
 - (instancetype)init {
+  return [self initWithColor:[WTRColor selectedValueScoreColor]];
+}
+
+- (instancetype)initWithColor:(UIColor *)color {
   if (self = [super init]) {
+    _selectedColor = color;
     self.textColor = [WTRColor anchorAndScoreColor];
     self.font = [UIFont systemFontOfSize:16];
     self.textAlignment = NSTextAlignmentCenter;
@@ -39,7 +50,7 @@
 }
 
 - (void)setAsSelected {
-  self.textColor = [WTRColor selectedValueScoreColor];
+  self.textColor = _selectedColor;
   self.font = [UIFont boldSystemFontOfSize:20];
 }
 

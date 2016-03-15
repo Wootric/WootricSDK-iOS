@@ -77,4 +77,9 @@
 
 + (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercentage registeredPercentage:(NSNumber *)registeredPercentage dailyResponseCap:(NSNumber *)dailyResponseCap;
 
++ (void)setSendButtonBackgroundColor:(UIColor *)color;
++ (void)setSliderColor:(UIColor *)color;
++ (void)setThankYouButtonBackgroundColor:(UIColor *)color;
++ (void)setSocialSharingColor:(UIColor *)color;
+
 @end

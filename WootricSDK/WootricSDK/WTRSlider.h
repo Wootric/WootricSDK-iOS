@@ -29,6 +29,7 @@
 @property (nonatomic, assign) BOOL thumbAdded;
 
 - (instancetype)initWithSuperview:(UIView *)superview andViewController:(UIViewController *)viewController;
+- (instancetype)initWithSuperview:(UIView *)superview viewController:(UIViewController *)viewController andColor:(UIColor *)color;
 - (void)addDots;
 - (void)recalculateDotsPositionForSliderWidth:(CGFloat)sliderWidth;
 - (void)updateDots;

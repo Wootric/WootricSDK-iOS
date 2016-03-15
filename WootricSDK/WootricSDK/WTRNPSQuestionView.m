@@ -71,10 +71,10 @@
 
 - (void)highlightAnchorForScore:(int)currentScore {
   if (currentScore == 0) {
-    _notLikelyAnchor.textColor = [WTRColor selectedValueScoreColor];
+    _notLikelyAnchor.textColor = [_settings sliderColor];
     _likelyAnchor.textColor = [WTRColor anchorAndScoreColor];
   } else if (currentScore == 10) {
-    _likelyAnchor.textColor = [WTRColor selectedValueScoreColor];
+    _likelyAnchor.textColor = [_settings sliderColor];
     _notLikelyAnchor.textColor = [WTRColor anchorAndScoreColor];
   } else {
     _notLikelyAnchor.textColor = [WTRColor anchorAndScoreColor];
@@ -139,11 +139,11 @@
 }
 
 - (void)setupSliderWithSuperview:(UIView *)superview andViewController:(UIViewController *)viewController {
-  self.scoreSlider = [[WTRSlider alloc] initWithSuperview:superview andViewController:viewController];
+  self.scoreSlider = [[WTRSlider alloc] initWithSuperview:superview viewController:viewController andColor:[_settings sliderColor]];
 }
 
 - (void)setupScoreLabel {
-  self.scoreLabel = [[WTRScoreView alloc] init];
+  self.scoreLabel = [[WTRScoreView alloc] initWithColor:[_settings sliderColor]];
 }
 
 - (void)addSubviews {

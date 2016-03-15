@@ -133,19 +133,19 @@
 }
 
 - (void)setupThankYouButtonWithTargetViewController:(UIViewController *)viewController {
-  _thankYouButton = [[WTRThankYouButton alloc] initWithViewController:viewController];
+  _thankYouButton = [[WTRThankYouButton alloc] initWithViewController:viewController backgroundColor:[_settings thankYouButtonBackgroundColor]];
 }
 
 - (void)setupFacebookButtonWithTargetViewController:(UIViewController *)viewController {
-    _facebookButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAFacebook] textColor:[WTRColor facebookLogoTextColor]];
+    _facebookButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAFacebook] textColor:[_settings socialSharingColor]];
 }
 
 - (void)setupTwitterButtonWithTargetViewController:(UIViewController *)viewController {
-    _twitterButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FATwitter] textColor:[WTRColor twitterLogoTextColor]];
+    _twitterButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FATwitter] textColor:[_settings socialSharingColor]];
 }
 
 - (void)setupFacebookLikeButtonWithTargetViewController:(UIViewController *)viewController {
-    _facebookLikeButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] textColor:[WTRColor facebookLogoTextColor]];
+    _facebookLikeButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] textColor:[_settings socialSharingColor]];
 }
 
 - (void)setupNoThanksButtonWithTargetViewController:(UIViewController *)viewController {
@@ -153,7 +153,7 @@
   _noThanksButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
   [_noThanksButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_noThanksButton setTitle:[[_settings socialShareDeclineText] uppercaseString] forState:UIControlStateNormal];
-  [_noThanksButton setTitleColor:[WTRColor sendButtonBackgroundColor] forState:UIControlStateNormal];
+  [_noThanksButton setTitleColor:[_settings sendButtonBackgroundColor] forState:UIControlStateNormal];
   [_noThanksButton addTarget:viewController
                       action:NSSelectorFromString(@"noThanksButtonPressed")
             forControlEvents:UIControlEventTouchUpInside];
@@ -174,7 +174,7 @@
 - (void)setupSocialShareQuestionLabel {
   _socialShareQuestionLabel = [[UILabel alloc] init];
   _socialShareQuestionLabel.textAlignment = NSTextAlignmentCenter;
-  _socialShareQuestionLabel.textColor = [WTRColor socialShareQuestionTextColor];
+  _socialShareQuestionLabel.textColor = [_settings socialSharingColor];
   _socialShareQuestionLabel.numberOfLines = 0;
   _socialShareQuestionLabel.lineBreakMode = NSLineBreakByWordWrapping;
   _socialShareQuestionLabel.font = [UIFont boldSystemFontOfSize:12];

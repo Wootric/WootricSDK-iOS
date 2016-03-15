@@ -23,6 +23,7 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface WTRSettings : NSObject
 
@@ -50,6 +51,9 @@
 @property (nonatomic, assign) BOOL setDefaultAfterSurvey;
 @property (nonatomic, assign) BOOL skipFeedbackScreen;
 @property (nonatomic, assign) BOOL passScoreAndTextToURL;
+@property (nonatomic, strong) UIColor *sendButtonBackgroundColor;
+@property (nonatomic, strong) UIColor *sliderColor;
+@property (nonatomic, strong) UIColor *socialSharingColor;
 
 - (void)parseDataFromSurveyServer:(NSDictionary *)surveyServerSettings;
 - (NSString *)getEndUserEmailOrUnknown;
@@ -64,6 +68,10 @@
 - (NSString *)dismissButtonText;
 - (NSString *)socialShareQuestionText;
 - (NSString *)socialShareDeclineText;
+
+
+- (void)setThankYouButtonBackgroundColor:(UIColor *)thankYouButtonBackgroundColor;
+- (UIColor *)thankYouButtonBackgroundColor;
 
 - (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder detractor:(NSString *)detractorPlaceholder;
 - (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion detractor:(NSString *)detractorQuestion;

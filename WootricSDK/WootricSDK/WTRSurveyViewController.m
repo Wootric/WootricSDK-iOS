@@ -215,7 +215,7 @@
 - (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer {
   if (!_sendButton.enabled) {
     _sendButton.enabled = YES;
-    _sendButton.backgroundColor = [WTRColor sendButtonBackgroundColor];
+    _sendButton.backgroundColor = [_settings sendButtonBackgroundColor];
   }
   [_npsQuestionView sliderTapped:gestureRecognizer];
 }

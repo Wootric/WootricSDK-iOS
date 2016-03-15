@@ -23,6 +23,7 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface WTRCustomThankYou : NSObject
 
@@ -38,5 +39,6 @@
 @property (nonatomic, strong) NSURL *passiveThankYouLinkURL;
 @property (nonatomic, strong) NSString *promoterThankYouLinkText;
 @property (nonatomic, strong) NSURL *promoterThankYouLinkURL;
+@property (nonatomic, strong) UIColor *backgroundColor;
 
 @end

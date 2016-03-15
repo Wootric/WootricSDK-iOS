@@ -27,6 +27,7 @@
 #import "WTRCustomMessages.h"
 #import "WTRCustomThankYou.h"
 #import "WTRUserCustomMessages.h"
+#import "WTRColor.h"
 
 @interface WTRSettings ()
 
@@ -199,6 +200,34 @@
     return _localizedTexts.send;
 }
 
+- (UIColor *)sendButtonBackgroundColor {
+  if (_sendButtonBackgroundColor) {
+    return _sendButtonBackgroundColor;
+  }
+  return [WTRColor sendButtonBackgroundColor];
+}
+
+- (UIColor *)sliderColor {
+  if (_sliderColor) {
+    return _sliderColor;
+  }
+  return [WTRColor sliderValueColor];
+}
+
+- (UIColor *)thankYouButtonBackgroundColor {
+  if (_customThankYou.backgroundColor) {
+    return _customThankYou.backgroundColor;
+  }
+  return [WTRColor callToActionButtonBackgroundColor];
+}
+
+- (UIColor *)socialSharingColor {
+  if (_socialSharingColor) {
+    return _socialSharingColor;
+  }
+  return [WTRColor socialShareQuestionTextColor];
+}
+
 - (NSString *)dismissButtonText {
     return _localizedTexts.dismiss;
 }
@@ -209,6 +238,10 @@
 
 - (NSString *)socialShareDeclineText {
     return _localizedTexts.socialShareDecline;
+}
+
+- (void)setThankYouButtonBackgroundColor:(UIColor *)thankYouButtonBackgroundColor {
+  _customThankYou.backgroundColor = thankYouButtonBackgroundColor;
 }
 
 - (void)setThankYouMessage:(NSString *)thankYouMessage {
@@ -228,8 +261,8 @@
 }
 
 - (void)setThankYouLinkWithText:(NSString *)thankYouLinkText URL:(NSURL *)thankYouLinkURL {
-    _customThankYou.thankYouLinkText = thankYouLinkText;
-    _customThankYou.thankYouLinkURL = thankYouLinkURL;
+  _customThankYou.thankYouLinkText = thankYouLinkText;
+  _customThankYou.thankYouLinkURL = thankYouLinkURL;
 }
 
 - (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText URL:(NSURL *)detractorThankYouLinkURL {

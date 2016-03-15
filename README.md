@@ -60,6 +60,10 @@ $ pod install
 + setCustomFollowupPlaceholderForPromoter:passive:detractor:
 + setCustomFollowupQuestionForPromoter:passive:detractor:
 + setCustomValueForResurveyThrottle:visitorPercentage:registeredPercentage:dailyResponseCap:
++ setSendButtonBackgroundColor:
++ setSliderColor:
++ setThankYouButtonBackgroundColor:
++ setSocialSharingColor:
 ```
 
 ####Required configuration:
@@ -210,6 +214,30 @@ if custom product name is set it will substitute "this product or service" text,
 If configured, social share will display third screen for promoters (score 9-10, also twitter displays only if there is a feedback text provided), while custom thank you message and/or button will display for each type of end user that is configured (where ```setThankYouMessage:``` and ```setThankYouLinkWithText:URL:``` being default for any score).
 
 For detailed information please refer to [js docs](http://docs.wootric.com/install/#social-media-share-settings).
+####Color Customization (iPhone only)
+---
+
+```objective-c
+// Change slider color
+[Wootric setSliderColor:<UI_COLOR>];
+```
+Changes the color of the Survey Score Graphics and the Edit Score button on the feedback view.
+```objective-c
+// Change Send button color
+[Wootric setSendButtonBackgroundColor:<UI_COLOR>];
+```
+Changes the color of the Send button and the No thanks button on the sharing view.
+```objective-c
+// Change Thank You button color
+[Wootric setThankYouButtonBackgroundColor:<UI_COLOR>;
+```
+Changes the color of the Thank You button on the sharing view.
+```objective-c
+// Change Social buttons color
+[Wootric setSocialSharingColor:<UI_COLOR>];
+```
+Changes the color of Facebook, Twitter and Thumbs up button on the sharing view.
+
 ####Additional information:
 ---
 #####First survey after & end user created at setting:
