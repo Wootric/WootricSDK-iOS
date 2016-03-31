@@ -1,3 +1,9 @@
+## 0.5.0 (2016-03-31)
+
+### Added:
+
+- Add color customization feature
+
 ## 0.4.7 (2016-02-15)
 
 ### Fixed:
