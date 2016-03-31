@@ -1,5 +1,11 @@
 ## 0.5.0 (2016-03-31)
 
+### Fixed:
+
+- Add fontawesome-webfont.ttf to podspec resources.
+
+## 0.5.0 (2016-03-31)
+
 ### Added:
 
 - Add color customization feature
