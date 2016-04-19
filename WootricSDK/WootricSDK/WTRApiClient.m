@@ -90,23 +90,26 @@
             NSLog(@"WootricSDK (GET end user): %@", error);
         }
         else {
-            NSArray *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+          id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+          if ([responseJSON isKindOfClass:[NSArray class]]) {
             if ([responseJSON count] == 0) {
-                [self createEndUser:^(NSInteger endUserID) {
-                    endUserWithID(endUserID);
-                }];
-            }
-            else {
-                NSDictionary *endUser = responseJSON[0];
-                
-                if (endUser[@"id"]) {
-                    NSInteger endUserID = [endUser[@"id"] integerValue];
-                    if (!_endUserAlreadyUpdated) {
-                        [self updateExistingEndUser:endUserID];
-                    }
-                    endUserWithID(endUserID);
+              [self createEndUser:^(NSInteger endUserID) {
+                endUserWithID(endUserID);
+              }];
+            } else {
+              NSDictionary *endUser = responseJSON[0];
+              
+              if (endUser[@"id"]) {
+                NSInteger endUserID = [endUser[@"id"] integerValue];
+                if (!_endUserAlreadyUpdated) {
+                  [self updateExistingEndUser:endUserID];
                 }
+                endUserWithID(endUserID);
+              }
             }
+          } else {
+            NSLog(@"WootricSDK - Error: %@", responseJSON);
+          }
         }
     }];
     
@@ -161,7 +164,7 @@
     }
     
     if (_settings.customProperties) {
-        NSString *parsedProperties = [WTRPropertiesParser parseToStringFromDictionary:_settings.customProperties];;
+        NSString *parsedProperties = [WTRPropertiesParser parseToStringFromDictionary:_settings.customProperties];
         params = [NSString stringWithFormat:@"%@%@", params, parsedProperties];
     }
     
