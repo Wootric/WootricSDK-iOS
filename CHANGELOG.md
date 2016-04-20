@@ -1,4 +1,10 @@
-## 0.5.0 (2016-03-31)
+## 0.5.2 (2016-03-31)
+
+### Fixed:
+
+- Fix crash at getEndUserEmail when receiving a dictionary.
+
+## 0.5.1 (2016-03-31)
 
 ### Fixed:
 
