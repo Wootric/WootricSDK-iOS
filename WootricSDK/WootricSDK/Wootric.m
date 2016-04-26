@@ -123,7 +123,7 @@
 + (void)showSurveyInViewController:(UIViewController *)viewController {
     
     if ([[WTRApiClient sharedInstance] checkConfiguration]) {
-        
+      
         [WTRTrackingPixel getPixel];
         
         WTRSurvey *surveyClient = [[WTRSurvey alloc] init];

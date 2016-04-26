@@ -1,3 +1,9 @@
+## 0.5.3 (2016-05-23)
+
+### Add:
+
+- Concurrent Survey Processing
+
 ## 0.5.2 (2016-03-31)
 
 ### Fixed:

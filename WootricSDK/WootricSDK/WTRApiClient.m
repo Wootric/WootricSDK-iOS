@@ -24,6 +24,8 @@
 
 #import "WTRApiClient.h"
 #import "WTRPropertiesParser.h"
+#import <CommonCrypto/CommonHMAC.h>
+
 
 @interface WTRApiClient ()
 
@@ -31,7 +33,11 @@
 @property (nonatomic, strong) NSString *surveyServerURL;
 @property (nonatomic, strong) NSString *accessToken;
 @property (nonatomic, strong) NSURLSession *wootricSession;
+@property (nonatomic, strong) NSNumber *userID;
+@property (nonatomic, strong) NSNumber *accountID;
+@property (nonatomic, strong) NSString *uniqueLink;
 @property (nonatomic, assign) BOOL endUserAlreadyUpdated;
+@property (nonatomic) int priority;
 
 @end
 
@@ -48,72 +54,71 @@
 }
 
 - (instancetype)init {
-    if (self = [super init]) {
-        _baseAPIURL = @"https://api.wootric.com";
-        _surveyServerURL = @"https://survey.wootric.com/eligible.json";
-        _wootricSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-        _settings = [[WTRSettings alloc] init];
-        _apiVersion = @"api/v1";
-    }
-    return self;
+  if (self = [super init]) {
+    _baseAPIURL = @"https://api.wootric.com";
+    _surveyServerURL = @"https://survey.wootric.com/eligible.json";
+    _wootricSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    _settings = [[WTRSettings alloc] init];
+    _apiVersion = @"api/v1";
+    _priority = 0;
+  }
+  return self;
 }
 
 - (BOOL)checkConfiguration {
-    
-    if ([_clientID length] != 0 &&
-        [_clientSecret length] != 0 &&
-        [_accountToken length] != 0) {
-        return YES;
-    }
-    return NO;
+  if ([_clientID length] != 0 &&
+      [_clientSecret length] != 0 &&
+      [_accountToken length] != 0) {
+    return YES;
+  }
+  return NO;
 }
 
 - (void)endUserDeclined {
   [self getEndUserWithEmail:^(NSInteger endUserID) {
-    [self createDeclineForEndUser:endUserID];
+    [self createResponseForEndUser:endUserID withScore:-1 text:nil endpoint:@"declines"];
   }];
 }
 
 - (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text {
   [self getEndUserWithEmail:^(NSInteger endUserID) {
-    [self createResponseForEndUser:endUserID withScore:score andText:text];
+    [self createResponseForEndUser:endUserID withScore:score text:text endpoint:@"responses"];
   }];
 }
 
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID {
-    NSString *escapedEmail = [self percentEscapeString:[_settings getEndUserEmailOrUnknown]];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", _baseAPIURL, _apiVersion, escapedEmail]];
-    NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:nil andHTTPBody:nil];
-    
-    NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            NSLog(@"WootricSDK (GET end user): %@", error);
-        }
-        else {
-          id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-          if ([responseJSON isKindOfClass:[NSArray class]]) {
-            if ([responseJSON count] == 0) {
-              [self createEndUser:^(NSInteger endUserID) {
-                endUserWithID(endUserID);
-              }];
-            } else {
-              NSDictionary *endUser = responseJSON[0];
-              
-              if (endUser[@"id"]) {
-                NSInteger endUserID = [endUser[@"id"] integerValue];
-                if (!_endUserAlreadyUpdated) {
-                  [self updateExistingEndUser:endUserID];
-                }
-                endUserWithID(endUserID);
-              }
+  NSString *escapedEmail = [self percentEscapeString:[_settings getEndUserEmailOrUnknown]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", _baseAPIURL, _apiVersion, escapedEmail]];
+  NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:nil andHTTPBody:nil];
+  
+  NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    if (error) {
+      NSLog(@"WootricSDK (GET end user): %@", error);
+    } else {
+      id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+      if ([responseJSON isKindOfClass:[NSArray class]]) {
+        if ([responseJSON count] == 0) {
+          [self createEndUser:^(NSInteger endUserID) {
+            endUserWithID(endUserID);
+          }];
+        } else {
+          NSDictionary *endUser = responseJSON[0];
+          
+          if (endUser[@"id"]) {
+            NSInteger endUserID = [endUser[@"id"] integerValue];
+            if (!_endUserAlreadyUpdated) {
+              [self updateExistingEndUser:endUserID];
             }
-          } else {
-            NSLog(@"WootricSDK - Error: %@", responseJSON);
+            endUserWithID(endUserID);
           }
         }
-    }];
+      } else {
+        NSLog(@"WootricSDK - Error: %@", responseJSON);
+      }
+    }
+  }];
     
-    [dataTask resume];
+  [dataTask resume];
 }
 
 - (void)updateExistingEndUser:(NSInteger)endUserID {
@@ -131,6 +136,7 @@
     NSString *parsedProperties = [WTRPropertiesParser parseToStringFromDictionary:_settings.customProperties];
     params = [NSString stringWithFormat:@"%@%@", params, parsedProperties];
   }
+  
 
   if (needsUpdate) {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld?%@", _baseAPIURL, _apiVersion, (long)endUserID, params]];
@@ -150,75 +156,55 @@
 }
 
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID {
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", _baseAPIURL, _apiVersion]];
+  NSString *escapedEmail = [self percentEscapeString:[_settings getEndUserEmailOrUnknown]];
+  NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", _baseAPIURL, _apiVersion]];
-    NSString *escapedEmail = [self percentEscapeString:[_settings getEndUserEmailOrUnknown]];
-    NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
-    
-    if (_settings.externalCreatedAt) {
-        params = [NSString stringWithFormat:@"%@&external_created_at=%ld", params, (long)[_settings.externalCreatedAt integerValue]];
-    }
-    
-    if (_settings.productName) {
-        params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, _settings.productName];
-    }
-    
-    if (_settings.customProperties) {
-        NSString *parsedProperties = [WTRPropertiesParser parseToStringFromDictionary:_settings.customProperties];
-        params = [NSString stringWithFormat:@"%@%@", params, parsedProperties];
-    }
-    
-    NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
-    
-    NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            NSLog(@"WootricSDK (create end user): %@", error);
-        }
-        else {
-            NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            NSLog(@"WootricSDK (create end user): %@", responseJSON);
-            if (responseJSON) {
-                NSInteger endUserID = [responseJSON[@"id"] integerValue];
-                endUserWithID(endUserID);
-            }
-        }
-    }];
-    
-    [dataTask resume];
-}
-
-- (void)createResponseForEndUser:(NSInteger)endUserID withScore:(NSInteger)score andText:(NSString *)text {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/responses", _baseAPIURL, _apiVersion, (long)endUserID]];
-  NSString *params = [NSString stringWithFormat:@"score=%ld&origin_url=%@&survey[channel]=mobile", (long)score, _settings.originURL];
-
-  if (text) {
-    NSString *escapedText = [self percentEscapeString:text];
-    params = [NSString stringWithFormat:@"%@&text=%@", params, escapedText];
+  if (_settings.externalCreatedAt) {
+    params = [NSString stringWithFormat:@"%@&external_created_at=%ld", params, (long)[_settings.externalCreatedAt integerValue]];
   }
-
+    
+  if (_settings.productName) {
+    params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, _settings.productName];
+  }
+    
+  if (_settings.customProperties) {
+    NSString *parsedProperties = [WTRPropertiesParser parseToStringFromDictionary:_settings.customProperties];
+    params = [NSString stringWithFormat:@"%@%@", params, parsedProperties];
+  }
+    
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
 
+  NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    if (error) {
+      NSLog(@"WootricSDK (create end user): %@", error);
+    } else {
+      NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+      NSLog(@"WootricSDK (create end user): %@", responseJSON);
+      if (responseJSON) {
+        NSInteger endUserID = [responseJSON[@"id"] integerValue];
+        endUserWithID(endUserID);
+      }
+    }
+  }];
+    
+  [dataTask resume];
+}
+
+- (void)createResponseForEndUser:(NSInteger)endUserID withScore:(NSInteger)score text:(NSString *)text endpoint:(NSString *)endpoint {
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/%@", _baseAPIURL, _apiVersion, (long)endUserID, endpoint]];
+  NSString *params = [self paramsWithScore:score endUserID:endUserID userID:_userID accountID:_accountID uniqueLink:_uniqueLink priority:_priority text:text];
+  
+  NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
+  
+  NSLog(@"request: %@", urlRequest);
+  NSLog(@"params: %@", params);
+  
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       NSLog(@"ResponseError: %@", error);
     } else {
       NSLog(@"Create response added to queue");
-    }
-  }];
-
-  [dataTask resume];
-}
-
-- (void)createDeclineForEndUser:(NSInteger)endUserID {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/declines", _baseAPIURL, _apiVersion, (long)endUserID]];
-  NSString *params = [NSString stringWithFormat:@"origin_url=%@&survey[channel]=mobile", _settings.originURL];
-  NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
-
-  NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-    if (error) {
-      NSLog(@"WootricSDK (decline): %@", error);
-    } else {
-      NSLog(@"WootricSDK (decline): Decline creation added to queue");
     }
   }];
 
@@ -270,11 +256,20 @@
     } else {
       NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
       if (responseJSON) {
-        NSLog(@"WootricSDK: %@", responseJSON);
         if ([responseJSON[@"eligible"] isEqual:@1] || _settings.forceSurvey) {
           if (_settings.forceSurvey) NSLog(@"WootricSDK: forced survey (remove for production!)");
           NSLog(@"WootricSDK: User eligible");
           [_settings parseDataFromSurveyServer:responseJSON];
+          _userID = responseJSON[@"settings"][@"user_id"];
+          
+          _uniqueLink = [self buildUniqueLinkAccountToken:_accountToken
+                                             endUserEmail:[_settings getEndUserEmailOrUnknown]
+                                                     date:[[NSDate date] timeIntervalSince1970]
+                                             randomString:[self randomString]];
+          
+          if (responseJSON[@"settings"][@"account_id"] != nil) {
+            _accountID = responseJSON[@"settings"][@"account_id"];
+          }
           eligible();
         } else {
           NSLog(@"WootricSDK: User ineligible");
@@ -358,6 +353,32 @@
   return baseURLString;
 }
 
+- (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID userID:(NSNumber *)userID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text {
+  
+  NSString *params = [NSString stringWithFormat:@"origin_url=%@&end_user[id]=%ld&survey[channel]=mobile&survey[unique_link]=%@&priority=%i", _settings.originURL, endUserID, uniqueLink, priority];
+  
+  if (score > -1) {
+    params = [NSString stringWithFormat:@"%@&score=%ld", params, (long) score];
+    
+    if (text) {
+      NSString *escapedText = [self percentEscapeString:text];
+      params = [NSString stringWithFormat:@"%@&text=%@", params, escapedText];
+    }
+  }
+  
+  if (userID != nil) {
+    params = [NSString stringWithFormat:@"%@&user_id=%ld", params, [userID longValue]];
+  }
+  
+  if (accountID != nil) {
+    params = [NSString stringWithFormat:@"%@&account_id=%ld", params, [accountID longValue]];
+  }
+  
+  _priority++;
+  
+  return params;
+}
+
 - (NSString *)percentEscapeString:(NSString *)string {
   NSString *result = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
                                                                                (CFStringRef)string,
@@ -365,6 +386,29 @@
                                                                                (CFStringRef)@":/?@!$&'()*+,;=",
                                                                                kCFStringEncodingUTF8));
   return [result stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+}
+
+-(NSString *)buildUniqueLinkAccountToken:(NSString *)accountToken endUserEmail:(NSString *)endUserEmail date:(NSTimeInterval)date randomString:(NSString *)randomString {
+  const char* str = [[NSString stringWithFormat:@"%@%@%.0f%@", accountToken, endUserEmail, date, randomString] UTF8String];
+  unsigned char result[CC_SHA256_DIGEST_LENGTH];
+  CC_SHA256(str, (int) strlen(str), result);
+  
+  NSMutableString *hash = [NSMutableString stringWithCapacity:CC_SHA256_DIGEST_LENGTH * 2];
+  for (int i = 0; i < CC_SHA256_DIGEST_LENGTH; i++) {
+    [hash appendFormat:@"%02x", result[i]];
+  }
+  return hash;
+}
+
+- (NSString *)randomString {
+  NSMutableString *text = [NSMutableString string];
+  static const NSString *POSSIBLE = @"abcdefghijklmnopqrstuvwxyz0123456789";
+  int i = 0;
+  while (i < 16) {
+    [text appendString:[NSString stringWithFormat:@"%C", [POSSIBLE characterAtIndex:arc4random_uniform((int) POSSIBLE.length)]]];
+    i++;
+  }
+  return text;
 }
 
 @end
