@@ -1,6 +1,12 @@
+## 0.5.4 (2016-06-01)
+
+### Added:
+
+- Color customization support for Segment integration
+
 ## 0.5.3 (2016-05-23)
 
-### Add:
+### Added:
 
 - Concurrent Survey Processing
 

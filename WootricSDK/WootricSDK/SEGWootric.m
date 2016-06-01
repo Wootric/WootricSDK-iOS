@@ -147,7 +147,28 @@
   [Wootric setCustomFollowupPlaceholderForPromoter:promoterQuestion passive:passiveQuestion detractor:detractorQuestion];
 }
 
+#pragma mark - Custom Values For Eligibility
+
 - (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercentage registeredPercentage:(NSNumber *)registeredPercentage dailyResponseCap:(NSNumber *)dailyResponseCap {
   [Wootric setCustomValueForResurveyThrottle:resurveyThrottle visitorPercentage:visitorPercentage registeredPercentage:registeredPercentage dailyResponseCap:dailyResponseCap];
 }
+
+#pragma mark - Color Customization
+
+- (void)setSendButtonBackgroundColor:(UIColor *)color {
+  [Wootric setSendButtonBackgroundColor:color];
+}
+
+- (void)setSliderColor:(UIColor *)color {
+  [Wootric setSliderColor:color];
+}
+
+- (void)setSocialSharingColor:(UIColor *)color {
+  [Wootric setSocialSharingColor:color];
+}
+
+- (void)setThankYouButtonBackgroundColor:(UIColor *)color {
+  [Wootric setThankYouButtonBackgroundColor:color];
+}
+
 @end
