@@ -29,61 +29,60 @@
 #pragma mark - Public methods
 
 + (FAIcon)fontAwesomeEnumForIconIdentifier:(NSString*)string {
-    NSDictionary *enums = [self enumDictionary];
-    return [enums[string] integerValue];
+  NSDictionary *enums = [self enumDictionary];
+  return [enums[string] integerValue];
 }
 
 + (NSString*)fontAwesomeIconStringForEnum:(FAIcon)value {
-    return [NSString fontAwesomeUnicodeStrings][value];
+  return [NSString fontAwesomeUnicodeStrings][value];
 }
 
 + (NSString*)fontAwesomeIconStringForIconIdentifier:(NSString*)identifier {
-    return [self fontAwesomeIconStringForEnum:[self fontAwesomeEnumForIconIdentifier:identifier]];
+  return [self fontAwesomeIconStringForEnum:[self fontAwesomeEnumForIconIdentifier:identifier]];
 }
 
 #pragma mark - data structures
 
 + (NSArray *)fontAwesomeUnicodeStrings {
+  
+  static NSArray *fontAwesomeUnicodeStrings;
     
-    static NSArray *fontAwesomeUnicodeStrings;
-    
-    static dispatch_once_t unicodeStringsOnceToken;
-    dispatch_once(&unicodeStringsOnceToken, ^{
+  static dispatch_once_t unicodeStringsOnceToken;
+  dispatch_once(&unicodeStringsOnceToken, ^{
         
-        fontAwesomeUnicodeStrings = @[ @"\uf099",
-                                       @"\uf09a",
-                                       @"\uf081",
-                                       @"\uf082",
-                                       @"\uf230",
-                                       @"\uf164",
-                                       @"\uf087"];
-        
-    });
-    
-    return fontAwesomeUnicodeStrings;
+    fontAwesomeUnicodeStrings = @[@"\uf099",
+                                  @"\uf09a",
+                                  @"\uf081",
+                                  @"\uf082",
+                                  @"\uf230",
+                                  @"\uf164",
+                                  @"\uf087"];
+  });
+  
+  return fontAwesomeUnicodeStrings;
 }
 
 + (NSDictionary *)enumDictionary {
     
-    static NSDictionary *enumDictionary;
+  static NSDictionary *enumDictionary;
     
-    static dispatch_once_t enumDictionaryOnceToken;
-    dispatch_once(&enumDictionaryOnceToken, ^{
+  static dispatch_once_t enumDictionaryOnceToken;
+  dispatch_once(&enumDictionaryOnceToken, ^{
         
-        NSMutableDictionary *tmp = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *tmp = [[NSMutableDictionary alloc] init];
         
-        tmp[@"fa-twitter"] = @(FATwitter);
-        tmp[@"fa-facebook"] = @(FAFacebook);
-        tmp[@"fa-twitter-square"] = @(FATwitterSquare);
-        tmp[@"fa-facebook-square"] = @(FAFacebookSquare);
-        tmp[@"fa-facebook-official"] = @(FAFacebookOfficial);
-        tmp[@"fa-thumbs-up"] = @(FAThumbsUp);
-        tmp[@"fa-thumbs-o-up "] = @(FAThumbsOUp);
+    tmp[@"fa-twitter"] = @(FATwitter);
+    tmp[@"fa-facebook"] = @(FAFacebook);
+    tmp[@"fa-twitter-square"] = @(FATwitterSquare);
+    tmp[@"fa-facebook-square"] = @(FAFacebookSquare);
+    tmp[@"fa-facebook-official"] = @(FAFacebookOfficial);
+    tmp[@"fa-thumbs-up"] = @(FAThumbsUp);
+    tmp[@"fa-thumbs-o-up "] = @(FAThumbsOUp);
         
-        enumDictionary = tmp;
-    });
+      enumDictionary = tmp;
+  });
     
-    return enumDictionary;
+  return enumDictionary;
 }
 
 @end

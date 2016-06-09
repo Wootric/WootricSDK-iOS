@@ -94,12 +94,12 @@
   return [self colorWithHexString:@"#3081C2"];
 }
 
-+(UIColor *)facebookLogoTextColor {
-    return [self colorWithHexString:@"#3b5998"];
++ (UIColor *)facebookLogoTextColor {
+  return [self colorWithHexString:@"#3b5998"];
 }
 
-+(UIColor *)twitterLogoTextColor {
-    return [self colorWithHexString:@"#00aced"];
++ (UIColor *)twitterLogoTextColor {
+  return [self colorWithHexString:@"#00aced"];
 }
 
 + (UIColor *)selectedValueUnderlineColor {

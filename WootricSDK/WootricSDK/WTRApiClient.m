@@ -197,9 +197,6 @@
   
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
   
-  NSLog(@"request: %@", urlRequest);
-  NSLog(@"params: %@", params);
-  
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       NSLog(@"ResponseError: %@", error);
@@ -249,6 +246,8 @@
   NSURL *url = [NSURL URLWithString:baseURLString];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"USER_AGENT"];
+  
+  NSLog(@"WootricSDK: eligibility - %@", urlRequest);
 
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
@@ -349,6 +348,10 @@
     baseURLString = [NSString stringWithFormat:@"%@&first_survey_delay=%d",
                      baseURLString, [_settings.firstSurveyAfter intValue]];
   }
+  
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  double lastSeen = [defaults doubleForKey:@"lastSeenAt"];
+  baseURLString = [NSString stringWithFormat:@"%@&end_user_last_seen=%.0f", baseURLString, lastSeen];
 
   return baseURLString;
 }

@@ -30,13 +30,13 @@ static NSString *const kFontAwesomeFamilyName = @"FontAwesome";
  @abstract FontAwesome Facebook and Twitter Icons.
  */
 typedef NS_ENUM(NSInteger, FAIcon) {
-    FATwitter,
-    FAFacebook,
-    FATwitterSquare,
-    FAFacebookSquare,
-    FAFacebookOfficial,
-    FAThumbsUp,
-    FAThumbsOUp
+  FATwitter,
+  FAFacebook,
+  FATwitterSquare,
+  FAFacebookSquare,
+  FAFacebookOfficial,
+  FAThumbsUp,
+  FAThumbsOUp
 };
 
 @interface NSString (FontAwesome)

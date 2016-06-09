@@ -30,20 +30,20 @@
 @implementation UIItems
 
 + (void)dynamicallyAddFont {
-    NSString *fontPath = [[NSBundle bundleForClass:[UIItems class]] pathForResource:@"fontawesome-webfont" ofType:@"ttf"];
-    NSData *fontData = [NSData dataWithContentsOfFile:fontPath];
+  NSString *fontPath = [[NSBundle bundleForClass:[UIItems class]] pathForResource:@"fontawesome-webfont" ofType:@"ttf"];
+  NSData *fontData = [NSData dataWithContentsOfFile:fontPath];
     
-    CFErrorRef error;
-    CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef) fontData);
-    CGFontRef font = CGFontCreateWithDataProvider(provider);
-    if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
-        if (CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) { return; }
-        CFStringRef errorDescription = CFErrorCopyDescription(error);
-        NSLog(@"WootricSDK: Failed to load font: %@", errorDescription);
-        CFRelease(errorDescription);
-    }
-    CFRelease(font);
-    CFRelease(provider);
+  CFErrorRef error;
+  CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef) fontData);
+  CGFontRef font = CGFontCreateWithDataProvider(provider);
+  if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
+    if (CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) { return; }
+      CFStringRef errorDescription = CFErrorCopyDescription(error);
+      NSLog(@"WootricSDK: Failed to load font: %@", errorDescription);
+      CFRelease(errorDescription);
+  }
+  CFRelease(font);
+  CFRelease(provider);
 }
 
 + (UILabel *)likelyAnchorWithSettings:(WTRSettings *)settings andFont:(UIFont *)font {

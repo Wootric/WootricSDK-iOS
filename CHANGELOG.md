@@ -1,3 +1,12 @@
+## 0.5.5 (2016-06-10)
+
+### Fixed:
+
+- Add end_user_last_seen to eligibility requests
+- Code cleanup
+- Add documentation
+- Change resources for new logo
+
 ## 0.5.4 (2016-06-01)
 
 ### Added:

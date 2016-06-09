@@ -291,7 +291,7 @@
                                                           attribute:NSLayoutAttributeCenterX
                                                          multiplier:1
                                                            constant:0];
-    [self addConstraint:_facebookLikeXConstraint];
+  [self addConstraint:_facebookLikeXConstraint];
 }
 
 - (void)noThankYouButton {

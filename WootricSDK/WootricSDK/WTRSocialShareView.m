@@ -137,15 +137,15 @@
 }
 
 - (void)setupFacebookButtonWithTargetViewController:(UIViewController *)viewController {
-    _facebookButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAFacebook] textColor:[_settings socialSharingColor]];
+  _facebookButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAFacebook] textColor:[_settings socialSharingColor]];
 }
 
 - (void)setupTwitterButtonWithTargetViewController:(UIViewController *)viewController {
-    _twitterButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FATwitter] textColor:[_settings socialSharingColor]];
+  _twitterButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FATwitter] textColor:[_settings socialSharingColor]];
 }
 
 - (void)setupFacebookLikeButtonWithTargetViewController:(UIViewController *)viewController {
-    _facebookLikeButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] textColor:[_settings socialSharingColor]];
+  _facebookLikeButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] textColor:[_settings socialSharingColor]];
 }
 
 - (void)setupNoThanksButtonWithTargetViewController:(UIViewController *)viewController {

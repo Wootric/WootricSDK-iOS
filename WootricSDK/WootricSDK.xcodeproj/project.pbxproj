@@ -90,7 +90,6 @@
 		B2D9FCE01BF9F18E00479F9F /* SEGWootric.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D9FCDE1BF9F18E00479F9F /* SEGWootric.m */; };
 		B2DC6F081B81E6F900F599B3 /* WootricSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = B2DC6F071B81E6F900F599B3 /* WootricSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B2DC6F0E1B81E6F900F599B3 /* WootricSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DC6F021B81E6F900F599B3 /* WootricSDK.framework */; };
-		B2DC6F151B81E6F900F599B3 /* WootricSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6F141B81E6F900F599B3 /* WootricSDKTests.m */; };
 		B2DC6F2E1B82000900F599B3 /* Wootric.h in Headers */ = {isa = PBXBuildFile; fileRef = B2DC6F2C1B82000900F599B3 /* Wootric.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B2DC6F2F1B82000900F599B3 /* Wootric.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6F2D1B82000900F599B3 /* Wootric.m */; };
 		B2DC6F331B820E6B00F599B3 /* WTRApiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = B2DC6F311B820E6B00F599B3 /* WTRApiClient.h */; };
@@ -196,7 +195,6 @@
 		B2DC6F071B81E6F900F599B3 /* WootricSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WootricSDK.h; sourceTree = "<group>"; };
 		B2DC6F0D1B81E6F900F599B3 /* WootricSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WootricSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DC6F131B81E6F900F599B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B2DC6F141B81E6F900F599B3 /* WootricSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WootricSDKTests.m; sourceTree = "<group>"; };
 		B2DC6F2C1B82000900F599B3 /* Wootric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wootric.h; sourceTree = "<group>"; };
 		B2DC6F2D1B82000900F599B3 /* Wootric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wootric.m; sourceTree = "<group>"; };
 		B2DC6F311B820E6B00F599B3 /* WTRApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRApiClient.h; sourceTree = "<group>"; };
@@ -418,7 +416,6 @@
 			children = (
 				B21372951BED0DB1009F5974 /* WTRSurveyTests.m */,
 				B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */,
-				B2DC6F141B81E6F900F599B3 /* WootricSDKTests.m */,
 				B2DC6F121B81E6F900F599B3 /* Supporting Files */,
 				0FE2FAC71CE4356F0065823C /* WTRApiClientTests.m */,
 				0FAB0CAA1CFE1DCE00977346 /* SEGWootricTests.m */,
@@ -642,7 +639,6 @@
 			files = (
 				B29D63CA1BC3CEEB00F0C98C /* WTRSettingsTests.m in Sources */,
 				0FAB0CAB1CFE1DCE00977346 /* SEGWootricTests.m in Sources */,
-				B2DC6F151B81E6F900F599B3 /* WootricSDKTests.m in Sources */,
 				B21372961BED0DB1009F5974 /* WTRSurveyTests.m in Sources */,
 				0FE2FAC81CE4356F0065823C /* WTRApiClientTests.m in Sources */,
 			);
@@ -759,6 +755,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = mh_dylib;
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wootric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -777,6 +774,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = mh_dylib;
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wootric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -34,206 +34,204 @@
 @implementation Wootric
 
 + (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret accountToken:(NSString *)accountToken {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.clientID = clientID;
-    apiClient.clientSecret = clientSecret;
-    apiClient.accountToken = accountToken;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.clientID = clientID;
+  apiClient.clientSecret = clientSecret;
+  apiClient.accountToken = accountToken;
 }
 
 + (void)setEndUserEmail:(NSString *)endUserEmail {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.endUserEmail = endUserEmail;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.endUserEmail = endUserEmail;
 }
 
 + (void)setEndUserCreatedAt:(NSNumber *)externalCreatedAt {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.externalCreatedAt = externalCreatedAt;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.externalCreatedAt = externalCreatedAt;
 }
 
 + (void)setCustomAudience:(NSString *)audience {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.customAudience = audience;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.customAudience = audience;
 }
 
 + (void)setCustomLanguage:(NSString *)languageCode {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.languageCode = languageCode;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.languageCode = languageCode;
 }
 
 + (void)setCustomProductName:(NSString *)productName {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.customProductName = productName;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.customProductName = productName;
 }
 
 + (void)setCustomFinalThankYou:(NSString *)finalThankYou {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.customFinalThankYou = finalThankYou;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.customFinalThankYou = finalThankYou;
 }
 
 + (void)setCustomNPSQuestion:(NSString *)npsQuestion {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.customNPSQuestion = npsQuestion;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.customNPSQuestion = npsQuestion;
 }
 
 + (void)setSurveyedDefault:(BOOL)flag {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.setDefaultAfterSurvey = flag;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.setDefaultAfterSurvey = flag;
 }
 
 + (void)forceSurvey:(BOOL)flag {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.forceSurvey = flag;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.forceSurvey = flag;
 }
 
 + (void)surveyImmediately:(BOOL)flag {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.surveyImmediately = flag;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.surveyImmediately = flag;
 }
 
 + (void)setEndUserProperties:(NSDictionary *)customProperties {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.customProperties = customProperties;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.customProperties = customProperties;
 }
 
 + (NSDictionary *)endUserProperties {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    return apiClient.settings.customProperties;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  return apiClient.settings.customProperties;
 }
 
 + (void)setProductNameForEndUser:(NSString *)productName {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.productName = productName;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.productName = productName;
 }
 
 + (void)setFirstSurveyAfter:(NSNumber *)firstSurveyAfter {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.firstSurveyAfter = firstSurveyAfter;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.firstSurveyAfter = firstSurveyAfter;
 }
 
 + (void)skipFeedbackScreenForPromoter:(BOOL)flag {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.skipFeedbackScreen = flag;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.skipFeedbackScreen = flag;
 }
 
 + (void)passScoreAndTextToURL:(BOOL)flag {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.passScoreAndTextToURL = flag;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.passScoreAndTextToURL = flag;
 }
 
 + (void)showSurveyInViewController:(UIViewController *)viewController {
     
-    if ([[WTRApiClient sharedInstance] checkConfiguration]) {
-      
-        [WTRTrackingPixel getPixel];
+  if ([[WTRApiClient sharedInstance] checkConfiguration]) {
+    
+    [WTRTrackingPixel getPixel];
+    
+    WTRSurvey *surveyClient = [[WTRSurvey alloc] init];
+    [surveyClient survey:^{
         
-        WTRSurvey *surveyClient = [[WTRSurvey alloc] init];
-        [surveyClient survey:^{
-            
-            NSLog(@"WootricSDK: presenting survey view");
-            
-            WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-     
-                [self performSelector:@selector(presentSurveyInViewController:)
-                           withObject:viewController
-                           afterDelay:apiClient.settings.timeDelay];
-            });
-            
-        }];
-    }
-    else {
-        NSLog(@"WootricSDK: Configure SDK first");
-    }
+      NSLog(@"WootricSDK: presenting survey view");
+      
+      WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+      
+      dispatch_async(dispatch_get_main_queue(), ^{
+
+        [self performSelector:@selector(presentSurveyInViewController:)
+                   withObject:viewController
+                   afterDelay:apiClient.settings.timeDelay];
+      });
+        
+    }];
+  } else {
+    NSLog(@"WootricSDK: Configure SDK first");
+  }
 }
 
 + (void)presentSurveyInViewController:(UIViewController *)viewController {
-    WTRSettings *surveySettings = [WTRApiClient sharedInstance].settings;
-    
-    if (IPAD) {
-        WTRiPADSurveyViewController *surveyViewController = [[WTRiPADSurveyViewController alloc] initWithSurveySettings:surveySettings];
-        [viewController presentViewController:surveyViewController animated:YES completion:nil];
-    }
-    else {
-        WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:surveySettings];
-        [viewController presentViewController:surveyViewController animated:YES completion:nil];
-    }
+  WTRSettings *surveySettings = [WTRApiClient sharedInstance].settings;
+  
+  if (IPAD) {
+    WTRiPADSurveyViewController *surveyViewController = [[WTRiPADSurveyViewController alloc] initWithSurveySettings:surveySettings];
+    [viewController presentViewController:surveyViewController animated:YES completion:nil];
+  } else {
+    WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:surveySettings];
+    [viewController presentViewController:surveyViewController animated:YES completion:nil];
+  }
 }
 
 #pragma mark - Social Share
 
 + (void)setTwitterHandler:(NSString *)twitterHandler {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.twitterHandler = twitterHandler;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.twitterHandler = twitterHandler;
 }
 
 + (void)setFacebookPage:(NSURL *)facebookPage {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    apiClient.settings.facebookPage = facebookPage;
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.facebookPage = facebookPage;
 }
 
 #pragma mark - Custom Thanks
 
 + (void)setThankYouMessage:(NSString *)thankYouMessage {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    [apiClient.settings setThankYouMessage:thankYouMessage];
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setThankYouMessage:thankYouMessage];
 }
 
 + (void)setDetractorThankYouMessage:(NSString *)detractorThankYouMessage {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    [apiClient.settings setDetractorThankYouMessage:detractorThankYouMessage];
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setDetractorThankYouMessage:detractorThankYouMessage];
 }
 
 + (void)setPassiveThankYouMessage:(NSString *)passiveThankYouMessage {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    [apiClient.settings setPassiveThankYouMessage:passiveThankYouMessage];
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setPassiveThankYouMessage:passiveThankYouMessage];
 }
 
 + (void)setPromoterThankYouMessage:(NSString *)promoterThankYouMessage {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    [apiClient.settings setPromoterThankYouMessage:promoterThankYouMessage];
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setPromoterThankYouMessage:promoterThankYouMessage];
 }
 
 + (void)setThankYouLinkWithText:(NSString *)thankYouLinkText URL:(NSURL *)thankYouLinkURL {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    [apiClient.settings setThankYouLinkWithText:thankYouLinkText URL:thankYouLinkURL];
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setThankYouLinkWithText:thankYouLinkText URL:thankYouLinkURL];
 }
 
 + (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText URL:(NSURL *)detractorThankYouLinkURL {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    [apiClient.settings setDetractorThankYouLinkWithText:detractorThankYouLinkText URL:detractorThankYouLinkURL];
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setDetractorThankYouLinkWithText:detractorThankYouLinkText URL:detractorThankYouLinkURL];
 }
 
 + (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText URL:(NSURL *)passiveThankYouLinkURL {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    [apiClient.settings setPassiveThankYouLinkWithText:passiveThankYouLinkText URL:passiveThankYouLinkURL];
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setPassiveThankYouLinkWithText:passiveThankYouLinkText URL:passiveThankYouLinkURL];
 }
 
 + (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText URL:(NSURL *)promoterThankYouLinkURL {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    [apiClient.settings setPromoterThankYouLinkWithText:promoterThankYouLinkText URL:promoterThankYouLinkURL];
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setPromoterThankYouLinkWithText:promoterThankYouLinkText URL:promoterThankYouLinkURL];
 }
 
 #pragma mark - Application Set Custom Messages
 
 + (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder detractor:(NSString *)detractorPlaceholder {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    [apiClient.settings setCustomFollowupPlaceholderForPromoter:promoterPlaceholder passive:passivePlaceholder detractor:detractorPlaceholder];
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setCustomFollowupPlaceholderForPromoter:promoterPlaceholder passive:passivePlaceholder detractor:detractorPlaceholder];
 }
 
 + (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion detractor:(NSString *)detractorQuestion {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    [apiClient.settings setCustomFollowupQuestionForPromoter:promoterQuestion passive:passiveQuestion detractor:detractorQuestion];
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setCustomFollowupQuestionForPromoter:promoterQuestion passive:passiveQuestion detractor:detractorQuestion];
 }
 
 #pragma mark - Custom Values For Eligibility
 
 + (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercentage registeredPercentage:(NSNumber *)registeredPercentage dailyResponseCap:(NSNumber *)dailyResponseCap {
-    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-    [apiClient.settings setCustomResurveyThrottle:resurveyThrottle];
-    [apiClient.settings setCustomVisitorPercentage:visitorPercentage];
-    [apiClient.settings setCustomRegisteredPercentage:registeredPercentage];
-    [apiClient.settings setCustomDailyResponseCap:dailyResponseCap];
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setCustomResurveyThrottle:resurveyThrottle];
+  [apiClient.settings setCustomVisitorPercentage:visitorPercentage];
+  [apiClient.settings setCustomRegisteredPercentage:registeredPercentage];
+  [apiClient.settings setCustomDailyResponseCap:dailyResponseCap];
 }
 
 #pragma mark - Color Customization

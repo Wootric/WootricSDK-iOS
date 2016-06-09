@@ -36,6 +36,7 @@
 - (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID userID:(NSNumber *)userID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text;
 - (NSString *)randomString;
 - (NSString *)buildUniqueLinkAccountToken:(NSString *)accountToken endUserEmail:(NSString *)endUserEmail date:(NSTimeInterval)date randomString:(NSString *)randomString;
+- (NSString *)addSurveyServerCustomSettingsToURLString:(NSString *)baseURLString;
 
 @end
 
@@ -117,6 +118,43 @@
   _apiClient.clientSecret = @"clientSecretTestString";
   _apiClient.accountToken = @"NPS-token";
   XCTAssertTrue([_apiClient checkConfiguration]);
+}
+
+- (void) testAddSurveyServerCustomSettingsToURLString {
+  NSString *baseURLString = @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com";
+  
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&end_user_last_seen=0");
+  
+  _apiClient.settings.surveyImmediately = YES;
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&end_user_last_seen=0");
+  
+  _apiClient.settings.registeredPercentage = @50;
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&end_user_last_seen=0");
+  
+  _apiClient.settings.visitorPercentage = @50;
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&end_user_last_seen=0");
+  
+  _apiClient.settings.resurveyThrottle = @100;
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&end_user_last_seen=0");
+  
+  _apiClient.settings.dailyResponseCap = @25;
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_last_seen=0");
+  
+  _apiClient.settings.externalCreatedAt = @1234567890;
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&end_user_last_seen=0");
+  
+  _apiClient.settings.languageCode = @"ES";
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&language[code]=ES&end_user_last_seen=0");
+  
+  _apiClient.settings.customProductName = @"productName";
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&language[code]=ES&language[product_name]=productName&end_user_last_seen=0");
+  
+  
+  _apiClient.settings.customAudience = @"customAudience";
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&language[code]=ES&language[product_name]=productName&language[audience_text]=customAudience&end_user_last_seen=0");
+  
+  _apiClient.settings.firstSurveyAfter = @1;
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&language[code]=ES&language[product_name]=productName&language[audience_text]=customAudience&first_survey_delay=1&end_user_last_seen=0");
 }
 
 - (void)testRandomStringLength {
