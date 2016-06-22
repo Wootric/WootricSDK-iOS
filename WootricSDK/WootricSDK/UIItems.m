@@ -31,19 +31,19 @@
 
 + (void)dynamicallyAddFont {
   NSString *fontPath = [[NSBundle bundleForClass:[UIItems class]] pathForResource:@"fontawesome-webfont" ofType:@"ttf"];
-  NSData *fontData = [NSData dataWithContentsOfFile:fontPath];
-    
+  
   CFErrorRef error;
-  CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef) fontData);
-  CGFontRef font = CGFontCreateWithDataProvider(provider);
-  if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
-    if (CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) { return; }
-      CFStringRef errorDescription = CFErrorCopyDescription(error);
-      NSLog(@"WootricSDK: Failed to load font: %@", errorDescription);
-      CFRelease(errorDescription);
+  NSURL *url = [NSURL fileURLWithPath:fontPath isDirectory:NO];
+  if (!CTFontManagerRegisterFontsForURL((__bridge CFURLRef)url, kCTFontManagerScopeNone, &error)) {
+    if (CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) {
+      CFRelease(error);
+      return;
+    }
+    CFStringRef errorDescription = CFErrorCopyDescription(error);
+    NSLog(@"WootricSDK: Failed to load font: %@", errorDescription);
+    CFRelease(errorDescription);
+    CFRelease(error);
   }
-  CFRelease(font);
-  CFRelease(provider);
 }
 
 + (UILabel *)likelyAnchorWithSettings:(WTRSettings *)settings andFont:(UIFont *)font {
