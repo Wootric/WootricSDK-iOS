@@ -25,6 +25,8 @@
 @property (nonatomic, strong) NSNumber *userID;
 @property (nonatomic, strong) NSNumber *accountID;
 @property (nonatomic, strong) NSString *uniqueLink;
+@property (nonatomic, strong) NSString *osVersion;
+@property (nonatomic, strong) NSString *sdkVersion;
 @property (nonatomic, assign) BOOL endUserAlreadyUpdated;
 @property (nonatomic) int priority;
 
@@ -37,6 +39,7 @@
 - (NSString *)randomString;
 - (NSString *)buildUniqueLinkAccountToken:(NSString *)accountToken endUserEmail:(NSString *)endUserEmail date:(NSTimeInterval)date randomString:(NSString *)randomString;
 - (NSString *)addSurveyServerCustomSettingsToURLString:(NSString *)baseURLString;
+- (NSString *)addVersionsToURLString:(NSString *)baseURLString;
 
 @end
 
@@ -155,6 +158,50 @@
   
   _apiClient.settings.firstSurveyAfter = @1;
   XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&language[code]=ES&language[product_name]=productName&language[audience_text]=customAudience&first_survey_delay=1&end_user_last_seen=0");
+}
+
+- (void)testRequestURL {
+  NSString *params = @"params";
+  NSString *urlString = @"test";
+  _apiClient.sdkVersion = @"0.6.0";
+  _apiClient.osVersion = @"10.0";
+  NSURL *url = [NSURL URLWithString:urlString];
+  
+  NSMutableURLRequest *urlRequest = [_apiClient requestWithURL:url HTTPMethod:nil andHTTPBody:nil];
+  
+  XCTAssertNil([urlRequest valueForHTTPHeaderField:@"Authorization"]);
+  
+  _apiClient.accessToken = @"accessToken";
+  urlRequest = [_apiClient requestWithURL:url HTTPMethod:nil andHTTPBody:nil];
+  XCTAssertEqualObjects([urlRequest valueForHTTPHeaderField:@"Authorization"], @"Bearer accessToken");
+  
+  NSString *httpBody = [[NSString alloc] initWithData:urlRequest.HTTPBody encoding:NSUTF8StringEncoding];
+  XCTAssertEqualObjects(httpBody, @"");
+  
+  urlRequest = [_apiClient requestWithURL:url HTTPMethod:nil andHTTPBody:params];
+  httpBody = [[NSString alloc] initWithData:urlRequest.HTTPBody encoding:NSUTF8StringEncoding];
+  XCTAssertEqualObjects(httpBody, @"params&os_name=iOS&sdk_version=0.6.0&os_version=10.0");
+  
+}
+
+- (void)testAddVersionsToURLString {
+  _apiClient.osVersion = nil;
+  _apiClient.sdkVersion = nil;
+  
+  NSString *versionString = [_apiClient addVersionsToURLString:@"string"];
+  XCTAssertEqualObjects(versionString, @"string&os_name=iOS");
+  
+  _apiClient.sdkVersion = @"0.6.0";
+  versionString = [_apiClient addVersionsToURLString:@"string"];
+  XCTAssertEqualObjects(versionString, @"string&os_name=iOS&sdk_version=0.6.0");
+  
+  _apiClient.osVersion = @"10.0";
+  versionString = [_apiClient addVersionsToURLString:@"string"];
+  XCTAssertEqualObjects(versionString, @"string&os_name=iOS&sdk_version=0.6.0&os_version=10.0");
+  
+  _apiClient.sdkVersion = nil;
+  versionString = [_apiClient addVersionsToURLString:@"string"];
+  XCTAssertEqualObjects(versionString, @"string&os_name=iOS&os_version=10.0");
 }
 
 - (void)testRandomStringLength {

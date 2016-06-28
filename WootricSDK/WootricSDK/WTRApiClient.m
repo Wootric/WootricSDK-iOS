@@ -26,7 +26,6 @@
 #import "WTRPropertiesParser.h"
 #import <CommonCrypto/CommonHMAC.h>
 
-
 @interface WTRApiClient ()
 
 @property (nonatomic, strong) NSString *baseAPIURL;
@@ -36,6 +35,8 @@
 @property (nonatomic, strong) NSNumber *userID;
 @property (nonatomic, strong) NSNumber *accountID;
 @property (nonatomic, strong) NSString *uniqueLink;
+@property (nonatomic, strong) NSString *osVersion;
+@property (nonatomic, strong) NSString *sdkVersion;
 @property (nonatomic, assign) BOOL endUserAlreadyUpdated;
 @property (nonatomic) int priority;
 
@@ -61,6 +62,8 @@
     _settings = [[WTRSettings alloc] init];
     _apiVersion = @"api/v1";
     _priority = 0;
+    _osVersion = [self osVersion];
+    _sdkVersion = [self sdkVersion];
   }
   return self;
 }
@@ -88,6 +91,9 @@
 
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID {
   NSString *escapedEmail = [self percentEscapeString:[_settings getEndUserEmailOrUnknown]];
+  
+  escapedEmail = [self addVersionsToURLString:escapedEmail];
+  
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", _baseAPIURL, _apiVersion, escapedEmail]];
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:nil andHTTPBody:nil];
   
@@ -137,6 +143,7 @@
     params = [NSString stringWithFormat:@"%@%@", params, parsedProperties];
   }
   
+  params = [self addVersionsToURLString:params];
 
   if (needsUpdate) {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld?%@", _baseAPIURL, _apiVersion, (long)endUserID, params]];
@@ -209,8 +216,10 @@
 }
 
 - (void)authenticate:(void (^)())authenticated {
+  
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/oauth/token", _baseAPIURL]];
   NSString *params = [NSString stringWithFormat:@"grant_type=client_credentials&client_id=%@&client_secret=%@", _clientID, _clientSecret];
+  
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
 
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -236,6 +245,8 @@
   NSString *endUserEmail = [_settings getEndUserEmailOrUnknown];
   NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@",
                              _surveyServerURL, _accountToken];
+  
+  baseURLString = [self addVersionsToURLString:baseURLString];
 
   if (![endUserEmail isEqual: @"Unknown"]) {
     baseURLString = [NSString stringWithFormat:@"%@&email=%@", baseURLString, endUserEmail];
@@ -282,8 +293,9 @@
 
 - (NSMutableURLRequest *)requestWithURL:(NSURL *)url HTTPMethod:(NSString *)httpMethod andHTTPBody:(NSString *)httpBody {
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-
+  
   if (httpBody) {
+    httpBody = [self addVersionsToURLString:httpBody];
     urlRequest.HTTPBody = [httpBody dataUsingEncoding:NSUTF8StringEncoding];
   }
 
@@ -296,6 +308,21 @@
   }
 
   return urlRequest;
+}
+
+- (NSString *)addVersionsToURLString:(NSString *)baseURLString {
+  
+  baseURLString = [NSString stringWithFormat:@"%@&os_name=iOS", baseURLString];
+  
+  if (_sdkVersion != nil) {
+    baseURLString = [NSString stringWithFormat:@"%@&sdk_version=%@", baseURLString, _sdkVersion];
+  }
+  
+  if (_osVersion != nil) {
+    baseURLString = [NSString stringWithFormat:@"%@&os_version=%@", baseURLString, _osVersion];
+  }
+  
+  return baseURLString;
 }
 
 - (NSString *)addSurveyServerCustomSettingsToURLString:(NSString *)baseURLString {
@@ -391,7 +418,7 @@
   return [result stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 }
 
--(NSString *)buildUniqueLinkAccountToken:(NSString *)accountToken endUserEmail:(NSString *)endUserEmail date:(NSTimeInterval)date randomString:(NSString *)randomString {
+- (NSString *)buildUniqueLinkAccountToken:(NSString *)accountToken endUserEmail:(NSString *)endUserEmail date:(NSTimeInterval)date randomString:(NSString *)randomString {
   const char* str = [[NSString stringWithFormat:@"%@%@%.0f%@", accountToken, endUserEmail, date, randomString] UTF8String];
   unsigned char result[CC_SHA256_DIGEST_LENGTH];
   CC_SHA256(str, (int) strlen(str), result);
@@ -412,6 +439,14 @@
     i++;
   }
   return text;
+}
+
+- (nullable NSString *)sdkVersion {
+  return [[NSBundle bundleForClass:[WTRApiClient class]] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+}
+
+- (NSString *)osVersion {
+  return [[UIDevice currentDevice] systemVersion];
 }
 
 @end
