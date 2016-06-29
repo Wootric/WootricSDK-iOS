@@ -1,3 +1,9 @@
+## 0.5.6 (2016-06-29)
+
+### Added:
+
+- Send Wootric SDK, OS version and OS name
+
 ## 0.5.5 (2016-06-10)
 
 ### Fixed:
