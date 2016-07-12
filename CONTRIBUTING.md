@@ -34,6 +34,28 @@ Here's the basic process you should follow when developing a feature or fixing a
 
 [Git protocol]: https://github.com/thoughtbot/guides/blob/master/protocol/git/README.md
 
+Build & Release
+---------------
+
+The library is uploaded to [Cocoapods](https://cocoapods.org/pods/WootricSDK). To upload a new version, please follow these steps:
+
+* Make code changes
+
+* Update Bundle Version of the WootricSDK project. Convention for Version are 3 digits specifying “Major number.Minor number.Patch number”.
+
+* Update `s.version` on `WootricSDK.podspec`
+
+* Don't forget to update version code on [README](https://github.com/Wootric/WootricSDK-iOS/blob/master/README.md) and update [CHANGELOG](https://github.com/Wootric/WootricSDK-iOS/blob/master/CHANGELOG.md)
+
+* Create a PR and when everything is good, merge to master.
+
+* Create a new Release on Github. Tag should be same as Bundle Version.
+
+* Run `pod trunk push WootricSDK.podspec`
+
+If everything is ok, a new version of WootricSDK should show up in [Cocoapods](https://cocoapods.org/pods/WootricSDK)
+
+
 Pull Requests
 -------------
 
