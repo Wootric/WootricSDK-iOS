@@ -76,6 +76,24 @@ And that's it! You're good to go and start receiving customer's feedback from yo
 
 For more information on class methods, please refer to [Wootric's docs](http://cocoadocs.org/docsets/WootricSDK/0.5.6/Classes/Wootric.html).
 
+## Example
+
+```objective-c
+// Import Wootric
+@import WootricSDK;
+
+// Inside your view controller's viewDidLoad method
+
+[Wootric configureWithClientID:YOUR_CLIENT_ID clientSecret:YOUR_CLIENT_SECRET accountToken:YOUR_ACCOUNT_TOKEN];
+[Wootric setEndUserEmail:@"nps@example.com"];
+[Wootric setEndUserCreatedAt:@1234567890];
+// Use only for testing
+[Wootric forceSurvey:YES];
+// show survey
+[Wootric showSurveyInViewController:self];
+
+```
+
 ## License
 
 The WootricSDK is released under the MIT license. See LICENSE for details.
