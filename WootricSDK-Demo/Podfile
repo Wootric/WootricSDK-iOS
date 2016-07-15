@@ -1,0 +1,3 @@
+target 'WootricSDK-Demo' do
+	pod 'WootricSDK'
+end
