@@ -34,6 +34,7 @@
     self.backgroundColor = backgroundColor;
     self.layer.borderColor = [backgroundColor colorWithAlphaComponent:0.65f].CGColor;
     self.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    self.titleLabel.adjustsFontSizeToFitWidth = YES;
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addTarget:viewController action:NSSelectorFromString(@"openThankYouURL:") forControlEvents:UIControlEventTouchUpInside];

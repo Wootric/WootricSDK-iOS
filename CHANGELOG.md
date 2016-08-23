@@ -1,3 +1,12 @@
+## 0.5.7 (2016-08-31)
+
+### Changed:
+
+- Accept resurvey_throttle and decline_resurvey_throttle
+- Fix last button long text adjustment
+- Update tests
+- Add tests for WTRDefaults
+
 ## 0.5.6 (2016-06-29)
 
 ### Added:

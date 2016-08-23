@@ -40,6 +40,7 @@
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setBool:NO forKey:@"surveyed"];
   [defaults setDouble:0 forKey:@"lastSeenAt"];
+  [defaults setObject:nil forKey:@"resurvey_days"];
 }
 
 // surveyImmediately = YES
@@ -77,17 +78,57 @@
   XCTAssertFalse([_surveyClient needsSurvey]);
 }
 
-// surveyed > 90 days
+// surveyed > 90 days, surveyed = YES
 - (void)testNeedsSurveySix {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setBool:YES forKey:@"surveyed"];
-  [defaults setDouble:[[self createdDaysAgo:91] doubleValue] forKey:@"surveyedAt"];
+  [defaults setDouble:[[self createdDaysAgo:95] doubleValue] forKey:@"surveyedAt"];
   [WTRDefaults checkIfSurveyedDefaultExpired];
   XCTAssertTrue([_surveyClient needsSurvey]);
 }
 
-// surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 60, externalCreatedAt = 20, lastSeenAt = 40
+// surveyed > 90 days, surveyed = YES, type = response
 - (void)testNeedsSurveySeven {
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setBool:YES forKey:@"surveyed"];
+  [defaults setObject:@"response" forKey:@"type"];
+  [defaults setDouble:[[self createdDaysAgo:95] doubleValue] forKey:@"surveyedAt"];
+  [WTRDefaults checkIfSurveyedDefaultExpired];
+  XCTAssertTrue([_surveyClient needsSurvey]);
+}
+
+// surveyed < 90 days, surveyed = YES, type = response
+- (void)testNeedsSurveyEight {
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setBool:YES forKey:@"surveyed"];
+  [defaults setObject:@"response" forKey:@"type"];
+  [defaults setDouble:[[self createdDaysAgo:85] doubleValue] forKey:@"surveyedAt"];
+  [WTRDefaults checkIfSurveyedDefaultExpired];
+  XCTAssertFalse([_surveyClient needsSurvey]);
+}
+
+// surveyed > 30 days, surveyed = YES, type = decline
+- (void)testNeedsSurveyNine {
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setBool:YES forKey:@"surveyed"];
+  [defaults setObject:@"decline" forKey:@"type"];
+  [defaults setDouble:[[self createdDaysAgo:35] doubleValue] forKey:@"surveyedAt"];
+  [WTRDefaults checkIfSurveyedDefaultExpired];
+  XCTAssertTrue([_surveyClient needsSurvey]);
+}
+
+// surveyed < 30 days, surveyed = YES, type = decline
+- (void)testNeedsSurveyTen {
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setBool:YES forKey:@"surveyed"];
+  [defaults setObject:@"decline" forKey:@"type"];
+  [defaults setDouble:[[self createdDaysAgo:25] doubleValue] forKey:@"surveyedAt"];
+  [WTRDefaults checkIfSurveyedDefaultExpired];
+  XCTAssertFalse([_surveyClient needsSurvey]);
+}
+
+// surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 60, externalCreatedAt = 20, lastSeenAt = 40
+- (void)testNeedsSurveyEleven {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setDouble:[[self createdDaysAgo:40] doubleValue] forKey:@"lastSeenAt"];
   _apiClient.settings.firstSurveyAfter = @60;
@@ -96,11 +137,20 @@
 }
 
 // surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 31, externalCreatedAt = 20, lastSeenAt = 40
-- (void)testNeedsSurveyEight {
+- (void)testNeedsSurveyTwelve {
   _apiClient.settings.firstSurveyAfter = @31;
   _apiClient.settings.externalCreatedAt = [self createdDaysAgo:20];
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setDouble:[[self createdDaysAgo:40] doubleValue] forKey:@"lastSeenAt"];
+  XCTAssertTrue([_surveyClient needsSurvey]);
+}
+
+// surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 2, externalCreatedAt = 2, lastSeenAt = 4
+- (void)testNeedsSurveyThirteen {
+  _apiClient.settings.firstSurveyAfter = @2;
+  _apiClient.settings.externalCreatedAt = [self createdDaysAgo:2];
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setDouble:[[self createdDaysAgo:4] doubleValue] forKey:@"lastSeenAt"];
   XCTAssertTrue([_surveyClient needsSurvey]);
 }
 

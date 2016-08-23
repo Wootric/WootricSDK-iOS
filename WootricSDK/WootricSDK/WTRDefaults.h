@@ -27,7 +27,7 @@
 @interface WTRDefaults : NSObject
 
 + (void)setLastSeenAt;
-+ (void)setSurveyed;
++ (void)setSurveyedWithType:(NSString *)type;
 + (void)checkIfSurveyedDefaultExpired;
 
 @end

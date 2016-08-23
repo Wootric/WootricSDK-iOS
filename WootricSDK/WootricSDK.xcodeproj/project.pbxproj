@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0FAB0CAB1CFE1DCE00977346 /* SEGWootricTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAB0CAA1CFE1DCE00977346 /* SEGWootricTests.m */; };
 		0FE2FAC81CE4356F0065823C /* WTRApiClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE2FAC71CE4356F0065823C /* WTRApiClientTests.m */; };
+		0FEC4B6D1D669E7300D7E941 /* WTRDefaultsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FEC4B6C1D669E7300D7E941 /* WTRDefaultsTests.m */; };
 		7E74E3361C8E987000BCB84F /* NSString+FontAwesome.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E74E3341C8E986F00BCB84F /* NSString+FontAwesome.h */; };
 		7E74E3371C8E987000BCB84F /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E74E3351C8E987000BCB84F /* NSString+FontAwesome.m */; };
 		7E74E3391C8E99C300BCB84F /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E74E3381C8E99C300BCB84F /* fontawesome-webfont.ttf */; };
@@ -111,6 +112,7 @@
 /* Begin PBXFileReference section */
 		0FAB0CAA1CFE1DCE00977346 /* SEGWootricTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEGWootricTests.m; sourceTree = "<group>"; };
 		0FE2FAC71CE4356F0065823C /* WTRApiClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRApiClientTests.m; sourceTree = "<group>"; };
+		0FEC4B6C1D669E7300D7E941 /* WTRDefaultsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRDefaultsTests.m; sourceTree = "<group>"; };
 		7E74E3341C8E986F00BCB84F /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
 		7E74E3351C8E987000BCB84F /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
 		7E74E3381C8E99C300BCB84F /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.ttf"; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				B21372951BED0DB1009F5974 /* WTRSurveyTests.m */,
+				0FEC4B6C1D669E7300D7E941 /* WTRDefaultsTests.m */,
 				B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */,
 				B2DC6F121B81E6F900F599B3 /* Supporting Files */,
 				0FE2FAC71CE4356F0065823C /* WTRApiClientTests.m */,
@@ -638,6 +641,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B29D63CA1BC3CEEB00F0C98C /* WTRSettingsTests.m in Sources */,
+				0FEC4B6D1D669E7300D7E941 /* WTRDefaultsTests.m in Sources */,
 				0FAB0CAB1CFE1DCE00977346 /* SEGWootricTests.m in Sources */,
 				B21372961BED0DB1009F5974 /* WTRSurveyTests.m in Sources */,
 				0FE2FAC81CE4356F0065823C /* WTRApiClientTests.m in Sources */,

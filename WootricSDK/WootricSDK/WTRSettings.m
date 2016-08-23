@@ -45,6 +45,7 @@
   if (self = [super init]) {
     _setDefaultAfterSurvey = YES;
     _surveyedDefaultDuration = 90;
+    _surveyedDefaultDurationDecline = 30;
     _firstSurveyAfter = @0;
     _originURL = [[NSBundle mainBundle] bundleIdentifier];
     _customThankYou = [[WTRCustomThankYou alloc] init];
@@ -63,6 +64,8 @@
     localizedTextsFromSurvey = surveyServerSettings[@"settings"][@"localized_texts"];
     customMessagesFromSurvey = surveyServerSettings[@"settings"][@"messages"];
     NSNumber *firstSurvey = surveyServerSettings[@"settings"][@"first_survey"];
+    NSNumber *resurveyThrottleFromServer = surveyServerSettings[@"settings"][@"resurvey_throttle"];
+    NSNumber *declineResurveyThrottleFromServer = surveyServerSettings[@"settings"][@"decline_resurvey_throttle"];
     NSInteger delay = [surveyServerSettings[@"settings"][@"time_delay"] integerValue];
         
     if (localizedTextsFromSurvey) {
@@ -79,6 +82,14 @@
         
     if (delay > 0) {
       _timeDelay = delay;
+    }
+    
+    if (resurveyThrottleFromServer) {
+      _surveyedDefaultDuration = [resurveyThrottleFromServer intValue];
+    }
+    
+    if (declineResurveyThrottleFromServer) {
+      _surveyedDefaultDurationDecline = [declineResurveyThrottleFromServer intValue];
     }
   }
 }

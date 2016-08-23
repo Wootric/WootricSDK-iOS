@@ -43,12 +43,12 @@
 
 - (void)endUserDeclined {
   [[WTRApiClient sharedInstance] endUserDeclined];
-  [WTRDefaults setSurveyed];
+  [WTRDefaults setSurveyedWithType:@"decline"];
 }
 
 - (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text {
   [[WTRApiClient sharedInstance] endUserVotedWithScore:score andText:text];
-  [WTRDefaults setSurveyed];
+  [WTRDefaults setSurveyedWithType:@"response"];
 }
 
 - (void)survey:(void (^)())showSurvey {
@@ -68,7 +68,15 @@
 - (BOOL)needsSurvey {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   if ([defaults boolForKey:@"surveyed"]) {
-    NSLog(@"WootricSDK: needsSurvey(NO) - Already surveyed in last %d days", (int)_apiClient.settings.surveyedDefaultDuration);
+    NSInteger days;
+    if ([defaults objectForKey:@"resurvey_days"]) {
+      days = [defaults integerForKey:@"resurvey_days"];
+    } else if([[defaults objectForKey:@"type"] isEqualToString:@"response"]){
+      days = _apiClient.settings.surveyedDefaultDuration;
+    } else {
+      days = _apiClient.settings.surveyedDefaultDurationDecline;
+    }
+    NSLog(@"WootricSDK: needsSurvey(NO) - Already surveyed in last %li days", (long)days);
     return NO;
   } else if (_apiClient.settings.surveyImmediately) {
     NSLog(@"WootricSDK: needsSurvey(YES) - surveyImmediately");

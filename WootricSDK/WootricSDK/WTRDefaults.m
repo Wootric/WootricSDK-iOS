@@ -22,6 +22,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#define DAYS_IN_MILLIS 60 * 60 * 24
+
 #import "WTRDefaults.h"
 #import "WTRApiClient.h"
 
@@ -32,20 +34,26 @@
   if ([defaults doubleForKey:@"lastSeenAt"] == 0) {
     [defaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:@"lastSeenAt"];
   } else {
-    double ninetyDaysTimestamp = 90 * 60 * 60 * 24;
+    double ninetyDaysTimestamp = 90 * DAYS_IN_MILLIS;
     if ([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"lastSeenAt"] >= ninetyDaysTimestamp) {
       [defaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:@"lastSeenAt"];
     }
   }
 }
 
-+ (void)setSurveyed {
++ (void)setSurveyedWithType:(NSString *)type {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
 
   if (apiClient.settings.setDefaultAfterSurvey) {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     [defaults setBool:YES forKey:@"surveyed"];
+    [defaults setObject:type forKey:@"type"];
+    if([type isEqualToString:@"decline"]){
+      [defaults setInteger:apiClient.settings.surveyedDefaultDurationDecline forKey:@"resurvey_days"];;
+    } else {
+      [defaults setInteger:apiClient.settings.surveyedDefaultDuration forKey:@"resurvey_days"];
+    }
     [defaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:@"surveyedAt"];
   }
 }
@@ -53,10 +61,19 @@
 + (void)checkIfSurveyedDefaultExpired {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  double surveyedDurationTimestamp = apiClient.settings.surveyedDefaultDuration * 60 * 60 * 24;
-
+  
+  double surveyedDurationTimestamp = apiClient.settings.surveyedDefaultDuration;
+  if ([defaults objectForKey:@"resurvey_days"] && [defaults integerForKey:@"resurvey_days"] >= 0) {
+    surveyedDurationTimestamp = [defaults integerForKey:@"resurvey_days"];
+  } else if([[defaults objectForKey:@"type"] isEqualToString:@"decline"]){
+    surveyedDurationTimestamp = apiClient.settings.surveyedDefaultDurationDecline;
+  }
+  
+  surveyedDurationTimestamp = surveyedDurationTimestamp * DAYS_IN_MILLIS;
+  
   if ([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"surveyedAt"] >= surveyedDurationTimestamp) {
     [defaults setBool:NO forKey:@"surveyed"];
+    [defaults setInteger:-1 forKey:@"resurvey_days"];
   }
 }
 

@@ -269,6 +269,7 @@
         if ([responseJSON[@"eligible"] isEqual:@1] || _settings.forceSurvey) {
           if (_settings.forceSurvey) NSLog(@"WootricSDK: forced survey (remove for production!)");
           NSLog(@"WootricSDK: User eligible");
+
           [_settings parseDataFromSurveyServer:responseJSON];
           _userID = responseJSON[@"settings"][@"user_id"];
           
