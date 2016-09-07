@@ -50,6 +50,16 @@
   apiClient.settings.externalCreatedAt = externalCreatedAt;
 }
 
++ (void)setEndUserExternalId:(NSString *)externalId {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.externalId = externalId;
+}
+
++ (void)setEndUserPhoneNumber:(NSString *)phoneNumber {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.phoneNumber = phoneNumber;
+}
+
 + (void)setCustomAudience:(NSString *)audience {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.customAudience = audience;

@@ -36,6 +36,8 @@
 @property (nonatomic, strong) NSString *customAudience;
 @property (nonatomic, strong) NSString *customFinalThankYou;
 @property (nonatomic, strong) NSString *customNPSQuestion;
+@property (nonatomic, strong) NSString *externalId;
+@property (nonatomic, strong) NSString *phoneNumber;
 @property (nonatomic, strong) NSNumber *registeredPercentage;
 @property (nonatomic, strong) NSNumber *visitorPercentage;
 @property (nonatomic, strong) NSNumber *resurveyThrottle;

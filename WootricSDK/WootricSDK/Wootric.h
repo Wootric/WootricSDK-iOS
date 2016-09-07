@@ -50,6 +50,16 @@
 */
 + (void)setEndUserEmail:(NSString *)endUserEmail;
 /**
+ @discussion It sets an end user's external id.
+ @param externalId NSString of the end user's external id.
+ */
++ (void)setEndUserExternalId:(NSString *)externalId;
+/**
+ @discussion It sets end user's phone number.
+ @param phoneNumber NSString of the end user's phone number.
+ */
++ (void)setEndUserPhoneNumber:(NSString *)phoneNumber;
+/**
  @discussion Adds a product name to end user's properties.
  @param productName NSString of the end user's product name.
 */

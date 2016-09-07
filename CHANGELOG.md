@@ -1,3 +1,10 @@
+## 0.5.8 (2016-09-07)
+
+### Added:
+
+- Pass external_id & phone_number
+- Update tests
+
 ## 0.5.7 (2016-08-31)
 
 ### Changed:

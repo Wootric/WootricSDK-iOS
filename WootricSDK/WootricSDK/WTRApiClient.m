@@ -377,6 +377,16 @@
                      baseURLString, [_settings.firstSurveyAfter intValue]];
   }
   
+  if (_settings.externalId) {
+    baseURLString = [NSString stringWithFormat:@"%@&external_id=%@",
+                     baseURLString, _settings.externalId];
+  }
+  
+  if (_settings.phoneNumber) {
+    baseURLString = [NSString stringWithFormat:@"%@&phone_number=%@",
+                     baseURLString, _settings.phoneNumber];
+  }
+  
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   double lastSeen = [defaults doubleForKey:@"lastSeenAt"];
   baseURLString = [NSString stringWithFormat:@"%@&end_user_last_seen=%.0f", baseURLString, lastSeen];
