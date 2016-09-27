@@ -136,6 +136,16 @@
     needsUpdate = YES;
     params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, _settings.productName];
   }
+  
+  if (_settings.externalId) {
+    needsUpdate = YES;
+    params = [NSString stringWithFormat:@"%@&external_id=%@", params, _settings.externalId];
+  }
+  
+  if (_settings.phoneNumber) {
+    needsUpdate = YES;
+    params = [NSString stringWithFormat:@"%@&phone_number=%@", params, _settings.phoneNumber];
+  }
 
   if (_settings.customProperties) {
     needsUpdate = YES;
@@ -169,6 +179,14 @@
     
   if (_settings.externalCreatedAt) {
     params = [NSString stringWithFormat:@"%@&external_created_at=%ld", params, (long)[_settings.externalCreatedAt integerValue]];
+  }
+  
+  if (_settings.externalId) {
+    params = [NSString stringWithFormat:@"%@&external_id=%@", params, _settings.externalId];
+  }
+  
+  if (_settings.phoneNumber) {
+    params = [NSString stringWithFormat:@"%@&phone_number=%@", params, _settings.phoneNumber];
   }
     
   if (_settings.productName) {
@@ -266,7 +284,7 @@
     } else {
       NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
       if (responseJSON) {
-        if ([responseJSON[@"eligible"] isEqual:@1] || _settings.forceSurvey) {
+        if ([responseJSON[@"eligible"] isEqual:@1]) {
           if (_settings.forceSurvey) NSLog(@"WootricSDK: forced survey (remove for production!)");
           NSLog(@"WootricSDK: User eligible");
 
@@ -283,7 +301,11 @@
           }
           eligible();
         } else {
-          NSLog(@"WootricSDK: User ineligible");
+          NSString *logString = @"WootricSDK: User ineligible";
+          if (responseJSON[@"error"]){
+            logString = [NSString stringWithFormat:@"%@ - %@", logString, responseJSON[@"error"]];
+          }
+          NSLog(@"%@", logString);
         }
       }
     }
@@ -364,12 +386,12 @@
 
   if (_settings.customProductName) {
     baseURLString = [NSString stringWithFormat:@"%@&language[product_name]=%@",
-                     baseURLString, _settings.customProductName];
+                     baseURLString, [self percentEscapeString:_settings.customProductName]];
   }
 
   if (_settings.customAudience) {
     baseURLString = [NSString stringWithFormat:@"%@&language[audience_text]=%@",
-                     baseURLString, _settings.customAudience];
+                     baseURLString, [self percentEscapeString:_settings.customAudience]];
   }
 
   if ([_settings.firstSurveyAfter intValue] > 0) {
@@ -453,7 +475,8 @@
 }
 
 - (nullable NSString *)sdkVersion {
-  return [[NSBundle bundleForClass:[WTRApiClient class]] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+  NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle bundleForClass:[WTRApiClient class]] URLForResource:@"WootricSDK" withExtension:@"bundle"]];
+  return [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 }
 
 - (NSString *)osVersion {

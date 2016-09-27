@@ -1,3 +1,11 @@
+## 0.5.9 (2016-09-27)
+
+### Fixed:
+
+- SDK version bug
+- Escape customProduct and customAudience
+- Don't show survey if accountToken is wrong
+
 ## 0.5.8 (2016-09-07)
 
 ### Added:

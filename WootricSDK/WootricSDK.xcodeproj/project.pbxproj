@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0FAB0CAB1CFE1DCE00977346 /* SEGWootricTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAB0CAA1CFE1DCE00977346 /* SEGWootricTests.m */; };
+		0FD5920B1D99DE4C00DD173B /* WootricSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0FD5920A1D99DE4C00DD173B /* WootricSDK.bundle */; };
+		0FD5920F1D99EB0500DD173B /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0FD5920E1D99EAFF00DD173B /* fontawesome-webfont.ttf */; };
 		0FE2FAC81CE4356F0065823C /* WTRApiClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE2FAC71CE4356F0065823C /* WTRApiClientTests.m */; };
 		0FEC4B6D1D669E7300D7E941 /* WTRDefaultsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FEC4B6C1D669E7300D7E941 /* WTRDefaultsTests.m */; };
 		7E74E3361C8E987000BCB84F /* NSString+FontAwesome.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E74E3341C8E986F00BCB84F /* NSString+FontAwesome.h */; };
 		7E74E3371C8E987000BCB84F /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E74E3351C8E987000BCB84F /* NSString+FontAwesome.m */; };
-		7E74E3391C8E99C300BCB84F /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E74E3381C8E99C300BCB84F /* fontawesome-webfont.ttf */; };
 		B2102A2D1BB59ABC0025DABC /* WTRDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */; };
 		B2102A2E1BB59ABC0025DABC /* WTRDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A2C1BB59ABC0025DABC /* WTRDefaults.m */; };
 		B2102A331BB59ACE0025DABC /* WTRCustomMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2F1BB59ACE0025DABC /* WTRCustomMessages.h */; };
@@ -74,7 +75,6 @@
 		B29A2E881BAC0B50007181D3 /* WTRFeedbackView.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */; };
 		B29A2E891BAC0B50007181D3 /* WTRFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */; };
 		B29D63CA1BC3CEEB00F0C98C /* WTRSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */; };
-		B2A4810D1BBE781E00BC9E13 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2A4810C1BBE781E00BC9E13 /* Images.xcassets */; };
 		B2BED80C1BA8610900DD1EFC /* WTRSingleScoreLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = B2BED80A1BA8610900DD1EFC /* WTRSingleScoreLabel.h */; };
 		B2BED80D1BA8610900DD1EFC /* WTRSingleScoreLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B2BED80B1BA8610900DD1EFC /* WTRSingleScoreLabel.m */; };
 		B2C9405B1BA0723300482494 /* WTRModalView.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C940591BA0723300482494 /* WTRModalView.h */; };
@@ -111,11 +111,12 @@
 
 /* Begin PBXFileReference section */
 		0FAB0CAA1CFE1DCE00977346 /* SEGWootricTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEGWootricTests.m; sourceTree = "<group>"; };
+		0FD5920A1D99DE4C00DD173B /* WootricSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WootricSDK.bundle; sourceTree = "<group>"; };
+		0FD5920E1D99EAFF00DD173B /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.ttf"; sourceTree = "<group>"; };
 		0FE2FAC71CE4356F0065823C /* WTRApiClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRApiClientTests.m; sourceTree = "<group>"; };
 		0FEC4B6C1D669E7300D7E941 /* WTRDefaultsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRDefaultsTests.m; sourceTree = "<group>"; };
 		7E74E3341C8E986F00BCB84F /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
 		7E74E3351C8E987000BCB84F /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
-		7E74E3381C8E99C300BCB84F /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.ttf"; sourceTree = "<group>"; };
 		B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRDefaults.h; sourceTree = "<group>"; };
 		B2102A2C1BB59ABC0025DABC /* WTRDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRDefaults.m; sourceTree = "<group>"; };
 		B2102A2F1BB59ACE0025DABC /* WTRCustomMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRCustomMessages.h; sourceTree = "<group>"; };
@@ -177,7 +178,6 @@
 		B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRFeedbackView.h; sourceTree = "<group>"; };
 		B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRFeedbackView.m; sourceTree = "<group>"; };
 		B29D63C91BC3CEEB00F0C98C /* WTRSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSettingsTests.m; sourceTree = "<group>"; };
-		B2A4810C1BBE781E00BC9E13 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B2BED80A1BA8610900DD1EFC /* WTRSingleScoreLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRSingleScoreLabel.h; sourceTree = "<group>"; };
 		B2BED80B1BA8610900DD1EFC /* WTRSingleScoreLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSingleScoreLabel.m; sourceTree = "<group>"; };
 		B2C940591BA0723300482494 /* WTRModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRModalView.h; sourceTree = "<group>"; };
@@ -193,7 +193,6 @@
 		B2D9FCDD1BF9F18E00479F9F /* SEGWootric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEGWootric.h; sourceTree = "<group>"; };
 		B2D9FCDE1BF9F18E00479F9F /* SEGWootric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEGWootric.m; sourceTree = "<group>"; };
 		B2DC6F021B81E6F900F599B3 /* WootricSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WootricSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2DC6F061B81E6F900F599B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2DC6F071B81E6F900F599B3 /* WootricSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WootricSDK.h; sourceTree = "<group>"; };
 		B2DC6F0D1B81E6F900F599B3 /* WootricSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WootricSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DC6F131B81E6F900F599B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -406,9 +405,8 @@
 		B2DC6F051B81E6F900F599B3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7E74E3381C8E99C300BCB84F /* fontawesome-webfont.ttf */,
-				B2DC6F061B81E6F900F599B3 /* Info.plist */,
-				B2A4810C1BBE781E00BC9E13 /* Images.xcassets */,
+				0FD5920E1D99EAFF00DD173B /* fontawesome-webfont.ttf */,
+				0FD5920A1D99DE4C00DD173B /* WootricSDK.bundle */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -574,8 +572,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2A4810D1BBE781E00BC9E13 /* Images.xcassets in Resources */,
-				7E74E3391C8E99C300BCB84F /* fontawesome-webfont.ttf in Resources */,
+				0FD5920F1D99EB0500DD173B /* fontawesome-webfont.ttf in Resources */,
+				0FD5920B1D99DE4C00DD173B /* WootricSDK.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -755,7 +753,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = WootricSDK/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/WootricSDK/WootricSDK.bundle/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -774,7 +772,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = WootricSDK/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/WootricSDK/WootricSDK.bundle/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
