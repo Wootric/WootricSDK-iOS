@@ -1,3 +1,9 @@
+## 0.5.10 (2016-10-11)
+
+### Fixed:
+
+- Bundle Info.plist to correct submission issues
+
 ## 0.5.9 (2016-09-27)
 
 ### Fixed:
