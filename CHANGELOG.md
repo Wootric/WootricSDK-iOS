@@ -1,3 +1,10 @@
+## 0.5.11 (2016-10-12)
+
+### Fixed:
+
+- "Edit Score" string for different languages
+- Demo project
+
 ## 0.5.10 (2016-10-11)
 
 ### Fixed:

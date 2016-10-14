@@ -99,7 +99,7 @@
 - (void)setupEditScoreButtonWithViewController:(UIViewController *)viewController {
   _editScoreButton = [[UIButton alloc] init];
   _editScoreButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-  [_editScoreButton setTitle:@"EDIT SCORE" forState:UIControlStateNormal];
+  [_editScoreButton setTitle:[_settings editScoreButtonText].uppercaseString forState:UIControlStateNormal];
   [_editScoreButton setTitleColor:[_settings sliderColor] forState:UIControlStateNormal];
   [_editScoreButton addTarget:viewController
                        action:NSSelectorFromString(@"editScoreButtonPressed:")

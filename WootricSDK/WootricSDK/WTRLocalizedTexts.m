@@ -36,6 +36,7 @@
     _finalThankYou = localizedTexts[@"final_thank_you"];
     _send = localizedTexts[@"send"];
     _dismiss = localizedTexts[@"dismiss"];
+    _editScore = localizedTexts[@"edit_score"];
     _socialShareQuestion = localizedTexts[@"social_share"][@"question"];
     _socialShareDecline = localizedTexts[@"social_share"][@"decline"];
   }

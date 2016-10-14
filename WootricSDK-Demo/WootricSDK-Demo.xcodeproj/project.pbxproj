@@ -14,8 +14,6 @@
 		B2DC6EE01B81E5D800F599B3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2DC6EDF1B81E5D800F599B3 /* Images.xcassets */; };
 		B2DC6EE31B81E5D800F599B3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2DC6EE11B81E5D800F599B3 /* LaunchScreen.xib */; };
 		B2DC6EEF1B81E5D800F599B3 /* WootricSDK_DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6EEE1B81E5D800F599B3 /* WootricSDK_DemoTests.m */; };
-		B2DC6F271B81E92000F599B3 /* WootricSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DC6F241B81E8E700F599B3 /* WootricSDK.framework */; };
-		B2DC6F281B81E92000F599B3 /* WootricSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B2DC6F241B81E8E700F599B3 /* WootricSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,28 +38,7 @@
 			remoteGlobalIDString = B2DC6F0D1B81E6F900F599B3;
 			remoteInfo = WootricSDKTests;
 		};
-		B2DC6F291B81E92000F599B3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B2DC6F1E1B81E8E700F599B3 /* WootricSDK.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = B2DC6F011B81E6F900F599B3;
-			remoteInfo = WootricSDK;
-		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		B2DC6F2B1B81E92000F599B3 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B2DC6F281B81E92000F599B3 /* WootricSDK.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B2DC6ECF1B81E5D800F599B3 /* WootricSDK-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WootricSDK-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,7 +62,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2DC6F271B81E92000F599B3 /* WootricSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,12 +154,10 @@
 				B2DC6ECB1B81E5D800F599B3 /* Sources */,
 				B2DC6ECC1B81E5D800F599B3 /* Frameworks */,
 				B2DC6ECD1B81E5D800F599B3 /* Resources */,
-				B2DC6F2B1B81E92000F599B3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				B2DC6F2A1B81E92000F599B3 /* PBXTargetDependency */,
 			);
 			name = "WootricSDK-Demo";
 			productName = "WootricSDK-Demo";
@@ -314,11 +288,6 @@
 			isa = PBXTargetDependency;
 			target = B2DC6ECE1B81E5D800F599B3 /* WootricSDK-Demo */;
 			targetProxy = B2DC6EE91B81E5D800F599B3 /* PBXContainerItemProxy */;
-		};
-		B2DC6F2A1B81E92000F599B3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = WootricSDK;
-			targetProxy = B2DC6F291B81E92000F599B3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

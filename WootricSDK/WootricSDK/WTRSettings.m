@@ -239,6 +239,10 @@
   return _localizedTexts.dismiss;
 }
 
+- (NSString *)editScoreButtonText {
+  return _localizedTexts.editScore;
+}
+
 - (NSString *)socialShareQuestionText {
   return _localizedTexts.socialShareQuestion;
 }

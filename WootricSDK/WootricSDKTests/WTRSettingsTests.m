@@ -127,6 +127,11 @@
   XCTAssertEqualObjects(dismissButtonTitle, @"dismiss");
 }
 
+- (void)testEditScoreButtonTitle {
+  NSString *editScoreButtonTitle = [_settings editScoreButtonText];
+  XCTAssertEqualObjects(editScoreButtonTitle, @"edit");
+}
+
 - (void)testSocialShareQuestion {
   NSString *socialShareQuestion = [_settings socialShareQuestionText];
   XCTAssertEqualObjects(socialShareQuestion, @"Would you be willing to share your positive comments?");
@@ -291,6 +296,7 @@
            @"followup_question": @"Thank you! Care to tell us why?",
            @"nps_question": @"How likely are you to recommend Wootric to a friend or co-worker?",
            @"send": @"send",
+           @"edit_score": @"edit",
            @"social_share": @{
                @"decline": @"No thanks...",
                @"question": @"Would you be willing to share your positive comments?"}}}};

@@ -34,6 +34,7 @@
 @property (nonatomic, strong) NSString *finalThankYou;
 @property (nonatomic, strong) NSString *send;
 @property (nonatomic, strong) NSString *dismiss;
+@property (nonatomic, strong) NSString *editScore;
 @property (nonatomic, strong) NSString *socialShareQuestion;
 @property (nonatomic, strong) NSString *socialShareDecline;
 

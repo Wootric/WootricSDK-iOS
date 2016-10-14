@@ -70,6 +70,7 @@
 - (NSString *)finalThankYouText;
 - (NSString *)sendButtonText;
 - (NSString *)dismissButtonText;
+- (NSString *)editScoreButtonText;
 - (NSString *)socialShareQuestionText;
 - (NSString *)socialShareDeclineText;
 
