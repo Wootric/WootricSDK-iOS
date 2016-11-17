@@ -26,7 +26,7 @@
 
 @implementation UIView (Constraints)
 
-- (NSLayoutConstraint *)top {
+- (NSLayoutConstraint *)wtr_topConstraint {
   UIView *emptyView = [[UIView alloc] init];
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                 attribute:NSLayoutAttributeTop
@@ -38,7 +38,7 @@
   return constraint;
 }
 
-- (NSLayoutConstraint *)bottom {
+- (NSLayoutConstraint *)wtr_bottomConstraint {
   UIView *emptyView = [[UIView alloc] init];
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                 attribute:NSLayoutAttributeBottom
@@ -50,7 +50,7 @@
   return constraint;
 }
 
-- (NSLayoutConstraint *)left {
+- (NSLayoutConstraint *)wtr_leftConstraint {
   UIView *emptyView = [[UIView alloc] init];
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                 attribute:NSLayoutAttributeLeft
@@ -62,7 +62,7 @@
   return constraint;
 }
 
-- (NSLayoutConstraint *)right {
+- (NSLayoutConstraint *)wtr_rightConstraint {
   UIView *emptyView = [[UIView alloc] init];
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                 attribute:NSLayoutAttributeRight
@@ -74,7 +74,7 @@
   return constraint;
 }
 
-- (NSLayoutConstraint *)centerX {
+- (NSLayoutConstraint *)wtr_centerXConstraint {
   UIView *emptyView = [[UIView alloc] init];
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                 attribute:NSLayoutAttributeCenterX
@@ -86,7 +86,7 @@
   return constraint;
 }
 
-- (NSLayoutConstraint *)centerY {
+- (NSLayoutConstraint *)wtr_centerYConstraint {
   UIView *emptyView = [[UIView alloc] init];
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                 attribute:NSLayoutAttributeCenterY
@@ -98,7 +98,7 @@
   return constraint;
 }
 
-- (void)constraintHeight:(CGFloat)height {
+- (void)wtr_constraintHeight:(CGFloat)height {
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                 attribute:NSLayoutAttributeHeight
                                                                 relatedBy:NSLayoutRelationEqual
@@ -110,7 +110,7 @@
   [self addConstraint:constraint];
 }
 
-- (void)constraintWidth:(CGFloat)width {
+- (void)wtr_constraintWidth:(CGFloat)width {
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                 attribute:NSLayoutAttributeWidth
                                                                 relatedBy:NSLayoutRelationEqual
@@ -122,7 +122,7 @@
   [self addConstraint:constraint];
 }
 
-- (void)constraintHeightEqualSecondViewHeight:(UIView *)secondView {
+- (void)wtr_constraintHeightEqualSecondViewHeight:(UIView *)secondView {
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                 attribute:NSLayoutAttributeHeight
                                                                 relatedBy:NSLayoutRelationEqual
@@ -134,7 +134,7 @@
   [secondView addConstraint:constraint];
 }
 
-- (void)constraintWidthEqualSecondViewWidth:(UIView *)secondView {
+- (void)wtr_constraintWidthEqualSecondViewWidth:(UIView *)secondView {
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                 attribute:NSLayoutAttributeWidth
                                                                 relatedBy:NSLayoutRelationEqual
@@ -146,7 +146,7 @@
   [secondView addConstraint:constraint];
 }
 
-- (void)constraintHeightToSecondViewHeight:(UIView *)secondView withConstant:(CGFloat)constant {
+- (void)wtr_constraintHeightToSecondViewHeight:(UIView *)secondView withConstant:(CGFloat)constant {
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                 attribute:NSLayoutAttributeHeight
                                                                 relatedBy:NSLayoutRelationEqual
@@ -158,7 +158,7 @@
   [secondView addConstraint:constraint];
 }
 
-- (void)constraintWidthToSecondViewWidth:(UIView *)secondView withConstant:(CGFloat)constant {
+- (void)wtr_constraintWidthToSecondViewWidth:(UIView *)secondView withConstant:(CGFloat)constant {
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self
                                                                 attribute:NSLayoutAttributeWidth
                                                                 relatedBy:NSLayoutRelationEqual

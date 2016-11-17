@@ -82,24 +82,24 @@
 }
 
 - (void)setupLikelyAnchorConstraints {
-  [[[_likelyAnchor centerY] toSecondViewCenterY:_scoreView] addToView:self];
-  [[[[_likelyAnchor left] toSecondViewRight:_scoreView] withConstant:10] addToView:self];
+  [[[_likelyAnchor wtr_centerYConstraint] toSecondViewCenterY:_scoreView] addToView:self];
+  [[[[_likelyAnchor wtr_leftConstraint] toSecondViewRight:_scoreView] withConstant:10] addToView:self];
 }
 
 - (void)setupNotLikelyAnchorConstraints {
-  [[[_notLikelyAnchor centerY] toSecondViewCenterY:_scoreView] addToView:self];
-  [[[[_notLikelyAnchor right] toSecondViewLeft:_scoreView] withConstant:-10] addToView:self];
+  [[[_notLikelyAnchor wtr_centerYConstraint] toSecondViewCenterY:_scoreView] addToView:self];
+  [[[[_notLikelyAnchor wtr_rightConstraint] toSecondViewLeft:_scoreView] withConstant:-10] addToView:self];
 }
 
 - (void)setupNpsQuestionLabelConstraints {
-  [[[[_npsQuestionLabel top] toSecondViewTop:self] withConstant:20] addToView:self];
-  [[[[_npsQuestionLabel left] toSecondViewLeft:self] withConstant:45] addToView:self];
-  [[[[self right] toSecondViewRight:_npsQuestionLabel] withConstant:45] addToView:self];
+  [[[[_npsQuestionLabel wtr_topConstraint] toSecondViewTop:self] withConstant:20] addToView:self];
+  [[[[_npsQuestionLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:45] addToView:self];
+  [[[[self wtr_rightConstraint] toSecondViewRight:_npsQuestionLabel] withConstant:45] addToView:self];
 }
 
 - (void)setupScoreViewConstraints {
-  [[[_scoreView centerX] toSecondViewCenterX:self] addToView:self];
-  [[[[_scoreView top] toSecondViewBottom:_npsQuestionLabel] withConstant:20] addToView:self];
+  [[[_scoreView wtr_centerXConstraint] toSecondViewCenterX:self] addToView:self];
+  [[[[_scoreView wtr_topConstraint] toSecondViewBottom:_npsQuestionLabel] withConstant:20] addToView:self];
 }
 
 - (void)setupCircleScoreViewWithViewController:(UIViewController *)viewController {

@@ -183,15 +183,15 @@
 }
 
 - (void)setupCustomThankYouLabelConstraints {
-  [[[[_customThankYouLabel left] toSecondViewLeft:self] withConstant:24] addToView:self];
-  [[[[_customThankYouLabel right] toSecondViewRight:self] withConstant:-24] addToView:self];
-  [[[[_customThankYouLabel top] toSecondViewBottom:_finalThankYouLabel] withConstant:8] addToView:self];
+  [[[[_customThankYouLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
+  [[[[_customThankYouLabel wtr_rightConstraint] toSecondViewRight:self] withConstant:-24] addToView:self];
+  [[[[_customThankYouLabel wtr_topConstraint] toSecondViewBottom:_finalThankYouLabel] withConstant:8] addToView:self];
 }
 
 - (void)setupFacebookButtonConstraints {
-  [_facebookButton constraintWidth:32];
-  [_facebookButton constraintHeight:32];
-  [[[[_facebookButton top] toSecondViewBottom:_socialShareQuestionLabel] withConstant:18] addToView:self];
+  [_facebookButton wtr_constraintWidth:32];
+  [_facebookButton wtr_constraintHeight:32];
+  [[[[_facebookButton wtr_topConstraint] toSecondViewBottom:_socialShareQuestionLabel] withConstant:18] addToView:self];
 
   _facebookXConstraint = [NSLayoutConstraint constraintWithItem:_facebookButton
                                                       attribute:NSLayoutAttributeCenterX
@@ -204,9 +204,9 @@
 }
 
 - (void)setupTwitterButtonConstraints {
-  [_twitterButton constraintWidth:32];
-  [_twitterButton constraintHeight:32];
-  [[[[_twitterButton top] toSecondViewBottom:_socialShareQuestionLabel] withConstant:18] addToView:self];
+  [_twitterButton wtr_constraintWidth:32];
+  [_twitterButton wtr_constraintHeight:32];
+  [[[[_twitterButton wtr_topConstraint] toSecondViewBottom:_socialShareQuestionLabel] withConstant:18] addToView:self];
 
   _twitterXConstraint = [NSLayoutConstraint constraintWithItem:_twitterButton
                                                      attribute:NSLayoutAttributeCenterX
@@ -219,9 +219,9 @@
 }
 
 - (void)setupFacebookLikeButtonConstraints {
-    [_facebookLikeButton constraintWidth:32];
-    [_facebookLikeButton constraintHeight:32];
-    [[[[_facebookLikeButton top] toSecondViewBottom:_socialShareQuestionLabel] withConstant:18] addToView:self];
+    [_facebookLikeButton wtr_constraintWidth:32];
+    [_facebookLikeButton wtr_constraintHeight:32];
+    [[[[_facebookLikeButton wtr_topConstraint] toSecondViewBottom:_socialShareQuestionLabel] withConstant:18] addToView:self];
     
     _facebookLikeXConstraint = [NSLayoutConstraint constraintWithItem:_facebookLikeButton
                                                         attribute:NSLayoutAttributeCenterX
@@ -234,28 +234,28 @@
 }
 
 - (void)setupSocialShareQuestionLabelConstraints {
-  [[[[_socialShareQuestionLabel left] toSecondViewLeft:self] withConstant:24] addToView:self];
-  [[[[_socialShareQuestionLabel right] toSecondViewRight:self] withConstant:-24] addToView:self];
-  [[[[_socialShareQuestionLabel top] toSecondViewBottom:_thankYouButton] withConstant:16] addToView:self];
+  [[[[_socialShareQuestionLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
+  [[[[_socialShareQuestionLabel wtr_rightConstraint] toSecondViewRight:self] withConstant:-24] addToView:self];
+  [[[[_socialShareQuestionLabel wtr_topConstraint] toSecondViewBottom:_thankYouButton] withConstant:16] addToView:self];
 }
 
 - (void)setupFinalThankYouLabelConstraints {
-  [[[[_finalThankYouLabel top] toSecondViewTop:self] withConstant:16] addToView:self];
-  [[[[_finalThankYouLabel left] toSecondViewLeft:self] withConstant:24] addToView:self];
-  [[[[self right] toSecondViewRight:_finalThankYouLabel] withConstant:24] addToView:self];
+  [[[[_finalThankYouLabel wtr_topConstraint] toSecondViewTop:self] withConstant:16] addToView:self];
+  [[[[_finalThankYouLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
+  [[[[self wtr_rightConstraint] toSecondViewRight:_finalThankYouLabel] withConstant:24] addToView:self];
 }
 
 - (void)setupThankYouButtonConstraints {
-  [_thankYouButton constraintHeight:50];
-  [[[_thankYouButton centerX] toSecondViewCenterX:self] addToView:self];
-  [[[[_thankYouButton left] toSecondViewLeft:self] withConstant:24] addToView:self];
-  [[[[_thankYouButton right] toSecondViewRight:self] withConstant:-24] addToView:self];
-  [[[[_thankYouButton top] toSecondViewBottom:_finalThankYouLabel] withConstant:38] addToView:self];
+  [_thankYouButton wtr_constraintHeight:50];
+  [[[_thankYouButton wtr_centerXConstraint] toSecondViewCenterX:self] addToView:self];
+  [[[[_thankYouButton wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
+  [[[[_thankYouButton wtr_rightConstraint] toSecondViewRight:self] withConstant:-24] addToView:self];
+  [[[[_thankYouButton wtr_topConstraint] toSecondViewBottom:_finalThankYouLabel] withConstant:38] addToView:self];
 }
 
 - (void)setupNoThanksButtonConstraints {
-  [[[_noThanksButton centerX] toSecondViewCenterX:self] addToView:self];
-  [[[[_noThanksButton bottom] toSecondViewBottom:self] withConstant:-8] addToView:self];
+  [[[_noThanksButton wtr_centerXConstraint] toSecondViewCenterX:self] addToView:self];
+  [[[[_noThanksButton wtr_bottomConstraint] toSecondViewBottom:self] withConstant:-8] addToView:self];
 }
 
 @end

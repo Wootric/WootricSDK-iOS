@@ -44,8 +44,8 @@
 }
 
 - (void)setupConstraints {
-  [self constraintHeight:42];
-  [self constraintWidth:42];
+  [self wtr_constraintHeight:42];
+  [self wtr_constraintWidth:42];
 }
 
 - (void)addConstraintsWithSuperview:(UIView *)superView andLeftConstraintConstant:(CGFloat)leftConstant {

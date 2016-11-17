@@ -128,28 +128,28 @@
 }
 
 - (void)setupEditScoreButtonConstraints {
-  [[[_editScoreButton centerX] toSecondViewCenterX:self] addToView:self];
-  [[[[_editScoreButton top] toSecondViewTop:self] withConstant:16] addToView:self];
+  [[[_editScoreButton wtr_centerXConstraint] toSecondViewCenterX:self] addToView:self];
+  [[[[_editScoreButton wtr_topConstraint] toSecondViewTop:self] withConstant:16] addToView:self];
 }
 
 - (void)setupFollowupLabelConstraints {
-  [[[_followupLabel centerX] toSecondViewCenterX:self] addToView:self];
-  [[[[_followupLabel top] toSecondViewTop:self] withConstant:50] addToView:self];
-  [[[[_followupLabel left] toSecondViewLeft:self] withConstant:16] addToView:self];
-  [[[[_followupLabel right] toSecondViewRight:self] withConstant:-16] addToView:self];
+  [[[_followupLabel wtr_centerXConstraint] toSecondViewCenterX:self] addToView:self];
+  [[[[_followupLabel wtr_topConstraint] toSecondViewTop:self] withConstant:50] addToView:self];
+  [[[[_followupLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:16] addToView:self];
+  [[[[_followupLabel wtr_rightConstraint] toSecondViewRight:self] withConstant:-16] addToView:self];
 }
 
 - (void)setupFeedbackTextViewConstraints {
-  [[[[_feedbackTextView left] toSecondViewLeft:self] withConstant:16] addToView:self];
-  [[[[_feedbackTextView right] toSecondViewRight:self] withConstant:-16] addToView:self];
-  [[[[_feedbackTextView top] toSecondViewBottom:_followupLabel] withConstant:16] addToView:self];
-  [[[_feedbackTextView bottom] toSecondViewBottom:self] addToView:self];
+  [[[[_feedbackTextView wtr_leftConstraint] toSecondViewLeft:self] withConstant:16] addToView:self];
+  [[[[_feedbackTextView wtr_rightConstraint] toSecondViewRight:self] withConstant:-16] addToView:self];
+  [[[[_feedbackTextView wtr_topConstraint] toSecondViewBottom:_followupLabel] withConstant:16] addToView:self];
+  [[[_feedbackTextView wtr_bottomConstraint] toSecondViewBottom:self] addToView:self];
 }
 
 - (void)setupFeedbackLabelConstraints {
-  [[[[_feedbackPlaceholder left] toSecondViewLeft:_feedbackTextView] withConstant:20] addToView:self];
-  [[[[_feedbackPlaceholder right] toSecondViewRight:_feedbackTextView] withConstant:-20] addToView:self];
-  [[[[_feedbackPlaceholder top] toSecondViewTop:_feedbackTextView] withConstant:17] addToView:self];
+  [[[[_feedbackPlaceholder wtr_leftConstraint] toSecondViewLeft:_feedbackTextView] withConstant:20] addToView:self];
+  [[[[_feedbackPlaceholder wtr_rightConstraint] toSecondViewRight:_feedbackTextView] withConstant:-20] addToView:self];
+  [[[[_feedbackPlaceholder wtr_topConstraint] toSecondViewTop:_feedbackTextView] withConstant:17] addToView:self];
 }
 
 @end

@@ -72,9 +72,9 @@
 
   [superView addConstraint:self.leftConstraint];
 
-  [[[self centerY] toSecondViewCenterY:superView] addToView:superView];
-  [self constraintWidth:24];
-  [self constraintHeight:16];
+  [[[self wtr_centerYConstraint] toSecondViewCenterY:superView] addToView:superView];
+  [self wtr_constraintWidth:24];
+  [self wtr_constraintHeight:16];
 }
 
 @end

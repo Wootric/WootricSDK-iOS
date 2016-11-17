@@ -1,3 +1,10 @@
+## 0.5.12 (2016-11-17)
+
+### Fixed:
+
+- Change method names in category to avoid conflict
+- Update project settings
+
 ## 0.5.11 (2016-10-12)
 
 ### Fixed:

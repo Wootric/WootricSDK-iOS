@@ -38,8 +38,8 @@
 }
 
 - (void)setupConstraints {
-  [self constraintHeight:42];
-  [self constraintWidth:492];
+  [self wtr_constraintHeight:42];
+  [self wtr_constraintWidth:492];
 }
 
 - (void)addCircleButtonsWithViewController:(UIViewController *)viewController {

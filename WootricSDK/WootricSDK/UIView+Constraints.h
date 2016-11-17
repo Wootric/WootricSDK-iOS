@@ -26,17 +26,17 @@
 
 @interface UIView (Constraints)
 
-- (NSLayoutConstraint *)top;
-- (NSLayoutConstraint *)bottom;
-- (NSLayoutConstraint *)left;
-- (NSLayoutConstraint *)right;
-- (NSLayoutConstraint *)centerX;
-- (NSLayoutConstraint *)centerY;
-- (void)constraintHeight:(CGFloat)height;
-- (void)constraintWidth:(CGFloat)width;
-- (void)constraintHeightEqualSecondViewHeight:(UIView *)secondView;
-- (void)constraintWidthEqualSecondViewWidth:(UIView *)secondView;
-- (void)constraintHeightToSecondViewHeight:(UIView *)secondView withConstant:(CGFloat)constant;
-- (void)constraintWidthToSecondViewWidth:(UIView *)secondView withConstant:(CGFloat)constant;
+- (NSLayoutConstraint *)wtr_topConstraint;
+- (NSLayoutConstraint *)wtr_bottomConstraint;
+- (NSLayoutConstraint *)wtr_leftConstraint;
+- (NSLayoutConstraint *)wtr_rightConstraint;
+- (NSLayoutConstraint *)wtr_centerXConstraint;
+- (NSLayoutConstraint *)wtr_centerYConstraint;
+- (void)wtr_constraintHeight:(CGFloat)height;
+- (void)wtr_constraintWidth:(CGFloat)width;
+- (void)wtr_constraintHeightEqualSecondViewHeight:(UIView *)secondView;
+- (void)wtr_constraintWidthEqualSecondViewWidth:(UIView *)secondView;
+- (void)wtr_constraintHeightToSecondViewHeight:(UIView *)secondView withConstant:(CGFloat)constant;
+- (void)wtr_constraintWidthToSecondViewWidth:(UIView *)secondView withConstant:(CGFloat)constant;
 
 @end

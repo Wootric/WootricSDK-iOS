@@ -29,7 +29,7 @@ The easiest way to get Wootric into your iOS project is to use [CocoaPods](http:
 
 2. Create a file in your Xcode project called Podfile and add the following line:
 	```ruby
-	pod "WootricSDK", "~> 0.5.11"
+	pod "WootricSDK", "~> 0.5.12"
 	```
 
 3. In your Xcode project directory run the following command:
