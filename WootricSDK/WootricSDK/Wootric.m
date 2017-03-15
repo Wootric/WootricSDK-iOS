@@ -80,9 +80,9 @@
   apiClient.settings.customFinalThankYou = finalThankYou;
 }
 
-+ (void)setCustomNPSQuestion:(NSString *)npsQuestion {
++ (void)setCustomQuestion:(NSString *)question {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.customNPSQuestion = npsQuestion;
+  apiClient.settings.customQuestion = question;
 }
 
 + (void)setSurveyedDefault:(BOOL)flag {

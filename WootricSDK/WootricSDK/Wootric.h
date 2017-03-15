@@ -90,9 +90,9 @@
 + (void)setCustomFinalThankYou:(NSString *)finalThankYou;
 /**
  @discussion It sets the question of the survey.
- @param npsQuestion NSString of the custom NPS question.
+ @param question NSString of the custom question.
 */
-+ (void)setCustomNPSQuestion:(NSString *)npsQuestion;
++ (void)setCustomQuestion:(NSString *)question;
 /**
  @discussion It sets an NSDictionary with properties to be added to the end user.
  An example of this would be to add a 'company' and 'type':

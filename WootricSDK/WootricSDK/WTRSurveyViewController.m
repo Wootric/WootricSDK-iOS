@@ -76,7 +76,7 @@
   }];
   [self setModalGradient:_modalView.bounds];
   [_modalView.layer insertSublayer:_gradient atIndex:0];
-  [_npsQuestionView addDotsAndScores];
+  [_questionView addDotsAndScores];
 }
 
 #pragma mark - Button methods
@@ -106,7 +106,7 @@
 
 - (void)sendButtonPressed:(UIButton *)sender {
   _alreadyVoted = YES;
-  int score = [_npsQuestionView getScoreSliderValue];
+  int score = [_questionView getScoreSliderValue];
   NSString *placeholderText = [_settings followupPlaceholderTextForScore:score];
   NSString *text = [_feedbackView feedbackText];
   [self endUserVotedWithScore:score andText:text];
@@ -150,7 +150,7 @@
 }
 
 - (void)setQuestionViewVisible:(BOOL)questionFlag andFeedbackViewVisible:(BOOL)feedbackFlag {
-  _npsQuestionView.hidden = !questionFlag;
+  _questionView.hidden = !questionFlag;
   _feedbackView.hidden = !feedbackFlag;
 }
 
@@ -217,7 +217,7 @@
     _sendButton.enabled = YES;
     _sendButton.backgroundColor = [_settings sendButtonBackgroundColor];
   }
-  [_npsQuestionView sliderTapped:gestureRecognizer];
+  [_questionView sliderTapped:gestureRecognizer];
 }
 
 #pragma mark - Helper methods
@@ -257,7 +257,7 @@
 
 - (void)dismissWithFinalThankYou {
   _feedbackView.hidden = YES;
-  _npsQuestionView.hidden = YES;
+  _questionView.hidden = YES;
   _socialShareView.hidden = YES;
   _sendButton.hidden = YES;
   _poweredByWootric.hidden = YES;
@@ -297,7 +297,7 @@
     } else {
       widthAfterRotation = self.view.frame.size.width - leftAndRightMargins;
     }
-    [_npsQuestionView recalculateDotsAndScorePositionForWidth:widthAfterRotation];
+    [_questionView recalculateDotsAndScorePositionForWidth:widthAfterRotation];
   }
 }
 

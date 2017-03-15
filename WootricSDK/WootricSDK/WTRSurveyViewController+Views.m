@@ -31,7 +31,7 @@
 - (void)setupViews {
   [self setupModalView];
   [self setupScrollView];
-  [self setupNPSQuestionView];
+  [self setupQuestionView];
   [self setupFeedbackView];
   [self setupSocialShareView];
   [self setupFinalThankYouLabel];
@@ -109,9 +109,9 @@
   self.modalView = [[WTRModalView alloc] init];
 }
 
-- (void)setupNPSQuestionView {
-  self.npsQuestionView = [[WTRNPSQuestionView alloc] initWithSettings:self.settings];
-  [self.npsQuestionView initializeSubviewsWithTargetViewController:self];
+- (void)setupQuestionView {
+  self.questionView = [[WTRQuestionView alloc] initWithSettings:self.settings];
+  [self.questionView initializeSubviewsWithTargetViewController:self];
 }
 
 - (void)setupFeedbackView {
@@ -125,7 +125,7 @@
 }
 
 - (void)addViewsToModal {
-  [self.modalView addSubview:self.npsQuestionView];
+  [self.modalView addSubview:self.questionView];
   [self.modalView addSubview:self.feedbackView];
   [self.modalView addSubview:self.socialShareView];
   [self.modalView addSubview:self.modalView.dismissButton];

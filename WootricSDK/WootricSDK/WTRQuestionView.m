@@ -1,5 +1,5 @@
 //
-//  WTRNPSQuestionView.m
+//  WTRQuestionView.m
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,16 +22,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "WTRNPSQuestionView.h"
+#import "WTRQuestionView.h"
 #import "WTRColor.h"
 #import "WTRScoreView.h"
 #import "WTRSlider.h"
 #import "UIItems.h"
 
-@interface WTRNPSQuestionView ()
+@interface WTRQuestionView ()
 
 @property (nonatomic, assign) BOOL firstTap;
-@property (nonatomic, strong) UILabel *npsQuestionLabel;
+@property (nonatomic, strong) UILabel *questionLabel;
 @property (nonatomic, strong) UILabel *likelyAnchor;
 @property (nonatomic, strong) UILabel *notLikelyAnchor;
 @property (nonatomic, strong) UIButton *poweredByWootric;
@@ -41,7 +41,7 @@
 
 @end
 
-@implementation WTRNPSQuestionView
+@implementation WTRQuestionView
 
 - (instancetype)initWithSettings:(WTRSettings *)settings {
   if (self = [super init]) {
@@ -100,7 +100,7 @@
 }
 
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController {
-  [self setupNpsQuestionLabel];
+  [self setupQuestionLabel];
   [self setupLikelyAnchor];
   [self setupNotLikelyAnchor];
   [self setupSliderWithSuperview:self andViewController:viewController];
@@ -109,7 +109,7 @@
 }
 
 - (void)setupSubviewsConstraints {
-  [self setupNpsQuestionLabelConstraints];
+  [self setupQuestionLabelConstraints];
   [self setupSliderConstraints];
   [self setupScoreLabelConstraints];
   [self setupLikelyAnchorConstraints];
@@ -118,12 +118,12 @@
 
 #pragma mark - Subviews setup
 
-- (void)setupNpsQuestionLabel {
+- (void)setupQuestionLabel {
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    _npsQuestionLabel = [UIItems npsQuestionLabelWithSettings:_settings
+    _questionLabel = [UIItems questionLabelWithSettings:_settings
                                                       andFont:[UIFont systemFontOfSize:18 weight:UIFontWeightMedium]];
   } else {
-    _npsQuestionLabel = [UIItems npsQuestionLabelWithSettings:_settings
+    _questionLabel = [UIItems questionLabelWithSettings:_settings
                                                       andFont:[UIFont systemFontOfSize:18]];
   }
 }
@@ -139,15 +139,15 @@
 }
 
 - (void)setupSliderWithSuperview:(UIView *)superview andViewController:(UIViewController *)viewController {
-  self.scoreSlider = [[WTRSlider alloc] initWithSuperview:superview viewController:viewController andColor:[_settings sliderColor]];
+  self.scoreSlider = [[WTRSlider alloc] initWithSuperview:superview viewController:viewController  settings:_settings color:[_settings sliderColor]];
 }
 
 - (void)setupScoreLabel {
-  self.scoreLabel = [[WTRScoreView alloc] initWithColor:[_settings sliderColor]];
+  self.scoreLabel = [[WTRScoreView alloc] initWithSettings:_settings color:[_settings sliderColor]];
 }
 
 - (void)addSubviews {
-  [self addSubview:_npsQuestionLabel];
+  [self addSubview:_questionLabel];
   [self addSubview:_scoreSlider];
   [self addSubview:_scoreLabel];
   [self addSubview:_likelyAnchor];
@@ -196,9 +196,9 @@
   [self addConstraint:constX];
 }
 
-- (void)setupNpsQuestionLabelConstraints {
+- (void)setupQuestionLabelConstraints {
   //  CGFloat topMargin = [self isSmallerScreenDevice] ? 30 : 40;
-  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_npsQuestionLabel
+  NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_questionLabel
                                                               attribute:NSLayoutAttributeTop
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self
@@ -208,7 +208,7 @@
   [self addConstraint:constTop];
 
   //  CGFloat margin = [self isSmallerScreenDevice] ? 20 : 50;
-  NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:_npsQuestionLabel
+  NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:_questionLabel
                                                                attribute:NSLayoutAttributeLeft
                                                                relatedBy:NSLayoutRelationEqual
                                                                   toItem:self
@@ -220,7 +220,7 @@
   NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:self
                                                                 attribute:NSLayoutAttributeRight
                                                                 relatedBy:NSLayoutRelationEqual
-                                                                   toItem:_npsQuestionLabel
+                                                                   toItem:_questionLabel
                                                                 attribute:NSLayoutAttributeRight
                                                                multiplier:1
                                                                  constant:20];
@@ -240,7 +240,7 @@
   NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_scoreSlider
                                                               attribute:NSLayoutAttributeTop
                                                               relatedBy:NSLayoutRelationEqual
-                                                                 toItem:_npsQuestionLabel
+                                                                 toItem:_questionLabel
                                                               attribute:NSLayoutAttributeBottom
                                                              multiplier:1
                                                                constant:60];
@@ -300,7 +300,7 @@
   NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_scoreLabel
                                                               attribute:NSLayoutAttributeTop
                                                               relatedBy:NSLayoutRelationEqual
-                                                                 toItem:_npsQuestionLabel
+                                                                 toItem:_questionLabel
                                                               attribute:NSLayoutAttributeBottom
                                                              multiplier:1
                                                                constant:24];

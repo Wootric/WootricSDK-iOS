@@ -63,8 +63,8 @@
   [Wootric setCustomFinalThankYou:finalThankYou];
 }
 
-- (void)setCustomNPSQuestion:(NSString *)npsQuestion {
-  [Wootric setCustomNPSQuestion:npsQuestion];
+- (void)setCustomQuestion:(NSString *)question {
+  [Wootric setCustomQuestion:question];
 }
 
 - (void)setEndUserProperties:(NSDictionary *)customProperties {

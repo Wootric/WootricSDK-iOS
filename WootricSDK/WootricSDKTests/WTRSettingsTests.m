@@ -88,15 +88,15 @@
   XCTAssertEqualObjects(followupPlaceholder, @"promoter placeholder");
 }
 
-- (void)testNPSQuestion {
-  NSString *npsQuestion = [_settings npsQuestionText];
-  XCTAssertEqualObjects(npsQuestion, @"How likely are you to recommend Wootric to a friend or co-worker?");
+- (void)testQuestion {
+  NSString *question = [_settings questionText];
+  XCTAssertEqualObjects(question, @"How likely are you to recommend Wootric to a friend or co-worker?");
 }
 
-- (void)testCustomNPSQuestion {
-  [_settings setCustomNPSQuestion:@"custom nps question"];
-  NSString *npsQuestion = [_settings npsQuestionText];
-  XCTAssertEqualObjects(npsQuestion, @"custom nps question");
+- (void)testCustomQuestion {
+  [_settings setCustomQuestion:@"custom question"];
+  NSString *question = [_settings questionText];
+  XCTAssertEqualObjects(question, @"custom question");
 }
 
 - (void)testAnchors {

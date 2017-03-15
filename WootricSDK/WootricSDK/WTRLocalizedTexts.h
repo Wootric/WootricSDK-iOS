@@ -26,7 +26,7 @@
 
 @interface WTRLocalizedTexts : NSObject
 
-@property (nonatomic, strong) NSString *npsQuestion;
+@property (nonatomic, strong) NSString *question;
 @property (nonatomic, strong) NSString *likelyAnchor;
 @property (nonatomic, strong) NSString *notLikelyAnchor;
 @property (nonatomic, strong) NSString *followupQuestion;

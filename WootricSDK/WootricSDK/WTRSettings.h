@@ -33,9 +33,12 @@
 @property (nonatomic, strong) NSString *twitterHandler;
 @property (nonatomic, strong) NSString *customProductName;
 @property (nonatomic, strong) NSString *languageCode;
+@property (nonatomic, strong) NSString *surveyType;
+@property (nonatomic, assign) NSInteger surveyTypeScale;
+@property (nonatomic, strong) NSDictionary *scale;
 @property (nonatomic, strong) NSString *customAudience;
 @property (nonatomic, strong) NSString *customFinalThankYou;
-@property (nonatomic, strong) NSString *customNPSQuestion;
+@property (nonatomic, strong) NSString *customQuestion;
 @property (nonatomic, strong) NSString *externalId;
 @property (nonatomic, strong) NSString *phoneNumber;
 @property (nonatomic, strong) NSNumber *registeredPercentage;
@@ -60,11 +63,14 @@
 @property (nonatomic, strong) UIColor *socialSharingColor;
 
 - (void)parseDataFromSurveyServer:(NSDictionary *)surveyServerSettings;
+- (int)maximumScore;
+- (int)minimumScore;
+- (NSDictionary *)scoreRules;
 - (NSString *)getEndUserEmailOrUnknown;
 
 - (NSString *)followupQuestionTextForScore:(int)score;
 - (NSString *)followupPlaceholderTextForScore:(int)score;
-- (NSString *)npsQuestionText;
+- (NSString *)questionText;
 - (NSString *)likelyAnchorText;
 - (NSString *)notLikelyAnchorText;
 - (NSString *)finalThankYouText;

@@ -28,8 +28,9 @@
 
 @implementation WTRCircleScoreView
 
-- (instancetype)initWithViewController:(UIViewController *)viewController {
+- (instancetype)initWithViewController:(UIViewController *)viewController settings:(WTRSettings *)settings {
   if (self = [super init]) {
+    _settings = settings;
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self setupConstraints];
     [self addCircleButtonsWithViewController:viewController];
@@ -43,14 +44,25 @@
 }
 
 - (void)addCircleButtonsWithViewController:(UIViewController *)viewController {
-  for (int i = 0; i <= 10; i++) {
+  for (int i = [_settings minimumScore]; i <= [_settings maximumScore]; i++) {
     WTRCircleScoreButton *circleButton = [[WTRCircleScoreButton alloc] initWithViewController:viewController];
     circleButton.tag = 9000 + i;
     circleButton.assignedScore = i;
     [circleButton setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];
     [self addSubview:circleButton];
 
-    CGFloat buttonX = 0;
+    CGFloat buttonX;
+    if ([_settings.surveyType isEqualToString:@"CES"]) {
+      buttonX = 45;
+    } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
+      if ((int) _settings.surveyTypeScale == 0) {
+        buttonX = 90;
+      } else if ((int) _settings.surveyTypeScale == 1) {
+        buttonX = -22;
+      }
+    } else {
+      buttonX = 0;
+    }
     buttonX += 42 * i + 3 * i;
     [circleButton addConstraintsWithSuperview:self andLeftConstraintConstant:buttonX];
   }

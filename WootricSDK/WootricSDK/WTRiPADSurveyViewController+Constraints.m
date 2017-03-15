@@ -30,8 +30,8 @@
 - (void)setupConstraints {
   [self setupScrollViewConstraints];
   [self setupModalConstraints];
-  [self setupNpsQuestionViewConstraints];
-  [self.npsQuestionView setupSubviewsConstraints];
+  [self setupQuestionViewConstraints];
+  [self.questionView setupSubviewsConstraints];
   [self setupFeedbackViewConstraints];
   [self.feedbackView setupSubviewsConstraints];
   [self setupSocialShareViewConstraints];
@@ -82,12 +82,12 @@
   [[[self.modalView wtr_rightConstraint] toSecondViewRight:self.scrollView] addToView:self.scrollView];
 }
 
-- (void)setupNpsQuestionViewConstraints {
-  [self.npsQuestionView wtr_constraintWidthEqualSecondViewWidth:self.view];
-  [self.npsQuestionView wtr_constraintHeight:110];
-  [[[self.npsQuestionView wtr_centerXConstraint] toSecondViewCenterX:self.modalView] addToView:self.modalView];
-  self.constraintNPSTopToModalTop = [[self.npsQuestionView wtr_topConstraint] toSecondViewTop:self.modalView];
-  [self.constraintNPSTopToModalTop addToView:self.modalView];
+- (void)setupQuestionViewConstraints {
+  [self.questionView wtr_constraintWidthEqualSecondViewWidth:self.view];
+  [self.questionView wtr_constraintHeight:110];
+  [[[self.questionView wtr_centerXConstraint] toSecondViewCenterX:self.modalView] addToView:self.modalView];
+  self.constraintQuestionTopToModalTop = [[self.questionView wtr_topConstraint] toSecondViewTop:self.modalView];
+  [self.constraintQuestionTopToModalTop addToView:self.modalView];
 }
 
 - (void)setupFeedbackViewConstraints {

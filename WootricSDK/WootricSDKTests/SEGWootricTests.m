@@ -110,13 +110,13 @@
   _apiClient.settings.customFinalThankYou = nil;
 }
 
-- (void)testSetCustomNPSQuestion {
-  static NSString *customNPSQuestion = @"Would you recommend this to a friend?";
-  [_segWootric setCustomNPSQuestion:customNPSQuestion];
+- (void)testSetCustomQuestion {
+  static NSString *customQuestion = @"Would you recommend this to a friend?";
+  [_segWootric setCustomQuestion:customQuestion];
   
-  XCTAssertEqualObjects(_apiClient.settings.customNPSQuestion, customNPSQuestion, @"customNPSQuestion should be equal to Would you recommend this to a friend?");
+  XCTAssertEqualObjects(_apiClient.settings.customQuestion, customQuestion, @"customQuestion should be equal to Would you recommend this to a friend?");
   
-  _apiClient.settings.customNPSQuestion = nil;
+  _apiClient.settings.customQuestion = nil;
 }
 
 - (void)testSetEndUserProperties {

@@ -51,6 +51,8 @@
     _customThankYou = [[WTRCustomThankYou alloc] init];
     _userCustomMessages = [[WTRUserCustomMessages alloc] init];
     _timeDelay = 0;
+    _surveyType = @"NPS";
+    _scale = [self scoreRules][_surveyType][0];
   }
     
   return self;
@@ -63,11 +65,24 @@
   if (surveyServerSettings[@"settings"]) {
     localizedTextsFromSurvey = surveyServerSettings[@"settings"][@"localized_texts"];
     customMessagesFromSurvey = surveyServerSettings[@"settings"][@"messages"];
+    NSString *surveyTypeFromSurvey = surveyServerSettings[@"settings"][@"survey_type"];
+    NSInteger surveyTypeScaleFromSurvey = [surveyServerSettings[@"settings"][@"survey_type_scale"] integerValue];
     NSNumber *firstSurvey = surveyServerSettings[@"settings"][@"first_survey"];
     NSNumber *resurveyThrottleFromServer = surveyServerSettings[@"settings"][@"resurvey_throttle"];
     NSNumber *declineResurveyThrottleFromServer = surveyServerSettings[@"settings"][@"decline_resurvey_throttle"];
     NSInteger delay = [surveyServerSettings[@"settings"][@"time_delay"] integerValue];
-        
+      
+    if (surveyTypeFromSurvey) {
+      _surveyType = surveyTypeFromSurvey;
+      if (surveyTypeScaleFromSurvey) {
+        _surveyTypeScale = surveyTypeScaleFromSurvey;
+        _scale = [self scoreRules][_surveyType][surveyTypeScaleFromSurvey];
+      } else {
+        _surveyTypeScale = 0;
+        _scale = [self scoreRules][_surveyType][0];
+      }
+    }
+      
     if (localizedTextsFromSurvey) {
       _localizedTexts = [[WTRLocalizedTexts alloc] initWithLocalizedTexts:localizedTextsFromSurvey];
     }
@@ -94,6 +109,34 @@
   }
 }
 
+- (NSDictionary *)scoreRules {
+    return @{
+             @"NPS" : [NSArray arrayWithObjects: @{@"min" : @0, @"max" : @10, @"negative_type_max" : @6, @"neutral_type_max" : @8}, nil],
+             @"CES" : [NSArray arrayWithObjects: @{@"min" : @1, @"max" : @7, @"negative_type_max" : @3, @"neutral_type_max" : @5}, nil],
+             @"CSAT" : [NSArray arrayWithObjects: @{@"min" : @1, @"max" : @5, @"negative_type_max" : @2, @"neutral_type_max" : @3}, @{@"min" : @1, @"max" : @10, @"negative_type_max" : @6, @"neutral_type_max" : @8}, nil]
+             };
+}
+
+- (BOOL)negativeTypeScore:(int)score {
+    return score <= [_scale[@"negative_type_max"] intValue];
+}
+
+- (BOOL)neutralTypeScore:(int)score {
+    return score > [_scale[@"negative_type_max"] intValue] && score <= [_scale[@"neutral_type_max"] intValue];
+}
+
+- (BOOL)positiveTypeScore:(int)score {
+    return score > [_scale[@"neutral_type_max"] intValue];
+}
+
+- (int)maximumScore {
+    return [_scale[@"max"] intValue];
+}
+
+- (int)minimumScore {
+    return [_scale[@"min"] intValue];
+}
+
 - (NSString *)getEndUserEmailOrUnknown {
   if (!_endUserEmail || ![self validEmailString]) {
     return @"Unknown";
@@ -106,11 +149,11 @@
     return _localizedTexts.followupQuestion;
   }
     
-  if (score <= 6 && (_customMessages.detractorQuestion || _userCustomMessages.detractorQuestion)) {
+  if ([self negativeTypeScore:score] && (_customMessages.detractorQuestion || _userCustomMessages.detractorQuestion)) {
     return [self detractorFollowupQuestion];
-  } else if (score > 6 && score <= 8 && (_customMessages.passiveQuestion || _userCustomMessages.passiveQuestion)) {
+  } else if ([self neutralTypeScore:score] && (_customMessages.passiveQuestion || _userCustomMessages.passiveQuestion)) {
     return [self passiveFollowupQuestion];
-  } else if (score > 8 && score <= 10 && (_customMessages.promoterQuestion || _userCustomMessages.promoterQuestion)) {
+  } else if ([self positiveTypeScore:score] && (_customMessages.promoterQuestion || _userCustomMessages.promoterQuestion)) {
     return [self promoterFollowupQuestion];
   }
     
@@ -122,11 +165,11 @@
     return _localizedTexts.followupPlaceholder;
   }
     
-  if (score <= 6 && (_customMessages.detractorText || _userCustomMessages.detractorPlaceholderText)) {
+  if ([self negativeTypeScore:score] && (_customMessages.detractorText || _userCustomMessages.detractorPlaceholderText)) {
     return [self detractorFollowupPlaceholder];
-  } else if (score > 6 && score <= 8 && (_customMessages.passiveText || _userCustomMessages.passivePlaceholderText)) {
+  } else if ([self neutralTypeScore:score] && (_customMessages.passiveText || _userCustomMessages.passivePlaceholderText)) {
     return [self passiveFollowupPlaceholder];
-  } else if (score > 8 && score <= 10 && (_customMessages.promoterText || _userCustomMessages.promoterPlaceholderText)) {
+  } else if ([self positiveTypeScore:score] && (_customMessages.promoterText || _userCustomMessages.promoterPlaceholderText)) {
     return [self promoterFollowupPlaceholder];
   }
     
@@ -181,11 +224,11 @@
   return _customMessages.promoterText;
 }
 
-- (NSString *)npsQuestionText {
-  if (_customNPSQuestion) {
-    return _customNPSQuestion;
+- (NSString *)questionText {
+  if (_customQuestion) {
+    return _customQuestion;
   }
-  return _localizedTexts.npsQuestion;
+  return _localizedTexts.question;
 }
 
 - (NSString *)likelyAnchorText {
@@ -305,11 +348,11 @@
 
 - (NSString *)thankYouMessageDependingOnScore:(int)score {
     
-  if (score <= 6 && _customThankYou.detractorThankYouMessage) {
+  if ([self negativeTypeScore:score] && _customThankYou.detractorThankYouMessage) {
     return _customThankYou.detractorThankYouMessage;
-  } else if (score > 6 && score <= 8 && _customThankYou.passiveThankYouMessage) {
+  } else if ([self neutralTypeScore:score] && _customThankYou.passiveThankYouMessage) {
     return _customThankYou.passiveThankYouMessage;
-  } else if (score > 8 && score <= 10 && _customThankYou.promoterThankYouMessage) {
+  } else if ([self positiveTypeScore:score] && _customThankYou.promoterThankYouMessage) {
     return _customThankYou.promoterThankYouMessage;
   } else if (_customThankYou.thankYouMessage) {
     return _customThankYou.thankYouMessage;
@@ -320,11 +363,11 @@
 
 - (NSString *)thankYouLinkTextDependingOnScore:(int)score {
     
-  if (score <= 6 && _customThankYou.detractorThankYouLinkText) {
+  if ([self negativeTypeScore:score] && _customThankYou.detractorThankYouLinkText) {
     return _customThankYou.detractorThankYouLinkText;
-  } else if (score > 6 && score <= 8 && _customThankYou.passiveThankYouLinkText) {
+  } else if ([self neutralTypeScore:score] && _customThankYou.passiveThankYouLinkText) {
     return _customThankYou.passiveThankYouLinkText;
-  } else if (score > 8 && score <= 10 && _customThankYou.promoterThankYouLinkText) {
+  } else if ([self positiveTypeScore:score] && _customThankYou.promoterThankYouLinkText) {
     return _customThankYou.promoterThankYouLinkText;
   } else if (_customThankYou.thankYouLinkText) {
     return _customThankYou.thankYouLinkText;
@@ -335,17 +378,17 @@
 
 - (NSURL *)thankYouLinkURLDependingOnScore:(int)score andText:(NSString *)text {
     
-  if (score <= 6 && _customThankYou.detractorThankYouLinkURL) {
+  if ([self negativeTypeScore:score] && _customThankYou.detractorThankYouLinkURL) {
     if (_passScoreAndTextToURL) {
       return [self url:_customThankYou.detractorThankYouLinkURL withScore:score andText:text];
     }
     return _customThankYou.detractorThankYouLinkURL;
-  } else if (score > 6 && score <= 8 && _customThankYou.passiveThankYouLinkURL) {
+  } else if ([self neutralTypeScore:score] && _customThankYou.passiveThankYouLinkURL) {
     if (_passScoreAndTextToURL) {
       return [self url:_customThankYou.passiveThankYouLinkURL withScore:score andText:text];
     }
     return _customThankYou.passiveThankYouLinkURL;
-  } else if (score > 8 && score <= 10 && _customThankYou.promoterThankYouLinkURL) {
+  } else if ([self positiveTypeScore:score] && _customThankYou.promoterThankYouLinkURL) {
     if (_passScoreAndTextToURL) {
       return [self url:_customThankYou.promoterThankYouLinkURL withScore:score andText:text];
     }
@@ -362,13 +405,13 @@
 
 - (BOOL)thankYouLinkConfiguredForScore:(int)score {
     
-  if (score <= 6 && [self detractorOrDefaultURL] && [self detractorOrDefaultText]) {
+  if ([self negativeTypeScore:score] && [self detractorOrDefaultURL] && [self detractorOrDefaultText]) {
     return YES;
   }
-  else if (score > 6 && score <= 8 && [self passiveOrDefaultURL] && [self passiveOrDefaultText]) {
+  else if ([self neutralTypeScore:score] && [self passiveOrDefaultURL] && [self passiveOrDefaultText]) {
     return YES;
   }
-  else if (score > 8 && score <= 10 && [self promoterOrDefaultURL] && [self promoterOrDefaultText]) {
+  else if ([self positiveTypeScore:score] && [self promoterOrDefaultURL] && [self promoterOrDefaultText]) {
     return YES;
   }
   else if (_customThankYou.thankYouLinkURL && _customThankYou.thankYouLinkText) {

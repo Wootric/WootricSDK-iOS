@@ -23,13 +23,14 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import "WTRSettings.h"
 
 @interface WTRSlider : UISlider
 
 @property (nonatomic, assign) BOOL thumbAdded;
 
-- (instancetype)initWithSuperview:(UIView *)superview andViewController:(UIViewController *)viewController;
-- (instancetype)initWithSuperview:(UIView *)superview viewController:(UIViewController *)viewController andColor:(UIColor *)color;
+- (instancetype)initWithSuperview:(UIView *)superview viewController:(UIViewController *)viewController settings:(WTRSettings *)settings;
+- (instancetype)initWithSuperview:(UIView *)superview viewController:(UIViewController *)viewController settings: (WTRSettings *)settings color:(UIColor *)color;
 - (void)addDots;
 - (void)recalculateDotsPositionForSliderWidth:(CGFloat)sliderWidth;
 - (void)updateDots;

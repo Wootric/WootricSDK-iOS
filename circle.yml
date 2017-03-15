@@ -1,5 +1,8 @@
 general:
   build_dir: WootricSDK
+machine:
+  xcode:
+    version: "8.2"
 test:
   override:
     - set -o pipefail &&

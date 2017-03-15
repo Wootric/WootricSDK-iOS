@@ -23,12 +23,13 @@
 // THE SOFTWARE.
 
 #import "WTRLocalizedTexts.h"
+#import "WTRApiClient.h"
 
 @implementation WTRLocalizedTexts
 
 - (instancetype)initWithLocalizedTexts:(NSDictionary *)localizedTexts {
   if (self = [super init]) {
-    _npsQuestion = localizedTexts[@"nps_question"];
+    _question = localizedTexts[@"nps_question"];
     _likelyAnchor = localizedTexts[@"anchors"][@"likely"];
     _notLikelyAnchor = localizedTexts[@"anchors"][@"not_likely"];
     _followupQuestion = localizedTexts[@"followup_question"];
@@ -39,6 +40,17 @@
     _editScore = localizedTexts[@"edit_score"];
     _socialShareQuestion = localizedTexts[@"social_share"][@"question"];
     _socialShareDecline = localizedTexts[@"social_share"][@"decline"];
+      
+    WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+    if ([apiClient.settings.surveyType isEqualToString:@"CES"]) {
+      _question = localizedTexts[@"ces_question"];
+      _likelyAnchor = localizedTexts[@"ces_anchors"][@"very_easy"];
+      _notLikelyAnchor = localizedTexts[@"ces_anchors"][@"very_difficult"];
+    } else if ([apiClient.settings.surveyType isEqualToString:@"CSAT"]) {
+      _question = localizedTexts[@"csat_question"];
+      _likelyAnchor = localizedTexts[@"csat_anchors"][@"very_satisfied"];
+      _notLikelyAnchor = localizedTexts[@"csat_anchors"][@"very_unsatisfied"];
+    }
   }
   return self;
 }

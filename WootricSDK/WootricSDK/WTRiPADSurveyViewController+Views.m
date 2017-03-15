@@ -30,7 +30,7 @@
 - (void)setupViews {
   [self setupModalView];
   [self setupScrollView];
-  [self setupNPSQuestionView];
+  [self setupQuestionView];
   [self setupFeedbackView];
   [self setupSocialShareView];
   [self setupFinalThankYouLabel];
@@ -43,7 +43,7 @@
 }
 
 - (void)addViewsToModal {
-  [self.modalView addSubview:self.npsQuestionView];
+  [self.modalView addSubview:self.questionView];
   [self.modalView addSubview:self.feedbackView];
   [self.modalView addSubview:self.socialShareView];
   [self.modalView addSubview:self.finalThankYouLabel];
@@ -51,9 +51,9 @@
   [self.modalView addSubview:self.dismissButton];
 }
 
-- (void)setupNPSQuestionView {
-  self.npsQuestionView = [[WTRiPADNPSQuestionView alloc] initWithSettings:self.settings];
-  [self.npsQuestionView initializeSubviewsWithTargetViewController:self];
+- (void)setupQuestionView {
+  self.questionView = [[WTRiPADQuestionView alloc] initWithSettings:self.settings];
+  [self.questionView initializeSubviewsWithTargetViewController:self];
 }
 
 - (void)setupFeedbackView {

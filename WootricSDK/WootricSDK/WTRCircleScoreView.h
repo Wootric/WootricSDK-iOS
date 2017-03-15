@@ -24,10 +24,13 @@
 
 #import <UIKit/UIKit.h>
 #import "WTRCircleScoreButton.h"
+#import "WTRSettings.h"
 
 @interface WTRCircleScoreView : UIView
 
-- (instancetype)initWithViewController:(UIViewController *)viewController;
+@property (nonatomic, assign) WTRSettings * settings;
+
+- (instancetype)initWithViewController:(UIViewController *)viewController settings:(WTRSettings *)settings;
 
 - (void)selectCircleButton:(WTRCircleScoreButton *)button;
 

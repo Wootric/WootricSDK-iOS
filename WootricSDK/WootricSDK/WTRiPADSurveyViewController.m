@@ -78,7 +78,7 @@
 - (void)selectScore:(WTRCircleScoreButton *)sender {
   NSString *placeholderText = [_settings followupPlaceholderTextForScore:sender.assignedScore];
   _currentScore = sender.assignedScore;
-  [_npsQuestionView selectCircleButton:sender];
+  [_questionView selectCircleButton:sender];
   [self endUserVotedWithScore:sender.assignedScore andText:nil];
   [_feedbackView setFollowupLabelTextBasedOnScore:sender.assignedScore];
   [_feedbackView setFeedbackPlaceholderText:placeholderText];
@@ -92,10 +92,10 @@
 }
 
 - (void)showFeedbackView {
-  [_npsQuestionView hideQuestionLabel];
+  [_questionView hideQuestionLabel];
   _feedbackView.hidden = NO;
   _constraintModalHeight.constant = 215;
-  _constraintNPSTopToModalTop.constant = 50;
+  _constraintQuestionTopToModalTop.constant = 50;
   _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
   [UIView animateWithDuration:0.2 animations:^{
     [self.view layoutIfNeeded];
@@ -250,7 +250,7 @@
 
 - (void)dismissWithFinalThankYou {
   _feedbackView.hidden = YES;
-  _npsQuestionView.hidden = YES;
+  _questionView.hidden = YES;
   _socialShareView.hidden = YES;
   _poweredByWootric.hidden = YES;
   _finalThankYouLabel.hidden = NO;
@@ -266,7 +266,7 @@
 }
 
 - (void)setQuestionViewVisible:(BOOL)questionFlag andFeedbackViewVisible:(BOOL)feedbackFlag {
-  _npsQuestionView.hidden = !questionFlag;
+  _questionView.hidden = !questionFlag;
   _feedbackView.hidden = !feedbackFlag;
 }
 

@@ -1,5 +1,5 @@
 //
-//  WTRiPADNPSQuestionView.m
+//  WTRiPADQuestionView.m
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -22,16 +22,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "WTRiPADNPSQuestionView.h"
+#import "WTRiPADQuestionView.h"
 #import "WTRCircleScoreView.h"
 #import "WTRColor.h"
 #import "SimpleConstraints.h"
 #import "UIItems.h"
 
-@interface WTRiPADNPSQuestionView ()
+@interface WTRiPADQuestionView ()
 
 @property (nonatomic, assign) BOOL firstTap;
-@property (nonatomic, strong) UILabel *npsQuestionLabel;
+@property (nonatomic, strong) UILabel *questionLabel;
 @property (nonatomic, strong) UILabel *likelyAnchor;
 @property (nonatomic, strong) UILabel *notLikelyAnchor;
 @property (nonatomic, strong) WTRCircleScoreView *scoreView;
@@ -39,7 +39,7 @@
 
 @end
 
-@implementation WTRiPADNPSQuestionView
+@implementation WTRiPADQuestionView
 
 - (instancetype)initWithSettings:(WTRSettings *)settings {
   if (self = [super init]) {
@@ -52,7 +52,7 @@
 }
 
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController {
-  [self setupNpsQuestionLabel];
+  [self setupQuestionLabel];
   [self setupLikelyAnchor];
   [self setupNotLikelyAnchor];
   [self setupCircleScoreViewWithViewController:viewController];
@@ -60,21 +60,21 @@
 }
 
 - (void)setupSubviewsConstraints {
-  [self setupNpsQuestionLabelConstraints];
+  [self setupQuestionLabelConstraints];
   [self setupScoreViewConstraints];
   [self setupLikelyAnchorConstraints];
   [self setupNotLikelyAnchorConstraints];
 }
 
 - (void)addSubviews {
-  [self addSubview:_npsQuestionLabel];
+  [self addSubview:_questionLabel];
   [self addSubview:_scoreView];
   [self addSubview:_likelyAnchor];
   [self addSubview:_notLikelyAnchor];
 }
 
 - (void)hideQuestionLabel {
-  _npsQuestionLabel.hidden = YES;
+  _questionLabel.hidden = YES;
 }
 
 - (void)selectCircleButton:(WTRCircleScoreButton *)button {
@@ -82,32 +82,56 @@
 }
 
 - (void)setupLikelyAnchorConstraints {
+  int rightConstraint;
+  if ([_settings.surveyType isEqualToString:@"CES"]) {
+    rightConstraint = -80;
+  } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
+    if ((int) _settings.surveyTypeScale == 0) {
+      rightConstraint = -130;
+    } else if ((int) _settings.surveyTypeScale == 1) {
+      rightConstraint = 10;
+    }
+  } else {
+    rightConstraint = 10;
+  }
   [[[_likelyAnchor wtr_centerYConstraint] toSecondViewCenterY:_scoreView] addToView:self];
-  [[[[_likelyAnchor wtr_leftConstraint] toSecondViewRight:_scoreView] withConstant:10] addToView:self];
+  [[[[_likelyAnchor wtr_leftConstraint] toSecondViewRight:_scoreView] withConstant:rightConstraint] addToView:self];
 }
 
 - (void)setupNotLikelyAnchorConstraints {
+  int leftConstraint;
+  if ([_settings.surveyType isEqualToString:@"CES"]) {
+    leftConstraint = 80;
+  } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
+    if ((int) _settings.surveyTypeScale == 0) {
+      leftConstraint = 130;
+    } else if ((int) _settings.surveyTypeScale == 1) {
+      leftConstraint = -10;
+    }
+  } else {
+    leftConstraint = -10;
+  }
   [[[_notLikelyAnchor wtr_centerYConstraint] toSecondViewCenterY:_scoreView] addToView:self];
-  [[[[_notLikelyAnchor wtr_rightConstraint] toSecondViewLeft:_scoreView] withConstant:-10] addToView:self];
+  [[[[_notLikelyAnchor wtr_rightConstraint] toSecondViewLeft:_scoreView] withConstant:leftConstraint] addToView:self];
 }
 
-- (void)setupNpsQuestionLabelConstraints {
-  [[[[_npsQuestionLabel wtr_topConstraint] toSecondViewTop:self] withConstant:20] addToView:self];
-  [[[[_npsQuestionLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:45] addToView:self];
-  [[[[self wtr_rightConstraint] toSecondViewRight:_npsQuestionLabel] withConstant:45] addToView:self];
+- (void)setupQuestionLabelConstraints {
+  [[[[_questionLabel wtr_topConstraint] toSecondViewTop:self] withConstant:20] addToView:self];
+  [[[[_questionLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:45] addToView:self];
+  [[[[self wtr_rightConstraint] toSecondViewRight:_questionLabel] withConstant:45] addToView:self];
 }
 
 - (void)setupScoreViewConstraints {
   [[[_scoreView wtr_centerXConstraint] toSecondViewCenterX:self] addToView:self];
-  [[[[_scoreView wtr_topConstraint] toSecondViewBottom:_npsQuestionLabel] withConstant:20] addToView:self];
+  [[[[_scoreView wtr_topConstraint] toSecondViewBottom:_questionLabel] withConstant:20] addToView:self];
 }
 
 - (void)setupCircleScoreViewWithViewController:(UIViewController *)viewController {
-  _scoreView = [[WTRCircleScoreView alloc] initWithViewController:viewController];
+  _scoreView = [[WTRCircleScoreView alloc] initWithViewController:viewController settings:_settings];
 }
 
-- (void)setupNpsQuestionLabel {
-  _npsQuestionLabel = [UIItems npsQuestionLabelWithSettings:_settings
+- (void)setupQuestionLabel {
+  _questionLabel = [UIItems questionLabelWithSettings:_settings
                                                     andFont:[UIFont systemFontOfSize:18]];
 }
 

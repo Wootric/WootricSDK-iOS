@@ -29,18 +29,20 @@
 @interface WTRScoreView ()
 
 @property (nonatomic, assign) int currentValue;
+@property (nonatomic, strong) WTRSettings *settings;
 @property (nonatomic, strong) UIColor *labelColor;
 
 @end
 
 @implementation WTRScoreView
 
-- (instancetype)init {
-  return [self initWithColor:[WTRColor selectedValueScoreColor]];
+- (instancetype)initWithSettings:(WTRSettings *)settings {
+  return [self initWithSettings:settings color:[WTRColor selectedValueScoreColor]];
 }
 
-- (instancetype)initWithColor:(UIColor *)color {
+- (instancetype)initWithSettings:(WTRSettings *)settings color:(UIColor *)color {
   if (self = [super init]) {
+    _settings = settings;
     _labelColor = color;
     _currentValue = -1;
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -50,30 +52,54 @@
 
 - (void)addScores {
   float scoreLabelWidth = self.frame.size.width;
+  int minimumScore = [_settings minimumScore];
+  int maximumScore = [_settings maximumScore];
 
-  for (int i = 0; i <= 10; i++) {
+  for (int i = minimumScore; i <= maximumScore; i++) {
     WTRSingleScoreLabel *label = [[WTRSingleScoreLabel alloc] initWithColor:_labelColor];
     label.tag = 9000 + i;
     label.text = [NSString stringWithFormat:@"%d", i];
     [self addSubview:label];
 
     CGFloat labelX = 10;
-    if (i == 0) {
+    if (i == minimumScore) {
       [label addConstraintsWithLeftConstraintConstant:labelX];
     } else {
-      labelX += round(scoreLabelWidth / 10.0 * i) - 2 * i;
+      int labelOffset = 2;
+      if ([_settings.surveyType isEqualToString:@"CES"]) {
+        labelOffset = 3;
+      } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
+        if ((int) _settings.surveyTypeScale == 0) {
+          labelOffset = 4;
+        } else if ((int) _settings.surveyTypeScale == 1) {
+          labelOffset = 2;
+        }
+      }
+      labelX += round(scoreLabelWidth / (float) (maximumScore - minimumScore) * (i - minimumScore)) - labelOffset * (i - minimumScore);
       [label addConstraintsWithLeftConstraintConstant:labelX];
     }
   }
 }
 
 - (void)recalculateScorePositionForScoreLabelWidth:(CGFloat)scoreLabelWidth {
+  int minimumScore = [_settings minimumScore];
+  int maximumScore = [_settings maximumScore];
   for (WTRSingleScoreLabel *label in self.subviews) {
     if (label.tag) {
       int i = (int)(label.tag - 9000);
       CGFloat labelX = 10;
       if (i >= 1) {
-        labelX += round(scoreLabelWidth / 10.0 * i) - 2 * i;
+        int labelOffset = 2;
+        if ([_settings.surveyType isEqualToString:@"CES"]) {
+          labelOffset = 3;
+        } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
+          if ((int) _settings.surveyTypeScale == 0) {
+            labelOffset = 4;
+          } else if ((int) _settings.surveyTypeScale == 1) {
+            labelOffset = 2;
+          }
+        }
+        labelX += round(scoreLabelWidth / (float) (maximumScore - minimumScore) * (i - minimumScore)) - labelOffset * (i - minimumScore);
         label.leftConstraint.constant = labelX;
       }
     }

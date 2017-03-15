@@ -1,5 +1,5 @@
 //
-//  WTRNPSQuestionView.h
+//  WTRQuestionView.h
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -25,7 +25,7 @@
 #import <UIKit/UIKit.h>
 #import "WTRSettings.h"
 
-@interface WTRNPSQuestionView : UIView
+@interface WTRQuestionView : UIView
 
 - (instancetype)initWithSettings:(WTRSettings *)settings;
 

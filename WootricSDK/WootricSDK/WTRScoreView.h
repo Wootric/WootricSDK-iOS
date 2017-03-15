@@ -23,10 +23,11 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import "WTRSettings.h"
 
 @interface WTRScoreView : UIView
 
-- (instancetype)initWithColor:(UIColor *)color;
+- (instancetype)initWithSettings:(WTRSettings *)settings color:(UIColor *)color;
 
 - (void)addScores;
 - (void)recalculateScorePositionForScoreLabelWidth:(CGFloat)scoreLabelWidth;

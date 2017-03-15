@@ -104,14 +104,14 @@
   return tempTextView;
 }
 
-+ (UILabel *)npsQuestionLabelWithSettings:(WTRSettings *)settings andFont:(UIFont *)font {
++ (UILabel *)questionLabelWithSettings:(WTRSettings *)settings andFont:(UIFont *)font {
   UILabel *tempLabel = [[UILabel alloc] init];
   tempLabel.textAlignment = NSTextAlignmentCenter;
   tempLabel.textColor = [UIColor blackColor];
   tempLabel.numberOfLines = 0;
   tempLabel.lineBreakMode = NSLineBreakByWordWrapping;
   tempLabel.font = font;
-  tempLabel.text = [settings npsQuestionText];
+  tempLabel.text = [settings questionText];
   [tempLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 
   return tempLabel;

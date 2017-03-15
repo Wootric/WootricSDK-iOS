@@ -53,7 +53,7 @@
 - (void)setCustomAudience:(NSString *)audience;
 - (void)setCustomProductName:(NSString *)productName;
 - (void)setCustomFinalThankYou:(NSString *)finalThankYou;
-- (void)setCustomNPSQuestion:(NSString *)npsQuestion;
+- (void)setCustomQuestion:(NSString *)question;
 - (void)setEndUserProperties:(NSDictionary *)customProperties;
 - (NSDictionary *)endUserProperties;
 - (void)setFirstSurveyAfter:(NSNumber *)firstSurveyAfter;

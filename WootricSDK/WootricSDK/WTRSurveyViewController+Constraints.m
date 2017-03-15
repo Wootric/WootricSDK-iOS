@@ -29,8 +29,8 @@
 - (void)setupConstraints {
   [self setupScrollViewConstraints];
   [self setupModalConstraints];
-  [self setupNpsQuestionViewConstraints];
-  [self.npsQuestionView setupSubviewsConstraints];
+  [self setupQuestionViewConstraints];
+  [self.questionView setupSubviewsConstraints];
   [self setupFeedbackViewConstraints];
   [self.feedbackView setupSubviewsConstraints];
   [self setupSocialShareViewConstraints];
@@ -294,8 +294,8 @@
   [self.scrollView addConstraint:constR];
 }
 
-- (void)setupNpsQuestionViewConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.npsQuestionView
+- (void)setupQuestionViewConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.questionView
                                                             attribute:NSLayoutAttributeCenterX
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:self.modalView
@@ -304,7 +304,7 @@
                                                              constant:0];
   [self.modalView addConstraint:constX];
 
-  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.npsQuestionView
+  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self.questionView
                                                             attribute:NSLayoutAttributeTop
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:self.modalView
@@ -313,7 +313,7 @@
                                                              constant:0];
   [self.modalView addConstraint:constY];
 
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.npsQuestionView
+  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.questionView
                                                             attribute:NSLayoutAttributeWidth
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:self.view
@@ -322,14 +322,14 @@
                                                              constant:2];
   [self.view addConstraint:constW];
 
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.npsQuestionView
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.questionView
                                                             attribute:NSLayoutAttributeHeight
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
                                                              constant:213];
-  [self.npsQuestionView addConstraint:constH];
+  [self.questionView addConstraint:constH];
 }
 
 - (void)setupSocialShareViewConstraints {

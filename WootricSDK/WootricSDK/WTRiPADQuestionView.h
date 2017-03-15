@@ -1,5 +1,5 @@
 //
-//  WTRiPADNPSQuestionView.h
+//  WTRiPADQuestionView.h
 //  WootricSDK
 //
 // Copyright (c) 2015 Wootric (https://wootric.com)
@@ -26,7 +26,7 @@
 #import "WTRSettings.h"
 #import "WTRCircleScoreButton.h"
 
-@interface WTRiPADNPSQuestionView : UIView
+@interface WTRiPADQuestionView : UIView
 
 - (instancetype)initWithSettings:(WTRSettings *)settings;
 

@@ -31,23 +31,26 @@
 
 @property (nonatomic, assign) int currentValue;
 @property (nonatomic, strong) UIColor *sliderColor;
+@property (nonatomic, strong) WTRSettings *settings;
 
 
 @end
 
 @implementation WTRSlider
 
-- (instancetype)initWithSuperview:(UIView *)superview andViewController:(UIViewController *)viewController {
-  return [self initWithSuperview:superview viewController:viewController andColor:[WTRColor sliderValueColor]];
+- (instancetype)initWithSuperview:(UIView *)superview viewController:(UIViewController *)viewController settings:(WTRSettings *)settings  {
+    return [self initWithSuperview:superview viewController:viewController settings:(WTRSettings *)settings color:[WTRColor sliderValueColor]];
 }
 
-- (instancetype)initWithSuperview:(UIView *)superview viewController:(UIViewController *)viewController andColor:(UIColor *)color {
+- (instancetype)initWithSuperview:(UIView *)superview viewController:(UIViewController *)viewController settings:(WTRSettings *)settings color:(UIColor *)color {
   if (self = [super init]) {
+    _settings = settings;
     _sliderColor = color;
     _currentValue = -1;
-    self.minimumValue = 0;
-    self.maximumValue = 10;
-    self.value = 0;
+    
+    self.minimumValue = [_settings minimumScore];
+    self.maximumValue = [_settings maximumScore];
+    self.value = [_settings minimumScore];
     self.tintColor = [WTRColor sliderBackgroundColor];
     UIImage *image = [[UIImage alloc] init];
     UIImage *greyBackground = [UIImage imageFromColor:[WTRColor sliderBackgroundColor] withSize:24];
@@ -84,16 +87,26 @@
 - (void)addDots {
   float sliderWidth = self.frame.size.width;
 
-  for (int i = 0; i <= 10; i++) {
+  for (int i = self.minimumValue; i <= self.maximumValue; i++) {
     WTRSliderDot *dot = [[WTRSliderDot alloc] initWithColor:_sliderColor];
     dot.tag = 9000 + i;
     [self addSubview:dot];
 
     CGFloat dotX = 8;
-    if (i == 0) {
+    if (i == self.minimumValue) {
       [dot addConstraintsWithLeftConstraintConstant:dotX];
     } else {
-      dotX += round(sliderWidth / 10.0 * i) - 2 * i;
+      int dotOffset = 2;
+      if ([_settings.surveyType isEqualToString:@"CES"]) {
+        dotOffset = 3;
+      } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
+        if ((int) _settings.surveyTypeScale == 0) {
+          dotOffset = 4;
+        } else if ((int) _settings.surveyTypeScale == 1) {
+          dotOffset = 2;
+        }
+      }
+      dotX += round(sliderWidth / (float) (self.maximumValue - self.minimumValue) * (i - self.minimumValue)) - dotOffset * (i - self.minimumValue);
       [dot addConstraintsWithLeftConstraintConstant:dotX];
     }
 
@@ -107,7 +120,17 @@
       int i = (int)(dot.tag - 9000);
       CGFloat dotX = 8;
       if (i >= 1) {
-        dotX += round(sliderWidth / 10.0 * i) - 2 * i;
+        int dotOffset = 2;
+        if ([_settings.surveyType isEqualToString:@"CES"]) {
+          dotOffset = 3;
+        } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
+          if ((int) _settings.surveyTypeScale == 0) {
+            dotOffset = 4;
+          } else if ((int) _settings.surveyTypeScale == 1) {
+            dotOffset = 2;
+          }
+        }
+        dotX += round(sliderWidth / (float) (self.maximumValue - self.minimumValue) * (i - self.minimumValue)) - dotOffset * (i - self.minimumValue);
         dot.leftConstraint.constant = dotX;
       }
     }

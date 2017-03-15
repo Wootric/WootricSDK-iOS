@@ -43,8 +43,8 @@
 		B24550A21B909A49001AC1FB /* WTRSurveyViewController+Views.m in Sources */ = {isa = PBXBuildFile; fileRef = B24550A01B909A49001AC1FB /* WTRSurveyViewController+Views.m */; };
 		B24550A51B909AC9001AC1FB /* WTRSurveyViewController+Constraints.h in Headers */ = {isa = PBXBuildFile; fileRef = B24550A31B909AC9001AC1FB /* WTRSurveyViewController+Constraints.h */; };
 		B24550A61B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m in Sources */ = {isa = PBXBuildFile; fileRef = B24550A41B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m */; };
-		B25CE75F1BAADC920063E6E5 /* WTRNPSQuestionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B25CE75D1BAADC920063E6E5 /* WTRNPSQuestionView.h */; };
-		B25CE7601BAADC920063E6E5 /* WTRNPSQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B25CE75E1BAADC920063E6E5 /* WTRNPSQuestionView.m */; };
+		B25CE75F1BAADC920063E6E5 /* WTRQuestionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B25CE75D1BAADC920063E6E5 /* WTRQuestionView.h */; };
+		B25CE7601BAADC920063E6E5 /* WTRQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B25CE75E1BAADC920063E6E5 /* WTRQuestionView.m */; };
 		B260ECDD1BD7E5B200E29CD5 /* UIView+Constraints.h in Headers */ = {isa = PBXBuildFile; fileRef = B260ECDB1BD7E5B200E29CD5 /* UIView+Constraints.h */; };
 		B260ECDE1BD7E5B200E29CD5 /* UIView+Constraints.m in Sources */ = {isa = PBXBuildFile; fileRef = B260ECDC1BD7E5B200E29CD5 /* UIView+Constraints.m */; };
 		B260ECE11BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.h in Headers */ = {isa = PBXBuildFile; fileRef = B260ECDF1BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.h */; };
@@ -61,8 +61,8 @@
 		B26866831BD63ED100A4288D /* WTRCircleScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866811BD63ED100A4288D /* WTRCircleScoreView.m */; };
 		B26866861BD63F8B00A4288D /* WTRiPADModalView.h in Headers */ = {isa = PBXBuildFile; fileRef = B26866841BD63F8B00A4288D /* WTRiPADModalView.h */; };
 		B26866871BD63F8B00A4288D /* WTRiPADModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866851BD63F8B00A4288D /* WTRiPADModalView.m */; };
-		B268668A1BD671D200A4288D /* WTRiPADNPSQuestionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B26866881BD671D200A4288D /* WTRiPADNPSQuestionView.h */; };
-		B268668B1BD671D200A4288D /* WTRiPADNPSQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866891BD671D200A4288D /* WTRiPADNPSQuestionView.m */; };
+		B268668A1BD671D200A4288D /* WTRiPADQuestionView.h in Headers */ = {isa = PBXBuildFile; fileRef = B26866881BD671D200A4288D /* WTRiPADQuestionView.h */; };
+		B268668B1BD671D200A4288D /* WTRiPADQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B26866891BD671D200A4288D /* WTRiPADQuestionView.m */; };
 		B278896D1BD914F2001D5696 /* SimpleConstraints.h in Headers */ = {isa = PBXBuildFile; fileRef = B278896C1BD914F2001D5696 /* SimpleConstraints.h */; };
 		B27889701BDA5520001D5696 /* WTRiPADFeedbackView.h in Headers */ = {isa = PBXBuildFile; fileRef = B278896E1BDA5520001D5696 /* WTRiPADFeedbackView.h */; };
 		B27889711BDA5520001D5696 /* WTRiPADFeedbackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B278896F1BDA5520001D5696 /* WTRiPADFeedbackView.m */; };
@@ -146,8 +146,8 @@
 		B24550A01B909A49001AC1FB /* WTRSurveyViewController+Views.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WTRSurveyViewController+Views.m"; sourceTree = "<group>"; };
 		B24550A31B909AC9001AC1FB /* WTRSurveyViewController+Constraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WTRSurveyViewController+Constraints.h"; sourceTree = "<group>"; };
 		B24550A41B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WTRSurveyViewController+Constraints.m"; sourceTree = "<group>"; };
-		B25CE75D1BAADC920063E6E5 /* WTRNPSQuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRNPSQuestionView.h; sourceTree = "<group>"; };
-		B25CE75E1BAADC920063E6E5 /* WTRNPSQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRNPSQuestionView.m; sourceTree = "<group>"; };
+		B25CE75D1BAADC920063E6E5 /* WTRQuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRQuestionView.h; sourceTree = "<group>"; };
+		B25CE75E1BAADC920063E6E5 /* WTRQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRQuestionView.m; sourceTree = "<group>"; };
 		B260ECDB1BD7E5B200E29CD5 /* UIView+Constraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Constraints.h"; path = "WootricSDK/UIView+Constraints.h"; sourceTree = "<group>"; };
 		B260ECDC1BD7E5B200E29CD5 /* UIView+Constraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Constraints.m"; path = "WootricSDK/UIView+Constraints.m"; sourceTree = "<group>"; };
 		B260ECDF1BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+Simple.h"; path = "WootricSDK/NSLayoutConstraint+Simple.h"; sourceTree = "<group>"; };
@@ -164,8 +164,8 @@
 		B26866811BD63ED100A4288D /* WTRCircleScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRCircleScoreView.m; sourceTree = "<group>"; };
 		B26866841BD63F8B00A4288D /* WTRiPADModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRiPADModalView.h; sourceTree = "<group>"; };
 		B26866851BD63F8B00A4288D /* WTRiPADModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRiPADModalView.m; sourceTree = "<group>"; };
-		B26866881BD671D200A4288D /* WTRiPADNPSQuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRiPADNPSQuestionView.h; sourceTree = "<group>"; };
-		B26866891BD671D200A4288D /* WTRiPADNPSQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRiPADNPSQuestionView.m; sourceTree = "<group>"; };
+		B26866881BD671D200A4288D /* WTRiPADQuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRiPADQuestionView.h; sourceTree = "<group>"; };
+		B26866891BD671D200A4288D /* WTRiPADQuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRiPADQuestionView.m; sourceTree = "<group>"; };
 		B278896C1BD914F2001D5696 /* SimpleConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleConstraints.h; path = WootricSDK/SimpleConstraints.h; sourceTree = "<group>"; };
 		B278896E1BDA5520001D5696 /* WTRiPADFeedbackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRiPADFeedbackView.h; sourceTree = "<group>"; };
 		B278896F1BDA5520001D5696 /* WTRiPADFeedbackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRiPADFeedbackView.m; sourceTree = "<group>"; };
@@ -272,8 +272,8 @@
 				B26866811BD63ED100A4288D /* WTRCircleScoreView.m */,
 				B278896E1BDA5520001D5696 /* WTRiPADFeedbackView.h */,
 				B278896F1BDA5520001D5696 /* WTRiPADFeedbackView.m */,
-				B26866881BD671D200A4288D /* WTRiPADNPSQuestionView.h */,
-				B26866891BD671D200A4288D /* WTRiPADNPSQuestionView.m */,
+				B26866881BD671D200A4288D /* WTRiPADQuestionView.h */,
+				B26866891BD671D200A4288D /* WTRiPADQuestionView.m */,
 				B278897B1BE105D6001D5696 /* WTRiPADThankYouButton.h */,
 				B278897C1BE105D6001D5696 /* WTRiPADThankYouButton.m */,
 				B27889771BE0E168001D5696 /* WTRiPADSocialShareView.h */,
@@ -295,8 +295,8 @@
 				B2C9406B1BA83E6200482494 /* WTRScoreView.m */,
 				B2BED80A1BA8610900DD1EFC /* WTRSingleScoreLabel.h */,
 				B2BED80B1BA8610900DD1EFC /* WTRSingleScoreLabel.m */,
-				B25CE75D1BAADC920063E6E5 /* WTRNPSQuestionView.h */,
-				B25CE75E1BAADC920063E6E5 /* WTRNPSQuestionView.m */,
+				B25CE75D1BAADC920063E6E5 /* WTRQuestionView.h */,
+				B25CE75E1BAADC920063E6E5 /* WTRQuestionView.m */,
 				B29A2E861BAC0B50007181D3 /* WTRFeedbackView.h */,
 				B29A2E871BAC0B50007181D3 /* WTRFeedbackView.m */,
 				B229767B1BB1901500FC2772 /* WTRThankYouButton.h */,
@@ -473,7 +473,7 @@
 				B229766D1BB0036100FC2772 /* WTRPropertiesParser.h in Headers */,
 				B2102A2D1BB59ABC0025DABC /* WTRDefaults.h in Headers */,
 				B2DC6F371B82143B00F599B3 /* WTRSettings.h in Headers */,
-				B25CE75F1BAADC920063E6E5 /* WTRNPSQuestionView.h in Headers */,
+				B25CE75F1BAADC920063E6E5 /* WTRQuestionView.h in Headers */,
 				B245509D1B909A03001AC1FB /* WTRSurveyViewController.h in Headers */,
 				B27889701BDA5520001D5696 /* WTRiPADFeedbackView.h in Headers */,
 				B2BED80C1BA8610900DD1EFC /* WTRSingleScoreLabel.h in Headers */,
@@ -484,7 +484,7 @@
 				B278897D1BE105D6001D5696 /* WTRiPADThankYouButton.h in Headers */,
 				B26866721BD5443000A4288D /* WTRiPADSurveyViewController+Views.h in Headers */,
 				B2102A3D1BB59AE60025DABC /* WTRTrackingPixel.h in Headers */,
-				B268668A1BD671D200A4288D /* WTRiPADNPSQuestionView.h in Headers */,
+				B268668A1BD671D200A4288D /* WTRiPADQuestionView.h in Headers */,
 				B23DEF7B1BBBE9CA002A7FFD /* WTRUserCustomMessages.h in Headers */,
 				B29A2E881BAC0B50007181D3 /* WTRFeedbackView.h in Headers */,
 				B2DC6F331B820E6B00F599B3 /* WTRApiClient.h in Headers */,
@@ -616,10 +616,10 @@
 				B278897E1BE105D6001D5696 /* WTRiPADThankYouButton.m in Sources */,
 				B27889711BDA5520001D5696 /* WTRiPADFeedbackView.m in Sources */,
 				B27889761BDF85FD001D5696 /* UIItems.m in Sources */,
-				B268668B1BD671D200A4288D /* WTRiPADNPSQuestionView.m in Sources */,
+				B268668B1BD671D200A4288D /* WTRiPADQuestionView.m in Sources */,
 				B24550A21B909A49001AC1FB /* WTRSurveyViewController+Views.m in Sources */,
 				B23DEF7C1BBBE9CA002A7FFD /* WTRUserCustomMessages.m in Sources */,
-				B25CE7601BAADC920063E6E5 /* WTRNPSQuestionView.m in Sources */,
+				B25CE7601BAADC920063E6E5 /* WTRQuestionView.m in Sources */,
 				B2BED80D1BA8610900DD1EFC /* WTRSingleScoreLabel.m in Sources */,
 				B29A2E891BAC0B50007181D3 /* WTRFeedbackView.m in Sources */,
 				B268667F1BD63B7000A4288D /* WTRCircleScoreButton.m in Sources */,
@@ -793,10 +793,6 @@
 		B2DC6F1C1B81E6F900F599B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -811,10 +807,6 @@
 		B2DC6F1D1B81E6F900F599B3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = WootricSDKTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wootric.$(PRODUCT_NAME:rfc1034identifier)";
