@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F0266721ECAEC2C0099145B /* WootricSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DC6F241B81E8E700F599B3 /* WootricSDK.framework */; };
 		B2DC6ED51B81E5D800F599B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6ED41B81E5D800F599B3 /* main.m */; };
 		B2DC6ED81B81E5D800F599B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6ED71B81E5D800F599B3 /* AppDelegate.m */; };
 		B2DC6EDB1B81E5D800F599B3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6EDA1B81E5D800F599B3 /* ViewController.m */; };
@@ -62,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F0266721ECAEC2C0099145B /* WootricSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
