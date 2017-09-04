@@ -51,7 +51,7 @@
     [circleButton setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];
     [self addSubview:circleButton];
 
-    CGFloat buttonX;
+    CGFloat buttonX = 0;
     if ([_settings.surveyType isEqualToString:@"CES"]) {
       buttonX = 45;
     } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
@@ -60,8 +60,6 @@
       } else if ((int) _settings.surveyTypeScale == 1) {
         buttonX = -22;
       }
-    } else {
-      buttonX = 0;
     }
     buttonX += 42 * i + 3 * i;
     [circleButton addConstraintsWithSuperview:self andLeftConstraintConstant:buttonX];

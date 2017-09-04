@@ -30,7 +30,6 @@
 }
 
 - (void)tearDown {
-
   [super tearDown];
 }
 
@@ -41,6 +40,16 @@
   XCTAssertEqualObjects(followupQuestionPassive, @"Thank you! Care to tell us why?");
   NSString *followupQuestionPromoter = [_settings followupQuestionTextForScore:10];
   XCTAssertEqualObjects(followupQuestionPromoter, @"Thank you! Care to tell us why?");
+}
+
+- (void)testFollowupQuestionWithCustomMessage {
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsWithMessages]];
+  NSString *followupQuestionDetractor = [_settings followupQuestionTextForScore:1];
+  XCTAssertEqualObjects(followupQuestionDetractor, @"Can you explain why?");
+  NSString *followupQuestionPassive = [_settings followupQuestionTextForScore:8];
+  XCTAssertEqualObjects(followupQuestionPassive, @"Can you explain why?");
+  NSString *followupQuestionPromoter = [_settings followupQuestionTextForScore:10];
+  XCTAssertEqualObjects(followupQuestionPromoter, @"Can you explain why?");
 }
 
 - (void)testFollowupQuestionForDetractor {
@@ -68,6 +77,16 @@
   XCTAssertEqualObjects(followupPlaceholderPassive, @"Help us by explaining your score.");
   NSString *followupPlaceholderPromoter = [_settings followupPlaceholderTextForScore:10];
   XCTAssertEqualObjects(followupPlaceholderPromoter, @"Help us by explaining your score.");
+}
+
+- (void)testFollowupPlaceholderWithCustomMessage {
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsWithMessages]];
+  NSString *followupQuestionDetractor = [_settings followupPlaceholderTextForScore:1];
+  XCTAssertEqualObjects(followupQuestionDetractor, @"Please, leave a feedback");
+  NSString *followupQuestionPassive = [_settings followupPlaceholderTextForScore:8];
+  XCTAssertEqualObjects(followupQuestionPassive, @"Please, leave a feedback");
+  NSString *followupQuestionPromoter = [_settings followupPlaceholderTextForScore:10];
+  XCTAssertEqualObjects(followupQuestionPromoter, @"Please, leave a feedback");
 }
 
 - (void)testFollowupPlaceholderForDetractor {
@@ -285,21 +304,100 @@
   NSDictionary *settings = @{
     @"eligible": @1,
     @"settings": @{
-       @"first_survey": @30,
-       @"localized_texts": @{
-           @"anchors": @{
-               @"likely": @"Extremely likely",
-               @"not_likely": @"Not at all likely"},
-           @"dismiss": @"dismiss",
-           @"final_thank_you": @"Thank you for your response, and your feedback!",
-           @"followup_placeholder": @"Help us by explaining your score.",
-           @"followup_question": @"Thank you! Care to tell us why?",
-           @"nps_question": @"How likely are you to recommend Wootric to a friend or co-worker?",
-           @"send": @"send",
-           @"edit_score": @"edit",
-           @"social_share": @{
-               @"decline": @"No thanks...",
-               @"question": @"Would you be willing to share your positive comments?"}}}};
+      @"first_survey": @30,
+      @"resurvey_throttle": @180,
+      @"decline_resurvey_throttle": @30,
+      @"localized_texts": @{
+        @"nps_question": @"How likely are you to recommend Wootric to a friend or co-worker?",
+        @"anchors": @{
+          @"likely": @"Extremely likely",
+          @"not_likely": @"Not at all likely"
+        },
+        @"ces_question": @"How easy was it for you to use Wootric?",
+        @"ces_anchors": @{
+          @"very_difficult": @"Very difficult",
+          @"difficult": @"Difficult",
+          @"somewhat_difficult": @"Somewhat difficult",
+          @"neutral": @"Neutral",
+          @"somewhat_easy": @"Somewhat easy",
+          @"easy": @"Easy",
+          @"very_easy": @"Very easy"
+        },
+        @"csat_question": @"How satisfied are you with Wootric?",
+        @"csat_anchors": @{
+          @"very_unsatisfied": @"Very unsatisfied",
+          @"unsatisfied": @"Unsatisfied",
+          @"neutral": @"Neutral",
+          @"satisfied": @"Satisfied",
+          @"very_satisfied": @"Very satisfied"
+        },
+        @"dismiss": @"dismiss",
+        @"followup_placeholder": @"Help us by explaining your score.",
+        @"followup_question": @"Thank you! Care to tell us why?",
+        @"final_thank_you": @"Thank you for your response, and your feedback!",
+        @"send": @"send",
+        @"edit_score": @"edit",
+        @"dismiss": @"dismiss",
+        @"social_share": @{
+          @"decline": @"No thanks...",
+          @"question": @"Would you be willing to share your positive comments?"
+        }
+      }
+    }
+  };
+
+  return settings;
+}
+
+- (NSDictionary *)surveyServerSettingsWithMessages {
+  NSDictionary *settings = @{
+    @"eligible": @1,
+    @"settings": @{
+      @"first_survey": @30,
+      @"resurvey_throttle": @180,
+      @"decline_resurvey_throttle": @30,
+      @"messages": @{
+        @"followup_question": @"Can you explain why?",
+        @"placeholder_text": @"Please, leave a feedback"
+      },
+      @"localized_texts": @{
+        @"nps_question": @"How likely are you to recommend Wootric to a friend or co-worker?",
+        @"anchors": @{
+          @"likely": @"Extremely likely",
+          @"not_likely": @"Not at all likely"
+        },
+        @"ces_question": @"How easy was it for you to use Wootric?",
+        @"ces_anchors": @{
+          @"very_difficult": @"Very difficult",
+          @"difficult": @"Difficult",
+          @"somewhat_difficult": @"Somewhat difficult",
+          @"neutral": @"Neutral",
+          @"somewhat_easy": @"Somewhat easy",
+          @"easy": @"Easy",
+          @"very_easy": @"Very easy"
+        },
+        @"csat_question": @"How satisfied are you with Wootric?",
+        @"csat_anchors": @{
+          @"very_unsatisfied": @"Very unsatisfied",
+          @"unsatisfied": @"Unsatisfied",
+          @"neutral": @"Neutral",
+          @"satisfied": @"Satisfied",
+          @"very_satisfied": @"Very satisfied"
+        },
+        @"dismiss": @"dismiss",
+        @"followup_placeholder": @"Help us by explaining your score.",
+        @"followup_question": @"Thank you! Care to tell us why?",
+        @"final_thank_you": @"Thank you for your response, and your feedback!",
+        @"send": @"send",
+        @"edit_score": @"edit",
+        @"dismiss": @"dismiss",
+        @"social_share": @{
+          @"decline": @"No thanks...",
+          @"question": @"Would you be willing to share your positive comments?"
+        }
+      }
+    }
+  };
 
   return settings;
 }

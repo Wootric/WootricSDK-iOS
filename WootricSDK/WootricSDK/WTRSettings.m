@@ -82,27 +82,27 @@
         _scale = [self scoreRules][_surveyType][0];
       }
     }
-      
+
     if (localizedTextsFromSurvey) {
       _localizedTexts = [[WTRLocalizedTexts alloc] initWithLocalizedTexts:localizedTextsFromSurvey];
     }
-        
+
     if (customMessagesFromSurvey) {
       _customMessages = [[WTRCustomMessages alloc] initWithCustomMessages:customMessagesFromSurvey];
     }
-        
+
     if (firstSurvey) {
       _firstSurveyAfter = firstSurvey;
     }
-        
+
     if (delay > 0) {
       _timeDelay = delay;
     }
-    
+
     if (resurveyThrottleFromServer) {
       _surveyedDefaultDuration = [resurveyThrottleFromServer intValue];
     }
-    
+
     if (declineResurveyThrottleFromServer) {
       _surveyedDefaultDurationDecline = [declineResurveyThrottleFromServer intValue];
     }
@@ -148,15 +148,17 @@
   if (!_customMessages && ![_userCustomMessages userCustomQuestionPresent]) {
     return _localizedTexts.followupQuestion;
   }
-    
+
   if ([self negativeTypeScore:score] && (_customMessages.detractorQuestion || _userCustomMessages.detractorQuestion)) {
     return [self detractorFollowupQuestion];
   } else if ([self neutralTypeScore:score] && (_customMessages.passiveQuestion || _userCustomMessages.passiveQuestion)) {
     return [self passiveFollowupQuestion];
   } else if ([self positiveTypeScore:score] && (_customMessages.promoterQuestion || _userCustomMessages.promoterQuestion)) {
     return [self promoterFollowupQuestion];
+  } else if (_customMessages.followupQuestion) {
+    return [self mainFollowupQuestion];
   }
-    
+
   return _localizedTexts.followupQuestion;
 }
 
@@ -164,23 +166,33 @@
   if (!_customMessages && ![_userCustomMessages userCustomPlaceholderPresent]) {
     return _localizedTexts.followupPlaceholder;
   }
-    
+
   if ([self negativeTypeScore:score] && (_customMessages.detractorText || _userCustomMessages.detractorPlaceholderText)) {
     return [self detractorFollowupPlaceholder];
   } else if ([self neutralTypeScore:score] && (_customMessages.passiveText || _userCustomMessages.passivePlaceholderText)) {
     return [self passiveFollowupPlaceholder];
   } else if ([self positiveTypeScore:score] && (_customMessages.promoterText || _userCustomMessages.promoterPlaceholderText)) {
     return [self promoterFollowupPlaceholder];
+  } else if (_customMessages.followupText) {
+    return _customMessages.followupText;
   }
-    
+
   return _localizedTexts.followupPlaceholder;
+}
+
+- (NSString *)mainFollowupQuestion {
+  if (_userCustomMessages.followupQuestion) {
+    return _userCustomMessages.followupQuestion;
+  }
+
+  return _customMessages.followupQuestion;
 }
 
 - (NSString *)detractorFollowupQuestion {
   if (_userCustomMessages.detractorQuestion) {
     return _userCustomMessages.detractorQuestion;
   }
-    
+
   return _customMessages.detractorQuestion;
 }
 

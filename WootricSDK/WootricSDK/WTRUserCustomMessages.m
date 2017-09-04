@@ -27,7 +27,7 @@
 @implementation WTRUserCustomMessages
 
 - (BOOL)userCustomQuestionPresent {
-  if (_promoterQuestion || _passiveQuestion || _detractorQuestion) {
+  if (_followupQuestion || _promoterQuestion || _passiveQuestion || _detractorQuestion) {
     return YES;
   }
 
@@ -35,7 +35,7 @@
 }
 
 - (BOOL)userCustomPlaceholderPresent {
-  if (_promoterPlaceholderText || _passivePlaceholderText || _detractorPlaceholderText) {
+  if (_placeholderText || _promoterPlaceholderText || _passivePlaceholderText || _detractorPlaceholderText) {
     return YES;
   }
 

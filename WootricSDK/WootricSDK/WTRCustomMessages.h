@@ -26,9 +26,11 @@
 
 @interface WTRCustomMessages : NSObject
 
+@property (nonatomic, strong) NSString *followupQuestion;
 @property (nonatomic, strong) NSString *detractorQuestion;
 @property (nonatomic, strong) NSString *passiveQuestion;
 @property (nonatomic, strong) NSString *promoterQuestion;
+@property (nonatomic, strong) NSString *followupText;
 @property (nonatomic, strong) NSString *detractorText;
 @property (nonatomic, strong) NSString *passiveText;
 @property (nonatomic, strong) NSString *promoterText;

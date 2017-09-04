@@ -1,3 +1,12 @@
+## 0.6.2 (2017-09-05)
+
+### Fixed:
+
+- Fix followup question and placeholder bug
+- Update demo project settings
+- Refactor code
+- Update Deployment Target = 8.0
+
 ## 0.6.1 (2017-05-16)
 
 ### Fixed:

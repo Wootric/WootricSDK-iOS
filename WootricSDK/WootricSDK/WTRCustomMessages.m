@@ -30,13 +30,21 @@
   if (self = [super init]) {
     NSDictionary *followupQuestionList = customMessages[@"followup_questions_list"];
     NSDictionary *placeholderTextList = customMessages[@"placeholder_texts_list"];
-        
+
+    if (customMessages[@"followup_question"]) {
+      _followupQuestion = customMessages[@"followup_question"];
+    }
+
+    if (customMessages[@"placeholder_text"]) {
+      _followupText = customMessages[@"placeholder_text"];
+    }
+
     if (followupQuestionList) {
       _detractorQuestion = followupQuestionList[@"detractor_question"];
       _passiveQuestion = followupQuestionList[@"passive_question"];
       _promoterQuestion = followupQuestionList[@"promoter_question"];
     }
-        
+
     if (placeholderTextList) {
       _detractorText = placeholderTextList[@"detractor_text"];
       _passiveText = placeholderTextList[@"passive_text"];

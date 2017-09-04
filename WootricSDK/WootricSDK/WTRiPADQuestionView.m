@@ -82,7 +82,7 @@
 }
 
 - (void)setupLikelyAnchorConstraints {
-  int rightConstraint;
+  int rightConstraint = 10;
   if ([_settings.surveyType isEqualToString:@"CES"]) {
     rightConstraint = -80;
   } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
@@ -91,15 +91,13 @@
     } else if ((int) _settings.surveyTypeScale == 1) {
       rightConstraint = 10;
     }
-  } else {
-    rightConstraint = 10;
   }
   [[[_likelyAnchor wtr_centerYConstraint] toSecondViewCenterY:_scoreView] addToView:self];
   [[[[_likelyAnchor wtr_leftConstraint] toSecondViewRight:_scoreView] withConstant:rightConstraint] addToView:self];
 }
 
 - (void)setupNotLikelyAnchorConstraints {
-  int leftConstraint;
+  int leftConstraint = -10;
   if ([_settings.surveyType isEqualToString:@"CES"]) {
     leftConstraint = 80;
   } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
@@ -108,8 +106,6 @@
     } else if ((int) _settings.surveyTypeScale == 1) {
       leftConstraint = -10;
     }
-  } else {
-    leftConstraint = -10;
   }
   [[[_notLikelyAnchor wtr_centerYConstraint] toSecondViewCenterY:_scoreView] addToView:self];
   [[[[_notLikelyAnchor wtr_rightConstraint] toSecondViewLeft:_scoreView] withConstant:leftConstraint] addToView:self];
