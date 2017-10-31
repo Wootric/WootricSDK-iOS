@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F84DC081F5E5E7000D91DF1 /* WootricSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DC6F241B81E8E700F599B3 /* WootricSDK.framework */; };
-		0F84DC091F5E5E7000D91DF1 /* WootricSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B2DC6F241B81E8E700F599B3 /* WootricSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0F0415341FA8EF2300E3C926 /* WootricSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2DC6F241B81E8E700F599B3 /* WootricSDK.framework */; };
+		0F0415361FA8EFAF00E3C926 /* WootricSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B2DC6F241B81E8E700F599B3 /* WootricSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0F84DC0D1F5E602900D91DF1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2DC6EDF1B81E5D800F599B3 /* Images.xcassets */; };
 		B2DC6ED51B81E5D800F599B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6ED41B81E5D800F599B3 /* main.m */; };
 		B2DC6ED81B81E5D800F599B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6ED71B81E5D800F599B3 /* AppDelegate.m */; };
@@ -19,7 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0F84DC0A1F5E5E7000D91DF1 /* PBXContainerItemProxy */ = {
+		0F0415371FA8EFAF00E3C926 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B2DC6F1E1B81E8E700F599B3 /* WootricSDK.xcodeproj */;
 			proxyType = 1;
@@ -50,13 +50,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		0F84DC0C1F5E5E7000D91DF1 /* Embed Frameworks */ = {
+		0F0415391FA8EFAF00E3C926 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0F84DC091F5E5E7000D91DF1 /* WootricSDK.framework in Embed Frameworks */,
+				0F0415361FA8EFAF00E3C926 /* WootricSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -85,7 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F84DC081F5E5E7000D91DF1 /* WootricSDK.framework in Frameworks */,
+				0F0415341FA8EF2300E3C926 /* WootricSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +99,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F0415331FA8EF2300E3C926 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B2DC6EC61B81E5D800F599B3 = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +113,7 @@
 				B2DC6ED11B81E5D800F599B3 /* WootricSDK-Demo */,
 				B2DC6EEB1B81E5D800F599B3 /* WootricSDK-DemoTests */,
 				B2DC6ED01B81E5D800F599B3 /* Products */,
+				0F0415331FA8EF2300E3C926 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -178,12 +186,12 @@
 				B2DC6ECB1B81E5D800F599B3 /* Sources */,
 				B2DC6ECC1B81E5D800F599B3 /* Frameworks */,
 				B2DC6ECD1B81E5D800F599B3 /* Resources */,
-				0F84DC0C1F5E5E7000D91DF1 /* Embed Frameworks */,
+				0F0415391FA8EFAF00E3C926 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0F84DC0B1F5E5E7000D91DF1 /* PBXTargetDependency */,
+				0F0415381FA8EFAF00E3C926 /* PBXTargetDependency */,
 			);
 			name = "WootricSDK-Demo";
 			productName = "WootricSDK-Demo";
@@ -214,7 +222,7 @@
 		B2DC6EC71B81E5D800F599B3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = Wootric;
 				TargetAttributes = {
 					B2DC6ECE1B81E5D800F599B3 = {
@@ -310,10 +318,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0F84DC0B1F5E5E7000D91DF1 /* PBXTargetDependency */ = {
+		0F0415381FA8EFAF00E3C926 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = WootricSDK;
-			targetProxy = 0F84DC0A1F5E5E7000D91DF1 /* PBXContainerItemProxy */;
+			targetProxy = 0F0415371FA8EFAF00E3C926 /* PBXContainerItemProxy */;
 		};
 		B2DC6EEA1B81E5D800F599B3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -350,14 +358,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -397,14 +411,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -465,6 +485,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -485,6 +506,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

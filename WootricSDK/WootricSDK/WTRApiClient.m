@@ -233,7 +233,7 @@
   [dataTask resume];
 }
 
-- (void)authenticate:(void (^)())authenticated {
+- (void)authenticate:(void (^)(void))authenticated {
   
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/oauth/token", _baseAPIURL]];
   NSString *params = [NSString stringWithFormat:@"grant_type=client_credentials&client_id=%@&client_secret=%@", _clientID, _clientSecret];
@@ -259,7 +259,7 @@
   [dataTask resume];
 }
 
-- (void)checkEligibility:(void (^)())eligible {
+- (void)checkEligibility:(void (^)(void))eligible {
   NSString *endUserEmail = [_settings getEndUserEmailOrUnknown];
   NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@",
                              _surveyServerURL, _accountToken];
@@ -475,8 +475,7 @@
 }
 
 - (nullable NSString *)sdkVersion {
-  NSBundle *bundle = [NSBundle bundleWithURL:[[NSBundle bundleForClass:[WTRApiClient class]] URLForResource:@"WootricSDK" withExtension:@"bundle"]];
-  return [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+  return [[NSBundle bundleForClass:[WTRApiClient class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 }
 
 - (NSString *)osVersion {

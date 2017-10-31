@@ -315,7 +315,7 @@
 
 - (void)adjustInsetForKeyboardShow:(BOOL)show notification:(NSNotification *)notification {
   NSDictionary *userInfo = notification.userInfo ? notification.userInfo : @{};
-  CGRect keyboardFrame = [userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+  CGRect keyboardFrame = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
   double adjustmentHeight = CGRectGetHeight(keyboardFrame) * (show ? 1 : -1);
   UIEdgeInsets contentInsets = UIEdgeInsetsMake(0, 0, adjustmentHeight, 0);
   _scrollView.contentInset = contentInsets;

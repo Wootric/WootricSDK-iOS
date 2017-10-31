@@ -138,7 +138,7 @@
   
   [WTRDefaults setSurveyedWithType:@"response"];
   
-  XCTAssertEqual([_defaults objectForKey:@"type"], @"response");
+  XCTAssertEqualObjects([_defaults objectForKey:@"type"], @"response");
   XCTAssertTrue([_defaults boolForKey:@"surveyed"]);
 }
 
@@ -149,7 +149,7 @@
   
   [WTRDefaults setSurveyedWithType:@"response"];
   
-  XCTAssertNotEqual([_defaults objectForKey:@"type"], @"response");
+  XCTAssertNotEqualObjects([_defaults objectForKey:@"type"], @"response");
   XCTAssertFalse([_defaults boolForKey:@"surveyed"]);
 }
 
@@ -160,7 +160,7 @@
   
   [WTRDefaults setSurveyedWithType:@"decline"];
   
-  XCTAssertEqual([_defaults objectForKey:@"type"], @"decline");
+  XCTAssertEqualObjects([_defaults objectForKey:@"type"], @"decline");
   XCTAssertTrue([_defaults boolForKey:@"surveyed"]);
 }
 
@@ -171,7 +171,7 @@
   
   [WTRDefaults setSurveyedWithType:@"decline"];
   
-  XCTAssertNotEqual([_defaults objectForKey:@"type"], @"decline");
+  XCTAssertNotEqualObjects([_defaults objectForKey:@"type"], @"decline");
   XCTAssertFalse([_defaults boolForKey:@"surveyed"]);
 }
 

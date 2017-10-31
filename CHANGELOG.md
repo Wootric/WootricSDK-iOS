@@ -1,3 +1,12 @@
+## 0.6.3 (2017-10-31)
+
+### Changes:
+
+- Fix Carthage compatibility
+- Update project for Xcode9
+- Fix iOS 11 keyboard bug
+- Fix warnings
+
 ## 0.6.2 (2017-09-05)
 
 ### Fixed:

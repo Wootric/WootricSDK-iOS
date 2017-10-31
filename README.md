@@ -7,7 +7,7 @@
 </p>
 
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/Wootric/WootricSDK-iOS/master/LICENSE.md) [![GitHub release](https://img.shields.io/github/release/Wootric/WootricSDK-iOS.svg)](https://github.com/Wootric/WootricSDK-iOS/releases) [![Build Status](https://img.shields.io/circleci/project/Wootric/WootricSDK-iOS.svg)](https://img.shields.io/circleci/project/Wootric/WootricSDK-iOS.svg) [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/WootricSDK.svg)](https://img.shields.io/cocoapods/v/WootricSDK.svg) [![Platform](https://img.shields.io/cocoapods/p/WootricSDK.svg?style=flat)](http://cocoadocs.org/docsets/WootricSDK) [![Twitter](https://img.shields.io/badge/twitter-@Wootric-blue.svg?style=flat)](http://twitter.com/Wootric)
+[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/Wootric/WootricSDK-iOS/master/LICENSE.md) [![GitHub release](https://img.shields.io/github/release/Wootric/WootricSDK-iOS.svg)](https://github.com/Wootric/WootricSDK-iOS/releases) [![Build Status](https://img.shields.io/circleci/project/Wootric/WootricSDK-iOS.svg)](https://img.shields.io/circleci/project/Wootric/WootricSDK-iOS.svg) [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/WootricSDK.svg)](https://img.shields.io/cocoapods/v/WootricSDK.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Platform](https://img.shields.io/cocoapods/p/WootricSDK.svg?style=flat)](http://cocoadocs.org/docsets/WootricSDK) [![Twitter](https://img.shields.io/badge/twitter-@Wootric-blue.svg?style=flat)](http://twitter.com/Wootric)
 
 
 ## Requirements
@@ -29,7 +29,7 @@ The easiest way to get Wootric into your iOS project is to use [CocoaPods](http:
 
 2. Create a file in your Xcode project called Podfile and add the following line:
 	```ruby
-	pod "WootricSDK", "~> 0.6.2"
+	pod "WootricSDK", "~> 0.6.3"
 	```
 
 3. In your Xcode project directory run the following command:

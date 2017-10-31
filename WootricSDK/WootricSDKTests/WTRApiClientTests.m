@@ -34,7 +34,7 @@
 - (NSString *)percentEscapeString:(NSString *)string;
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID;
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID;
-- (void)authenticate:(void (^)())authenticated;
+- (void)authenticate:(void (^)(void))authenticated;
 - (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID userID:(NSNumber *)userID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text;
 - (NSString *)randomString;
 - (NSString *)buildUniqueLinkAccountToken:(NSString *)accountToken endUserEmail:(NSString *)endUserEmail date:(NSTimeInterval)date randomString:(NSString *)randomString;

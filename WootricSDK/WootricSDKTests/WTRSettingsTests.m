@@ -281,8 +281,7 @@
   NSURL *thankYouURL = [NSURL URLWithString:@"http://thankyou.com"];
   [_settings setThankYouLinkWithText:nil URL:thankYouURL];
   [_settings setPromoterThankYouLinkWithText:@"thank you message" URL:nil];
-  NSLog(@"%@", [_settings thankYouLinkURLDependingOnScore:1 andText:@""]);
-  NSLog(@"%@", [_settings thankYouLinkTextDependingOnScore:1]);
+  
   BOOL flag = [_settings thankYouLinkConfiguredForScore:1];
   XCTAssertFalse(flag);
   flag = [_settings thankYouLinkConfiguredForScore:8];

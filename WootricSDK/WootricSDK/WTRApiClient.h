@@ -35,8 +35,8 @@
 
 + (instancetype)sharedInstance;
 - (BOOL)checkConfiguration;
-- (void)authenticate:(void (^)())completionHandler;
-- (void)checkEligibility:(void (^)())completionHandler;
+- (void)authenticate:(void (^)(void))completionHandler;
+- (void)checkEligibility:(void (^)(void))completionHandler;
 - (void)endUserDeclined;
 - (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text;
 

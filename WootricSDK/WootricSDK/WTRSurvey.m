@@ -51,7 +51,7 @@
   [WTRDefaults setSurveyedWithType:@"response"];
 }
 
-- (void)survey:(void (^)())showSurvey {
+- (void)survey:(void (^)(void))showSurvey {
     
   [WTRDefaults setLastSeenAt];
   [WTRDefaults checkIfSurveyedDefaultExpired];

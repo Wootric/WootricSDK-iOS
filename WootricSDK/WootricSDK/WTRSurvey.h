@@ -26,7 +26,7 @@
 
 @interface WTRSurvey : NSObject
 
-- (void)survey:(void (^)())completionHandler;
+- (void)survey:(void (^)(void))completionHandler;
 - (void)endUserDeclined;
 - (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text;
 
