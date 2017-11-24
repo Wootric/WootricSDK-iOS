@@ -244,6 +244,11 @@
   [apiClient.settings setCustomDailyResponseCap:dailyResponseCap];
 }
 
++ (void)setCustomTimeDelay:(NSInteger)customTimeDelay {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setCustomTimeDelay:customTimeDelay];
+}
+
 #pragma mark - Color Customization
 
 + (void)setSendButtonBackgroundColor:(UIColor *)color {

@@ -1,3 +1,9 @@
+## 0.6.4 (2017-11-24)
+
+### Changes:
+
+- Add setCustomTimeDelay method
+
 ## 0.6.3 (2017-10-31)
 
 ### Changes:

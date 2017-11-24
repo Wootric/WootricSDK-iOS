@@ -50,7 +50,7 @@
     _originURL = [[NSBundle mainBundle] bundleIdentifier];
     _customThankYou = [[WTRCustomThankYou alloc] init];
     _userCustomMessages = [[WTRUserCustomMessages alloc] init];
-    _timeDelay = 0;
+    _timeDelay = -1;
     _surveyType = @"NPS";
     _scale = [self scoreRules][_surveyType][0];
   }
@@ -70,7 +70,7 @@
     NSNumber *firstSurvey = surveyServerSettings[@"settings"][@"first_survey"];
     NSNumber *resurveyThrottleFromServer = surveyServerSettings[@"settings"][@"resurvey_throttle"];
     NSNumber *declineResurveyThrottleFromServer = surveyServerSettings[@"settings"][@"decline_resurvey_throttle"];
-    NSInteger delay = [surveyServerSettings[@"settings"][@"time_delay"] integerValue];
+    NSInteger delay = _timeDelay > -1 ? _timeDelay : [surveyServerSettings[@"settings"][@"time_delay"] integerValue];
       
     if (surveyTypeFromSurvey) {
       _surveyType = surveyTypeFromSurvey;
@@ -495,6 +495,10 @@
     customDailyResponseCap = @0;
   }
   _dailyResponseCap = customDailyResponseCap;
+}
+
+- (void)setCustomTimeDelay:(NSInteger)customTimeDelay {
+  _timeDelay = customTimeDelay < 0 ? 0 : customTimeDelay;
 }
 
 - (BOOL)validEmailString {

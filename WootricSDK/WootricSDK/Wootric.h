@@ -221,6 +221,12 @@
 + (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercentage registeredPercentage:(NSNumber *)registeredPercentage dailyResponseCap:(NSNumber *)dailyResponseCap;
 
 /**
+ @discussion Change the time delay to show the survey (in seconds).
+ @param customTimeDelay NSInteger representing number of seconds to show the survey.
+ */
++ (void)setCustomTimeDelay:(NSInteger)customTimeDelay;
+
+/**
  @discussion Changes the color of the Send button and the No thanks button on the sharing view.
  @param color UIColor for the Send button.
 */

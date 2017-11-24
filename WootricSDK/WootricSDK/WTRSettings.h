@@ -108,5 +108,6 @@
 - (void)setCustomVisitorPercentage:(NSNumber *)customVisitorPercentage;
 - (void)setCustomRegisteredPercentage:(NSNumber *)customRegisteredPercentage;
 - (void)setCustomDailyResponseCap:(NSNumber *)customDailyResponseCap;
+- (void)setCustomTimeDelay:(NSInteger)customTimeDelay;
 
 @end

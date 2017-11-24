@@ -299,10 +299,16 @@
   XCTAssertEqualObjects(@"mail@example.com", [_settings getEndUserEmailOrUnknown]);
 }
 
+- (void)testTimeDelay {
+  NSInteger timeDelay = [_settings timeDelay];
+  XCTAssertEqual(timeDelay, 10);
+}
+
 - (NSDictionary *)surveyServerSettings {
   NSDictionary *settings = @{
     @"eligible": @1,
     @"settings": @{
+      @"time_delay": @10,
       @"first_survey": @30,
       @"resurvey_throttle": @180,
       @"decline_resurvey_throttle": @30,
