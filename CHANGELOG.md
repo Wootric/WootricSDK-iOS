@@ -1,3 +1,9 @@
+## 0.6.5 (2017-12-14)
+
+### Fixed:
+
+- Fix char escaping when updating end user with product_name
+
 ## 0.6.4 (2017-11-24)
 
 ### Changes:

@@ -187,7 +187,6 @@
   urlRequest = [_apiClient requestWithURL:url HTTPMethod:nil andHTTPBody:params];
   httpBody = [[NSString alloc] initWithData:urlRequest.HTTPBody encoding:NSUTF8StringEncoding];
   XCTAssertEqualObjects(httpBody, @"params&os_name=iOS&sdk_version=0.6.0&os_version=10.0");
-  
 }
 
 - (void)testAddVersionsToURLString {

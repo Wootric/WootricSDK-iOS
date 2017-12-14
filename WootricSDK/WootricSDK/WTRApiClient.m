@@ -134,7 +134,7 @@
 
   if (_settings.productName) {
     needsUpdate = YES;
-    params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, _settings.productName];
+    params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, [self percentEscapeString:_settings.productName]];
   }
   
   if (_settings.externalId) {
