@@ -1,3 +1,9 @@
+## 0.6.5 (2017-12-14)
+
+### Fixed:
+
+- Fix end user updater method
+
 ## 0.6.4 (2017-11-24)
 
 ### Changes:
