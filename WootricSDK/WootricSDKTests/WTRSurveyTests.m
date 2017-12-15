@@ -30,6 +30,7 @@
   [super setUp];
   _apiClient = [WTRApiClient sharedInstance];
   _surveyClient = [[WTRSurvey alloc] init];
+  _apiClient.settings.setDefaultAfterSurvey = YES;
 }
 
 - (void)tearDown {
@@ -150,6 +151,41 @@
   _apiClient.settings.firstSurveyAfter = @2;
   _apiClient.settings.externalCreatedAt = [self createdDaysAgo:2];
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setDouble:[[self createdDaysAgo:4] doubleValue] forKey:@"lastSeenAt"];
+  XCTAssertTrue([_surveyClient needsSurvey]);
+}
+
+// surveyed = YES, surveyImmediately = NO, firstSurveyAfter = 0, setDefaultAfterSurvey = YES
+- (void)testNeedsSurveyFourteen {
+  _apiClient.settings.firstSurveyAfter = @0;
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setBool:YES forKey:@"surveyed"];
+  XCTAssertFalse([_surveyClient needsSurvey]);
+}
+
+// surveyed = YES, surveyImmediately = NO, firstSurveyAfter = 0, setDefaultAfterSurvey = NO
+- (void)testNeedsSurveyFifteen {
+  _apiClient.settings.firstSurveyAfter = @0;
+  _apiClient.settings.setDefaultAfterSurvey = NO;
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setBool:YES forKey:@"surveyed"];
+  XCTAssertTrue([_surveyClient needsSurvey]);
+}
+
+// surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 0, setDefaultAfterSurvey = YES
+- (void)testNeedsSurveySixteen {
+  _apiClient.settings.firstSurveyAfter = @0;
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setBool:NO forKey:@"surveyed"];
+  XCTAssertTrue([_surveyClient needsSurvey]);
+}
+
+// surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 0, setDefaultAfterSurvey = NO
+- (void)testNeedsSurveySeventeen {
+  _apiClient.settings.firstSurveyAfter = @0;
+  _apiClient.settings.setDefaultAfterSurvey = NO;
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setBool:NO forKey:@"surveyed"];
   [defaults setDouble:[[self createdDaysAgo:4] doubleValue] forKey:@"lastSeenAt"];
   XCTAssertTrue([_surveyClient needsSurvey]);
 }

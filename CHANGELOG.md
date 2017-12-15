@@ -1,3 +1,9 @@
+## 0.6.6 (2017-12-15)
+
+### Fixed:
+
+- Check for setDefaultAfterSurvey when checking defaults values
+
 ## 0.6.5 (2017-12-14)
 
 ### Fixed:

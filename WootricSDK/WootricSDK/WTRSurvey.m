@@ -67,7 +67,7 @@
 
 - (BOOL)needsSurvey {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  if ([defaults boolForKey:@"surveyed"]) {
+  if ([defaults boolForKey:@"surveyed"] && _apiClient.settings.setDefaultAfterSurvey) {
     NSInteger days;
     if ([defaults objectForKey:@"resurvey_days"]) {
       days = [defaults integerForKey:@"resurvey_days"];

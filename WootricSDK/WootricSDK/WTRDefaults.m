@@ -31,6 +31,7 @@
 
 + (void)setLastSeenAt {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
   if ([defaults doubleForKey:@"lastSeenAt"] == 0) {
     [defaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:@"lastSeenAt"];
   } else {
@@ -43,25 +44,27 @@
 
 + (void)setSurveyedWithType:(NSString *)type {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  
   if (apiClient.settings.setDefaultAfterSurvey) {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
     [defaults setBool:YES forKey:@"surveyed"];
     [defaults setObject:type forKey:@"type"];
     if([type isEqualToString:@"decline"]){
-      [defaults setInteger:apiClient.settings.surveyedDefaultDurationDecline forKey:@"resurvey_days"];;
+      [defaults setInteger:apiClient.settings.surveyedDefaultDurationDecline forKey:@"resurvey_days"];
     } else {
       [defaults setInteger:apiClient.settings.surveyedDefaultDuration forKey:@"resurvey_days"];
     }
     [defaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:@"surveyedAt"];
+  } else {
+    [defaults setBool:NO forKey:@"surveyed"];
+    [defaults setObject:nil forKey:@"type"];
   }
 }
 
 + (void)checkIfSurveyedDefaultExpired {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  
+
   double surveyedDurationTimestamp = apiClient.settings.surveyedDefaultDuration;
   if ([defaults objectForKey:@"resurvey_days"] && [defaults integerForKey:@"resurvey_days"] >= 0) {
     surveyedDurationTimestamp = [defaults integerForKey:@"resurvey_days"];
