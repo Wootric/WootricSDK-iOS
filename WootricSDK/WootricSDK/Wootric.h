@@ -246,5 +246,10 @@
  @param color UIColor for social sharing buttons.
 */
 + (void)setSocialSharingColor:(UIColor *)color;
-
+/**
+ @discussion Notification posted when the survey view disappears, with userInfo as follows:
+ @param score The NPS score as a NSNumber.
+ @param voted Boolean NSNumber indicating whether the user voted or not.
+ */
++ (NSNotificationName) surveyDidDisappearNotification;
 @end

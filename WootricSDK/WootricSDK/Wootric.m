@@ -271,4 +271,8 @@
   [apiClient.settings setThankYouButtonBackgroundColor:color];
 }
 
++ (NSNotificationName) surveyDidDisappearNotification {
+    return @"com.wootric.surveyDidDisappearNotification";
+}
+
 @end

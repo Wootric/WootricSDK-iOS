@@ -30,6 +30,7 @@
 #import "WTRColor.h"
 #import "WTRSurvey.h"
 #import "NSString+FontAwesome.h"
+#import "Wootric.h"
 #import <Social/Social.h>
 
 @interface WTRiPADSurveyViewController ()
@@ -73,6 +74,14 @@
     _modalView.frame = modalFrame;
     _constraintTopToModalTop.constant = modalPosition;
   }];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [NSNotificationCenter.defaultCenter postNotificationName:[Wootric surveyDidDisappearNotification]
+                                                      object:self
+                                                    userInfo:@{@"score": @(_currentScore), @"voted": @(_alreadyVoted)}];
+
+    [super viewDidDisappear:animated];
 }
 
 - (void)selectScore:(WTRCircleScoreButton *)sender {
