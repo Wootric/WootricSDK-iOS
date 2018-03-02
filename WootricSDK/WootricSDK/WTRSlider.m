@@ -32,7 +32,6 @@ static const CGFloat ThumbSize = 24.0;
 
 @interface WTRSlider ()
 
-@property (nonatomic, assign) int currentValue;
 @property (nonatomic, strong) UIColor *sliderColor;
 @property (nonatomic, strong) WTRSettings *settings;
 
@@ -53,7 +52,6 @@ static const CGFloat ThumbSize = 24.0;
   if (self = [super init]) {
     _settings = settings;
     _sliderColor = color;
-    _currentValue = -1;
     
     self.minimumValue = [_settings minimumScore];
     self.maximumValue = [_settings maximumScore];
