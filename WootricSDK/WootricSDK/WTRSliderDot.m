@@ -60,46 +60,4 @@
   self.layer.borderColor = [WTRColor sliderDotBorderColor].CGColor;
 }
 
-- (void)addConstraintsWithLeftConstraintConstant:(CGFloat)leftConstant {
-  UIView *superView = self.superview;
-
-  self.leftConstraint = [NSLayoutConstraint constraintWithItem:self
-                                                     attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:superView
-                                                     attribute:NSLayoutAttributeLeft
-                                                    multiplier:1
-                                                      constant:leftConstant];
-
-  [superView addConstraint:self.leftConstraint];
-
-  NSLayoutConstraint *constY = [NSLayoutConstraint constraintWithItem:self
-                                                            attribute:NSLayoutAttributeCenterY
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:superView
-                                                            attribute:NSLayoutAttributeCenterY
-                                                           multiplier:1
-                                                             constant:0];
-
-  [superView addConstraint:constY];
-
-  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self
-                                                            attribute:NSLayoutAttributeWidth
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:8];
-  [self addConstraint:constW];
-
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self
-                                                            attribute:NSLayoutAttributeHeight
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:nil
-                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                           multiplier:1
-                                                             constant:8];
-  [self addConstraint:constH];
-}
-
 @end

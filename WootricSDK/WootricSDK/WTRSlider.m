@@ -27,6 +27,9 @@
 #import "UIImage+ImageFromColor.h"
 #import "WTRSliderDot.h"
 
+static const CGFloat DotRadius = 8.0;
+static const CGFloat ThumbSize = 24.0;
+
 @interface WTRSlider ()
 
 @property (nonatomic, assign) int currentValue;
@@ -37,6 +40,10 @@
 @end
 
 @implementation WTRSlider
+{
+  NSArray<WTRSliderDot *> * dots;
+  NSArray<UIView *> * dotSpacers;
+}
 
 - (instancetype)initWithSuperview:(UIView *)superview viewController:(UIViewController *)viewController settings:(WTRSettings *)settings  {
     return [self initWithSuperview:superview viewController:viewController settings:(WTRSettings *)settings color:[WTRColor sliderValueColor]];
@@ -84,77 +91,99 @@
   }
 }
 
-- (void)addDots {
-  float sliderWidth = self.frame.size.width;
-
-  for (int i = self.minimumValue; i <= self.maximumValue; i++) {
-    WTRSliderDot *dot = [[WTRSliderDot alloc] initWithColor:_sliderColor];
-    dot.tag = 9000 + i;
-    [self addSubview:dot];
-
-    CGFloat dotX = 8;
-    if (i == self.minimumValue) {
-      [dot addConstraintsWithLeftConstraintConstant:dotX];
-    } else {
-      int dotOffset = 2;
-      if ([_settings.surveyType isEqualToString:@"CES"]) {
-        dotOffset = 3;
-      } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
-        if ((int) _settings.surveyTypeScale == 0) {
-          dotOffset = 4;
-        } else if ((int) _settings.surveyTypeScale == 1) {
-          dotOffset = 2;
-        }
-      }
-      dotX += round(sliderWidth / (float) (self.maximumValue - self.minimumValue) * (i - self.minimumValue)) - dotOffset * (i - self.minimumValue);
-      [dot addConstraintsWithLeftConstraintConstant:dotX];
-    }
-
-    [self bringSubviewToFront:dot];
-  }
+- (NSUInteger) numberOfDots
+{
+  return (self.maximumValue - self.minimumValue + 1);
 }
 
-- (void)recalculateDotsPositionForSliderWidth:(CGFloat)sliderWidth {
-  for (WTRSliderDot *dot in self.subviews) {
-    if (dot.tag) {
-      int i = (int)(dot.tag - 9000);
-      CGFloat dotX = 8;
-      if (i >= 1) {
-        int dotOffset = 2;
-        if ([_settings.surveyType isEqualToString:@"CES"]) {
-          dotOffset = 3;
-        } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
-          if ((int) _settings.surveyTypeScale == 0) {
-            dotOffset = 4;
-          } else if ((int) _settings.surveyTypeScale == 1) {
-            dotOffset = 2;
-          }
-        }
-        dotX += round(sliderWidth / (float) (self.maximumValue - self.minimumValue) * (i - self.minimumValue)) - dotOffset * (i - self.minimumValue);
-        dot.leftConstraint.constant = dotX;
-      }
+- (void)addDots {
+  // Remove any previous dots
+  [dots enumerateObjectsUsingBlock:^(WTRSliderDot * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [obj removeFromSuperview];
+  }];
+  [dotSpacers enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [obj removeFromSuperview];
+  }];
+  
+  // Sanity check
+  NSUInteger dotCount = [self numberOfDots];
+  if (dotCount < 2) {
+    return;
+  }
+  
+  NSMutableArray<WTRSliderDot *> * newDots = [[NSMutableArray alloc] initWithCapacity:dotCount];
+  NSMutableArray<UIView *> * newDotSpacers = [[NSMutableArray alloc] initWithCapacity:dotCount - 1];
+  
+  for (NSUInteger i = 0; i < dotCount; i++) {
+    WTRSliderDot * dot = [[WTRSliderDot alloc] initWithColor:_sliderColor];
+    [newDots addObject:dot];
+    [self addSubview:dot];
+    [self bringSubviewToFront:dot];
+    
+    NSLayoutConstraint * centerY = [NSLayoutConstraint constraintWithItem:dot attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
+    NSLayoutConstraint * width = [NSLayoutConstraint constraintWithItem:dot attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:DotRadius];
+    NSLayoutConstraint * height = [NSLayoutConstraint constraintWithItem:dot attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:DotRadius];
+    [self addConstraints:@[centerY, width, height]];
+  }
+
+  // Pin edge dots to edges
+  CGFloat margin = DotRadius;
+  NSLayoutConstraint * leftmostDotLeftness = [NSLayoutConstraint constraintWithItem:[newDots firstObject] attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:margin];
+  NSLayoutConstraint * rightmostDotRightness = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:[newDots lastObject] attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:margin];
+  [self addConstraints:@[leftmostDotLeftness, rightmostDotRightness]];
+  
+  // Put invisible spacers between dots
+  UIView * firstSpacer = nil;
+  
+  for (NSUInteger i = 0; i < (dotCount - 1); i++) {
+    WTRSliderDot * leftDot = newDots[i];
+    WTRSliderDot * rightDot = newDots[i + 1];
+    
+    UIView * spacer = [[UIView alloc] init];
+    spacer.translatesAutoresizingMaskIntoConstraints = NO;
+    spacer.hidden = YES;
+    
+    [self addSubview:spacer];
+    [newDotSpacers addObject:spacer];
+    
+    // 1 pt tall for no particular reason
+    NSLayoutConstraint * height = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:1.0];
+    
+    // Hold on to those dots
+    NSLayoutConstraint * leftDotHandhold = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:leftDot attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.0];
+    NSLayoutConstraint * rightDotHandhold = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:rightDot attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
+    [self addConstraints:@[height, leftDotHandhold, rightDotHandhold]];
+
+    // Same width for all spacers
+    if (i == 0) {
+      firstSpacer = spacer;
+    } else {
+      NSLayoutConstraint * sameWidth = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:firstSpacer attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+      [self addConstraint:sameWidth];
     }
   }
+  
+  dots = newDots;
+  dotSpacers = newDotSpacers;
 }
 
 - (void)updateDots {
   int intValue = (int)self.value;
-  if (_currentValue != intValue) {
-    for (WTRSliderDot *dot in self.subviews) {
-      if (dot.tag && (dot.tag <= 9000 + intValue)) {
-        [dot setAsSelected];
-      } else if (dot.tag) {
-        [dot setAsUnselected];
-      }
+  NSUInteger dotIndex = intValue - self.minimumValue;
+  
+  [dots enumerateObjectsUsingBlock:^(WTRSliderDot * _Nonnull dot, NSUInteger idx, BOOL * _Nonnull stop) {
+    if (idx == dotIndex) {
+      [dot setAsSelected];
+    } else {
+      [dot setAsUnselected];
     }
-    _currentValue = intValue;
-  }
+  }];
 }
 
 - (void)showThumb {
-  [self setThumbImage:[UIImage imageFromColor:_sliderColor withSize:24]
+  [self setThumbImage:[UIImage imageFromColor:_sliderColor withSize:ThumbSize]
              forState:UIControlStateNormal];
-  [self setThumbImage:[UIImage imageFromColor:_sliderColor withSize:24]
+  [self setThumbImage:[UIImage imageFromColor:_sliderColor withSize:ThumbSize]
               forState:UIControlStateHighlighted];
 }
 
