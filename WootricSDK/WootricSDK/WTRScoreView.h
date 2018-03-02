@@ -30,7 +30,6 @@
 - (instancetype)initWithSettings:(WTRSettings *)settings color:(UIColor *)color;
 
 - (void)addScores;
-- (void)recalculateScorePositionForScoreLabelWidth:(CGFloat)scoreLabelWidth;
 - (void)highlightCurrentScore:(int)score;
 
 @end

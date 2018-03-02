@@ -286,21 +286,6 @@
   _gradient.colors = @[(id)[WTRColor grayGradientTopColor].CGColor, (id)[WTRColor grayGradientBottomColor].CGColor];
 }
 
-- (void)getSizeAndRecalculatePositionsBasedOnOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  BOOL isFromLandscape = UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
-  BOOL isToLandscape = UIInterfaceOrientationIsLandscape(interfaceOrientation);
-  if ((!isFromLandscape && isToLandscape) || (isFromLandscape && !isToLandscape)) {
-    CGFloat widthAfterRotation;
-    CGFloat leftAndRightMargins = 28;
-    if (IS_OS_8_OR_LATER || isToLandscape) {
-      widthAfterRotation = self.view.frame.size.height - leftAndRightMargins;
-    } else {
-      widthAfterRotation = self.view.frame.size.width - leftAndRightMargins;
-    }
-    [_questionView recalculateDotsAndScorePositionForWidth:widthAfterRotation];
-  }
-}
-
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
   [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
@@ -322,7 +307,6 @@
   }
 
   _constraintTopToModalTop.constant = modalPosition;
-  [self getSizeAndRecalculatePositionsBasedOnOrientation:toInterfaceOrientation];
   [self setModalGradient:gradientBounds];
 }
 

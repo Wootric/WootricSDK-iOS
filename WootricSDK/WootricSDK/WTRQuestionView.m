@@ -55,11 +55,6 @@
   return self;
 }
 
-- (void)recalculateDotsAndScorePositionForWidth:(CGFloat)widthAfterRotation {
-  [_scoreSlider recalculateDotsPositionForSliderWidth:widthAfterRotation];
-  [_scoreLabel recalculateScorePositionForScoreLabelWidth:widthAfterRotation];
-}
-
 - (void)addDotsAndScores {
   [_scoreSlider addDots];
   [_scoreLabel addScores];

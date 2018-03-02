@@ -32,7 +32,6 @@
 - (instancetype)initWithSuperview:(UIView *)superview viewController:(UIViewController *)viewController settings:(WTRSettings *)settings;
 - (instancetype)initWithSuperview:(UIView *)superview viewController:(UIViewController *)viewController settings: (WTRSettings *)settings color:(UIColor *)color;
 - (void)addDots;
-- (void)recalculateDotsPositionForSliderWidth:(CGFloat)sliderWidth;
 - (void)updateDots;
 - (void)showThumb;
 - (void)tappedAtPoint:(CGPoint)point;

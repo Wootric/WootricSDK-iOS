@@ -31,7 +31,6 @@
 
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
 - (void)setupSubviewsConstraints;
-- (void)recalculateDotsAndScorePositionForWidth:(CGFloat)widthAfterRotation;
 - (void)addDotsAndScores;
 - (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer;
 - (int)getScoreSliderValue;

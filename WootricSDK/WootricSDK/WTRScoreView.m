@@ -26,15 +26,20 @@
 #import "WTRSingleScoreLabel.h"
 #import "WTRColor.h"
 
+static const CGFloat SideMargin = 8.0;
+
 @interface WTRScoreView ()
 
-@property (nonatomic, assign) int currentValue;
 @property (nonatomic, strong) WTRSettings *settings;
 @property (nonatomic, strong) UIColor *labelColor;
 
 @end
 
 @implementation WTRScoreView
+{
+  NSArray<WTRSingleScoreLabel *> * scoreLabels;
+  NSArray<UIView *> * spacers;
+}
 
 - (instancetype)initWithSettings:(WTRSettings *)settings {
   return [self initWithSettings:settings color:[WTRColor selectedValueScoreColor]];
@@ -44,79 +49,89 @@
   if (self = [super init]) {
     _settings = settings;
     _labelColor = color;
-    _currentValue = -1;
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
   }
   return self;
 }
 
 - (void)addScores {
-  float scoreLabelWidth = self.frame.size.width;
-  int minimumScore = [_settings minimumScore];
-  int maximumScore = [_settings maximumScore];
-
-  for (int i = minimumScore; i <= maximumScore; i++) {
-    WTRSingleScoreLabel *label = [[WTRSingleScoreLabel alloc] initWithColor:_labelColor];
-    label.tag = 9000 + i;
+  // Remove any previous labels/spacers
+  [scoreLabels enumerateObjectsUsingBlock:^(WTRSingleScoreLabel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [obj removeFromSuperview];
+  }];
+  [spacers enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [obj removeFromSuperview];
+  }];
+  
+  NSUInteger labelCount = _settings.maximumScore - _settings.minimumScore + 1;
+  
+  if (labelCount < 2) {
+    return;
+  }
+  
+  NSMutableArray<WTRSingleScoreLabel *> * newLabels = [[NSMutableArray alloc] initWithCapacity:labelCount];
+  NSMutableArray<UIView *> * newSpacers = [[NSMutableArray alloc] initWithCapacity:labelCount - 1];
+  
+  for (int i = _settings.minimumScore; i <= _settings.maximumScore; i++) {
+    WTRSingleScoreLabel * label = [[WTRSingleScoreLabel alloc] initWithColor:_labelColor];
     label.text = [NSString stringWithFormat:@"%d", i];
     [self addSubview:label];
-
-    CGFloat labelX = 10;
-    if (i == minimumScore) {
-      [label addConstraintsWithLeftConstraintConstant:labelX];
+    [newLabels addObject:label];
+    
+    NSLayoutConstraint * centerY = [NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
+    [self addConstraint:centerY];
+  }
+  
+  // Pin leftmost and rightmost labels to edges
+  NSLayoutConstraint * leftmostLabelLeftness = [NSLayoutConstraint constraintWithItem:[newLabels firstObject] attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:SideMargin];
+  NSLayoutConstraint * rightmostLabelRightness = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:[newLabels lastObject] attribute:NSLayoutAttributeRight multiplier:1.0 constant:SideMargin];
+  [self addConstraints:@[leftmostLabelLeftness, rightmostLabelRightness]];
+  
+  // Put spacers between labels
+  UIView * firstSpacer = nil;
+  
+  for (NSUInteger i = 0; i < (labelCount - 1); i++) {
+    WTRSingleScoreLabel * leftLabel = newLabels[i];
+    WTRSingleScoreLabel * rightLabel = newLabels[i + 1];
+    
+    UIView * spacer = [[UIView alloc] init];
+    spacer.translatesAutoresizingMaskIntoConstraints = NO;
+    spacer.hidden = YES;
+    [self addSubview:spacer];
+    
+    // 1 pt tall for no particular reason
+    NSLayoutConstraint * height = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:1.0];
+    
+    // Hold them both
+    NSLayoutConstraint * leftHandhold = [NSLayoutConstraint constraintWithItem:leftLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:spacer attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
+    NSLayoutConstraint * rightHandhold = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:rightLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
+    [self addConstraints:@[height, leftHandhold, rightHandhold]];
+    
+    // Same widths
+    if (i == 0) {
+      firstSpacer = spacer;
     } else {
-      int labelOffset = 2;
-      if ([_settings.surveyType isEqualToString:@"CES"]) {
-        labelOffset = 3;
-      } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
-        if ((int) _settings.surveyTypeScale == 0) {
-          labelOffset = 4;
-        } else if ((int) _settings.surveyTypeScale == 1) {
-          labelOffset = 2;
-        }
-      }
-      labelX += round(scoreLabelWidth / (float) (maximumScore - minimumScore) * (i - minimumScore)) - labelOffset * (i - minimumScore);
-      [label addConstraintsWithLeftConstraintConstant:labelX];
+      NSLayoutConstraint * sameWidth = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:firstSpacer attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+      [self addConstraint:sameWidth];
     }
+    
+    [newSpacers addObject:spacer];
   }
-}
-
-- (void)recalculateScorePositionForScoreLabelWidth:(CGFloat)scoreLabelWidth {
-  int minimumScore = [_settings minimumScore];
-  int maximumScore = [_settings maximumScore];
-  for (WTRSingleScoreLabel *label in self.subviews) {
-    if (label.tag) {
-      int i = (int)(label.tag - 9000);
-      CGFloat labelX = 10;
-      if (i >= 1) {
-        int labelOffset = 2;
-        if ([_settings.surveyType isEqualToString:@"CES"]) {
-          labelOffset = 3;
-        } else if ([_settings.surveyType isEqualToString:@"CSAT"]) {
-          if ((int) _settings.surveyTypeScale == 0) {
-            labelOffset = 4;
-          } else if ((int) _settings.surveyTypeScale == 1) {
-            labelOffset = 2;
-          }
-        }
-        labelX += round(scoreLabelWidth / (float) (maximumScore - minimumScore) * (i - minimumScore)) - labelOffset * (i - minimumScore);
-        label.leftConstraint.constant = labelX;
-      }
-    }
-  }
+  
+  scoreLabels = newLabels;
+  spacers = newSpacers;
 }
 
 - (void)highlightCurrentScore:(int)currentScore {
-  if (_currentValue != currentScore) {
-    for (WTRSingleScoreLabel *label in self.subviews) {
-      if (label.tag && (label.tag == 9000 + currentScore)) {
-        [label setAsSelected];
-      } else if (label.tag) {
-        [label setAsUnselected];
-      }
+  NSUInteger labelIndex = currentScore - _settings.minimumScore;
+  
+  [scoreLabels enumerateObjectsUsingBlock:^(WTRSingleScoreLabel * _Nonnull label, NSUInteger idx, BOOL * _Nonnull stop) {
+    if (idx == labelIndex) {
+      [label setAsSelected];
+    } else {
+      [label setAsUnselected];
     }
-    _currentValue = currentScore;
-  }
+  }];
 }
 
 @end

@@ -59,22 +59,4 @@
   self.font = [UIFont systemFontOfSize:16];
 }
 
-- (void)addConstraintsWithLeftConstraintConstant:(CGFloat)leftConstant {
-  UIView *superView = self.superview;
-
-  self.leftConstraint = [NSLayoutConstraint constraintWithItem:self
-                                                     attribute:NSLayoutAttributeCenterX
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:superView
-                                                     attribute:NSLayoutAttributeLeft
-                                                    multiplier:1
-                                                      constant:leftConstant];
-
-  [superView addConstraint:self.leftConstraint];
-
-  [[[self wtr_centerYConstraint] toSecondViewCenterY:superView] addToView:superView];
-  [self wtr_constraintWidth:24];
-  [self wtr_constraintHeight:16];
-}
-
 @end
