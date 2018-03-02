@@ -89,11 +89,6 @@ static const CGFloat ThumbSize = 24.0;
   }
 }
 
-- (NSUInteger) numberOfDots
-{
-  return (self.maximumValue - self.minimumValue + 1);
-}
-
 - (void)addDots {
   // Remove any previous dots
   [dots enumerateObjectsUsingBlock:^(WTRSliderDot * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -104,7 +99,7 @@ static const CGFloat ThumbSize = 24.0;
   }];
   
   // Sanity check
-  NSUInteger dotCount = [self numberOfDots];
+  NSUInteger dotCount = self.maximumValue - self.minimumValue + 1;
   if (dotCount < 2) {
     return;
   }
