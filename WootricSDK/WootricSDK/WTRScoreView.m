@@ -26,7 +26,7 @@
 #import "WTRSingleScoreLabel.h"
 #import "WTRColor.h"
 
-static const CGFloat SideMargin = 8.0;
+static const CGFloat SideMargin = 6.0;
 
 @interface WTRScoreView ()
 
@@ -71,6 +71,7 @@ static const CGFloat SideMargin = 8.0;
   
   NSMutableArray<WTRSingleScoreLabel *> * newLabels = [[NSMutableArray alloc] initWithCapacity:labelCount];
   NSMutableArray<UIView *> * newSpacers = [[NSMutableArray alloc] initWithCapacity:labelCount - 1];
+  WTRSingleScoreLabel * firstLabel = nil;
   
   for (int i = _settings.minimumScore; i <= _settings.maximumScore; i++) {
     WTRSingleScoreLabel * label = [[WTRSingleScoreLabel alloc] initWithColor:_labelColor];
@@ -80,6 +81,13 @@ static const CGFloat SideMargin = 8.0;
     
     NSLayoutConstraint * centerY = [NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
     [self addConstraint:centerY];
+    
+    if (firstLabel == nil) {
+      firstLabel = label;
+    } else {
+      NSLayoutConstraint * sameWidth = [NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:firstLabel attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+      [self addConstraint:sameWidth];
+    }
   }
   
   // Pin leftmost and rightmost labels to edges
