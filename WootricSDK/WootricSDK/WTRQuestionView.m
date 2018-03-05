@@ -111,6 +111,17 @@
   [self setupNotLikelyAnchorConstraints];
 }
 
+/**
+ *  Returns the safe area layout guide if available, otherwise self
+ */
+- (id) layoutAreaItemForConstraints {
+  if (@available(iOS 11.0, *)) {
+    return self.safeAreaLayoutGuide;
+  }
+  
+  return self;
+}
+
 #pragma mark - Subviews setup
 
 - (void)setupQuestionLabel {
@@ -192,7 +203,6 @@
 }
 
 - (void)setupQuestionLabelConstraints {
-  //  CGFloat topMargin = [self isSmallerScreenDevice] ? 30 : 40;
   NSLayoutConstraint *constTop = [NSLayoutConstraint constraintWithItem:_questionLabel
                                                               attribute:NSLayoutAttributeTop
                                                               relatedBy:NSLayoutRelationEqual
@@ -202,7 +212,6 @@
                                                                constant:16];
   [self addConstraint:constTop];
 
-  //  CGFloat margin = [self isSmallerScreenDevice] ? 20 : 50;
   NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:_questionLabel
                                                                attribute:NSLayoutAttributeLeft
                                                                relatedBy:NSLayoutRelationEqual
@@ -226,7 +235,7 @@
   NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:_scoreSlider
                                                             attribute:NSLayoutAttributeCenterX
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self
+                                                               toItem:[self layoutAreaItemForConstraints]
                                                             attribute:NSLayoutAttributeCenterX
                                                            multiplier:1
                                                              constant:0];
@@ -244,7 +253,7 @@
   NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:_scoreSlider
                                                                 attribute:NSLayoutAttributeRight
                                                                 relatedBy:NSLayoutRelationEqual
-                                                                   toItem:self
+                                                                   toItem:[self layoutAreaItemForConstraints]
                                                                 attribute:NSLayoutAttributeRight
                                                                multiplier:1
                                                                  constant:-17];
@@ -254,7 +263,7 @@
   NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:_scoreSlider
                                                                attribute:NSLayoutAttributeLeft
                                                                relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self
+                                                                  toItem:[self layoutAreaItemForConstraints]
                                                                attribute:NSLayoutAttributeLeft
                                                               multiplier:1
                                                                 constant:17];
@@ -275,7 +284,7 @@
   NSLayoutConstraint *constRight = [NSLayoutConstraint constraintWithItem:_scoreLabel
                                                                 attribute:NSLayoutAttributeRight
                                                                 relatedBy:NSLayoutRelationEqual
-                                                                   toItem:self
+                                                                   toItem:[self layoutAreaItemForConstraints]
                                                                 attribute:NSLayoutAttributeRight
                                                                multiplier:1
                                                                  constant:-15];
@@ -285,7 +294,7 @@
   NSLayoutConstraint *constLeft = [NSLayoutConstraint constraintWithItem:_scoreLabel
                                                                attribute:NSLayoutAttributeLeft
                                                                relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self
+                                                                  toItem:[self layoutAreaItemForConstraints]
                                                                attribute:NSLayoutAttributeLeft
                                                               multiplier:1
                                                                 constant:15];
