@@ -34,7 +34,6 @@
 
 @interface WTRSurveyViewController ()
 
-@property (nonatomic, assign) BOOL scrolled;
 @property (nonatomic, assign) BOOL alreadyVoted;
 @property (nonatomic, assign) CGFloat keyboardHeight;
 @property (nonatomic, strong) CAGradientLayer *gradient;
@@ -92,7 +91,6 @@
 
 - (void)editScoreButtonPressed:(UIButton *)sender {
   [_feedbackView textViewResignFirstResponder];
-  _scrolled = NO;
   [self setQuestionViewVisible:YES andFeedbackViewVisible:NO];
 }
 
@@ -328,7 +326,6 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
   [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-  _scrolled = NO;
 
   BOOL isFromLandscape = UIInterfaceOrientationIsLandscape(fromInterfaceOrientation);
   CGRect bounds = self.view.bounds;
@@ -357,23 +354,6 @@
     self->_scrollView.scrollIndicatorInsets = insets;
     self->_scrollView.contentOffset = contentOffset;
   } completion:nil];
-}
-
-- (void)adjustInsetForKeyboardShow:(BOOL)show notification:(NSNotification *)notification {
-  NSDictionary *userInfo = notification.userInfo ? notification.userInfo : @{};
-  CGRect keyboardFrame = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-  double adjustmentHeight = CGRectGetHeight(keyboardFrame) * (show ? 1 : -1);
-  UIEdgeInsets contentInsets = UIEdgeInsetsMake(0, 0, adjustmentHeight, 0);
-  _scrollView.contentInset = contentInsets;
-  _scrollView.scrollIndicatorInsets = contentInsets;
-
-  if ((_keyboardHeight != keyboardFrame.size.height)) {
-    _keyboardHeight = keyboardFrame.size.height;
-    [_scrollView setContentOffset:CGPointMake(0, _keyboardHeight) animated:YES];
-  } else if (!_scrolled) {
-    [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
-    _scrolled = YES;
-  }
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
