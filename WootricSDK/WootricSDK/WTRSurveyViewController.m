@@ -349,6 +349,20 @@
   UIEdgeInsets insets = CGRectIsEmpty(overlap) ? UIEdgeInsetsZero : UIEdgeInsetsMake(0.0, 0.0, overlap.size.height, 0.0);
   CGPoint contentOffset = CGPointMake(0.0, insets.bottom);
   
+  // If the text view is off screen, fix that
+  if ([_feedbackView isActive]) {
+    CGRect firstResponderFrame = [_feedbackView frameForFirstResponder];
+    
+    if (!CGRectIsEmpty(firstResponderFrame)) {
+      // We have a first responder within the feedback view.  Is it off screen?
+      CGRect firstResponderFrameInScrollView = [_scrollView convertRect:firstResponderFrame fromView:_feedbackView];
+      
+      if (contentOffset.y > firstResponderFrameInScrollView.origin.y) {
+        contentOffset.y = firstResponderFrameInScrollView.origin.y;
+      }
+    }
+  }
+  
   [UIView animateWithDuration:animationDuration delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
     self->_scrollView.contentInset = insets;
     self->_scrollView.scrollIndicatorInsets = insets;
