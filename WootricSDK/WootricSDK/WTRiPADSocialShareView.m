@@ -28,6 +28,7 @@
 #import "NSString+FontAwesome.h"
 #import "WTRiPADThankYouButton.h"
 #import "SimpleConstraints.h"
+#import "UIView+SafeArea.h"
 
 @interface WTRiPADSocialShareView ()
 
@@ -210,25 +211,28 @@
 #pragma mark - Setup Constraints
 
 - (void)setupFinalThankYouLabelConstraints {
-  [[[[_finalThankYouLabel wtr_topConstraint] toSecondItemTop:self] withConstant:16] addToView:self];
-  [[[[_finalThankYouLabel wtr_leftConstraint] toSecondItemLeft:self] withConstant:24] addToView:self];
+  id layoutArea = [self layoutAreaItemForConstraints];
+  [[[[_finalThankYouLabel wtr_topConstraint] toSecondItemTop:layoutArea] withConstant:16] addToView:self];
+  [[[[_finalThankYouLabel wtr_leftConstraint] toSecondItemLeft:layoutArea] withConstant:24] addToView:self];
   [[[[self wtr_rightConstraint] toSecondItemRight:_finalThankYouLabel] withConstant:24] addToView:self];
 }
 
 - (void)setupCustomThankYouLabelConstraints {
-  [[[[_customThankYouLabel wtr_leftConstraint] toSecondItemLeft:self] withConstant:24] addToView:self];
-  [[[[_customThankYouLabel wtr_rightConstraint] toSecondItemRight:self] withConstant:-24] addToView:self];
+  id layoutArea = [self layoutAreaItemForConstraints];
+  [[[[_customThankYouLabel wtr_leftConstraint] toSecondItemLeft:layoutArea] withConstant:24] addToView:self];
+  [[[[_customThankYouLabel wtr_rightConstraint] toSecondItemRight:layoutArea] withConstant:-24] addToView:self];
   [[[[_customThankYouLabel wtr_topConstraint] toSecondItemBottom:_finalThankYouLabel] withConstant:12] addToView:self];
 }
 
 - (void)setupThankYouButtonConstraints {
+  id layoutArea = [self layoutAreaItemForConstraints];
   [_thankYouButton wtr_constraintHeight:40];
-  [[[[_thankYouButton wtr_bottomConstraint] toSecondItemBottom:self] withConstant:-44] addToView:self];
+  [[[[_thankYouButton wtr_bottomConstraint] toSecondItemBottom:layoutArea] withConstant:-44] addToView:self];
 
   _thankYouXConstraint = [NSLayoutConstraint constraintWithItem:_thankYouButton
                                                       attribute:NSLayoutAttributeCenterX
                                                       relatedBy:NSLayoutRelationEqual
-                                                         toItem:self
+                                                         toItem:layoutArea
                                                       attribute:NSLayoutAttributeCenterX
                                                      multiplier:1
                                                        constant:0];
@@ -236,13 +240,14 @@
 }
 
 - (void)setupNoThanksButtonConstraints {
+  id layoutArea = [self layoutAreaItemForConstraints];
   [_noThanksButton wtr_constraintHeight:40];
-  [[[[_noThanksButton wtr_bottomConstraint] toSecondItemBottom:self] withConstant:-44] addToView:self];
+  [[[[_noThanksButton wtr_bottomConstraint] toSecondItemBottom:layoutArea] withConstant:-44] addToView:self];
 
   _noThanksXConstraint = [NSLayoutConstraint constraintWithItem:_noThanksButton
                                                       attribute:NSLayoutAttributeCenterX
                                                       relatedBy:NSLayoutRelationEqual
-                                                         toItem:self
+                                                         toItem:layoutArea
                                                       attribute:NSLayoutAttributeCenterX
                                                      multiplier:1
                                                        constant:0];
@@ -250,14 +255,15 @@
 }
 
 - (void)setupFacebookButtonConstraints {
+  id layoutArea = [self layoutAreaItemForConstraints];
   [_facebookButton wtr_constraintWidth:32];
   [_facebookButton wtr_constraintHeight:32];
-  [[[[_facebookButton wtr_bottomConstraint] toSecondItemBottom:self] withConstant:-48] addToView:self];
+  [[[[_facebookButton wtr_bottomConstraint] toSecondItemBottom:layoutArea] withConstant:-48] addToView:self];
 
   _facebookXConstraint = [NSLayoutConstraint constraintWithItem:_facebookButton
                                                       attribute:NSLayoutAttributeCenterX
                                                       relatedBy:NSLayoutRelationEqual
-                                                         toItem:self
+                                                         toItem:layoutArea
                                                       attribute:NSLayoutAttributeCenterX
                                                      multiplier:1
                                                        constant:0];
@@ -265,14 +271,15 @@
 }
 
 - (void)setupTwitterButtonConstraints {
+  id layoutArea = [self layoutAreaItemForConstraints];
   [_twitterButton wtr_constraintWidth:32];
   [_twitterButton wtr_constraintHeight:32];
-  [[[[_twitterButton wtr_bottomConstraint] toSecondItemBottom:self] withConstant:-48] addToView:self];
+  [[[[_twitterButton wtr_bottomConstraint] toSecondItemBottom:layoutArea] withConstant:-48] addToView:self];
 
   _twitterXConstraint = [NSLayoutConstraint constraintWithItem:_twitterButton
                                                      attribute:NSLayoutAttributeCenterX
                                                      relatedBy:NSLayoutRelationEqual
-                                                        toItem:self
+                                                        toItem:layoutArea
                                                      attribute:NSLayoutAttributeCenterX
                                                     multiplier:1
                                                       constant:0];
@@ -280,14 +287,15 @@
 }
 
 - (void)setupFacebookLikeButtonConstraints {
+  id layoutArea = [self layoutAreaItemForConstraints];
   [_facebookLikeButton wtr_constraintWidth:32];
   [_facebookLikeButton wtr_constraintHeight:32];
-  [[[[_facebookLikeButton wtr_bottomConstraint] toSecondItemBottom:self] withConstant:-48] addToView:self];
+  [[[[_facebookLikeButton wtr_bottomConstraint] toSecondItemBottom:layoutArea] withConstant:-48] addToView:self];
     
   _facebookLikeXConstraint = [NSLayoutConstraint constraintWithItem:_facebookLikeButton
                                                           attribute:NSLayoutAttributeCenterX
                                                           relatedBy:NSLayoutRelationEqual
-                                                             toItem:self
+                                                             toItem:layoutArea
                                                           attribute:NSLayoutAttributeCenterX
                                                          multiplier:1
                                                            constant:0];

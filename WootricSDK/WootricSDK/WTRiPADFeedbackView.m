@@ -27,6 +27,7 @@
 #import "WTRSurveyViewController.h"
 #import "SimpleConstraints.h"
 #import "UIItems.h"
+#import "UIView+SafeArea.h"
 
 @interface WTRiPADFeedbackView ()
 
@@ -134,22 +135,24 @@
 - (void)setupSendButtonConstraints {
   [_sendButton wtr_constraintWidth:100];
   [[[[_sendButton wtr_topConstraint] toSecondItemBottom:_followupLabel] withConstant:8] addToView:self];
-  [[[_sendButton wtr_bottomConstraint] toSecondItemBottom:self] addToView:self];
+  [[[_sendButton wtr_bottomConstraint] toSecondItemBottom:[self layoutAreaItemForConstraints]] addToView:self];
   [[[_sendButton wtr_leftConstraint] toSecondItemRight:_feedbackTextView] addToView:self];
 }
 
 - (void)setupFollowupLabelConstraints {
-  [[[_followupLabel wtr_centerXConstraint] toSecondItemCenterX:self] addToView:self];
-  [[[[_followupLabel wtr_topConstraint] toSecondItemTop:self] withConstant:20] addToView:self];
-  [[[[_followupLabel wtr_leftConstraint] toSecondItemLeft:self] withConstant:16] addToView:self];
-  [[[[_followupLabel wtr_rightConstraint] toSecondItemRight:self] withConstant:-16] addToView:self];
+  id layoutArea = [self layoutAreaItemForConstraints];
+  [[[_followupLabel wtr_centerXConstraint] toSecondItemCenterX:layoutArea] addToView:self];
+  [[[[_followupLabel wtr_topConstraint] toSecondItemTop:layoutArea] withConstant:20] addToView:self];
+  [[[[_followupLabel wtr_leftConstraint] toSecondItemLeft:layoutArea] withConstant:16] addToView:self];
+  [[[[_followupLabel wtr_rightConstraint] toSecondItemRight:layoutArea] withConstant:-16] addToView:self];
 }
 
 - (void)setupFeedbackTextViewConstraints {
-  [[[[_feedbackTextView wtr_leftConstraint] toSecondItemLeft:self] withConstant:16] addToView:self];
-  [[[[_feedbackTextView wtr_rightConstraint] toSecondItemRight:self] withConstant:-116] addToView:self];
+  id layoutArea = [self layoutAreaItemForConstraints];
+  [[[[_feedbackTextView wtr_leftConstraint] toSecondItemLeft:layoutArea] withConstant:16] addToView:self];
+  [[[[_feedbackTextView wtr_rightConstraint] toSecondItemRight:layoutArea] withConstant:-116] addToView:self];
   [[[[_feedbackTextView wtr_topConstraint] toSecondItemBottom:_followupLabel] withConstant:8] addToView:self];
-  [[[_feedbackTextView wtr_bottomConstraint] toSecondItemBottom:self] addToView:self];
+  [[[_feedbackTextView wtr_bottomConstraint] toSecondItemBottom:layoutArea] addToView:self];
 }
 
 - (void)setupFeedbackLabelConstraints {

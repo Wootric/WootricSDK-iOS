@@ -27,6 +27,7 @@
 #import "WTRColor.h"
 #import "SimpleConstraints.h"
 #import "UIItems.h"
+#import "UIView+SafeArea.h"
 
 @interface WTRiPADQuestionView ()
 
@@ -112,13 +113,14 @@
 }
 
 - (void)setupQuestionLabelConstraints {
-  [[[[_questionLabel wtr_topConstraint] toSecondItemTop:self] withConstant:20] addToView:self];
-  [[[[_questionLabel wtr_leftConstraint] toSecondItemLeft:self] withConstant:45] addToView:self];
+  id layoutArea = [self layoutAreaItemForConstraints];
+  [[[[_questionLabel wtr_topConstraint] toSecondItemTop:layoutArea] withConstant:20] addToView:self];
+  [[[[_questionLabel wtr_leftConstraint] toSecondItemLeft:layoutArea] withConstant:45] addToView:self];
   [[[[self wtr_rightConstraint] toSecondItemRight:_questionLabel] withConstant:45] addToView:self];
 }
 
 - (void)setupScoreViewConstraints {
-  [[[_scoreView wtr_centerXConstraint] toSecondItemCenterX:self] addToView:self];
+  [[[_scoreView wtr_centerXConstraint] toSecondItemCenterX:[self layoutAreaItemForConstraints]] addToView:self];
   [[[[_scoreView wtr_topConstraint] toSecondItemBottom:_questionLabel] withConstant:20] addToView:self];
 }
 
