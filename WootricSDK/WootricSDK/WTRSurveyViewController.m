@@ -339,21 +339,24 @@
 
 - (void)registerForKeyboardNotification {
   [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:NSSelectorFromString(@"keyboardWillShow:")
-                                               name:UIKeyboardWillShowNotification
-                                             object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:NSSelectorFromString(@"keyboardWillHide:")
-                                               name:UIKeyboardWillHideNotification
-                                             object:nil];
+                                            selector:@selector(keyboardFrameChanging:)
+                                                name:UIKeyboardWillChangeFrameNotification
+                                              object:nil];
 }
 
-- (void)keyboardWillShow:(NSNotification *)notification {
-  [self adjustInsetForKeyboardShow:YES notification:notification];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification {
-  [self adjustInsetForKeyboardShow:NO notification:notification];
+- (void)keyboardFrameChanging:(NSNotification *)notification {
+  CGRect keyboardFrameInWindow = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+  CGRect scrollViewFrameInWindow = [_scrollView convertRect:_scrollView.bounds toView:nil];
+  CGRect overlap = CGRectIntersection(keyboardFrameInWindow, scrollViewFrameInWindow);
+  NSTimeInterval animationDuration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
+  UIEdgeInsets insets = CGRectIsEmpty(overlap) ? UIEdgeInsetsZero : UIEdgeInsetsMake(0.0, 0.0, overlap.size.height, 0.0);
+  CGPoint contentOffset = CGPointMake(0.0, insets.bottom);
+  
+  [UIView animateWithDuration:animationDuration delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+    self->_scrollView.contentInset = insets;
+    self->_scrollView.scrollIndicatorInsets = insets;
+    self->_scrollView.contentOffset = contentOffset;
+  } completion:nil];
 }
 
 - (void)adjustInsetForKeyboardShow:(BOOL)show notification:(NSNotification *)notification {
