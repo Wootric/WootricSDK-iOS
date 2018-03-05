@@ -27,6 +27,7 @@
 #import "WTRScoreView.h"
 #import "WTRSlider.h"
 #import "UIItems.h"
+#import "UIView+SafeArea.h"
 
 @interface WTRQuestionView ()
 
@@ -109,17 +110,6 @@
   [self setupScoreLabelConstraints];
   [self setupLikelyAnchorConstraints];
   [self setupNotLikelyAnchorConstraints];
-}
-
-/**
- *  Returns the safe area layout guide if available, otherwise self
- */
-- (id) layoutAreaItemForConstraints {
-  if (@available(iOS 11.0, *)) {
-    return self.safeAreaLayoutGuide;
-  }
-  
-  return self;
 }
 
 #pragma mark - Subviews setup
