@@ -26,7 +26,7 @@
 #import "WTRSingleScoreLabel.h"
 #import "WTRColor.h"
 
-static const CGFloat SideMargin = 6.0;
+static const CGFloat EndNumbersDistanceCenterToEdge = 10.0;
 
 @interface WTRScoreView ()
 
@@ -91,8 +91,8 @@ static const CGFloat SideMargin = 6.0;
   }
   
   // Pin leftmost and rightmost labels to edges
-  NSLayoutConstraint * leftmostLabelLeftness = [NSLayoutConstraint constraintWithItem:[newLabels firstObject] attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:SideMargin];
-  NSLayoutConstraint * rightmostLabelRightness = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:[newLabels lastObject] attribute:NSLayoutAttributeRight multiplier:1.0 constant:SideMargin];
+  NSLayoutConstraint * leftmostLabelLeftness = [NSLayoutConstraint constraintWithItem:[newLabels firstObject] attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:EndNumbersDistanceCenterToEdge];
+  NSLayoutConstraint * rightmostLabelRightness = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:[newLabels lastObject] attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:EndNumbersDistanceCenterToEdge];
   [self addConstraints:@[leftmostLabelLeftness, rightmostLabelRightness]];
   
   // Put spacers between labels
@@ -111,8 +111,8 @@ static const CGFloat SideMargin = 6.0;
     NSLayoutConstraint * height = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:1.0];
     
     // Hold them both
-    NSLayoutConstraint * leftHandhold = [NSLayoutConstraint constraintWithItem:leftLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:spacer attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
-    NSLayoutConstraint * rightHandhold = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:rightLabel attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
+    NSLayoutConstraint * leftHandhold = [NSLayoutConstraint constraintWithItem:leftLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:spacer attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
+    NSLayoutConstraint * rightHandhold = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:rightLabel attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
     [self addConstraints:@[height, leftHandhold, rightHandhold]];
     
     // Same widths
