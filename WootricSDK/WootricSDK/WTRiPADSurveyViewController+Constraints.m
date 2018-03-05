@@ -43,15 +43,15 @@
 
 - (void)setupPoweredByWootricConstraints {
   [self.poweredByWootric wtr_constraintHeight:12];
-  [[[self.poweredByWootric wtr_centerXConstraint] toSecondViewCenterX:self.modalView] addToView:self.modalView];
-  [[[[self.poweredByWootric wtr_bottomConstraint] toSecondViewBottom:self.modalView] withConstant:-14] addToView:self.modalView];
+  [[[self.poweredByWootric wtr_centerXConstraint] toSecondItemCenterX:self.modalView] addToView:self.modalView];
+  [[[[self.poweredByWootric wtr_bottomConstraint] toSecondItemBottom:self.modalView] withConstant:-14] addToView:self.modalView];
 }
 
 - (void)setupScrollViewConstraints {
   [self.scrollView wtr_constraintWidthEqualSecondViewWidth:self.view];
   [self.scrollView wtr_constraintHeightEqualSecondViewHeight:self.view];
-  [[[self.scrollView wtr_centerXConstraint] toSecondViewCenterX:self.view] addConstraint];
-  [[[self.scrollView wtr_centerYConstraint] toSecondViewCenterY:self.view] addConstraint];
+  [[[self.scrollView wtr_centerXConstraint] toSecondItemCenterX:self.view] addConstraint];
+  [[[self.scrollView wtr_centerYConstraint] toSecondItemCenterY:self.view] addConstraint];
 }
 
 - (void)setupModalConstraints {
@@ -76,31 +76,31 @@
   [self.scrollView addConstraint:self.constraintTopToModalTop];
 
   [self.modalView wtr_constraintWidthEqualSecondViewWidth:self.view];
-  [[[self.modalView wtr_centerXConstraint] toSecondViewCenterX:self.view] addToView:self.view];
-  [[[self.modalView wtr_bottomConstraint] toSecondViewBottom:self.scrollView] addToView:self.scrollView];
-  [[[self.modalView wtr_leftConstraint] toSecondViewLeft:self.scrollView] addToView:self.scrollView];
-  [[[self.modalView wtr_rightConstraint] toSecondViewRight:self.scrollView] addToView:self.scrollView];
+  [[[self.modalView wtr_centerXConstraint] toSecondItemCenterX:self.view] addToView:self.view];
+  [[[self.modalView wtr_bottomConstraint] toSecondItemBottom:self.scrollView] addToView:self.scrollView];
+  [[[self.modalView wtr_leftConstraint] toSecondItemLeft:self.scrollView] addToView:self.scrollView];
+  [[[self.modalView wtr_rightConstraint] toSecondItemRight:self.scrollView] addToView:self.scrollView];
 }
 
 - (void)setupQuestionViewConstraints {
   [self.questionView wtr_constraintWidthEqualSecondViewWidth:self.view];
   [self.questionView wtr_constraintHeight:110];
-  [[[self.questionView wtr_centerXConstraint] toSecondViewCenterX:self.modalView] addToView:self.modalView];
-  self.constraintQuestionTopToModalTop = [[self.questionView wtr_topConstraint] toSecondViewTop:self.modalView];
+  [[[self.questionView wtr_centerXConstraint] toSecondItemCenterX:self.modalView] addToView:self.modalView];
+  self.constraintQuestionTopToModalTop = [[self.questionView wtr_topConstraint] toSecondItemTop:self.modalView];
   [self.constraintQuestionTopToModalTop addToView:self.modalView];
 }
 
 - (void)setupFeedbackViewConstraints {
   [self.feedbackView wtr_constraintHeight:100];
   [self.feedbackView wtr_constraintWidthToSecondViewWidth:self.view withConstant:-80];
-  [[[self.feedbackView wtr_topConstraint] toSecondViewTop:self.modalView] addToView:self.modalView];
-  [[[self.feedbackView wtr_centerXConstraint] toSecondViewCenterX:self.modalView] addToView:self.modalView];
+  [[[self.feedbackView wtr_topConstraint] toSecondItemTop:self.modalView] addToView:self.modalView];
+  [[[self.feedbackView wtr_centerXConstraint] toSecondItemCenterX:self.modalView] addToView:self.modalView];
 }
 
 - (void)setupSocialShareViewConstraints {
   [self.socialShareView wtr_constraintWidthEqualSecondViewWidth:self.view];
-  [[[self.socialShareView wtr_topConstraint] toSecondViewTop:self.modalView] addToView:self.modalView];
-  [[[self.socialShareView wtr_centerXConstraint] toSecondViewCenterX:self.modalView] addToView:self.modalView];
+  [[[self.socialShareView wtr_topConstraint] toSecondItemTop:self.modalView] addToView:self.modalView];
+  [[[self.socialShareView wtr_centerXConstraint] toSecondItemCenterX:self.modalView] addToView:self.modalView];
 
   self.socialShareViewHeightConstraint = [NSLayoutConstraint constraintWithItem:self.socialShareView
                                                                       attribute:NSLayoutAttributeHeight
@@ -114,16 +114,16 @@
 }
 
 - (void)setupFinalThankYouLabelConstraints {
-  [[[[self.finalThankYouLabel wtr_topConstraint] toSecondViewTop:self.modalView] withConstant:36] addToView:self.modalView];
-  [[[[self.finalThankYouLabel wtr_leftConstraint] toSecondViewLeft:self.modalView] withConstant:24] addToView:self.modalView];
-  [[[[self.finalThankYouLabel wtr_rightConstraint] toSecondViewRight:self.modalView] withConstant:-24] addToView:self.modalView];
+  [[[[self.finalThankYouLabel wtr_topConstraint] toSecondItemTop:self.modalView] withConstant:36] addToView:self.modalView];
+  [[[[self.finalThankYouLabel wtr_leftConstraint] toSecondItemLeft:self.modalView] withConstant:24] addToView:self.modalView];
+  [[[[self.finalThankYouLabel wtr_rightConstraint] toSecondItemRight:self.modalView] withConstant:-24] addToView:self.modalView];
 }
 
 - (void)setupDismissButtonConstraints {
   [self.dismissButton wtr_constraintHeight:30];
   [self.dismissButton wtr_constraintWidth:30];
-  [[[[self.dismissButton wtr_topConstraint] toSecondViewTop:self.modalView] withConstant:8] addToView:self.view];
-  [[[[self.dismissButton wtr_rightConstraint] toSecondViewRight:self.modalView] withConstant:-8] addToView:self.view];
+  [[[[self.dismissButton wtr_topConstraint] toSecondItemTop:self.modalView] withConstant:8] addToView:self.view];
+  [[[[self.dismissButton wtr_rightConstraint] toSecondItemRight:self.modalView] withConstant:-8] addToView:self.view];
 }
 
 @end

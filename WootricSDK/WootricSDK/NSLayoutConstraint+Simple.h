@@ -27,12 +27,12 @@
 @interface NSLayoutConstraint (Simple)
 
 - (NSLayoutConstraint *)withConstant:(CGFloat)constant;
-- (NSLayoutConstraint *)toSecondViewTop:(UIView *)secondView;
-- (NSLayoutConstraint *)toSecondViewBottom:(UIView *)secondView;
-- (NSLayoutConstraint *)toSecondViewLeft:(UIView *)secondView;
-- (NSLayoutConstraint *)toSecondViewRight:(UIView *)secondView;
-- (NSLayoutConstraint *)toSecondViewCenterX:(UIView *)secondView;
-- (NSLayoutConstraint *)toSecondViewCenterY:(UIView *)secondView;
+- (NSLayoutConstraint *)toSecondItemTop:(id)secondItem;
+- (NSLayoutConstraint *)toSecondItemBottom:(id)secondItem;
+- (NSLayoutConstraint *)toSecondItemLeft:(id)secondItem;
+- (NSLayoutConstraint *)toSecondItemRight:(id)secondItem;
+- (NSLayoutConstraint *)toSecondItemCenterX:(id)secondItem;
+- (NSLayoutConstraint *)toSecondItemCenterY:(id)secondItem;
 - (void)addToView:(UIView *)view;
 - (void)addConstraint;
 

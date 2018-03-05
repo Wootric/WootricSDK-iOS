@@ -42,11 +42,11 @@
   return constraint;
 }
 
-- (NSLayoutConstraint *)toSecondViewTop:(UIView *)secondView {
+- (NSLayoutConstraint *)toSecondItemTop:(id)secondItem {
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.firstItem
                                                                 attribute:self.firstAttribute
                                                                 relatedBy:self.relation
-                                                                   toItem:secondView
+                                                                   toItem:secondItem
                                                                 attribute:NSLayoutAttributeTop
                                                                multiplier:self.multiplier
                                                                  constant:self.constant];
@@ -54,11 +54,11 @@
   return constraint;
 }
 
-- (NSLayoutConstraint *)toSecondViewBottom:(UIView *)secondView {
+- (NSLayoutConstraint *)toSecondItemBottom:(id)secondItem {
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.firstItem
                                                                 attribute:self.firstAttribute
                                                                 relatedBy:self.relation
-                                                                   toItem:secondView
+                                                                   toItem:secondItem
                                                                 attribute:NSLayoutAttributeBottom
                                                                multiplier:self.multiplier
                                                                  constant:self.constant];
@@ -66,11 +66,11 @@
   return constraint;
 }
 
-- (NSLayoutConstraint *)toSecondViewLeft:(UIView *)secondView {
+- (NSLayoutConstraint *)toSecondItemLeft:(id)secondItem {
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.firstItem
                                                                 attribute:self.firstAttribute
                                                                 relatedBy:self.relation
-                                                                   toItem:secondView
+                                                                   toItem:secondItem
                                                                 attribute:NSLayoutAttributeLeft
                                                                multiplier:self.multiplier
                                                                  constant:self.constant];
@@ -78,11 +78,11 @@
   return constraint;
 }
 
-- (NSLayoutConstraint *)toSecondViewRight:(UIView *)secondView {
+- (NSLayoutConstraint *)toSecondItemRight:(id)secondItem {
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.firstItem
                                                                 attribute:self.firstAttribute
                                                                 relatedBy:self.relation
-                                                                   toItem:secondView
+                                                                   toItem:secondItem
                                                                 attribute:NSLayoutAttributeRight
                                                                multiplier:self.multiplier
                                                                  constant:self.constant];
@@ -90,11 +90,11 @@
   return constraint;
 }
 
-- (NSLayoutConstraint *)toSecondViewCenterX:(UIView *)secondView {
+- (NSLayoutConstraint *)toSecondItemCenterX:(id)secondItem {
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.firstItem
                                                                 attribute:self.firstAttribute
                                                                 relatedBy:self.relation
-                                                                   toItem:secondView
+                                                                   toItem:secondItem
                                                                 attribute:NSLayoutAttributeCenterX
                                                                multiplier:self.multiplier
                                                                  constant:self.constant];
@@ -102,11 +102,11 @@
   return constraint;
 }
 
-- (NSLayoutConstraint *)toSecondViewCenterY:(UIView *)secondView {
+- (NSLayoutConstraint *)toSecondItemCenterY:(id)secondItem {
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.firstItem
                                                                 attribute:self.firstAttribute
                                                                 relatedBy:self.relation
-                                                                   toItem:secondView
+                                                                   toItem:secondItem
                                                                 attribute:NSLayoutAttributeCenterY
                                                                multiplier:self.multiplier
                                                                  constant:self.constant];

@@ -92,8 +92,8 @@
       rightConstraint = 10;
     }
   }
-  [[[_likelyAnchor wtr_centerYConstraint] toSecondViewCenterY:_scoreView] addToView:self];
-  [[[[_likelyAnchor wtr_leftConstraint] toSecondViewRight:_scoreView] withConstant:rightConstraint] addToView:self];
+  [[[_likelyAnchor wtr_centerYConstraint] toSecondItemCenterY:_scoreView] addToView:self];
+  [[[[_likelyAnchor wtr_leftConstraint] toSecondItemRight:_scoreView] withConstant:rightConstraint] addToView:self];
 }
 
 - (void)setupNotLikelyAnchorConstraints {
@@ -107,19 +107,19 @@
       leftConstraint = -10;
     }
   }
-  [[[_notLikelyAnchor wtr_centerYConstraint] toSecondViewCenterY:_scoreView] addToView:self];
-  [[[[_notLikelyAnchor wtr_rightConstraint] toSecondViewLeft:_scoreView] withConstant:leftConstraint] addToView:self];
+  [[[_notLikelyAnchor wtr_centerYConstraint] toSecondItemCenterY:_scoreView] addToView:self];
+  [[[[_notLikelyAnchor wtr_rightConstraint] toSecondItemLeft:_scoreView] withConstant:leftConstraint] addToView:self];
 }
 
 - (void)setupQuestionLabelConstraints {
-  [[[[_questionLabel wtr_topConstraint] toSecondViewTop:self] withConstant:20] addToView:self];
-  [[[[_questionLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:45] addToView:self];
-  [[[[self wtr_rightConstraint] toSecondViewRight:_questionLabel] withConstant:45] addToView:self];
+  [[[[_questionLabel wtr_topConstraint] toSecondItemTop:self] withConstant:20] addToView:self];
+  [[[[_questionLabel wtr_leftConstraint] toSecondItemLeft:self] withConstant:45] addToView:self];
+  [[[[self wtr_rightConstraint] toSecondItemRight:_questionLabel] withConstant:45] addToView:self];
 }
 
 - (void)setupScoreViewConstraints {
-  [[[_scoreView wtr_centerXConstraint] toSecondViewCenterX:self] addToView:self];
-  [[[[_scoreView wtr_topConstraint] toSecondViewBottom:_questionLabel] withConstant:20] addToView:self];
+  [[[_scoreView wtr_centerXConstraint] toSecondItemCenterX:self] addToView:self];
+  [[[[_scoreView wtr_topConstraint] toSecondItemBottom:_questionLabel] withConstant:20] addToView:self];
 }
 
 - (void)setupCircleScoreViewWithViewController:(UIViewController *)viewController {
