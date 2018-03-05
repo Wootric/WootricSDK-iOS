@@ -34,7 +34,6 @@
 
 @interface WTRiPADSurveyViewController ()
 
-@property (nonatomic, assign) BOOL scrolled;
 @property (nonatomic, assign) int currentScore;
 @property (nonatomic, assign) BOOL alreadyVoted;
 @property (nonatomic, assign) CGFloat keyboardHeight;
