@@ -113,16 +113,51 @@ static const CGFloat ThumbSize = 24.0;
     [self addSubview:dot];
     [self bringSubviewToFront:dot];
     
-    NSLayoutConstraint * centerY = [NSLayoutConstraint constraintWithItem:dot attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
-    NSLayoutConstraint * width = [NSLayoutConstraint constraintWithItem:dot attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:DotRadius];
-    NSLayoutConstraint * height = [NSLayoutConstraint constraintWithItem:dot attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:DotRadius];
+    NSLayoutConstraint * centerY = [NSLayoutConstraint constraintWithItem:dot
+                                                                attribute:NSLayoutAttributeCenterY
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self
+                                                                attribute:NSLayoutAttributeCenterY
+                                                               multiplier:1.0
+                                                                 constant:0.0];
+    
+    NSLayoutConstraint * width = [NSLayoutConstraint constraintWithItem:dot
+                                                              attribute:NSLayoutAttributeWidth
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:nil
+                                                              attribute:NSLayoutAttributeNotAnAttribute
+                                                             multiplier:1.0
+                                                               constant:DotRadius];
+    
+    NSLayoutConstraint * height = [NSLayoutConstraint constraintWithItem:dot
+                                                               attribute:NSLayoutAttributeHeight
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:nil
+                                                               attribute:NSLayoutAttributeNotAnAttribute
+                                                              multiplier:1.0
+                                                                constant:DotRadius];
+    
     [self addConstraints:@[centerY, width, height]];
   }
 
   // Pin edge dots to edges
   CGFloat margin = DotRadius;
-  NSLayoutConstraint * leftmostDotLeftness = [NSLayoutConstraint constraintWithItem:[newDots firstObject] attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:margin];
-  NSLayoutConstraint * rightmostDotRightness = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:[newDots lastObject] attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:margin];
+  NSLayoutConstraint * leftmostDotLeftness = [NSLayoutConstraint constraintWithItem:[newDots firstObject]
+                                                                          attribute:NSLayoutAttributeCenterX
+                                                                          relatedBy:NSLayoutRelationEqual
+                                                                             toItem:self
+                                                                          attribute:NSLayoutAttributeLeft
+                                                                         multiplier:1.0
+                                                                           constant:margin];
+  
+  NSLayoutConstraint * rightmostDotRightness = [NSLayoutConstraint constraintWithItem:self
+                                                                            attribute:NSLayoutAttributeRight
+                                                                            relatedBy:NSLayoutRelationEqual
+                                                                               toItem:[newDots lastObject]
+                                                                            attribute:NSLayoutAttributeCenterX
+                                                                           multiplier:1.0
+                                                                             constant:margin];
+  
   [self addConstraints:@[leftmostDotLeftness, rightmostDotRightness]];
   
   // Put invisible spacers between dots
@@ -140,18 +175,45 @@ static const CGFloat ThumbSize = 24.0;
     [newDotSpacers addObject:spacer];
     
     // 1 pt tall for no particular reason
-    NSLayoutConstraint * height = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:1.0];
+    NSLayoutConstraint * height = [NSLayoutConstraint constraintWithItem:spacer
+                                                               attribute:NSLayoutAttributeHeight
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:nil
+                                                               attribute:NSLayoutAttributeNotAnAttribute
+                                                              multiplier:1.0
+                                                                constant:1.0];
     
     // Hold on to those dots
-    NSLayoutConstraint * leftDotHandhold = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:leftDot attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.0];
-    NSLayoutConstraint * rightDotHandhold = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:rightDot attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
+    NSLayoutConstraint * leftDotHandhold = [NSLayoutConstraint constraintWithItem:spacer
+                                                                        attribute:NSLayoutAttributeLeft
+                                                                        relatedBy:NSLayoutRelationEqual
+                                                                           toItem:leftDot
+                                                                        attribute:NSLayoutAttributeRight
+                                                                       multiplier:1.0
+                                                                         constant:0.0];
+    
+    NSLayoutConstraint * rightDotHandhold = [NSLayoutConstraint constraintWithItem:spacer
+                                                                         attribute:NSLayoutAttributeRight
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:rightDot
+                                                                         attribute:NSLayoutAttributeLeft
+                                                                        multiplier:1.0
+                                                                          constant:0.0];
+    
     [self addConstraints:@[height, leftDotHandhold, rightDotHandhold]];
 
     // Same width for all spacers
     if (i == 0) {
       firstSpacer = spacer;
     } else {
-      NSLayoutConstraint * sameWidth = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:firstSpacer attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+      NSLayoutConstraint * sameWidth = [NSLayoutConstraint constraintWithItem:spacer
+                                                                    attribute:NSLayoutAttributeWidth
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:firstSpacer
+                                                                    attribute:NSLayoutAttributeWidth
+                                                                   multiplier:1.0
+                                                                     constant:0.0];
+      
       [self addConstraint:sameWidth];
     }
   }

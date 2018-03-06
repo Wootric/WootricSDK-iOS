@@ -79,20 +79,46 @@ static const CGFloat EndNumbersDistanceCenterToEdge = 10.0;
     [self addSubview:label];
     [newLabels addObject:label];
     
-    NSLayoutConstraint * centerY = [NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
+    NSLayoutConstraint * centerY = [NSLayoutConstraint constraintWithItem:label
+                                                                attribute:NSLayoutAttributeCenterY
+                                                                relatedBy:NSLayoutRelationEqual
+                                                                   toItem:self
+                                                                attribute:NSLayoutAttributeCenterY
+                                                               multiplier:1.0
+                                                                 constant:0.0];
     [self addConstraint:centerY];
     
     if (firstLabel == nil) {
       firstLabel = label;
     } else {
-      NSLayoutConstraint * sameWidth = [NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:firstLabel attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+      NSLayoutConstraint * sameWidth = [NSLayoutConstraint constraintWithItem:label
+                                                                    attribute:NSLayoutAttributeWidth
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:firstLabel
+                                                                    attribute:NSLayoutAttributeWidth
+                                                                   multiplier:1.0
+                                                                     constant:0.0];
       [self addConstraint:sameWidth];
     }
   }
   
   // Pin leftmost and rightmost labels to edges
-  NSLayoutConstraint * leftmostLabelLeftness = [NSLayoutConstraint constraintWithItem:[newLabels firstObject] attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:EndNumbersDistanceCenterToEdge];
-  NSLayoutConstraint * rightmostLabelRightness = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:[newLabels lastObject] attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:EndNumbersDistanceCenterToEdge];
+  NSLayoutConstraint * leftmostLabelLeftness = [NSLayoutConstraint constraintWithItem:[newLabels firstObject]
+                                                                            attribute:NSLayoutAttributeCenterX
+                                                                            relatedBy:NSLayoutRelationEqual
+                                                                               toItem:self
+                                                                            attribute:NSLayoutAttributeLeft
+                                                                           multiplier:1.0
+                                                                             constant:EndNumbersDistanceCenterToEdge];
+  
+  NSLayoutConstraint * rightmostLabelRightness = [NSLayoutConstraint constraintWithItem:self
+                                                                              attribute:NSLayoutAttributeRight
+                                                                              relatedBy:NSLayoutRelationEqual
+                                                                                 toItem:[newLabels lastObject]
+                                                                              attribute:NSLayoutAttributeCenterX
+                                                                             multiplier:1.0
+                                                                               constant:EndNumbersDistanceCenterToEdge];
+  
   [self addConstraints:@[leftmostLabelLeftness, rightmostLabelRightness]];
   
   // Put spacers between labels
@@ -108,18 +134,45 @@ static const CGFloat EndNumbersDistanceCenterToEdge = 10.0;
     [self addSubview:spacer];
     
     // 1 pt tall for no particular reason
-    NSLayoutConstraint * height = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:1.0];
+    NSLayoutConstraint * height = [NSLayoutConstraint constraintWithItem:spacer
+                                                               attribute:NSLayoutAttributeHeight
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:nil
+                                                               attribute:NSLayoutAttributeNotAnAttribute
+                                                              multiplier:1.0
+                                                                constant:1.0];
     
     // Hold them both
-    NSLayoutConstraint * leftHandhold = [NSLayoutConstraint constraintWithItem:leftLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:spacer attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
-    NSLayoutConstraint * rightHandhold = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:rightLabel attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+    NSLayoutConstraint * leftHandhold = [NSLayoutConstraint constraintWithItem:leftLabel
+                                                                     attribute:NSLayoutAttributeCenterX
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:spacer
+                                                                     attribute:NSLayoutAttributeLeft
+                                                                    multiplier:1.0
+                                                                      constant:0.0];
+    
+    NSLayoutConstraint * rightHandhold = [NSLayoutConstraint constraintWithItem:spacer
+                                                                      attribute:NSLayoutAttributeRight
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:rightLabel
+                                                                      attribute:NSLayoutAttributeCenterX
+                                                                     multiplier:1.0
+                                                                       constant:0.0];
+    
     [self addConstraints:@[height, leftHandhold, rightHandhold]];
     
     // Same widths
     if (i == 0) {
       firstSpacer = spacer;
     } else {
-      NSLayoutConstraint * sameWidth = [NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:firstSpacer attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+      NSLayoutConstraint * sameWidth = [NSLayoutConstraint constraintWithItem:spacer
+                                                                    attribute:NSLayoutAttributeWidth
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:firstSpacer
+                                                                    attribute:NSLayoutAttributeWidth
+                                                                   multiplier:1.0
+                                                                     constant:0.0];
+      
       [self addConstraint:sameWidth];
     }
     
