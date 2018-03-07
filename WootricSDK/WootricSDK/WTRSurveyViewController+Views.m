@@ -69,7 +69,10 @@
   self.finalThankYouLabel.lineBreakMode = NSLineBreakByWordWrapping;
   self.finalThankYouLabel.hidden = YES;
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
     self.finalThankYouLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightMedium];
+#pragma clang diagnostic pop
   } else {
     self.finalThankYouLabel.font = [UIFont systemFontOfSize:18];
   }

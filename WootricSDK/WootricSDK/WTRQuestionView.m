@@ -116,8 +116,11 @@
 
 - (void)setupQuestionLabel {
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
     _questionLabel = [UIItems questionLabelWithSettings:_settings
                                                       andFont:[UIFont systemFontOfSize:18 weight:UIFontWeightMedium]];
+#pragma clang diagnostic pop
   } else {
     _questionLabel = [UIItems questionLabelWithSettings:_settings
                                                       andFont:[UIFont systemFontOfSize:18]];

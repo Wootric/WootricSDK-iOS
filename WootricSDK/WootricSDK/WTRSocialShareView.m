@@ -162,9 +162,12 @@
 
 - (void)setupFinalThankYouLabel {
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
     _finalThankYouLabel = [UIItems finalThankYouLabelWithSettings:_settings
                                                         textColor:[UIColor blackColor]
                                                           andFont:[UIFont systemFontOfSize:18 weight:UIFontWeightMedium]];
+#pragma clang diagnostic pop
   } else {
     _finalThankYouLabel = [UIItems finalThankYouLabelWithSettings:_settings
                                                         textColor:[UIColor blackColor]
