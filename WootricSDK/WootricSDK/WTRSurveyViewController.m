@@ -34,7 +34,6 @@
 
 @interface WTRSurveyViewController ()
 
-@property (nonatomic, assign) BOOL scrolled;
 @property (nonatomic, assign) BOOL alreadyVoted;
 @property (nonatomic, assign) CGFloat keyboardHeight;
 @property (nonatomic, strong) CAGradientLayer *gradient;
@@ -95,7 +94,6 @@
 
 - (void)editScoreButtonPressed:(UIButton *)sender {
   [_feedbackView textViewResignFirstResponder];
-  _scrolled = NO;
   [self setQuestionViewVisible:YES andFeedbackViewVisible:NO];
 }
 
@@ -289,38 +287,38 @@
 
 - (void)registerForKeyboardNotification {
   [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:NSSelectorFromString(@"keyboardWillShow:")
-                                               name:UIKeyboardWillShowNotification
-                                             object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:NSSelectorFromString(@"keyboardWillHide:")
-                                               name:UIKeyboardWillHideNotification
-                                             object:nil];
+                                            selector:@selector(keyboardFrameChanging:)
+                                                name:UIKeyboardWillChangeFrameNotification
+                                              object:nil];
 }
 
-- (void)keyboardWillShow:(NSNotification *)notification {
-  [self adjustInsetForKeyboardShow:YES notification:notification];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification {
-  [self adjustInsetForKeyboardShow:NO notification:notification];
-}
-
-- (void)adjustInsetForKeyboardShow:(BOOL)show notification:(NSNotification *)notification {
-  NSDictionary *userInfo = notification.userInfo ? notification.userInfo : @{};
-  CGRect keyboardFrame = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-  double adjustmentHeight = CGRectGetHeight(keyboardFrame) * (show ? 1 : -1);
-  UIEdgeInsets contentInsets = UIEdgeInsetsMake(0, 0, adjustmentHeight, 0);
-  _scrollView.contentInset = contentInsets;
-  _scrollView.scrollIndicatorInsets = contentInsets;
-
-  if ((_keyboardHeight != keyboardFrame.size.height)) {
-    _keyboardHeight = keyboardFrame.size.height;
-    [_scrollView setContentOffset:CGPointMake(0, _keyboardHeight) animated:YES];
-  } else if (!_scrolled) {
-    [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
-    _scrolled = YES;
+- (void)keyboardFrameChanging:(NSNotification *)notification {
+  CGRect keyboardFrameInWindow = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+  CGRect scrollViewFrameInWindow = [_scrollView convertRect:_scrollView.bounds toView:nil];
+  CGRect overlap = CGRectIntersection(keyboardFrameInWindow, scrollViewFrameInWindow);
+  NSTimeInterval animationDuration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
+  UIEdgeInsets insets = CGRectIsEmpty(overlap) ? UIEdgeInsetsZero : UIEdgeInsetsMake(0.0, 0.0, overlap.size.height, 0.0);
+  CGPoint contentOffset = CGPointMake(0.0, insets.bottom);
+  
+  // If the text view is off screen, fix that
+  if ([_feedbackView isActive]) {
+    CGRect firstResponderFrame = [_feedbackView frameForFirstResponder];
+    
+    if (!CGRectIsEmpty(firstResponderFrame)) {
+      // We have a first responder within the feedback view.  Is it off screen?
+      CGRect firstResponderFrameInScrollView = [_scrollView convertRect:firstResponderFrame fromView:_feedbackView];
+      
+      if (contentOffset.y > firstResponderFrameInScrollView.origin.y) {
+        contentOffset.y = firstResponderFrameInScrollView.origin.y;
+      }
+    }
   }
+  
+  [UIView animateWithDuration:animationDuration delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+    self->_scrollView.contentInset = insets;
+    self->_scrollView.scrollIndicatorInsets = insets;
+    self->_scrollView.contentOffset = contentOffset;
+  } completion:nil];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {

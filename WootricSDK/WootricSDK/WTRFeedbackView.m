@@ -97,6 +97,15 @@
   return !self.hidden;
 }
 
+- (CGRect)frameForFirstResponder
+{
+  if (_feedbackTextView.isFirstResponder) {
+    return _feedbackTextView.frame;
+  }
+  
+  return CGRectZero;
+}
+
 - (void)setupEditScoreButtonWithViewController:(UIViewController *)viewController {
   _editScoreButton = [[UIButton alloc] init];
   _editScoreButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];

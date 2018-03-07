@@ -38,4 +38,11 @@
 - (BOOL)feedbackTextPresent;
 - (BOOL)isActive;
 
+/**
+ *  If this view has an active first responder (e.g. the feedback text field), this provides the rect within
+ *   the WTRFeedbackView bounds for that view.
+ *  Returns CGRectNull if there is no first responder within this view.
+ */
+- (CGRect)frameForFirstResponder;
+
 @end
