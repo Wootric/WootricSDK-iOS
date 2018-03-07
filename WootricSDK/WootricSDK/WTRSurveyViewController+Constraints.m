@@ -247,15 +247,6 @@
                                                              constant:308];
   [self.modalView addConstraint:self.constraintModalHeight];
 
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.modalView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self.view addConstraint:constX];
-
   NSLayoutConstraint *constB = [NSLayoutConstraint constraintWithItem:self.modalView
                                                             attribute:NSLayoutAttributeBottom
                                                             relatedBy:NSLayoutRelationEqual
