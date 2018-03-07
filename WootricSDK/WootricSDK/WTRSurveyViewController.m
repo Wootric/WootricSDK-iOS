@@ -66,17 +66,20 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
   [UIView animateWithDuration:0.25 animations:^{
     self.view.backgroundColor = [WTRColor viewBackgroundColor];
-    CGRect modalFrame = _modalView.frame;
-    CGFloat modalPosition = self.view.frame.size.height - _modalView.frame.size.height;
-    modalFrame.origin.y = modalPosition;
-    _modalView.frame = modalFrame;
-    _constraintTopToModalTop.constant = modalPosition;
   }];
-  [self setModalGradient:_modalView.bounds];
+  
+  [self setModalGradient:self.view.bounds];
   [_modalView.layer insertSublayer:_gradient atIndex:0];
   [_questionView addDotsAndScores];
+}
+
+- (void) viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+  [self setModalGradient:self.view.bounds];
 }
 
 #pragma mark - Button methods
@@ -228,7 +231,6 @@
   if (!twitterAvailable && !facebookAvailable) {
     _constraintModalHeight.constant = 230;
     _socialShareViewHeightConstraint.constant = 190;
-    _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
     [UIView animateWithDuration:0.2 animations:^{
       [self.view layoutIfNeeded];
     }];
@@ -264,7 +266,6 @@
   _finalThankYouLabel.hidden = NO;
   [_modalView hideDismissButton];
   _constraintModalHeight.constant = 125;
-  _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
   [UIView animateWithDuration:0.2 animations:^{
     [self.view layoutIfNeeded];
   }];
@@ -284,41 +285,6 @@
 - (void)setModalGradient:(CGRect)bounds {
   _gradient.frame = bounds;
   _gradient.colors = @[(id)[WTRColor grayGradientTopColor].CGColor, (id)[WTRColor grayGradientBottomColor].CGColor];
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
-  BOOL isToLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
-  CGFloat modalPosition;
-  CGRect bounds = self.view.bounds;
-  CGRect gradientBounds;
-
-  if ((bounds.size.width > bounds.size.height) && isToLandscape) {
-    modalPosition = bounds.size.height - _modalView.frame.size.height;
-  } else {
-    modalPosition = bounds.size.width - _modalView.frame.size.height;
-  }
-
-  if ((bounds.size.height > bounds.size.width) && isToLandscape) {
-    gradientBounds = CGRectMake(bounds.origin.y, bounds.origin.x, bounds.size.height, bounds.size.width);
-  } else {
-    gradientBounds = bounds;
-  }
-
-  _constraintTopToModalTop.constant = modalPosition;
-  [self setModalGradient:gradientBounds];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-  [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-  _scrolled = NO;
-
-  BOOL isFromLandscape = UIInterfaceOrientationIsLandscape(fromInterfaceOrientation);
-  CGRect bounds = self.view.bounds;
-  if (_keyboardHeight == 0 && isFromLandscape && (bounds.size.width > bounds.size.height)) {
-    [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
-  }
 }
 
 - (void)registerForKeyboardNotification {

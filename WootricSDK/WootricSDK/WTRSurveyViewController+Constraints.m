@@ -23,11 +23,13 @@
 // THE SOFTWARE.
 
 #import "WTRSurveyViewController+Constraints.h"
+#import "UIView+SafeArea.h"
 
 @implementation WTRSurveyViewController (Constraints)
 
 - (void)setupConstraints {
   [self setupScrollViewConstraints];
+  [self setupScrollContentViewConstraints];
   [self setupModalConstraints];
   [self setupQuestionViewConstraints];
   [self.questionView setupSubviewsConstraints];
@@ -228,6 +230,56 @@
   [self.feedbackView addConstraint:constH];
 }
 
+- (void)setupScrollContentViewConstraints {
+  // The scroll content view will be at least as large as the scroll view itself.  It can expand to be taller.
+  
+  NSDictionary * views = @{@"scrollContentView": self.scrollContentView};
+  NSArray<NSLayoutConstraint *> * horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollContentView]|" options:0 metrics:nil views:views];
+  [self.scrollView addConstraints:horizontalConstraints];
+  
+  // Stuck to bottom
+  NSLayoutConstraint * bottom = [NSLayoutConstraint constraintWithItem:self.scrollContentView
+                                                             attribute:NSLayoutAttributeBottom
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.scrollView
+                                                             attribute:NSLayoutAttributeBottom
+                                                            multiplier:1.0
+                                                              constant:0.0];
+  [self.scrollView addConstraint:bottom];
+  
+  // Stick to the scroll content to the top of the scroll view.  The lower priority allows this constraint to be
+  //  broken when the modal view grows taller than the scroll view.
+  NSLayoutConstraint * top = [NSLayoutConstraint constraintWithItem:self.scrollContentView
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.scrollView
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1.0
+                                                           constant:0.0];
+  top.priority = UILayoutPriorityDefaultHigh;
+  [self.scrollView addConstraint:top];
+  
+  // Height at least as much as the scroll view
+  NSLayoutConstraint * height = [NSLayoutConstraint constraintWithItem:self.scrollContentView
+                                                             attribute:NSLayoutAttributeHeight
+                                                             relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                                toItem:self.scrollView
+                                                             attribute:NSLayoutAttributeHeight
+                                                            multiplier:1.0
+                                                              constant:0.0];
+  [self.scrollView addConstraint:height];
+  
+  // Expand to be as tall as the modal
+  NSLayoutConstraint * modalForcedHeight = [NSLayoutConstraint constraintWithItem:self.scrollContentView
+                                                                        attribute:NSLayoutAttributeHeight
+                                                                        relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                                           toItem:self.modalView
+                                                                        attribute:NSLayoutAttributeHeight
+                                                                       multiplier:1.0
+                                                                         constant:0.0];
+  [self.scrollView addConstraint:modalForcedHeight];
+}
+
 - (void)setupModalConstraints {
   NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.modalView
                                                             attribute:NSLayoutAttributeWidth
@@ -250,26 +302,16 @@
   NSLayoutConstraint *constB = [NSLayoutConstraint constraintWithItem:self.modalView
                                                             attribute:NSLayoutAttributeBottom
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.scrollView
+                                                               toItem:[self.scrollContentView layoutAreaItemForConstraints]
                                                             attribute:NSLayoutAttributeBottom
                                                            multiplier:1
                                                              constant:0];
-  [self.scrollView addConstraint:constB];
-
-  self.constraintTopToModalTop = [NSLayoutConstraint constraintWithItem:self.modalView
-                                                              attribute:NSLayoutAttributeTop
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.scrollView
-                                                              attribute:NSLayoutAttributeTop
-                                                             multiplier:1
-                                                               constant:self.view.frame.size.height + 32];
-
-  [self.scrollView addConstraint:self.constraintTopToModalTop];
+  [self.scrollContentView addConstraint:constB];
 
   NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:self.modalView
                                                             attribute:NSLayoutAttributeLeft
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.scrollView
+                                                               toItem:self.scrollContentView
                                                             attribute:NSLayoutAttributeLeft
                                                            multiplier:1
                                                              constant:0];
@@ -278,7 +320,7 @@
   NSLayoutConstraint *constR = [NSLayoutConstraint constraintWithItem:self.modalView
                                                             attribute:NSLayoutAttributeRight
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.scrollView
+                                                               toItem:self.scrollContentView
                                                             attribute:NSLayoutAttributeRight
                                                            multiplier:1
                                                              constant:0];
