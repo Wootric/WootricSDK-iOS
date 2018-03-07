@@ -71,7 +71,6 @@
     CGFloat modalPosition = self.view.frame.size.height - _modalView.frame.size.height;
     modalFrame.origin.y = modalPosition;
     _modalView.frame = modalFrame;
-    _constraintTopToModalTop.constant = modalPosition;
   }];
 }
 
@@ -96,7 +95,6 @@
   _feedbackView.hidden = NO;
   _constraintModalHeight.constant = 215;
   _constraintQuestionTopToModalTop.constant = 50;
-  _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
   [UIView animateWithDuration:0.2 animations:^{
     [self.view layoutIfNeeded];
   } completion:^(BOOL finished) {
@@ -235,7 +233,6 @@
 
 - (void)presentSocialShareViewWithScore:(int)score {
   _constraintModalHeight.constant = 165;
-  _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
   [self setQuestionViewVisible:NO andFeedbackViewVisible:NO];
   [_feedbackView textViewResignFirstResponder];
   _socialShareView.hidden = NO;
@@ -256,7 +253,6 @@
   _finalThankYouLabel.hidden = NO;
   _dismissButton.hidden = YES;
   _constraintModalHeight.constant = 125;
-  _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
   [UIView animateWithDuration:0.2 animations:^{
     [self.view layoutIfNeeded];
   }];
@@ -268,30 +264,6 @@
 - (void)setQuestionViewVisible:(BOOL)questionFlag andFeedbackViewVisible:(BOOL)feedbackFlag {
   _questionView.hidden = !questionFlag;
   _feedbackView.hidden = !feedbackFlag;
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
-  BOOL isToLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
-  CGFloat modalPosition;
-  CGRect bounds = self.view.bounds;
-
-  if ((bounds.size.width > bounds.size.height) && isToLandscape) {
-    modalPosition = bounds.size.height - _modalView.frame.size.height;
-  } else {
-    modalPosition = bounds.size.width - _modalView.frame.size.height;
-  }
-
-  _constraintTopToModalTop.constant = modalPosition;
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-  [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-
-  if (_keyboardHeight == 0) {
-    [_scrollView setContentOffset:CGPointMake(0, _keyboardHeight) animated:YES];
-  }
 }
 
 - (void)registerForKeyboardNotification {

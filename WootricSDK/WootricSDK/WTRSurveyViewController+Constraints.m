@@ -232,7 +232,6 @@
 
 - (void)setupScrollContentViewConstraints {
   // The scroll content view will be at least as large as the scroll view itself.  It can expand to be taller.
-  
   NSDictionary * views = @{@"scrollContentView": self.scrollContentView};
   NSArray<NSLayoutConstraint *> * horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollContentView]|" options:0 metrics:nil views:views];
   [self.scrollView addConstraints:horizontalConstraints];

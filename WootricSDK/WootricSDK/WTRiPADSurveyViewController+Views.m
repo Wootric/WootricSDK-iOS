@@ -30,6 +30,7 @@
 - (void)setupViews {
   [self setupModalView];
   [self setupScrollView];
+  [self setupScrollContentView];
   [self setupQuestionView];
   [self setupFeedbackView];
   [self setupSocialShareView];
@@ -39,7 +40,8 @@
 
   [self addViewsToModal];
   [self.view addSubview:self.scrollView];
-  [self.scrollView addSubview:self.modalView];
+  [self.scrollView addSubview:self.scrollContentView];
+  [self.scrollContentView addSubview:self.modalView];
 }
 
 - (void)addViewsToModal {
@@ -105,6 +107,11 @@
 
 - (void)setupModalView {
   self.modalView = [[WTRiPADModalView alloc] init];
+}
+
+- (void)setupScrollContentView {
+  self.scrollContentView = [[UIView alloc] init];
+  self.scrollContentView.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void)setupScrollView {

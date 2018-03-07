@@ -33,13 +33,13 @@
 
 @property (nonatomic, strong) WTRSettings *settings;
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIView * scrollContentView;
 @property (nonatomic, strong) UIButton *poweredByWootric;
 @property (nonatomic, strong) UIButton *dismissButton;
 @property (nonatomic, strong) WTRiPADModalView *modalView;
 @property (nonatomic, strong) WTRiPADQuestionView *questionView;
 @property (nonatomic, strong) WTRiPADFeedbackView *feedbackView;
 @property (nonatomic, strong) WTRiPADSocialShareView *socialShareView;
-@property (nonatomic, strong) NSLayoutConstraint *constraintTopToModalTop;
 @property (nonatomic, strong) NSLayoutConstraint *constraintQuestionTopToModalTop;
 @property (nonatomic, strong) NSLayoutConstraint *constraintModalHeight;
 @property (nonatomic, strong) NSLayoutConstraint *socialShareViewHeightConstraint;
