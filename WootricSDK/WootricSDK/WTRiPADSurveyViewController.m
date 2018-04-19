@@ -65,6 +65,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
   [UIView animateWithDuration:0.25 animations:^{
     self.view.backgroundColor = [WTRColor viewBackgroundColor];
     CGRect modalFrame = _modalView.frame;
