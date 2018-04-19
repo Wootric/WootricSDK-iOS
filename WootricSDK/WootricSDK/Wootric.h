@@ -2,7 +2,7 @@
 //  WootricSDK.h
 //  WootricSDK
 //
-// Copyright (c) 2015 Wootric (https://wootric.com)
+// Copyright (c) 2018 Wootric (https://wootric.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -254,5 +254,17 @@
  @param color UIColor for social sharing buttons.
 */
 + (void)setSocialSharingColor:(UIColor *)color;
+/**
+ @discussion Set WTRLogger level to None i.e. it won't show any log from the WootricSDK.
+ */
++ (void)setLogLevelNone;
+/**
+ @discussion Set WTRLogger level to Error i.e. it will only show error logs from the WootricSDK.
+ */
++ (void)setLogLevelError;
+/**
+ @discussion Set WTRLogger level to Verbose i.e. it will show all logs from the WootricSDK.
+ */
++ (void)setLogLevelVerbose;
 
 @end

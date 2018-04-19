@@ -2,7 +2,7 @@
 //  WTRSurveyViewController.m
 //  WootricSDK
 //
-// Copyright (c) 2015 Wootric (https://wootric.com)
+// Copyright (c) 2018 Wootric (https://wootric.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@
 #import "UIImage+ImageFromColor.h"
 #import "WTRSurvey.h"
 #import "WTRThankYouButton.h"
+#import "WTRLogger.h"
 #import "NSString+FontAwesome.h"
 #import <Social/Social.h>
 
@@ -66,13 +67,14 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
   [UIView animateWithDuration:0.25 animations:^{
     self.view.backgroundColor = [WTRColor viewBackgroundColor];
-    CGRect modalFrame = _modalView.frame;
-    CGFloat modalPosition = self.view.frame.size.height - _modalView.frame.size.height;
+    CGRect modalFrame = self->_modalView.frame;
+    CGFloat modalPosition = self.view.frame.size.height - self->_modalView.frame.size.height;
     modalFrame.origin.y = modalPosition;
-    _modalView.frame = modalFrame;
-    _constraintTopToModalTop.constant = modalPosition;
+    self->_modalView.frame = modalFrame;
+    self->_constraintTopToModalTop.constant = modalPosition;
   }];
   [self setModalGradient:_modalView.bounds];
   [_modalView.layer insertSublayer:_gradient atIndex:0];
@@ -82,9 +84,9 @@
 #pragma mark - Button methods
 
 - (void)openThankYouURL:(WTRThankYouButton *)sender {
-  NSLog(@"%@", sender.buttonURL);
+  [WTRLogger log:@"%@", sender.buttonURL];
   if (![[UIApplication sharedApplication] openURL:sender.buttonURL]) {
-    NSLog(@"WootricSDK: Failed to open 'thank you' url");
+    [WTRLogger logError:@"Failed to open 'thank you' url"];
   } else {
     [self dismissViewControllerWithBackgroundFade];
   }
@@ -140,13 +142,13 @@
 - (void)endUserVotedWithScore:(int)score andText:(NSString *)text {
   WTRSurvey *survey = [[WTRSurvey alloc] init];
   [survey endUserVotedWithScore:score andText:text];
-  NSLog(@"WootricSDK: Vote");
+  [WTRLogger log:@"Vote"];
 }
 
 - (void)endUserDeclined {
   WTRSurvey *survey = [[WTRSurvey alloc] init];
   [survey endUserDeclined];
-  NSLog(@"WootricSDK: Decline");
+  [WTRLogger log:@"WootricSDK: Decline"];
 }
 
 - (void)setQuestionViewVisible:(BOOL)questionFlag andFeedbackViewVisible:(BOOL)feedbackFlag {
@@ -157,7 +159,7 @@
 - (void)openWootricHomepage:(UIButton *)sender {
   NSURL *url = [NSURL URLWithString:@"https://www.wootric.com"];
   if (![[UIApplication sharedApplication] openURL:url]) {
-    NSLog(@"Failed to open wootric page");
+    [WTRLogger logError:@"Failed to open wootric page"];
   }
 }
 
@@ -166,7 +168,7 @@
   if ([sender.titleLabel.text isEqualToString:[NSString fontAwesomeIconStringForEnum:FAThumbsUp]]) {
     NSURL *url = _settings.facebookPage;
     if (![[UIApplication sharedApplication] openURL:url]) {
-      NSLog(@"Failed to open facebook page");
+      [WTRLogger logError:@"Failed to open facebook page"];
     }
   } else {
     NSString *serviceType;
@@ -188,10 +190,10 @@
       [sheet setCompletionHandler:^(SLComposeViewControllerResult result){
         switch (result) {
           case SLComposeViewControllerResultCancelled:
-            NSLog(@"WootricSDK: Post cancelled");
+            [WTRLogger log:@"Post cancelled"];
             break;
           case SLComposeViewControllerResultDone:
-            NSLog(@"WootricSDK: Post successful");
+            [WTRLogger log:@"Post successful"];
             break;
           default:
             break;

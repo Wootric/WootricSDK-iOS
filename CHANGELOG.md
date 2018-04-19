@@ -1,3 +1,11 @@
+## 0.8.0 (2018-05-15)
+
+### Changes:
+
+- Add WTRLogger to allow setting log level so logs can be disabled
+- Add new setters to Wootric.h to set the WTRLogger mode
+- Update license comment in all files
+
 ## 0.7.0 (2018-05-03)
 
 ### Changes:

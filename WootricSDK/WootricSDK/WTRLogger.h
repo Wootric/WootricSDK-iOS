@@ -1,5 +1,5 @@
 //
-//  WTRQuestionView.h
+//  WTRLogger.h
 //  WootricSDK
 //
 // Copyright (c) 2018 Wootric (https://wootric.com)
@@ -22,18 +22,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import "WTRSettings.h"
+#import <Foundation/Foundation.h>
+#import "WTRLogLevel.h"
 
-@interface WTRQuestionView : UIView
+@interface WTRLogger : NSObject
 
-- (instancetype)initWithSettings:(WTRSettings *)settings;
++ (void)setLogLevel:(WTRLogLevel)level;
++ (WTRLogLevel)logLevel;
 
-- (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
-- (void)setupSubviewsConstraints;
-- (void)recalculateDotsAndScorePositionForWidth:(CGFloat)widthAfterRotation;
-- (void)addDotsAndScores;
-- (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer;
-- (int)getScoreSliderValue;
++ (void)log:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
++ (void)log:(NSString *)format arguments:(va_list)argList NS_FORMAT_FUNCTION(1,0);
+
++ (void)logLevel:(WTRLogLevel)level format:(NSString *)format, ... NS_FORMAT_FUNCTION(2,3);
++ (void)logLevel:(WTRLogLevel)level format:(NSString *)format arguments:(va_list)argList NS_FORMAT_FUNCTION(2,0);
+
++ (void)logLevel:(WTRLogLevel)level message:(NSString *)message;
+
++ (void)logError:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
++ (void)logError:(NSString *)format arguments:(va_list)argList NS_FORMAT_FUNCTION(1,0);
 
 @end
