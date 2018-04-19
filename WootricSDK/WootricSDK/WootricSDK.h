@@ -24,6 +24,7 @@
 
 #import "Wootric.h"
 #import "SEGWootric.h"
+#import "WTRLogger.h"
 
 FOUNDATION_EXPORT double WootricSDKMainVersionNumber;
 FOUNDATION_EXPORT const unsigned char WootricSDKMainVersionString[];

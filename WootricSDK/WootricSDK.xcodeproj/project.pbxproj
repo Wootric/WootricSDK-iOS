@@ -11,9 +11,9 @@
 		0FD5920F1D99EB0500DD173B /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0FD5920E1D99EAFF00DD173B /* fontawesome-webfont.ttf */; };
 		0FE2FAC81CE4356F0065823C /* WTRApiClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE2FAC71CE4356F0065823C /* WTRApiClientTests.m */; };
 		0FEC4B6D1D669E7300D7E941 /* WTRDefaultsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FEC4B6C1D669E7300D7E941 /* WTRDefaultsTests.m */; };
-		178571982088FCA800CCBE02 /* WTRLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 178571962088FCA700CCBE02 /* WTRLogger.h */; };
+		178571982088FCA800CCBE02 /* WTRLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 178571962088FCA700CCBE02 /* WTRLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		178571992088FCA800CCBE02 /* WTRLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 178571972088FCA700CCBE02 /* WTRLogger.m */; };
-		1785719B2088FD1500CCBE02 /* WTRLogLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1785719A2088FD1500CCBE02 /* WTRLogLevel.h */; };
+		1785719B2088FD1500CCBE02 /* WTRLogLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1785719A2088FD1500CCBE02 /* WTRLogLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7E74E3361C8E987000BCB84F /* NSString+FontAwesome.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E74E3341C8E986F00BCB84F /* NSString+FontAwesome.h */; };
 		7E74E3371C8E987000BCB84F /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E74E3351C8E987000BCB84F /* NSString+FontAwesome.m */; };
 		B2102A2D1BB59ABC0025DABC /* WTRDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */; };
@@ -459,6 +459,8 @@
 				B2C940681BA71A2900482494 /* WTRSliderDot.h in Headers */,
 				B2DC6F2E1B82000900F599B3 /* Wootric.h in Headers */,
 				B2D9FCDF1BF9F18E00479F9F /* SEGWootric.h in Headers */,
+				178571982088FCA800CCBE02 /* WTRLogger.h in Headers */,
+				1785719B2088FD1500CCBE02 /* WTRLogLevel.h in Headers */,
 				B2C940641BA30AFB00482494 /* UIImage+ImageFromColor.h in Headers */,
 				B2C9406C1BA83E6200482494 /* WTRScoreView.h in Headers */,
 				B268666E1BD5339800A4288D /* WTRiPADSurveyViewController.h in Headers */,
@@ -478,10 +480,8 @@
 				B260ECE11BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.h in Headers */,
 				B22976751BB1404D00FC2772 /* WTRCustomThankYou.h in Headers */,
 				B24550911B8E0188001AC1FB /* WTRColor.h in Headers */,
-				1785719B2088FD1500CCBE02 /* WTRLogLevel.h in Headers */,
 				B229766D1BB0036100FC2772 /* WTRPropertiesParser.h in Headers */,
 				B2102A2D1BB59ABC0025DABC /* WTRDefaults.h in Headers */,
-				178571982088FCA800CCBE02 /* WTRLogger.h in Headers */,
 				B2DC6F371B82143B00F599B3 /* WTRSettings.h in Headers */,
 				B25CE75F1BAADC920063E6E5 /* WTRQuestionView.h in Headers */,
 				B245509D1B909A03001AC1FB /* WTRSurveyViewController.h in Headers */,
