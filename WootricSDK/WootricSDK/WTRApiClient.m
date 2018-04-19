@@ -24,6 +24,7 @@
 
 #import "WTRApiClient.h"
 #import "WTRPropertiesParser.h"
+#import "WTRLogger.h"
 #import <CommonCrypto/CommonHMAC.h>
 
 @interface WTRApiClient ()
@@ -99,7 +100,7 @@
   
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
-      NSLog(@"WootricSDK (GET end user): %@", error);
+      [WTRLogger logError:@"(GET end user): %@", error];
     } else {
       id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
       if ([responseJSON isKindOfClass:[NSArray class]]) {
@@ -119,7 +120,7 @@
           }
         }
       } else {
-        NSLog(@"WootricSDK - Error: %@", responseJSON);
+        [WTRLogger logError:@"%@", responseJSON];
       }
     }
   }];
@@ -161,9 +162,9 @@
 
     NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
       if (error) {
-        NSLog(@"WootricSDK (update end user): %@", error);
+        [WTRLogger logError:@"(update end user): %@", error];
       } else {
-        NSLog(@"WootricSDK (update end user): user updated");
+        [WTRLogger log:@"(update end user): user updated"];
         _endUserAlreadyUpdated = YES;
       }
     }];
@@ -202,10 +203,10 @@
 
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
-      NSLog(@"WootricSDK (create end user): %@", error);
+      [WTRLogger logError:@"(create end user): %@", error];
     } else {
       NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-      NSLog(@"WootricSDK (create end user): %@", responseJSON);
+      [WTRLogger log:@"(create end user): %@", responseJSON];
       if (responseJSON) {
         NSInteger endUserID = [responseJSON[@"id"] integerValue];
         endUserWithID(endUserID);
@@ -224,9 +225,9 @@
   
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
-      NSLog(@"ResponseError: %@", error);
+      [WTRLogger logError:@"ResponseError: %@", error];
     } else {
-      NSLog(@"Create response added to queue");
+      [WTRLogger log:@"Create response added to queue"];
     }
   }];
 
@@ -242,10 +243,10 @@
 
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
-      NSLog(@"WootricSDK (authentication): %@", error);
+      [WTRLogger logError:@"(authentication): %@", error];
     } else {
       NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-      NSLog(@"WootricSDK (authentication): %@", responseJSON);
+      [WTRLogger log:@"(authentication): %@", responseJSON];
       if (responseJSON) {
         NSString *accessToken = responseJSON[@"access_token"];
         if (accessToken) {
@@ -276,17 +277,17 @@
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"User-Agent"];
   
-  NSLog(@"WootricSDK: eligibility - %@", urlRequest);
+  [WTRLogger log:@"eligibility - %@", urlRequest];
 
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
-      NSLog(@"WootricSDK: %@", error);
+      [WTRLogger logError:@"%@", error];
     } else {
       NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
       if (responseJSON) {
         if ([responseJSON[@"eligible"] isEqual:@1]) {
-          if (_settings.forceSurvey) NSLog(@"WootricSDK: forced survey (remove for production!)");
-          NSLog(@"WootricSDK: User eligible");
+            if (_settings.forceSurvey) [WTRLogger logError:@"forced survey (remove for production!)"];
+          [WTRLogger log:@"User eligible"];
 
           [_settings parseDataFromSurveyServer:responseJSON];
           _userID = responseJSON[@"settings"][@"user_id"];
@@ -301,11 +302,13 @@
           }
           eligible();
         } else {
-          NSString *logString = @"WootricSDK: User ineligible";
+          NSString *logString = @"User ineligible";
           if (responseJSON[@"error"]){
             logString = [NSString stringWithFormat:@"%@ - %@", logString, responseJSON[@"error"]];
+            [WTRLogger logError:@"%@", logString];
+          } else {
+            [WTRLogger log:@"%@", logString];
           }
-          NSLog(@"%@", logString);
         }
       }
     }

@@ -28,6 +28,7 @@
 #import "WTRSurveyViewController.h"
 #import "WTRiPADSurveyViewController.h"
 #import "WTRApiClient.h"
+#import "WTRLogger.h"
 
 #define IPAD UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
 
@@ -139,7 +140,8 @@
     WTRSurvey *surveyClient = [[WTRSurvey alloc] init];
     [surveyClient survey:^{
         
-      NSLog(@"WootricSDK: presenting survey view");
+      [WTRLogger log:@"presenting survey view"];
+
       
       WTRApiClient *apiClient = [WTRApiClient sharedInstance];
       
@@ -152,7 +154,7 @@
         
     }];
   } else {
-    NSLog(@"WootricSDK: Configure SDK first");
+    [WTRLogger log:@"Configure SDK first"];
   }
 }
 
