@@ -1,3 +1,9 @@
+## 0.7.0 (2018-05-03)
+
+### Changes:
+
+- Add new method that just needs client_id & doesn't require the client_secret
+
 ## 0.6.6 (2017-12-15)
 
 ### Fixed:

@@ -79,7 +79,6 @@
 }
 
 - (void)testCheckConfiguration {
-  
   _apiClient.clientID = @"";
   _apiClient.clientSecret = @"";
   _apiClient.accountToken = @"";
@@ -106,17 +105,16 @@
   _apiClient.accountToken = @"";
   XCTAssertFalse([_apiClient checkConfiguration]);
   
-  _apiClient.clientID = @"clientIDtestString";
-  _apiClient.clientSecret = @"";
-  _apiClient.accountToken = @"NPS-token";
-  XCTAssertFalse([_apiClient checkConfiguration]);
-  
-  
   _apiClient.clientID = @"";
   _apiClient.clientSecret = @"clientSecretTestString";
   _apiClient.accountToken = @"NPS-token";
   XCTAssertFalse([_apiClient checkConfiguration]);
   
+  _apiClient.clientID = @"clientIDtestString";
+  _apiClient.clientSecret = @"";
+  _apiClient.accountToken = @"NPS-token";
+  XCTAssertTrue([_apiClient checkConfiguration]);
+
   _apiClient.clientID = @"clientIDtestString";
   _apiClient.clientSecret = @"clientSecretTestString";
   _apiClient.accountToken = @"NPS-token";

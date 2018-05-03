@@ -21,7 +21,7 @@
   NSString *clientSecret = @"YOUR_CLIENT_SECRET";
   NSString *accountToken = @"YOUR_ACCOUNT_TOKEN";
   
-  [Wootric configureWithClientID:clientID clientSecret:clientSecret accountToken:accountToken];
+  [Wootric configureWithClientID:clientID accountToken:accountToken];
   [Wootric setEndUserEmail:@"END_USER_EMAIL"];
   [Wootric setEndUserCreatedAt:@1234567890];
   

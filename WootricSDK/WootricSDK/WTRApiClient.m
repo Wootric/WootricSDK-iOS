@@ -70,7 +70,6 @@
 
 - (BOOL)checkConfiguration {
   if ([_clientID length] != 0 &&
-      [_clientSecret length] != 0 &&
       [_accountToken length] != 0) {
     return YES;
   }
@@ -96,7 +95,6 @@
   
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", _baseAPIURL, _apiVersion, escapedEmail]];
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:nil andHTTPBody:nil];
-  
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       NSLog(@"WootricSDK (GET end user): %@", error);
@@ -236,8 +234,12 @@
 - (void)authenticate:(void (^)(void))authenticated {
   
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/oauth/token", _baseAPIURL]];
-  NSString *params = [NSString stringWithFormat:@"grant_type=client_credentials&client_id=%@&client_secret=%@", _clientID, _clientSecret];
+  NSString *params = [NSString stringWithFormat:@"grant_type=client_credentials&client_id=%@", _clientID];
   
+  if (_clientSecret) {
+    params = [params stringByAppendingFormat:@"&client_secret=%@", _clientSecret];
+  }
+
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
 
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {

@@ -29,7 +29,7 @@ The easiest way to get Wootric into your iOS project is to use [CocoaPods](http:
 
 2. Create a file in your Xcode project called Podfile and add the following line:
 	```ruby
-	pod "WootricSDK", "~> 0.6.6"
+	pod "WootricSDK", "~> 0.7.0"
 	```
 
 3. In your Xcode project directory run the following command:
@@ -61,11 +61,11 @@ WootricSDK task is to present a fully functional survey view with just a few lin
 	#import <WootricSDK/WootricSDK.h>
 	```
 
-2. Configure the SDK with your client ID, secret and account token
+2. Configure the SDK with your client ID and account token
 	```objective-c
-	[Wootric configureWithClientID:<YOUR_CLIENT_ID> clientSecret:<YOUR_CLIENT_SECRET> accountToken:<YOUR_TOKEN>];
+	[Wootric configureWithClientID:<YOUR_CLIENT_ID> accountToken:<YOUR_TOKEN>];
 	``` 
-	*You can find the client ID and client secret on your [Wootric's account settings](https://app.wootric.com/account_settings/edit?) on the API section.*
+	*You can find the client ID on your [Wootric's account settings](https://app.wootric.com/account_settings/edit?) on the API section.*
 
 3. To display the survey (if user is eligible - this check is built in the method) use:
 	```objective-c
@@ -84,7 +84,7 @@ For more information on class methods, please refer to [Wootric's docs](http://c
 
 // Inside your view controller's viewDidLoad method
 
-[Wootric configureWithClientID:YOUR_CLIENT_ID clientSecret:YOUR_CLIENT_SECRET accountToken:YOUR_ACCOUNT_TOKEN];
+[Wootric configureWithClientID:YOUR_CLIENT_ID accountToken:YOUR_ACCOUNT_TOKEN];
 [Wootric setEndUserEmail:@"nps@example.com"];
 [Wootric setEndUserCreatedAt:@1234567890];
 // Use only for testing

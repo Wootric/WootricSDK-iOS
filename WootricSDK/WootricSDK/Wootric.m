@@ -40,6 +40,12 @@
   apiClient.accountToken = accountToken;
 }
 
++ (void)configureWithClientID:(NSString *)clientID accountToken:(NSString *)accountToken {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.clientID = clientID;
+  apiClient.accountToken = accountToken;
+}
+
 + (void)setEndUserEmail:(NSString *)endUserEmail {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.endUserEmail = endUserEmail;
