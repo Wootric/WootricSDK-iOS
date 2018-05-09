@@ -25,6 +25,7 @@
 #import "WTRApiClient.h"
 #import "WTRPropertiesParser.h"
 #import <CommonCrypto/CommonHMAC.h>
+#import "Wootric.h"
 
 @interface WTRApiClient ()
 
@@ -83,6 +84,8 @@
 }
 
 - (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text {
+  // Notify delegate
+  [[Wootric delegate] didSelectScore:score];
   [self getEndUserWithEmail:^(NSInteger endUserID) {
     [self createResponseForEndUser:endUserID withScore:score text:text endpoint:@"responses"];
   }];

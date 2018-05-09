@@ -96,6 +96,7 @@
 		B2DC6F341B820E6B00F599B3 /* WTRApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6F321B820E6B00F599B3 /* WTRApiClient.m */; };
 		B2DC6F371B82143B00F599B3 /* WTRSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = B2DC6F351B82143B00F599B3 /* WTRSettings.h */; };
 		B2DC6F381B82143B00F599B3 /* WTRSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DC6F361B82143B00F599B3 /* WTRSettings.m */; };
+		BB17E5B320A3B8EC00DEEEA1 /* WootricDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = BB17E5B220A3B8EC00DEEEA1 /* WootricDelegate.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -201,6 +202,7 @@
 		B2DC6F321B820E6B00F599B3 /* WTRApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRApiClient.m; sourceTree = "<group>"; };
 		B2DC6F351B82143B00F599B3 /* WTRSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRSettings.h; sourceTree = "<group>"; };
 		B2DC6F361B82143B00F599B3 /* WTRSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSettings.m; sourceTree = "<group>"; };
+		BB17E5B220A3B8EC00DEEEA1 /* WootricDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WootricDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -385,6 +387,7 @@
 				B2ADF6521B9DBD73005403AC /* Utils */,
 				B2ADF6511B9DBD52005403AC /* SurveySettings */,
 				B2DC6F301B82034100F599B3 /* ViewControllers */,
+				BB17E5B220A3B8EC00DEEEA1 /* WootricDelegate.h */,
 				B2DC6F071B81E6F900F599B3 /* WootricSDK.h */,
 				B2DC6F2C1B82000900F599B3 /* Wootric.h */,
 				B2DC6F2D1B82000900F599B3 /* Wootric.m */,
@@ -459,6 +462,7 @@
 				B22976811BB2A2C300FC2772 /* WTRSocialShareView.h in Headers */,
 				B26866761BD5444F00A4288D /* WTRiPADSurveyViewController+Constraints.h in Headers */,
 				B260ECDD1BD7E5B200E29CD5 /* UIView+Constraints.h in Headers */,
+				BB17E5B320A3B8EC00DEEEA1 /* WootricDelegate.h in Headers */,
 				B268667E1BD63B7000A4288D /* WTRCircleScoreButton.h in Headers */,
 				7E74E3361C8E987000BCB84F /* NSString+FontAwesome.h in Headers */,
 				B24550A51B909AC9001AC1FB /* WTRSurveyViewController+Constraints.h in Headers */,

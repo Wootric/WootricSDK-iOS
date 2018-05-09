@@ -31,6 +31,8 @@
 
 #define IPAD UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
 
+static id<WootricDelegate> _delegate = nil;
+
 @implementation Wootric
 
 + (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret accountToken:(NSString *)accountToken {
@@ -165,6 +167,9 @@
 + (void)presentSurveyInViewController:(UIViewController *)viewController {
   WTRSettings *surveySettings = [WTRApiClient sharedInstance].settings;
   
+  // Notify the delegate
+  [_delegate willPresentSurvey];
+    
   if (IPAD) {
     WTRiPADSurveyViewController *surveyViewController = [[WTRiPADSurveyViewController alloc] initWithSurveySettings:surveySettings];
     [viewController presentViewController:surveyViewController animated:YES completion:nil];
@@ -275,6 +280,16 @@
 + (void)setThankYouButtonBackgroundColor:(UIColor *)color {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   [apiClient.settings setThankYouButtonBackgroundColor:color];
+}
+
+#pragma mark - Delegate
+
++ (void)setDelegate:(id<WootricDelegate>)delegate {
+    _delegate = delegate;
+}
+
++ (id<WootricDelegate>)delegate {
+    return _delegate;
 }
 
 @end

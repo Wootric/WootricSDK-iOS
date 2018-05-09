@@ -24,6 +24,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "WootricDelegate.h"
 
 @interface Wootric : NSObject
 
@@ -254,5 +255,14 @@
  @param color UIColor for social sharing buttons.
 */
 + (void)setSocialSharingColor:(UIColor *)color;
+/**
+ @discussion Sets the delegate that receives notifications about SDK actions
+ @param delegate WootricDelegate to receive the notifications
+*/
++ (void)setDelegate:(id<WootricDelegate>)delegate;
+/**
+ @discussion returns the delegate
+*/
++ (id<WootricDelegate>)delegate;
 
 @end
