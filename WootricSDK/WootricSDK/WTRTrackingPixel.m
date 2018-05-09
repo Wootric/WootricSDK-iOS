@@ -24,6 +24,7 @@
 
 #import "WTRTrackingPixel.h"
 #import "WTRApiClient.h"
+#import "WTRLogger.h"
 
 @implementation WTRTrackingPixel
 
@@ -36,7 +37,7 @@
   NSString *params = [NSString stringWithFormat:stringToFormat, apiClient.accountToken, apiClient.settings.endUserEmail, apiClient.settings.originURL, formattedRandom];
 
   if (apiClient.settings.externalCreatedAt) {
-    NSLog(@"WootricSDK: externalCreatedAt: %ld", (long)[apiClient.settings.externalCreatedAt intValue]);
+    [WTRLogger log:@"externalCreatedAt: %ld", (long)[apiClient.settings.externalCreatedAt intValue]];
     params = [NSString stringWithFormat:@"%@&created_at=%ld", params, (long)[apiClient.settings.externalCreatedAt intValue]];
   }
 
@@ -46,9 +47,9 @@
 
   NSURLSessionDataTask *dataTask = [urlSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
-      NSLog(@"WootricSDK: tracking pixel error: %@", error);
+      [WTRLogger logError:@"tracking pixel error: %@", error];
     } else {
-      NSLog(@"WootricSDK: tracking pixel GET success (with params: %@)", params);
+      [WTRLogger log:@"tracking pixel GET success (with params: %@)", params];
     }
   }];
 

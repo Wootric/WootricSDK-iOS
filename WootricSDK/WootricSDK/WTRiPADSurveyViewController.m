@@ -29,6 +29,7 @@
 #import "WTRiPADThankYouButton.h"
 #import "WTRColor.h"
 #import "WTRSurvey.h"
+#import "WTRLogger.h"
 #import "NSString+FontAwesome.h"
 #import <Social/Social.h>
 
@@ -65,6 +66,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
   [UIView animateWithDuration:0.25 animations:^{
     self.view.backgroundColor = [WTRColor viewBackgroundColor];
     CGRect modalFrame = _modalView.frame;
@@ -110,19 +112,19 @@
   WTRSurvey *survey = [[WTRSurvey alloc] init];
   [survey endUserVotedWithScore:score andText:text];
   _alreadyVoted = YES;
-  NSLog(@"WootricSDK: Vote");
+  [WTRLogger log:@"Vote"];
 }
 
 - (void)openWootricHomepage:(UIButton *)sender {
   NSURL *url = [NSURL URLWithString:@"https://www.wootric.com"];
   if (![[UIApplication sharedApplication] openURL:url]) {
-    NSLog(@"Failed to open wootric page");
+    [WTRLogger logError:@"Failed to open wootric page"];
   }
 }
 
 - (void)openThankYouURL:(WTRiPADThankYouButton *)sender {
   if (![[UIApplication sharedApplication] openURL:sender.buttonURL]) {
-    NSLog(@"WootricSDK: Failed to open 'thank you' url");
+    [WTRLogger logError:@"Failed to open 'thank you' url"];
   } else {
     [self dismissViewControllerWithBackgroundFade];
   }
@@ -169,7 +171,7 @@
   if ([sender.titleLabel.text isEqualToString:[NSString fontAwesomeIconStringForEnum:FAThumbsUp]]) {
     NSURL *url = _settings.facebookPage;
     if (![[UIApplication sharedApplication] openURL:url]) {
-      NSLog(@"Failed to open facebook page");
+      [WTRLogger logError:@"Failed to open facebook page"];
     }
   } else {
     NSString *serviceType;
@@ -191,10 +193,10 @@
       [sheet setCompletionHandler:^(SLComposeViewControllerResult result){
         switch (result) {
           case SLComposeViewControllerResultCancelled:
-            NSLog(@"WootricSDK: Post cancelled");
+            [WTRLogger log:@"Post cancelled"];
             break;
           case SLComposeViewControllerResultDone:
-            NSLog(@"WootricSDK: Post successful");
+            [WTRLogger log:@"Post successful"];
             break;
           default:
             break;
