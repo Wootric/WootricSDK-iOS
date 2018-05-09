@@ -24,7 +24,13 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "WootricDelegate.h"
+
+@protocol WootricDelegate <NSObject>
+
+- (void)willPresentSurvey;
+- (void)didSelectScore:(NSInteger)score;
+
+@end
 
 @interface Wootric : NSObject
 
