@@ -34,6 +34,7 @@
 @property (nonatomic, strong) WTRSettings *settings;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIButton *poweredByWootric;
+@property (nonatomic, strong) UIButton *optOutButton;
 @property (nonatomic, strong) UIButton *dismissButton;
 @property (nonatomic, strong) WTRiPADModalView *modalView;
 @property (nonatomic, strong) WTRiPADQuestionView *questionView;

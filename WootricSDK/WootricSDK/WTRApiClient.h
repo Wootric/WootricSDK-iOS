@@ -40,4 +40,8 @@
 - (void)endUserDeclined;
 - (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text;
 
+- (NSString *)getUniqueLink;
+- (NSString *)getEndUserId;
+- (NSString *)getToken;
+
 @end

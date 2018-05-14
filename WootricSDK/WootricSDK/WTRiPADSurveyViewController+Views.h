@@ -27,5 +27,6 @@
 @interface WTRiPADSurveyViewController (Views)
 
 - (void)setupViews;
+- (void)setupPoweredByWootricForSocialShareView;
 
 @end

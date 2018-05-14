@@ -53,7 +53,6 @@
 }
 
 - (void)survey:(void (^)(void))showSurvey {
-    
   [WTRDefaults setLastSeenAt];
   [WTRDefaults checkIfSurveyedDefaultExpired];
   

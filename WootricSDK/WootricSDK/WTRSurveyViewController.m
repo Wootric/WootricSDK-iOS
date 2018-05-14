@@ -30,6 +30,7 @@
 #import "WTRSurvey.h"
 #import "WTRThankYouButton.h"
 #import "WTRLogger.h"
+#import "WTRApiClient.h"
 #import "NSString+FontAwesome.h"
 #import <Social/Social.h>
 
@@ -39,6 +40,10 @@
 @property (nonatomic, assign) BOOL alreadyVoted;
 @property (nonatomic, assign) CGFloat keyboardHeight;
 @property (nonatomic, strong) CAGradientLayer *gradient;
+@property (nonatomic, strong) NSString *accountToken;
+@property (nonatomic, strong) NSString *endUserId;
+@property (nonatomic, strong) NSString *uniqueLink;
+@property (nonatomic, strong) NSString *token;
 
 @end
 
@@ -56,6 +61,12 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  WTRApiClient *client = [WTRApiClient sharedInstance];
+  _accountToken = [client accountToken];
+  _endUserId = [client getEndUserId];
+  _uniqueLink = [client getUniqueLink];
+  _token = [client getToken];
 
   [self registerForKeyboardNotification];
   [self setupViews];
@@ -163,6 +174,13 @@
   }
 }
 
+- (void)optOutButtonPressed:(UIButton *)sender {
+  if (![[UIApplication sharedApplication] openURL:[self optOutURL]]) {
+    [WTRLogger logError:@"Failed to open opt out page"];
+  } else {
+    [self dismissViewControllerWithBackgroundFade];
+  }
+}
 
 -(void)socialButtonPressedForService:(UIButton *)sender {
   if ([sender.titleLabel.text isEqualToString:[NSString fontAwesomeIconStringForEnum:FAThumbsUp]]) {
@@ -224,6 +242,10 @@
 
 #pragma mark - Helper methods
 
+- (NSURL *)optOutURL {
+  return [NSURL URLWithString:[NSString stringWithFormat:@"https://app.wootric.com/opt_out?token=%@&metric_type=%@&end_user_id=%@&end_user_email=%@&unique_link=%@&opt_out_token=%@", _accountToken, _settings.surveyType, _endUserId, _settings.endUserEmail, _uniqueLink, _token]];
+}
+
 - (void)setupFacebookAndTwitterForScore:(int)score {
   BOOL twitterAvailable = ([self twitterHandlerAndFeedbackTextPresent] && score >= 9);
   BOOL facebookAvailable = ([_settings facebookPageSet] && score >= 9);
@@ -255,6 +277,8 @@
   [self setQuestionViewVisible:NO andFeedbackViewVisible:NO];
   _sendButton.hidden = YES;
   _socialShareView.hidden = NO;
+  _optOutButton.hidden = YES;
+  [self setupPoweredByWootricConstraintsCenteredX];
 }
 
 - (void)dismissWithFinalThankYou {
@@ -263,6 +287,7 @@
   _socialShareView.hidden = YES;
   _sendButton.hidden = YES;
   _poweredByWootric.hidden = YES;
+  _optOutButton.hidden = YES;
   _finalThankYouLabel.hidden = NO;
   [_modalView hideDismissButton];
   _constraintModalHeight.constant = 125;

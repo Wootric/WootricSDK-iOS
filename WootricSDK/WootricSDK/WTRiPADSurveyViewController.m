@@ -30,6 +30,7 @@
 #import "WTRColor.h"
 #import "WTRSurvey.h"
 #import "WTRLogger.h"
+#import "WTRApiClient.h"
 #import "NSString+FontAwesome.h"
 #import <Social/Social.h>
 
@@ -39,6 +40,10 @@
 @property (nonatomic, assign) int currentScore;
 @property (nonatomic, assign) BOOL alreadyVoted;
 @property (nonatomic, assign) CGFloat keyboardHeight;
+@property (nonatomic, strong) NSString *accountToken;
+@property (nonatomic, strong) NSString *endUserId;
+@property (nonatomic, strong) NSString *uniqueLink;
+@property (nonatomic, strong) NSString *token;
 
 @end
 
@@ -55,6 +60,12 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  WTRApiClient *client = [WTRApiClient sharedInstance];
+  _accountToken = [client accountToken];
+  _endUserId = [client getEndUserId];
+  _uniqueLink = [client getUniqueLink];
+  _token = [client getToken];
 
   [self registerForKeyboardNotification];
   [self setupViews];
@@ -119,6 +130,14 @@
   NSURL *url = [NSURL URLWithString:@"https://www.wootric.com"];
   if (![[UIApplication sharedApplication] openURL:url]) {
     [WTRLogger logError:@"Failed to open wootric page"];
+  }
+}
+
+- (void)optOutButtonPressed:(UIButton *)sender {
+  if (![[UIApplication sharedApplication] openURL:[self optOutURL]]) {
+    [WTRLogger logError:@"Failed to open opt out page"];
+  } else {
+    [self dismissViewControllerWithBackgroundFade];
   }
 }
 
@@ -215,6 +234,10 @@
   }
 }
 
+- (NSURL *)optOutURL {
+  return [NSURL URLWithString:[NSString stringWithFormat:@"https://app.wootric.com/opt_out?token=%@&metric_type=%@&end_user_id=%@&end_user_email=%@&unique_link=%@&opt_out_token=%@", _accountToken, _settings.surveyType, _endUserId, _settings.endUserEmail, _uniqueLink, _token]];
+}
+
 - (void)setupFacebookAndTwitterForScore:(int)score {
   BOOL twitterAvailable = ([self twitterHandlerAndFeedbackTextPresent] && score >= 9);
   BOOL facebookAvailable = ([_settings facebookPageSet] && score >= 9);
@@ -241,6 +264,10 @@
   [self setQuestionViewVisible:NO andFeedbackViewVisible:NO];
   [_feedbackView textViewResignFirstResponder];
   _socialShareView.hidden = NO;
+  if ([self.settings showOptOut]) {
+    [self setupPoweredByWootricForSocialShareView];
+    _optOutButton.hidden = YES;
+  }
   [UIView animateWithDuration:0.2 animations:^{
     [self.view layoutIfNeeded];
   } completion:^(BOOL finished) {

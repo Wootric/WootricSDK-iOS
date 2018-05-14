@@ -34,7 +34,6 @@
 @property (nonatomic, strong) UILabel *questionLabel;
 @property (nonatomic, strong) UILabel *likelyAnchor;
 @property (nonatomic, strong) UILabel *notLikelyAnchor;
-@property (nonatomic, strong) UIButton *poweredByWootric;
 @property (nonatomic, strong) WTRSlider *scoreSlider;
 @property (nonatomic, strong) WTRScoreView *scoreLabel;
 @property (nonatomic, strong) WTRSettings *settings;

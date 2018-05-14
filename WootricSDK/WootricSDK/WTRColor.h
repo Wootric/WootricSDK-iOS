@@ -38,6 +38,7 @@
 + (UIColor *)sendButtonBackgroundColor;
 + (UIColor *)sendButtonDisabledBackgroundColor;
 + (UIColor *)poweredByColor;
++ (UIColor *)optOutTextColor;
 + (UIColor *)wootricTextColor;
 + (UIColor *)sliderValueColor;
 + (UIColor *)sliderDotSelectedColor;

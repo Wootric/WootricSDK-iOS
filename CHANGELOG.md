@@ -1,3 +1,9 @@
+## 0.9.0 (2018-05-21)
+
+### Changes:
+
+- Add opt out option
+
 ## 0.8.0 (2018-05-15)
 
 ### Changes:

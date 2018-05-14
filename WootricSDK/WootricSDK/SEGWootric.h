@@ -85,4 +85,9 @@
 - (void)setThankYouButtonBackgroundColor:(UIColor *)color;
 - (void)setSocialSharingColor:(UIColor *)color;
 
+- (void)setLogLevelNone;
+- (void)setLogLevelError;
+- (void)setLogLevelVerbose;
+- (void)showOptOut:(BOOL)flag;
+
 @end

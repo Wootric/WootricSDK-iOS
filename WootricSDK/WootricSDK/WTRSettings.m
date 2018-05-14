@@ -53,6 +53,7 @@
     _timeDelay = -1;
     _surveyType = @"NPS";
     _scale = [self scoreRules][_surveyType][0];
+    _showOptOut = NO;
   }
     
   return self;

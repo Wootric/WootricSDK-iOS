@@ -91,6 +91,10 @@
   [Wootric forceSurvey:flag];
 }
 
+- (void)showOptOut:(BOOL)flag {
+  [Wootric showOptOut:flag];
+}
+
 - (void)skipFeedbackScreenForPromoter:(BOOL)flag {
   [Wootric skipFeedbackScreenForPromoter:flag];
 }
@@ -169,6 +173,20 @@
 
 - (void)setThankYouButtonBackgroundColor:(UIColor *)color {
   [Wootric setThankYouButtonBackgroundColor:color];
+}
+
+#pragma mark - WTRLogger setters
+
+- (void)setLogLevelNone {
+  [Wootric setLogLevelNone];
+}
+
+- (void)setLogLevelError {
+  [Wootric setLogLevelError];
+}
+
+- (void)setLogLevelVerbose {
+  [Wootric setLogLevelVerbose];
 }
 
 @end

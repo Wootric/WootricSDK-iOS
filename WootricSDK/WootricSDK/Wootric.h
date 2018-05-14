@@ -266,5 +266,10 @@
  @discussion Set WTRLogger level to Verbose i.e. it will show all logs from the WootricSDK.
  */
 + (void)setLogLevelVerbose;
+/**
+ @discussion If showOptOut is set to YES, it will show an option for the end user to opt out of being surveyed. Default value is NO.
+ @param flag A boolean to show the opt out option.
+ */
++ (void)showOptOut:(BOOL)flag;
 
 @end

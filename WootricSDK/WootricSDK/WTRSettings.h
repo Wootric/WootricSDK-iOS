@@ -55,6 +55,7 @@
 @property (nonatomic, assign) NSInteger timeDelay;
 @property (nonatomic, assign) BOOL surveyImmediately;
 @property (nonatomic, assign) BOOL forceSurvey;
+@property (nonatomic, assign) BOOL showOptOut;
 @property (nonatomic, assign) BOOL setDefaultAfterSurvey;
 @property (nonatomic, assign) BOOL skipFeedbackScreen;
 @property (nonatomic, assign) BOOL passScoreAndTextToURL;

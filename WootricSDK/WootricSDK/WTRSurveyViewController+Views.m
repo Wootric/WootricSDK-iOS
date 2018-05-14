@@ -26,6 +26,8 @@
 #import "WTRColor.h"
 #import "UIImage+ImageFromColor.h"
 
+static NSString *const kPoweredByWootric = @"Powered by Wootric";
+
 @implementation WTRSurveyViewController (Views)
 
 - (void)setupViews {
@@ -37,6 +39,9 @@
   [self setupFinalThankYouLabel];
   [self setupSendButton];
   [self setupDismissButton];
+  if ([self.settings showOptOut]) {
+    [self setupOptOut];
+  }
   [self setupPoweredByWootric];
 
   [self addViewsToModal];
@@ -93,7 +98,7 @@
 - (void)setupPoweredByWootric {
   self.poweredByWootric = [[UIButton alloc] init];
   [self.poweredByWootric setTranslatesAutoresizingMaskIntoConstraints:NO];
-  NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"Powered by Wootric"]];
+  NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:kPoweredByWootric];
   [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, 10)];
   [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColor] range:NSMakeRange(11, 7)];
   [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, 18)];
@@ -101,6 +106,17 @@
   [self.poweredByWootric addTarget:self
                       action:NSSelectorFromString(@"openWootricHomepage:")
             forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)setupOptOut {
+  self.optOutButton = [[UIButton alloc] init];
+  [self.optOutButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [self.optOutButton setTitle:@"opt out" forState:UIControlStateNormal];
+  [self.optOutButton setTitleColor:[WTRColor optOutTextColor] forState:UIControlStateNormal];
+  [self.optOutButton.titleLabel setFont:[UIFont systemFontOfSize:10]];
+  [self.optOutButton addTarget:self
+                            action:NSSelectorFromString(@"optOutButtonPressed:")
+                  forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Modals
@@ -131,6 +147,9 @@
   [self.modalView addSubview:self.modalView.dismissButton];
   [self.modalView addSubview:self.finalThankYouLabel];
   [self.modalView addSubview:self.sendButton];
+  if ([self.settings showOptOut]) {
+    [self.modalView addSubview:self.optOutButton];
+  }
   [self.modalView addSubview:self.poweredByWootric];
 }
 

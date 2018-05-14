@@ -102,6 +102,11 @@
   apiClient.settings.forceSurvey = flag;
 }
 
++ (void)showOptOut:(BOOL)flag {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.showOptOut = flag;
+}
+
 + (void)surveyImmediately:(BOOL)flag {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.surveyImmediately = flag;

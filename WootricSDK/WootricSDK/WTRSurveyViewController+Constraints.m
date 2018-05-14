@@ -39,19 +39,24 @@
   [self setupSendButtonConstraints];
   [self setupDismissButtonConstraints];
   [self setupPoweredByWootricConstraints];
+  if ([self.settings showOptOut]) {
+    [self setupOptOutButtonConstraints];
+  } else {
+    [self setupPoweredByWootricConstraintsCenteredX];
+  }
 }
 
 #pragma mark - Buttons
 
 - (void)setupPoweredByWootricConstraints {
-  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.poweredByWootric
-                                                            attribute:NSLayoutAttributeCenterX
-                                                            relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.modalView
-                                                            attribute:NSLayoutAttributeCenterX
-                                                           multiplier:1
-                                                             constant:0];
-  [self.modalView addConstraint:constX];
+  self.constraintPoweredByWootricX = [NSLayoutConstraint constraintWithItem:self.poweredByWootric
+                                                                  attribute:NSLayoutAttributeRight
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.modalView
+                                                                  attribute:NSLayoutAttributeRight
+                                                                 multiplier:1
+                                                                   constant:-17];
+  [self.modalView addConstraint:self.constraintPoweredByWootricX];
 
   NSLayoutConstraint *constBottom = [NSLayoutConstraint constraintWithItem:self.poweredByWootric
                                                                  attribute:NSLayoutAttributeBottom
@@ -70,6 +75,47 @@
                                                            multiplier:1
                                                              constant:12];
   [self.poweredByWootric addConstraint:constH];
+}
+
+- (void)setupPoweredByWootricConstraintsCenteredX {
+  [self.poweredByWootric removeConstraint:self.constraintPoweredByWootricX];
+  self.constraintPoweredByWootricX = [NSLayoutConstraint constraintWithItem:self.poweredByWootric
+                                                                  attribute:NSLayoutAttributeCenterX
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.modalView
+                                                                  attribute:NSLayoutAttributeCenterX
+                                                                 multiplier:1
+                                                                   constant:0];
+  [self.modalView addConstraint:self.constraintPoweredByWootricX];
+}
+
+- (void)setupOptOutButtonConstraints {
+  NSLayoutConstraint *constL = [NSLayoutConstraint constraintWithItem:self.optOutButton
+                                                            attribute:NSLayoutAttributeLeft
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.modalView
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1
+                                                             constant:17];
+  [self.modalView addConstraint:constL];
+
+  NSLayoutConstraint *constBottom = [NSLayoutConstraint constraintWithItem:self.optOutButton
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.modalView
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                multiplier:1
+                                                                  constant:-14];
+  [self.modalView addConstraint:constBottom];
+
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.optOutButton
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:12];
+  [self.optOutButton addConstraint:constH];
 }
 
 - (void)setupDismissButtonConstraints {

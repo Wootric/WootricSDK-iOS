@@ -42,14 +42,14 @@
 }
 
 - (void)tearDown {
-  [super tearDown];
-  
   [_defaults setObject:nil forKey:@"type"];
   [_defaults setObject:nil forKey:@"surveyed"];
   [_defaults setObject:nil forKey:@"lastSeenAt"];
   [_defaults setObject:nil forKey:@"surveyedAt"];
   _apiClient.settings.surveyedDefaultDurationDecline = 30;
   _apiClient.settings.surveyedDefaultDuration = 90;
+
+  [super tearDown];
 }
 
 - (void)testSetLastSeenAtNotSet {

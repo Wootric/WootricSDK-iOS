@@ -264,4 +264,16 @@
   _apiClient.settings.socialSharingColor = nil;
 }
 
+- (void)testShowOptOutDefaultNo {
+  XCTAssertFalse(_apiClient.settings.showOptOut, @"showOptOut default value should be NO");
+}
+
+- (void)testSetShowOptOut {
+  [_segWootric showOptOut:YES];
+
+  XCTAssertTrue(_apiClient.settings.showOptOut, @"showOptOut default value should be YES");
+
+  _apiClient.settings.showOptOut = NO;
+}
+
 @end

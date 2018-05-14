@@ -33,7 +33,7 @@
 @property (nonatomic, strong) NSString *surveyServerURL;
 @property (nonatomic, strong) NSString *accessToken;
 @property (nonatomic, strong) NSURLSession *wootricSession;
-@property (nonatomic, strong) NSNumber *userID;
+@property (nonatomic) NSInteger userID;
 @property (nonatomic, strong) NSNumber *accountID;
 @property (nonatomic, strong) NSString *uniqueLink;
 @property (nonatomic, strong) NSString *osVersion;
@@ -78,15 +78,25 @@
 }
 
 - (void)endUserDeclined {
-  [self getEndUserWithEmail:^(NSInteger endUserID) {
-    [self createResponseForEndUser:endUserID withScore:-1 text:nil endpoint:@"declines"];
-  }];
+  if (!self.userID) {
+    [self getEndUserWithEmail:^(NSInteger endUserID) {
+      self.userID = endUserID;
+      [self createResponseForEndUser:self.userID withScore:-1 text:nil endpoint:@"declines"];
+    }];
+  } else {
+    [self createResponseForEndUser:self.userID withScore:-1 text:nil endpoint:@"declines"];
+  }
 }
 
 - (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text {
-  [self getEndUserWithEmail:^(NSInteger endUserID) {
-    [self createResponseForEndUser:endUserID withScore:score text:text endpoint:@"responses"];
-  }];
+  if (!self.userID) {
+    [self getEndUserWithEmail:^(NSInteger endUserID) {
+      self.userID = endUserID;
+      [self createResponseForEndUser:self.userID withScore:score text:text endpoint:@"responses"];
+    }];
+  } else {
+    [self createResponseForEndUser:self.userID withScore:score text:text endpoint:@"responses"];
+  }
 }
 
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID {
@@ -104,17 +114,18 @@
       if ([responseJSON isKindOfClass:[NSArray class]]) {
         if ([responseJSON count] == 0) {
           [self createEndUser:^(NSInteger endUserID) {
-            endUserWithID(endUserID);
+            self.userID = (long)endUserID;
+            endUserWithID(self.userID);
           }];
         } else {
           NSDictionary *endUser = responseJSON[0];
           
           if (endUser[@"id"]) {
-            NSInteger endUserID = [endUser[@"id"] integerValue];
+            self.userID = [endUser[@"id"] integerValue];
             if (!self.endUserAlreadyUpdated) {
-              [self updateExistingEndUser:endUserID];
+              [self updateExistingEndUser:self.userID];
             }
-            endUserWithID(endUserID);
+            endUserWithID(self.userID);
           }
         }
       } else {
@@ -217,7 +228,7 @@
 
 - (void)createResponseForEndUser:(NSInteger)endUserID withScore:(NSInteger)score text:(NSString *)text endpoint:(NSString *)endpoint {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/%@", _baseAPIURL, _apiVersion, (long)endUserID, endpoint]];
-  NSString *params = [self paramsWithScore:score endUserID:endUserID userID:_userID accountID:_accountID uniqueLink:_uniqueLink priority:_priority text:text];
+  NSString *params = [self paramsWithScore:score endUserID:endUserID accountID:_accountID uniqueLink:_uniqueLink priority:_priority text:text];
   
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
   
@@ -233,7 +244,6 @@
 }
 
 - (void)authenticate:(void (^)(void))authenticated {
-  
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/oauth/token", _baseAPIURL]];
   NSString *params = [NSString stringWithFormat:@"grant_type=client_credentials&client_id=%@", _clientID];
   
@@ -253,6 +263,9 @@
         NSString *accessToken = responseJSON[@"access_token"];
         if (accessToken) {
           self->_accessToken = accessToken;
+          [self getEndUserWithEmail:^(NSInteger endUserID) {
+            self.userID = endUserID;
+          }];
           authenticated();
         }
       }
@@ -294,12 +307,15 @@
           [WTRLogger log:@"User eligible"];
 
           [self->_settings parseDataFromSurveyServer:responseJSON];
-          self->_userID = responseJSON[@"settings"][@"user_id"];
+
+          if (responseJSON[@"settings"][@"end_user_id"] != [NSNull null]) {
+            self.userID = [responseJSON[@"settings"][@"end_user_id"] integerValue];
+          }
           
           self->_uniqueLink = [self buildUniqueLinkAccountToken:self->_accountToken
-                                             endUserEmail:[self->_settings getEndUserEmailOrUnknown]
-                                                     date:[[NSDate date] timeIntervalSince1970]
-                                             randomString:[self randomString]];
+                                                   endUserEmail:[self->_settings getEndUserEmailOrUnknown]
+                                                           date:[[NSDate date] timeIntervalSince1970]
+                                                   randomString:[self randomString]];
           
           if (responseJSON[@"settings"][@"account_id"] != nil) {
             self->_accountID = responseJSON[@"settings"][@"account_id"];
@@ -423,7 +439,7 @@
   return baseURLString;
 }
 
-- (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID userID:(NSNumber *)userID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text {
+- (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text {
   
   NSString *params = [NSString stringWithFormat:@"origin_url=%@&end_user[id]=%ld&survey[channel]=mobile&survey[unique_link]=%@&priority=%i&metric_type=%@", _settings.originURL, endUserID, uniqueLink, priority, [_settings.surveyType lowercaseString]];
   
@@ -435,11 +451,7 @@
       params = [NSString stringWithFormat:@"%@&text=%@", params, escapedText];
     }
   }
-  
-  if (userID != nil) {
-    params = [NSString stringWithFormat:@"%@&user_id=%ld", params, [userID longValue]];
-  }
-  
+
   if (accountID != nil) {
     params = [NSString stringWithFormat:@"%@&account_id=%ld", params, [accountID longValue]];
   }
@@ -487,6 +499,26 @@
 
 - (NSString *)osVersion {
   return [[UIDevice currentDevice] systemVersion];
+}
+
+#pragma Getters
+
+- (NSString *)getUniqueLink {
+  if (!self.uniqueLink) {
+    self.uniqueLink = [self buildUniqueLinkAccountToken:self.accountToken
+                                           endUserEmail:[self.settings getEndUserEmailOrUnknown]
+                                                   date:[[NSDate date] timeIntervalSince1970]
+                                           randomString:[self randomString]];
+  }
+  return self.uniqueLink;
+}
+
+- (NSString *)getEndUserId {
+  return [NSString stringWithFormat: @"%ld", (long)self.userID];
+}
+
+- (NSString *)getToken {
+  return self.accessToken;
 }
 
 @end

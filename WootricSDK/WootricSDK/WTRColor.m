@@ -70,6 +70,10 @@
   return [self colorWithHexString:@"#AFAFAF"];
 }
 
++ (UIColor *)optOutTextColor {
+  return [self colorWithHexString:@"AFAFAF"];
+}
+
 + (UIColor *)wootricTextColor {
   return [self colorWithHexString:@"4A4A4A"];
 }

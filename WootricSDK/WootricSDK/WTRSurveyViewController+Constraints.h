@@ -27,5 +27,6 @@
 @interface WTRSurveyViewController (Constraints)
 
 - (void)setupConstraints;
+- (void)setupPoweredByWootricConstraintsCenteredX;
 
 @end
