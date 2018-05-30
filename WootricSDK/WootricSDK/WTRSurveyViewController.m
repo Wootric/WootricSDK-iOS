@@ -2,7 +2,7 @@
 //  WTRSurveyViewController.m
 //  WootricSDK
 //
-// Copyright (c) 2015 Wootric (https://wootric.com)
+// Copyright (c) 2018 Wootric (https://wootric.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,8 @@
 #import "UIImage+ImageFromColor.h"
 #import "WTRSurvey.h"
 #import "WTRThankYouButton.h"
+#import "WTRLogger.h"
+#import "WTRApiClient.h"
 #import "NSString+FontAwesome.h"
 #import "Wootric.h"
 #import <Social/Social.h>
@@ -40,6 +42,10 @@
 @property (nonatomic, assign) BOOL alreadyVoted;
 @property (nonatomic, assign) CGFloat keyboardHeight;
 @property (nonatomic, strong) CAGradientLayer *gradient;
+@property (nonatomic, strong) NSString *accountToken;
+@property (nonatomic, strong) NSString *endUserId;
+@property (nonatomic, strong) NSString *uniqueLink;
+@property (nonatomic, strong) NSString *token;
 
 @end
 
@@ -58,6 +64,12 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  WTRApiClient *client = [WTRApiClient sharedInstance];
+  _accountToken = [client accountToken];
+  _endUserId = [client getEndUserId];
+  _uniqueLink = [client getUniqueLink];
+  _token = [client getToken];
+
   [self registerForKeyboardNotification];
   [self setupViews];
   [self setupConstraints];
@@ -68,13 +80,14 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
   [UIView animateWithDuration:0.25 animations:^{
     self.view.backgroundColor = [WTRColor viewBackgroundColor];
-    CGRect modalFrame = _modalView.frame;
-    CGFloat modalPosition = self.view.frame.size.height - _modalView.frame.size.height;
+    CGRect modalFrame = self->_modalView.frame;
+    CGFloat modalPosition = self.view.frame.size.height - self->_modalView.frame.size.height;
     modalFrame.origin.y = modalPosition;
-    _modalView.frame = modalFrame;
-    _constraintTopToModalTop.constant = modalPosition;
+    self->_modalView.frame = modalFrame;
+    self->_constraintTopToModalTop.constant = modalPosition;
   }];
   [self setModalGradient:_modalView.bounds];
   [_modalView.layer insertSublayer:_gradient atIndex:0];
@@ -92,9 +105,9 @@
 #pragma mark - Button methods
 
 - (void)openThankYouURL:(WTRThankYouButton *)sender {
-  NSLog(@"%@", sender.buttonURL);
+  [WTRLogger log:@"%@", sender.buttonURL];
   if (![[UIApplication sharedApplication] openURL:sender.buttonURL]) {
-    NSLog(@"WootricSDK: Failed to open 'thank you' url");
+    [WTRLogger logError:@"Failed to open 'thank you' url"];
   } else {
     [self dismissViewControllerWithBackgroundFade];
   }
@@ -151,13 +164,13 @@
 - (void)endUserVotedWithScore:(int)score andText:(NSString *)text {
   WTRSurvey *survey = [[WTRSurvey alloc] init];
   [survey endUserVotedWithScore:score andText:text];
-  NSLog(@"WootricSDK: Vote");
+  [WTRLogger log:@"Vote"];
 }
 
 - (void)endUserDeclined {
   WTRSurvey *survey = [[WTRSurvey alloc] init];
   [survey endUserDeclined];
-  NSLog(@"WootricSDK: Decline");
+  [WTRLogger log:@"WootricSDK: Decline"];
 }
 
 - (void)setQuestionViewVisible:(BOOL)questionFlag andFeedbackViewVisible:(BOOL)feedbackFlag {
@@ -168,16 +181,23 @@
 - (void)openWootricHomepage:(UIButton *)sender {
   NSURL *url = [NSURL URLWithString:@"https://www.wootric.com"];
   if (![[UIApplication sharedApplication] openURL:url]) {
-    NSLog(@"Failed to open wootric page");
+    [WTRLogger logError:@"Failed to open wootric page"];
   }
 }
 
+- (void)optOutButtonPressed:(UIButton *)sender {
+  if (![[UIApplication sharedApplication] openURL:[self optOutURL]]) {
+    [WTRLogger logError:@"Failed to open opt out page"];
+  } else {
+    [self dismissViewControllerWithBackgroundFade];
+  }
+}
 
 -(void)socialButtonPressedForService:(UIButton *)sender {
   if ([sender.titleLabel.text isEqualToString:[NSString fontAwesomeIconStringForEnum:FAThumbsUp]]) {
     NSURL *url = _settings.facebookPage;
     if (![[UIApplication sharedApplication] openURL:url]) {
-      NSLog(@"Failed to open facebook page");
+      [WTRLogger logError:@"Failed to open facebook page"];
     }
   } else {
     NSString *serviceType;
@@ -199,10 +219,10 @@
       [sheet setCompletionHandler:^(SLComposeViewControllerResult result){
         switch (result) {
           case SLComposeViewControllerResultCancelled:
-            NSLog(@"WootricSDK: Post cancelled");
+            [WTRLogger log:@"Post cancelled"];
             break;
           case SLComposeViewControllerResultDone:
-            NSLog(@"WootricSDK: Post successful");
+            [WTRLogger log:@"Post successful"];
             break;
           default:
             break;
@@ -232,6 +252,10 @@
 }
 
 #pragma mark - Helper methods
+
+- (NSURL *)optOutURL {
+  return [NSURL URLWithString:[NSString stringWithFormat:@"https://app.wootric.com/opt_out?token=%@&metric_type=%@&end_user_id=%@&end_user_email=%@&unique_link=%@&opt_out_token=%@", _accountToken, _settings.surveyType, _endUserId, _settings.endUserEmail, _uniqueLink, _token]];
+}
 
 - (void)setupFacebookAndTwitterForScore:(int)score {
   BOOL twitterAvailable = ([self twitterHandlerAndFeedbackTextPresent] && score >= 9);
@@ -264,6 +288,8 @@
   [self setQuestionViewVisible:NO andFeedbackViewVisible:NO];
   _sendButton.hidden = YES;
   _socialShareView.hidden = NO;
+  _optOutButton.hidden = YES;
+  [self setupPoweredByWootricConstraintsCenteredX];
 }
 
 - (void)dismissWithFinalThankYou {
@@ -272,6 +298,7 @@
   _socialShareView.hidden = YES;
   _sendButton.hidden = YES;
   _poweredByWootric.hidden = YES;
+  _optOutButton.hidden = YES;
   _finalThankYouLabel.hidden = NO;
   [_modalView hideDismissButton];
   _constraintModalHeight.constant = 125;

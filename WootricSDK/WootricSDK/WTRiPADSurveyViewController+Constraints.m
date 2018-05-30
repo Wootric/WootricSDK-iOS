@@ -2,7 +2,7 @@
 //  WTRiPADSurveyViewController+Constraints.m
 //  WootricSDK
 //
-// Copyright (c) 2015 Wootric (https://wootric.com)
+// Copyright (c) 2018 Wootric (https://wootric.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,9 @@
   [self.socialShareView setupSubviewsConstraints];
   [self setupFinalThankYouLabelConstraints];
   [self setupPoweredByWootricConstraints];
+  if ([self.settings showOptOut]) {
+    [self setupOptOutButtonConstraints];
+  }
   [self setupDismissButtonConstraints];
 }
 
@@ -45,6 +48,12 @@
   [self.poweredByWootric wtr_constraintHeight:12];
   [[[self.poweredByWootric wtr_centerXConstraint] toSecondViewCenterX:self.modalView] addToView:self.modalView];
   [[[[self.poweredByWootric wtr_bottomConstraint] toSecondViewBottom:self.modalView] withConstant:-14] addToView:self.modalView];
+}
+
+- (void)setupOptOutButtonConstraints {
+  [self.optOutButton wtr_constraintHeight:12];
+  [[[[self.optOutButton wtr_leftConstraint] toSecondViewRight:self.poweredByWootric] withConstant:4] addToView:self.modalView];
+  [[[[self.optOutButton wtr_bottomConstraint] toSecondViewBottom:self.modalView] withConstant:-14] addToView:self.modalView];
 }
 
 - (void)setupScrollViewConstraints {

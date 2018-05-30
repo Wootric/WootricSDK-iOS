@@ -2,7 +2,7 @@
 //  WootricSDK.m
 //  WootricSDK
 //
-// Copyright (c) 2015 Wootric (https://wootric.com)
+// Copyright (c) 2018 Wootric (https://wootric.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@
 #import "WTRSurveyViewController.h"
 #import "WTRiPADSurveyViewController.h"
 #import "WTRApiClient.h"
+#import "WTRLogger.h"
 
 #define IPAD UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
 
@@ -37,6 +38,12 @@
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.clientID = clientID;
   apiClient.clientSecret = clientSecret;
+  apiClient.accountToken = accountToken;
+}
+
++ (void)configureWithClientID:(NSString *)clientID accountToken:(NSString *)accountToken {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.clientID = clientID;
   apiClient.accountToken = accountToken;
 }
 
@@ -95,6 +102,11 @@
   apiClient.settings.forceSurvey = flag;
 }
 
++ (void)showOptOut:(BOOL)flag {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.showOptOut = flag;
+}
+
 + (void)surveyImmediately:(BOOL)flag {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.surveyImmediately = flag;
@@ -139,7 +151,8 @@
     WTRSurvey *surveyClient = [[WTRSurvey alloc] init];
     [surveyClient survey:^{
         
-      NSLog(@"WootricSDK: presenting survey view");
+      [WTRLogger log:@"presenting survey view"];
+
       
       WTRApiClient *apiClient = [WTRApiClient sharedInstance];
       
@@ -152,7 +165,7 @@
         
     }];
   } else {
-    NSLog(@"WootricSDK: Configure SDK first");
+    [WTRLogger log:@"Configure SDK first"];
   }
 }
 
@@ -272,7 +285,21 @@
 }
 
 + (NSNotificationName) surveyDidDisappearNotification {
-    return @"com.wootric.surveyDidDisappearNotification";
+  return @"com.wootric.surveyDidDisappearNotification";
+}
+
+#pragma mark - WTRLogger setters
+
++ (void)setLogLevelNone {
+  [WTRLogger setLogLevel:WTRLogLevelNone];
+}
+
++ (void)setLogLevelError {
+  [WTRLogger setLogLevel:WTRLogLevelError];
+}
+
++ (void)setLogLevelVerbose {
+  [WTRLogger setLogLevel:WTRLogLevelVerbose];
 }
 
 @end

@@ -1,3 +1,23 @@
+## 0.9.0 (2018-05-21)
+
+### Changes:
+
+- Add opt out option
+
+## 0.8.0 (2018-05-15)
+
+### Changes:
+
+- Add WTRLogger to allow setting log level so logs can be disabled
+- Add new setters to Wootric.h to set the WTRLogger mode
+- Update license comment in all files
+
+## 0.7.0 (2018-05-03)
+
+### Changes:
+
+- Add new method that just needs client_id & doesn't require the client_secret
+
 ## 0.6.6 (2017-12-15)
 
 ### Fixed:

@@ -2,7 +2,7 @@
 //  WootricSDK.h
 //  WootricSDK
 //
-// Copyright (c) 2015 Wootric (https://wootric.com)
+// Copyright (c) 2018 Wootric (https://wootric.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,14 @@
  @param accountToken Found in Install section of the Wootric's admin panel.
 */
 + (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret accountToken:(NSString *)accountToken;
+
+/**
+ @discussion It configures the SDK with required parameters.
+ @param clientID Found in API section of the Wootric's admin panel.
+ @param accountToken Found in Install section of the Wootric's admin panel.
+ */
++ (void)configureWithClientID:(NSString *)clientID accountToken:(NSString *)accountToken;
+
 /**
  @discussion It shows survey if end user is eligible.
  @param viewController View controller in which you would like to display the survey.
@@ -252,4 +260,21 @@
  @param voted Boolean NSNumber indicating whether the user voted or not.
  */
 + (NSNotificationName) surveyDidDisappearNotification;
+/**
+ @discussion Set WTRLogger level to None i.e. it won't show any log from the WootricSDK.
+ */
++ (void)setLogLevelNone;
+/**
+ @discussion Set WTRLogger level to Error i.e. it will only show error logs from the WootricSDK.
+ */
++ (void)setLogLevelError;
+/**
+ @discussion Set WTRLogger level to Verbose i.e. it will show all logs from the WootricSDK.
+ */
++ (void)setLogLevelVerbose;
+/**
+ @discussion If showOptOut is set to YES, it will show an option for the end user to opt out of being surveyed. Default value is NO.
+ @param flag A boolean to show the opt out option.
+ */
++ (void)showOptOut:(BOOL)flag;
 @end

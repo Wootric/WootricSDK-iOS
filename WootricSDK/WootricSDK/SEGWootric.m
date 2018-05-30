@@ -2,7 +2,7 @@
 //  SEGWootric.m
 //  WootricSDK
 //
-// Copyright (c) 2015 Wootric (https://wootric.com)
+// Copyright (c) 2018 Wootric (https://wootric.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -91,6 +91,10 @@
   [Wootric forceSurvey:flag];
 }
 
+- (void)showOptOut:(BOOL)flag {
+  [Wootric showOptOut:flag];
+}
+
 - (void)skipFeedbackScreenForPromoter:(BOOL)flag {
   [Wootric skipFeedbackScreenForPromoter:flag];
 }
@@ -169,6 +173,20 @@
 
 - (void)setThankYouButtonBackgroundColor:(UIColor *)color {
   [Wootric setThankYouButtonBackgroundColor:color];
+}
+
+#pragma mark - WTRLogger setters
+
+- (void)setLogLevelNone {
+  [Wootric setLogLevelNone];
+}
+
+- (void)setLogLevelError {
+  [Wootric setLogLevelError];
+}
+
+- (void)setLogLevelVerbose {
+  [Wootric setLogLevelVerbose];
 }
 
 @end

@@ -2,7 +2,7 @@
 //  WTRSettings.m
 //  WootricSDK
 //
-// Copyright (c) 2015 Wootric (https://wootric.com)
+// Copyright (c) 2018 Wootric (https://wootric.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -53,6 +53,7 @@
     _timeDelay = -1;
     _surveyType = @"NPS";
     _scale = [self scoreRules][_surveyType][0];
+    _showOptOut = NO;
   }
     
   return self;

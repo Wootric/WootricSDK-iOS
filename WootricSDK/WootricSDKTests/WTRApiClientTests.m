@@ -1,10 +1,26 @@
 //
 //  WTRApiClientTests.m
-//  WootricSDK
+//  WootricSDKTests
 //
-//  Created by Diego Serrano on 5/11/16.
-//  Copyright © 2016 Wootric. All rights reserved.
+// Copyright (c) 2018 Wootric (https://wootric.com)
 //
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
 #import <XCTest/XCTest.h>
 #import "WTRApiClient.h"
@@ -22,7 +38,7 @@
 @property (nonatomic, strong) NSString *surveyServerURL;
 @property (nonatomic, strong) NSString *accessToken;
 @property (nonatomic, strong) NSURLSession *wootricSession;
-@property (nonatomic, strong) NSNumber *userID;
+@property (nonatomic) NSInteger userID;
 @property (nonatomic, strong) NSNumber *accountID;
 @property (nonatomic, strong) NSString *uniqueLink;
 @property (nonatomic, strong) NSString *osVersion;
@@ -35,7 +51,7 @@
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID;
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID;
 - (void)authenticate:(void (^)(void))authenticated;
-- (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID userID:(NSNumber *)userID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text;
+- (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text;
 - (NSString *)randomString;
 - (NSString *)buildUniqueLinkAccountToken:(NSString *)accountToken endUserEmail:(NSString *)endUserEmail date:(NSTimeInterval)date randomString:(NSString *)randomString;
 - (NSString *)addSurveyServerCustomSettingsToURLString:(NSString *)baseURLString;
@@ -57,6 +73,9 @@
   _apiClient.settings.surveyImmediately = NO;
   _apiClient.settings.firstSurveyAfter = @0;
   _apiClient.priority = 0;
+  _apiClient.userID = 0;
+  _apiClient.uniqueLink = nil;
+  _apiClient.accessToken = nil;
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setBool:NO forKey:@"surveyed"];
   [defaults setDouble:0 forKey:@"lastSeenAt"];
@@ -79,7 +98,6 @@
 }
 
 - (void)testCheckConfiguration {
-  
   _apiClient.clientID = @"";
   _apiClient.clientSecret = @"";
   _apiClient.accountToken = @"";
@@ -106,17 +124,16 @@
   _apiClient.accountToken = @"";
   XCTAssertFalse([_apiClient checkConfiguration]);
   
-  _apiClient.clientID = @"clientIDtestString";
-  _apiClient.clientSecret = @"";
-  _apiClient.accountToken = @"NPS-token";
-  XCTAssertFalse([_apiClient checkConfiguration]);
-  
-  
   _apiClient.clientID = @"";
   _apiClient.clientSecret = @"clientSecretTestString";
   _apiClient.accountToken = @"NPS-token";
   XCTAssertFalse([_apiClient checkConfiguration]);
   
+  _apiClient.clientID = @"clientIDtestString";
+  _apiClient.clientSecret = @"";
+  _apiClient.accountToken = @"NPS-token";
+  XCTAssertTrue([_apiClient checkConfiguration]);
+
   _apiClient.clientID = @"clientIDtestString";
   _apiClient.clientSecret = @"clientSecretTestString";
   _apiClient.accountToken = @"NPS-token";
@@ -235,24 +252,23 @@
   _apiClient.settings.originURL = @"com.wootric.WootricSDK-Demo";
   NSInteger score = 9;
   NSInteger endUserID = 12345678;
-  NSNumber *userID = nil;
   NSNumber *accountID = nil;
   NSString *uniqueLink = @"5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e";
   NSString *text = nil;
   int priority = 0;
   
-  NSString *params = [_apiClient paramsWithScore:score endUserID:endUserID userID:userID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil];
+  NSString *params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil];
   XCTAssertEqualObjects(params, expectedResponse, "Should not have account_id nor text in params");
   
-  params = [_apiClient paramsWithScore:score endUserID:endUserID userID:userID accountID:accountID uniqueLink:uniqueLink priority:priority text:text];
+  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text];
   XCTAssertEqualObjects(params, expectedResponse, "Should not have account_id nor text in params");
   
   accountID = @1234;
-  params = [_apiClient paramsWithScore:score endUserID:endUserID userID:userID accountID:accountID uniqueLink:uniqueLink priority:priority text:text];
+  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text];
   XCTAssertEqualObjects(params, expectedResponseAccountId);
   
   text = @"test";
-  params = [_apiClient paramsWithScore:score endUserID:endUserID userID:userID accountID:accountID uniqueLink:uniqueLink priority:priority text:text];
+  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text];
   XCTAssertEqualObjects(params, expectedResponseAccountIdText);
 }
 
@@ -263,34 +279,57 @@
   
   _apiClient.settings.originURL = @"com.wootric.WootricSDK-Demo";
   NSInteger endUserID = 12345678;
-  NSNumber *userID = nil;
   NSNumber *accountID = nil;
   NSString *uniqueLink = @"5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e";
   int priority = 0;
   
-  NSString *params = [_apiClient paramsWithScore:-1 endUserID:endUserID userID:userID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil];
+  NSString *params = [_apiClient paramsWithScore:-1 endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil];
   XCTAssertEqualObjects(params, expectedResponse);
   
   accountID = @1234;
-  params = [_apiClient paramsWithScore:-1 endUserID:endUserID userID:userID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil];
+  params = [_apiClient paramsWithScore:-1 endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil];
   XCTAssertEqualObjects(params, expectedResponseAccountId);
 }
 
 - (void)testPriorityIncreases {
-  
   _apiClient.settings.originURL = @"com.wootric.WootricSDK-Demo";
   NSInteger score = 9;
   NSInteger endUserID = 12345678;
-  NSNumber *userID = nil;
   NSNumber *accountID = nil;
   NSString *uniqueLink = @"5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e";
   _apiClient.priority = 0;
   
-  NSString *params = [_apiClient paramsWithScore:score endUserID:endUserID userID:userID accountID:accountID uniqueLink:uniqueLink priority:_apiClient.priority text:nil];
+  NSString *params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:_apiClient.priority text:nil];
   XCTAssertEqual(_apiClient.priority, 1, "priority should be 1");
-  params = [_apiClient paramsWithScore:score endUserID:endUserID userID:userID accountID:accountID uniqueLink:uniqueLink priority:_apiClient.priority text:nil];
-  params = [_apiClient paramsWithScore:score endUserID:endUserID userID:userID accountID:accountID uniqueLink:uniqueLink priority:_apiClient.priority text:nil];
+  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:_apiClient.priority text:nil];
+  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:_apiClient.priority text:nil];
   XCTAssertEqual(_apiClient.priority, 3, "priority should be 3");
 }
 
+- (void)testGetUniqueLinkWhenUniqueLinkIsSet {
+  NSString *uniqueLink = @"5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e";
+  _apiClient.uniqueLink = uniqueLink;
+
+  XCTAssertEqualObjects([_apiClient getUniqueLink], uniqueLink, "uniqueLink not equal");
+}
+
+- (void)testGetUniqueLinkWhenUniqueLinkIsNotSet {
+  _apiClient.uniqueLink = nil;
+
+  XCTAssertNotNil([_apiClient getUniqueLink], "uniqueLink should not be nil");
+}
+
+- (void)testGetEndUserId {
+  NSInteger userId = 12345;
+  _apiClient.userID = userId;
+
+  XCTAssertEqualObjects([_apiClient getEndUserId], @"12345", "userID not equal");
+}
+
+- (void)testGetToken {
+  NSString *token = @"5d8220d5b96ec1e0c4";
+  _apiClient.accessToken = token;
+
+  XCTAssertEqualObjects([_apiClient getToken], token, "token not equal");
+}
 @end

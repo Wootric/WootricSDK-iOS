@@ -2,7 +2,7 @@
 //  WTRiPADSurveyViewController+Views.m
 //  WootricSDK
 //
-// Copyright (c) 2015 Wootric (https://wootric.com)
+// Copyright (c) 2018 Wootric (https://wootric.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,9 @@
 #import "WTRiPADSurveyViewController+Views.h"
 #import "WTRColor.h"
 
+static NSString * const kPoweredByWootric = @"Powered by Wootric";
+static NSString * const kPoweredByWootricOptOut = @"Powered by Wootric •";
+
 @implementation WTRiPADSurveyViewController (Views)
 
 - (void)setupViews {
@@ -35,7 +38,12 @@
   [self setupSocialShareView];
   [self setupFinalThankYouLabel];
   [self setupDismissButton];
-  [self setupPoweredByWootric];
+  if ([self.settings showOptOut]) {
+    [self setupPoweredByWootric:kPoweredByWootricOptOut];
+    [self setupOptOutButton];
+  } else {
+    [self setupPoweredByWootric:kPoweredByWootric];
+  }
 
   [self addViewsToModal];
   [self.view addSubview:self.scrollView];
@@ -48,6 +56,7 @@
   [self.modalView addSubview:self.socialShareView];
   [self.modalView addSubview:self.finalThankYouLabel];
   [self.modalView addSubview:self.poweredByWootric];
+  [self.modalView addSubview:self.optOutButton];
   [self.modalView addSubview:self.dismissButton];
 }
 
@@ -90,17 +99,36 @@
   [self.finalThankYouLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
-- (void)setupPoweredByWootric {
+- (void)setupPoweredByWootric:(NSString *)text {
   self.poweredByWootric = [[UIButton alloc] init];
   [self.poweredByWootric setTranslatesAutoresizingMaskIntoConstraints:NO];
-  NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"Powered by Wootric"]];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, 10)];
+  NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:text];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, text.length)];
   [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor iPadPoweredByWootricTextColor] range:NSMakeRange(11, 7)];
-  [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, 18)];
+  [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, text.length)];
   [self.poweredByWootric setAttributedTitle:attrStr forState:UIControlStateNormal];
   [self.poweredByWootric addTarget:self
                             action:NSSelectorFromString(@"openWootricHomepage:")
                   forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)setupPoweredByWootricForSocialShareView {
+  NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:kPoweredByWootric]];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, 18)];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor iPadPoweredByWootricTextColor] range:NSMakeRange(11, 7)];
+  [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, 18)];
+  [self.poweredByWootric setAttributedTitle:attrStr forState:UIControlStateNormal];
+}
+
+- (void)setupOptOutButton {
+  self.optOutButton = [[UIButton alloc] init];
+  [self.optOutButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [self.optOutButton setTitle:@"opt out" forState:UIControlStateNormal];
+  [self.optOutButton setTitleColor:[WTRColor optOutTextColor] forState:UIControlStateNormal];
+  [self.optOutButton.titleLabel setFont:[UIFont systemFontOfSize:10]];
+  [self.optOutButton addTarget:self
+                        action:NSSelectorFromString(@"optOutButtonPressed:")
+              forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupModalView {

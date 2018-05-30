@@ -1,5 +1,5 @@
 //
-//  WTRQuestionView.h
+//  WTRLogLevel.h
 //  WootricSDK
 //
 // Copyright (c) 2018 Wootric (https://wootric.com)
@@ -22,18 +22,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import "WTRSettings.h"
+#import <Foundation/Foundation.h>
 
-@interface WTRQuestionView : UIView
-
-- (instancetype)initWithSettings:(WTRSettings *)settings;
-
-- (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
-- (void)setupSubviewsConstraints;
-- (void)recalculateDotsAndScorePositionForWidth:(CGFloat)widthAfterRotation;
-- (void)addDotsAndScores;
-- (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer;
-- (int)getScoreSliderValue;
-
-@end
+typedef NS_ENUM(NSInteger, WTRLogLevel) {
+    WTRLogLevelNone,
+    WTRLogLevelError,
+    WTRLogLevelVerbose
+};
