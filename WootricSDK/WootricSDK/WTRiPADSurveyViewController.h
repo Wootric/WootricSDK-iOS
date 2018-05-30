@@ -24,6 +24,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WTRSettings.h"
+#import "WTRNotificationCenter.h"
 #import "WTRiPADModalView.h"
 #import "WTRiPADQuestionView.h"
 #import "WTRiPADFeedbackView.h"
@@ -46,6 +47,6 @@
 @property (nonatomic, strong) NSLayoutConstraint *socialShareViewHeightConstraint;
 @property (nonatomic, strong) UILabel *finalThankYouLabel;
 
-- (instancetype)initWithSurveySettings:(WTRSettings *)settings;
+- (instancetype)initWithSurveySettings:(WTRSettings *)settings notificationCenter:(WTRNotificationCenter *)notificationCenter;
 
 @end

@@ -1,3 +1,9 @@
+## 0.10.0 (2018-06-25)
+
+### Changes:
+
+- Add notifications for `appear` events (willAppear, didAppear, willDisappear, didDisappear)
+
 ## 0.9.0 (2018-05-21)
 
 ### Changes:

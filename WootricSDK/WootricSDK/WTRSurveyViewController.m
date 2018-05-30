@@ -32,11 +32,13 @@
 #import "WTRLogger.h"
 #import "WTRApiClient.h"
 #import "NSString+FontAwesome.h"
+#import "Wootric.h"
 #import <Social/Social.h>
 
 @interface WTRSurveyViewController ()
 
 @property (nonatomic, assign) BOOL scrolled;
+@property (nonatomic, assign) int currentScore;
 @property (nonatomic, assign) BOOL alreadyVoted;
 @property (nonatomic, assign) CGFloat keyboardHeight;
 @property (nonatomic, strong) CAGradientLayer *gradient;
@@ -44,15 +46,17 @@
 @property (nonatomic, strong) NSString *endUserId;
 @property (nonatomic, strong) NSString *uniqueLink;
 @property (nonatomic, strong) NSString *token;
+@property (nonatomic, strong) WTRNotificationCenter *notificationCenter;
 
 @end
 
 @implementation WTRSurveyViewController
 
-- (instancetype)initWithSurveySettings:(WTRSettings *)settings {
+- (instancetype)initWithSurveySettings:(WTRSettings *)settings notificationCenter:(WTRNotificationCenter *)notificationCenter {
   if (self = [super init]) {
     _gradient = [CAGradientLayer layer];
     _settings = settings;
+    _notificationCenter = notificationCenter;
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
   }
@@ -77,8 +81,23 @@
   [super didReceiveMemoryWarning];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [_notificationCenter postNotificationName:[Wootric surveyWillAppearNotification]
+                                     object:self];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  [_notificationCenter postNotificationName:[Wootric surveyWillDisappearNotification]
+                                     object:self];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+  [_notificationCenter postNotificationName:[Wootric surveyDidAppearNotification]
+                                     object:self];
+
   [UIView animateWithDuration:0.25 animations:^{
     self.view.backgroundColor = [WTRColor viewBackgroundColor];
     CGRect modalFrame = self->_modalView.frame;
@@ -90,6 +109,13 @@
   [self setModalGradient:_modalView.bounds];
   [_modalView.layer insertSublayer:_gradient atIndex:0];
   [_questionView addDotsAndScores];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+  [super viewDidDisappear:animated];
+  [_notificationCenter postNotificationName:[Wootric surveyDidDisappearNotification]
+                                     object:self
+                                   userInfo:@{@"score": @(_currentScore), @"voted": @(_alreadyVoted)}];
 }
 
 #pragma mark - Button methods
@@ -119,19 +145,19 @@
 
 - (void)sendButtonPressed:(UIButton *)sender {
   _alreadyVoted = YES;
-  int score = [_questionView getScoreSliderValue];
-  NSString *placeholderText = [_settings followupPlaceholderTextForScore:score];
+  _currentScore = [_questionView getScoreSliderValue];
+  NSString *placeholderText = [_settings followupPlaceholderTextForScore:_currentScore];
   NSString *text = [_feedbackView feedbackText];
-  [self endUserVotedWithScore:score andText:text];
+  [self endUserVotedWithScore:_currentScore andText:text];
   if ([_feedbackView isActive]) {
     [_feedbackView textViewResignFirstResponder];
-    [self presentShareScreenOrDismissForScore:score];
+    [self presentShareScreenOrDismissForScore:_currentScore];
   } else {
-    if (_settings.skipFeedbackScreen && score >= 9) {
-      [self presentShareScreenOrDismissForScore:score];
+    if (_settings.skipFeedbackScreen && _currentScore >= 9) {
+      [self presentShareScreenOrDismissForScore:_currentScore];
     } else {
       [self setQuestionViewVisible:NO andFeedbackViewVisible:YES];
-      [_feedbackView setFollowupLabelTextBasedOnScore:score];
+      [_feedbackView setFollowupLabelTextBasedOnScore:_currentScore];
       [_feedbackView setFeedbackPlaceholderText:placeholderText];
     }
   }

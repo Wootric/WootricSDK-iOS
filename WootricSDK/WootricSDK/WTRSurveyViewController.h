@@ -25,6 +25,7 @@
 #import <UIKit/UIKit.h>
 #import "WTRModalView.h"
 #import "WTRSettings.h"
+#import "WTRNotificationCenter.h"
 #import "WTRQuestionView.h"
 #import "WTRFeedbackView.h"
 #import "WTRSocialShareView.h"
@@ -48,6 +49,6 @@
 @property (nonatomic, strong) WTRSettings *settings;
 @property (nonatomic, strong) UILabel *finalThankYouLabel;
 
-- (instancetype)initWithSurveySettings:(WTRSettings *)settings;
+- (instancetype)initWithSurveySettings:(WTRSettings *)settings notificationCenter:(WTRNotificationCenter *)notificationCenter;
 
 @end

@@ -271,5 +271,20 @@
  @param flag A boolean to show the opt out option.
  */
 + (void)showOptOut:(BOOL)flag;
-
+/**
+ @discussion Notification posted when the survey view is about to be presented.
+ */
++ (NSNotificationName)surveyWillAppearNotification;
+/**
+ @discussion Notification posted when the survey view is about to be dismissed.
+ */
++ (NSNotificationName)surveyWillDisappearNotification;
+/**
+ @discussion Notification posted when the survey view appears.
+ */
++ (NSNotificationName)surveyDidAppearNotification;
+/**
+ @discussion Notification posted when the survey view disappears, with userInfo as follows: `score` The NPS score as a NSNumber. `voted` Boolean NSNumber indicating whether the user voted or not.
+ */
++ (NSNotificationName)surveyDidDisappearNotification;
 @end

@@ -26,6 +26,7 @@
 #import "WTRTrackingPixel.h"
 #import "WTRSurvey.h"
 #import "WTRSurveyViewController.h"
+#import "WTRDefaultNotificationCenter.h"
 #import "WTRiPADSurveyViewController.h"
 #import "WTRApiClient.h"
 #import "WTRLogger.h"
@@ -173,10 +174,12 @@
   WTRSettings *surveySettings = [WTRApiClient sharedInstance].settings;
   
   if (IPAD) {
-    WTRiPADSurveyViewController *surveyViewController = [[WTRiPADSurveyViewController alloc] initWithSurveySettings:surveySettings];
+    WTRiPADSurveyViewController *surveyViewController = [[WTRiPADSurveyViewController alloc] initWithSurveySettings:surveySettings
+                                                                                                 notificationCenter:[[WTRDefaultNotificationCenter alloc] initWithNotificationCenter:[NSNotificationCenter defaultCenter]]];
     [viewController presentViewController:surveyViewController animated:YES completion:nil];
   } else {
-    WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:surveySettings];
+    WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:surveySettings
+                                                                                         notificationCenter:[[WTRDefaultNotificationCenter alloc] initWithNotificationCenter:[NSNotificationCenter defaultCenter]]];
     [viewController presentViewController:surveyViewController animated:YES completion:nil];
   }
 }
@@ -296,6 +299,24 @@
 
 + (void)setLogLevelVerbose {
   [WTRLogger setLogLevel:WTRLogLevelVerbose];
+}
+
+#pragma mark - Notifications
+
++ (NSNotificationName)surveyWillAppearNotification {
+  return @"com.wootric.surveyWillAppearNotification";
+}
+
++ (NSNotificationName)surveyWillDisappearNotification {
+  return @"com.wootric.surveyWillDisappearNotification";
+}
+
++ (NSNotificationName)surveyDidAppearNotification {
+  return @"com.wootric.surveyDidAppearNotification";
+}
+
++ (NSNotificationName)surveyDidDisappearNotification {
+  return @"com.wootric.surveyDidDisappearNotification";
 }
 
 @end

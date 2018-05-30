@@ -32,6 +32,8 @@
 #import "WTRLogger.h"
 #import "WTRApiClient.h"
 #import "NSString+FontAwesome.h"
+#import "WTRDefaultNotificationCenter.h"
+#import "Wootric.h"
 #import <Social/Social.h>
 
 @interface WTRiPADSurveyViewController ()
@@ -44,14 +46,16 @@
 @property (nonatomic, strong) NSString *endUserId;
 @property (nonatomic, strong) NSString *uniqueLink;
 @property (nonatomic, strong) NSString *token;
+@property (nonatomic, strong) WTRNotificationCenter *notificationCenter;
 
 @end
 
 @implementation WTRiPADSurveyViewController
 
-- (instancetype)initWithSurveySettings:(WTRSettings *)settings {
+- (instancetype)initWithSurveySettings:(WTRSettings *)settings notificationCenter:(WTRNotificationCenter *)notificationCenter {
   if (self = [super init]) {
     _settings = settings;
+    _notificationCenter = notificationCenter;
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
   }
@@ -76,8 +80,23 @@
   [super didReceiveMemoryWarning];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [_notificationCenter postNotificationName:[Wootric surveyWillAppearNotification]
+                                     object:self];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  [_notificationCenter postNotificationName:[Wootric surveyWillDisappearNotification]
+                                     object:self];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+  [_notificationCenter postNotificationName:[Wootric surveyDidAppearNotification]
+                                     object:self];
+
   [UIView animateWithDuration:0.25 animations:^{
     self.view.backgroundColor = [WTRColor viewBackgroundColor];
     CGRect modalFrame = self->_modalView.frame;
@@ -86,6 +105,13 @@
     self->_modalView.frame = modalFrame;
     self->_constraintTopToModalTop.constant = modalPosition;
   }];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+  [super viewDidDisappear:animated];
+  [_notificationCenter postNotificationName:[Wootric surveyDidDisappearNotification]
+                                     object:self
+                                   userInfo:@{@"score": @(_currentScore), @"voted": @(_alreadyVoted)}];
 }
 
 - (void)selectScore:(WTRCircleScoreButton *)sender {
