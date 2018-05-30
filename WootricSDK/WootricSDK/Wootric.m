@@ -284,6 +284,10 @@
   [apiClient.settings setThankYouButtonBackgroundColor:color];
 }
 
++ (NSNotificationName) surveyDidDisappearNotification {
+  return @"com.wootric.surveyDidDisappearNotification";
+}
+
 #pragma mark - WTRLogger setters
 
 + (void)setLogLevelNone {

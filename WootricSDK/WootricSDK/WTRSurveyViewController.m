@@ -32,11 +32,13 @@
 #import "WTRLogger.h"
 #import "WTRApiClient.h"
 #import "NSString+FontAwesome.h"
+#import "Wootric.h"
 #import <Social/Social.h>
 
 @interface WTRSurveyViewController ()
 
 @property (nonatomic, assign) BOOL scrolled;
+@property (nonatomic, assign) int currentScore;
 @property (nonatomic, assign) BOOL alreadyVoted;
 @property (nonatomic, assign) CGFloat keyboardHeight;
 @property (nonatomic, strong) CAGradientLayer *gradient;
@@ -92,6 +94,14 @@
   [_questionView addDotsAndScores];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [NSNotificationCenter.defaultCenter postNotificationName:[Wootric surveyDidDisappearNotification]
+                                                      object:self
+                                                    userInfo:@{@"score": @(_currentScore), @"voted": @(_alreadyVoted)}];
+
+    [super viewDidDisappear:animated];
+}
+
 #pragma mark - Button methods
 
 - (void)openThankYouURL:(WTRThankYouButton *)sender {
@@ -120,6 +130,7 @@
 - (void)sendButtonPressed:(UIButton *)sender {
   _alreadyVoted = YES;
   int score = [_questionView getScoreSliderValue];
+  _currentScore = score;
   NSString *placeholderText = [_settings followupPlaceholderTextForScore:score];
   NSString *text = [_feedbackView feedbackText];
   [self endUserVotedWithScore:score andText:text];
