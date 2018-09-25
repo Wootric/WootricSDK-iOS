@@ -1,3 +1,9 @@
+## 0.10.1 (2018-09-26)
+
+### Fixed:
+
+- Force left-to-right in slider
+
 ## 0.10.0 (2018-06-25)
 
 ### Changes:
