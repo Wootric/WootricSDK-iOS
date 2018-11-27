@@ -47,7 +47,6 @@
 @property (nonatomic) int priority;
 
 - (NSMutableURLRequest *)requestWithURL:(NSURL *)url HTTPMethod:(NSString *)httpMethod andHTTPBody:(NSString *)httpBody;
-- (NSString *)percentEscapeString:(NSString *)string;
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID;
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID;
 - (void)authenticate:(void (^)(void))authenticated;

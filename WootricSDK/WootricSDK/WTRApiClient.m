@@ -24,6 +24,7 @@
 
 #import "WTRApiClient.h"
 #import "WTRPropertiesParser.h"
+#import "WTRUtils.h"
 #import "WTRLogger.h"
 #import <CommonCrypto/CommonHMAC.h>
 
@@ -100,7 +101,7 @@
 }
 
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID {
-  NSString *escapedEmail = [self percentEscapeString:[_settings getEndUserEmailOrUnknown]];
+  NSString *escapedEmail = [WTRUtils percentEscapeString:[_settings getEndUserEmailOrUnknown]];
   
   escapedEmail = [self addVersionsToURLString:escapedEmail];
   
@@ -139,12 +140,12 @@
 
 - (void)updateExistingEndUser:(NSInteger)endUserID {
   BOOL needsUpdate = NO;
-  NSString *escapedEmail = [self percentEscapeString:[_settings getEndUserEmailOrUnknown]];
+  NSString *escapedEmail = [WTRUtils percentEscapeString:[_settings getEndUserEmailOrUnknown]];
   NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
 
   if (_settings.productName) {
     needsUpdate = YES;
-    params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, [self percentEscapeString:_settings.productName]];
+    params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, [WTRUtils percentEscapeString:_settings.productName]];
   }
   
   if (_settings.externalId) {
@@ -184,7 +185,7 @@
 
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", _baseAPIURL, _apiVersion]];
-  NSString *escapedEmail = [self percentEscapeString:[_settings getEndUserEmailOrUnknown]];
+  NSString *escapedEmail = [WTRUtils percentEscapeString:[_settings getEndUserEmailOrUnknown]];
   NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
     
   if (_settings.externalCreatedAt) {
@@ -283,7 +284,7 @@
   baseURLString = [self addVersionsToURLString:baseURLString];
 
   if (![endUserEmail isEqual: @"Unknown"]) {
-    baseURLString = [NSString stringWithFormat:@"%@&email=%@", baseURLString, endUserEmail];
+    baseURLString = [NSString stringWithFormat:@"%@&email=%@", baseURLString, [WTRUtils percentEscapeString:endUserEmail]];
   }
 
   baseURLString = [self addSurveyServerCustomSettingsToURLString:baseURLString];
@@ -409,12 +410,12 @@
 
   if (_settings.customProductName) {
     baseURLString = [NSString stringWithFormat:@"%@&language[product_name]=%@",
-                     baseURLString, [self percentEscapeString:_settings.customProductName]];
+                     baseURLString, [WTRUtils percentEscapeString:_settings.customProductName]];
   }
 
   if (_settings.customAudience) {
     baseURLString = [NSString stringWithFormat:@"%@&language[audience_text]=%@",
-                     baseURLString, [self percentEscapeString:_settings.customAudience]];
+                     baseURLString, [WTRUtils percentEscapeString:_settings.customAudience]];
   }
 
   if ([_settings.firstSurveyAfter intValue] > 0) {
@@ -447,7 +448,7 @@
     params = [NSString stringWithFormat:@"%@&score=%ld", params, (long) score];
     
     if (text) {
-      NSString *escapedText = [self percentEscapeString:text];
+      NSString *escapedText = [WTRUtils percentEscapeString:text];
       params = [NSString stringWithFormat:@"%@&text=%@", params, escapedText];
     }
   }
@@ -459,15 +460,6 @@
   _priority++;
   
   return params;
-}
-
-- (NSString *)percentEscapeString:(NSString *)string {
-  NSString *result = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                               (CFStringRef)string,
-                                                                               (CFStringRef)@" ",
-                                                                               (CFStringRef)@":/?@!$&'()*+,;=",
-                                                                               kCFStringEncodingUTF8));
-  return [result stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 }
 
 - (NSString *)buildUniqueLinkAccountToken:(NSString *)accountToken endUserEmail:(NSString *)endUserEmail date:(NSTimeInterval)date randomString:(NSString *)randomString {

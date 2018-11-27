@@ -1,5 +1,5 @@
 //
-//  WTRPropertiesParser.m
+//  WTRUtils.h
 //  WootricSDK
 //
 // Copyright (c) 2018 Wootric (https://wootric.com)
@@ -22,19 +22,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "WTRPropertiesParser.h"
-#import "WTRUtils.h"
+#import <Foundation/Foundation.h>
 
-@implementation WTRPropertiesParser
+@interface WTRUtils : NSObject
 
-+ (NSString *)parseToStringFromDictionary:(NSDictionary *)dictionary {
-  NSString *parsedProperties = @"";
-  for (NSString *key in dictionary) {
-    NSString *escapedValue = [WTRUtils percentEscapeString:[NSString stringWithFormat:@"%@", [dictionary objectForKey:key]]];
-    parsedProperties = [NSString stringWithFormat:@"%@&%@", parsedProperties, [NSString stringWithFormat:@"properties[%@]=%@", key, escapedValue]];
-  }
-
-  return parsedProperties;
-}
++ (NSString *)percentEscapeString:(NSString *)string;
 
 @end

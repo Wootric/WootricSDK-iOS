@@ -25,6 +25,7 @@
 #import "WTRTrackingPixel.h"
 #import "WTRApiClient.h"
 #import "WTRLogger.h"
+#import "WTRUtils.h"
 
 @implementation WTRTrackingPixel
 
@@ -34,7 +35,7 @@
   double cacheRandom = drand48();
   NSString *formattedRandom = [NSString stringWithFormat:@"%.16f", cacheRandom];
   NSString *stringToFormat = @"https://d8myem934l1zi.cloudfront.net/pixel.gif?account_token=%@&email=%@&url=%@&random=%@";
-  NSString *params = [NSString stringWithFormat:stringToFormat, apiClient.accountToken, apiClient.settings.endUserEmail, apiClient.settings.originURL, formattedRandom];
+  NSString *params = [NSString stringWithFormat:stringToFormat, apiClient.accountToken, [WTRUtils percentEscapeString:apiClient.settings.endUserEmail], apiClient.settings.originURL, formattedRandom];
 
   if (apiClient.settings.externalCreatedAt) {
     [WTRLogger log:@"externalCreatedAt: %ld", (long)[apiClient.settings.externalCreatedAt intValue]];

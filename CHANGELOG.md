@@ -1,3 +1,9 @@
+## 0.10.2 (2018-11-27)
+
+### Fixed:
+
+- Percentage escape strings to prevent NSURL errors
+
 ## 0.10.1 (2018-09-26)
 
 ### Fixed:
