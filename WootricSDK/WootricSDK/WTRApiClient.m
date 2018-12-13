@@ -28,6 +28,8 @@
 #import "WTRLogger.h"
 #import <CommonCrypto/CommonHMAC.h>
 
+NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
+
 @interface WTRApiClient ()
 
 @property (nonatomic, strong) NSString *baseAPIURL;
@@ -163,7 +165,7 @@
     NSString *parsedProperties = [WTRPropertiesParser parseToStringFromDictionary:_settings.customProperties];
     params = [NSString stringWithFormat:@"%@%@", params, parsedProperties];
   }
-  
+
   params = [self addVersionsToURLString:params];
 
   if (needsUpdate) {
@@ -280,14 +282,16 @@
   NSString *endUserEmail = [_settings getEndUserEmailOrUnknown];
   NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@",
                              _surveyServerURL, _accountToken];
+  NSString *params = [NSString new];
   
   baseURLString = [self addVersionsToURLString:baseURLString];
 
   if (![endUserEmail isEqual: @"Unknown"]) {
-    baseURLString = [NSString stringWithFormat:@"%@&email=%@", baseURLString, [WTRUtils percentEscapeString:endUserEmail]];
+    params = [NSString stringWithFormat:@"email=%@", [WTRUtils percentEscapeString:endUserEmail]];
   }
 
   baseURLString = [self addSurveyServerCustomSettingsToURLString:baseURLString];
+  baseURLString = [self addPropertiesToURLString:baseURLString];
 
   NSURL *url = [NSURL URLWithString:baseURLString];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -300,17 +304,23 @@
       [WTRLogger logError:@"%@", error];
     } else {
       NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+      NSLog(@"responseJSON: %@", responseJSON);
       if (responseJSON) {
         if ([responseJSON[@"eligible"] isEqual:@1]) {
           if (self->_settings.forceSurvey) {
             [WTRLogger logError:@"forced survey (remove for production!)"];
-          }
-          [WTRLogger log:@"User eligible"];
+          };
+
+          [WTRLogger log:@"User eligible. Code: %@. Description: %@.", responseJSON[@"details"][@"code"], responseJSON[@"details"][@"why"]];
 
           [self->_settings parseDataFromSurveyServer:responseJSON];
 
           if (responseJSON[@"settings"][@"end_user_id"] != [NSNull null]) {
             self.userID = [responseJSON[@"settings"][@"end_user_id"] integerValue];
+          }
+
+          if (responseJSON[@"sampling_rule"][@"name"]) {
+            [self->_settings.customProperties setValue:responseJSON[@"sampling_rule"][@"name"] forKey:WootricSamplingRule];
           }
           
           self->_uniqueLink = [self buildUniqueLinkAccountToken:self->_accountToken
@@ -328,7 +338,7 @@
             logString = [NSString stringWithFormat:@"%@ - %@", logString, responseJSON[@"error"]];
             [WTRLogger logError:@"%@", logString];
           } else {
-            [WTRLogger log:@"%@", logString];
+            [WTRLogger log:@"%@. Code: %@. Description: %@.", logString, responseJSON[@"details"][@"code"], responseJSON[@"details"][@"why"]];
           }
         }
       }
@@ -437,6 +447,15 @@
   double lastSeen = [defaults doubleForKey:@"lastSeenAt"];
   baseURLString = [NSString stringWithFormat:@"%@&end_user_last_seen=%.0f", baseURLString, lastSeen];
 
+  return baseURLString;
+}
+
+- (NSString *)addPropertiesToURLString:(NSString *)baseURLString {
+  if (_settings.customProperties) {
+    NSString *parsedProperties = [WTRPropertiesParser parseToStringFromDictionary:_settings.customProperties];
+    baseURLString = [NSString stringWithFormat:@"%@%@", baseURLString, parsedProperties];
+    ;
+  }
   return baseURLString;
 }
 

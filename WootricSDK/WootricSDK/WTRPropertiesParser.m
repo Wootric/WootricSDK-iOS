@@ -31,7 +31,8 @@
   NSString *parsedProperties = @"";
   for (NSString *key in dictionary) {
     NSString *escapedValue = [WTRUtils percentEscapeString:[NSString stringWithFormat:@"%@", [dictionary objectForKey:key]]];
-    parsedProperties = [NSString stringWithFormat:@"%@&%@", parsedProperties, [NSString stringWithFormat:@"properties[%@]=%@", key, escapedValue]];
+    NSString *escapedKey = [WTRUtils percentEscapeString:key];
+    parsedProperties = [NSString stringWithFormat:@"%@&%@", parsedProperties, [NSString stringWithFormat:@"properties[%@]=%@", escapedKey, escapedValue]];
   }
 
   return parsedProperties;

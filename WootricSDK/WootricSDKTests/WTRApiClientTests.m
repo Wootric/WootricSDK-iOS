@@ -55,6 +55,7 @@
 - (NSString *)buildUniqueLinkAccountToken:(NSString *)accountToken endUserEmail:(NSString *)endUserEmail date:(NSTimeInterval)date randomString:(NSString *)randomString;
 - (NSString *)addSurveyServerCustomSettingsToURLString:(NSString *)baseURLString;
 - (NSString *)addVersionsToURLString:(NSString *)baseURLString;
+- (NSString *)addPropertiesToURLString:(NSString *)baseURLString;
 
 @end
 
@@ -225,6 +226,15 @@
   XCTAssertEqualObjects(versionString, @"string&os_name=iOS&os_version=10.0");
 }
 
+- (void)testAddPropertiesToURLString {
+  NSString *versionString = [_apiClient addPropertiesToURLString:@"string"];
+  XCTAssertEqualObjects(versionString, @"string");
+
+  _apiClient.settings.customProperties = [NSMutableDictionary dictionaryWithDictionary:@{ @"pricing_plan": @"pro plan" }];
+  versionString = [_apiClient addPropertiesToURLString:@"string"];
+  XCTAssertEqualObjects(versionString, @"string&properties[pricing_plan]=pro+plan");
+}
+
 - (void)testRandomStringLength {
   XCTAssertEqual([[_apiClient randomString] length], 16);
 }
@@ -270,7 +280,6 @@
   params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text];
   XCTAssertEqualObjects(params, expectedResponseAccountIdText);
 }
-
 
 - (void)testDeclineParams {
   static NSString *expectedResponse = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps";

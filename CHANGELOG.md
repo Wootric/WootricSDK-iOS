@@ -1,3 +1,10 @@
+## 0.11.0 (2018-12-18)
+
+### Changes:
+
+- Add support for Property Based Sampling
+- Update eligibility logs to show more info
+
 ## 0.10.2 (2018-11-27)
 
 ### Fixed:

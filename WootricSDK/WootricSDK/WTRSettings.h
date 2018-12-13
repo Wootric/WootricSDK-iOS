@@ -49,7 +49,7 @@
 @property (nonatomic, strong) NSNumber *externalCreatedAt;
 @property (nonatomic, strong) NSNumber *firstSurveyAfter;
 @property (nonatomic, strong) NSURL *facebookPage;
-@property (nonatomic, strong) NSDictionary *customProperties;
+@property (nonatomic, strong) NSMutableDictionary *customProperties;
 @property (nonatomic, assign) NSInteger surveyedDefaultDuration;
 @property (nonatomic, assign) NSInteger surveyedDefaultDurationDecline;
 @property (nonatomic, assign) NSInteger timeDelay;

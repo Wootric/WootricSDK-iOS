@@ -115,7 +115,7 @@
 
 + (void)setEndUserProperties:(NSDictionary *)customProperties {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.customProperties = customProperties;
+  apiClient.settings.customProperties = [NSMutableDictionary dictionaryWithDictionary:customProperties];
 }
 
 + (NSDictionary *)endUserProperties {
