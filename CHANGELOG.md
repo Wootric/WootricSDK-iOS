@@ -1,3 +1,10 @@
+## 0.12.1 (2019-06-04)
+
+### Changes:
+
+- Fix slider bug
+- Remove tracking pixel
+
 ## 0.12.0 (2019-05-02)
 
 ### Changes:

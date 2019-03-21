@@ -63,7 +63,8 @@
     [self setThumbImage:image forState:UIControlStateHighlighted];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addTarget:superview action:NSSelectorFromString(@"updateSliderScore:") forControlEvents:UIControlEventValueChanged];
-    UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:viewController action:NSSelectorFromString(@"sliderTapped:")];
+    UILongPressGestureRecognizer *gr = [[UILongPressGestureRecognizer alloc] initWithTarget:viewController action:NSSelectorFromString(@"sliderTapped:")];
+    gr.minimumPressDuration = 0;
     [self addGestureRecognizer:gr];
   }
   return self;

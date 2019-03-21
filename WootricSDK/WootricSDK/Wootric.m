@@ -23,7 +23,6 @@
 // THE SOFTWARE.
 
 #import "Wootric.h"
-#import "WTRTrackingPixel.h"
 #import "WTRSurvey.h"
 #import "WTRSurveyViewController.h"
 #import "WTRDefaultNotificationCenter.h"
@@ -149,23 +148,16 @@ static id<WTRSurveyDelegate> _delegate = nil;
 + (void)showSurveyInViewController:(UIViewController *)viewController {
     
   if ([[WTRApiClient sharedInstance] checkConfiguration]) {
-    
-    [WTRTrackingPixel getPixel];
-    
     WTRSurvey *surveyClient = [[WTRSurvey alloc] init];
     [surveyClient survey:^{
-        
       [WTRLogger log:@"presenting survey view"];
-
       WTRApiClient *apiClient = [WTRApiClient sharedInstance];
       
       dispatch_async(dispatch_get_main_queue(), ^{
-
         [self performSelector:@selector(presentSurveyInViewController:)
                    withObject:viewController
                    afterDelay:apiClient.settings.timeDelay];
       });
-        
     }];
   } else {
     [WTRLogger log:@"Configure SDK first"];

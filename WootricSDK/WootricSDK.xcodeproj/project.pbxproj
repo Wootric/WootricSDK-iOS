@@ -36,8 +36,6 @@
 		B2102A361BB59ACE0025DABC /* WTRLocalizedTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A321BB59ACE0025DABC /* WTRLocalizedTexts.m */; };
 		B2102A3B1BB59AE60025DABC /* WTRSurvey.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A371BB59AE60025DABC /* WTRSurvey.h */; };
 		B2102A3C1BB59AE60025DABC /* WTRSurvey.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A381BB59AE60025DABC /* WTRSurvey.m */; };
-		B2102A3D1BB59AE60025DABC /* WTRTrackingPixel.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A391BB59AE60025DABC /* WTRTrackingPixel.h */; };
-		B2102A3E1BB59AE60025DABC /* WTRTrackingPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A3A1BB59AE60025DABC /* WTRTrackingPixel.m */; };
 		B21372961BED0DB1009F5974 /* WTRSurveyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B21372951BED0DB1009F5974 /* WTRSurveyTests.m */; };
 		B229766D1BB0036100FC2772 /* WTRPropertiesParser.h in Headers */ = {isa = PBXBuildFile; fileRef = B229766B1BB0036100FC2772 /* WTRPropertiesParser.h */; };
 		B229766E1BB0036100FC2772 /* WTRPropertiesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B229766C1BB0036100FC2772 /* WTRPropertiesParser.m */; };
@@ -156,8 +154,6 @@
 		B2102A321BB59ACE0025DABC /* WTRLocalizedTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRLocalizedTexts.m; sourceTree = "<group>"; };
 		B2102A371BB59AE60025DABC /* WTRSurvey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRSurvey.h; sourceTree = "<group>"; };
 		B2102A381BB59AE60025DABC /* WTRSurvey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSurvey.m; sourceTree = "<group>"; };
-		B2102A391BB59AE60025DABC /* WTRTrackingPixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRTrackingPixel.h; sourceTree = "<group>"; };
-		B2102A3A1BB59AE60025DABC /* WTRTrackingPixel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRTrackingPixel.m; sourceTree = "<group>"; };
 		B21372951BED0DB1009F5974 /* WTRSurveyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSurveyTests.m; sourceTree = "<group>"; };
 		B229766B1BB0036100FC2772 /* WTRPropertiesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRPropertiesParser.h; sourceTree = "<group>"; };
 		B229766C1BB0036100FC2772 /* WTRPropertiesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRPropertiesParser.m; sourceTree = "<group>"; };
@@ -466,8 +462,6 @@
 				B2DC6F2D1B82000900F599B3 /* Wootric.m */,
 				B2102A371BB59AE60025DABC /* WTRSurvey.h */,
 				B2102A381BB59AE60025DABC /* WTRSurvey.m */,
-				B2102A391BB59AE60025DABC /* WTRTrackingPixel.h */,
-				B2102A3A1BB59AE60025DABC /* WTRTrackingPixel.m */,
 				B2DC6F311B820E6B00F599B3 /* WTRApiClient.h */,
 				B2DC6F321B820E6B00F599B3 /* WTRApiClient.m */,
 				B2D9FCDD1BF9F18E00479F9F /* SEGWootric.h */,
@@ -569,7 +563,6 @@
 				B26866821BD63ED100A4288D /* WTRCircleScoreView.h in Headers */,
 				B278897D1BE105D6001D5696 /* WTRiPADThankYouButton.h in Headers */,
 				B26866721BD5443000A4288D /* WTRiPADSurveyViewController+Views.h in Headers */,
-				B2102A3D1BB59AE60025DABC /* WTRTrackingPixel.h in Headers */,
 				B268668A1BD671D200A4288D /* WTRiPADQuestionView.h in Headers */,
 				B23DEF7B1BBBE9CA002A7FFD /* WTRUserCustomMessages.h in Headers */,
 				B29A2E881BAC0B50007181D3 /* WTRFeedbackView.h in Headers */,
@@ -716,7 +709,6 @@
 				B24550921B8E0188001AC1FB /* WTRColor.m in Sources */,
 				B2102A2E1BB59ABC0025DABC /* WTRDefaults.m in Sources */,
 				B2DC6F381B82143B00F599B3 /* WTRSettings.m in Sources */,
-				B2102A3E1BB59AE60025DABC /* WTRTrackingPixel.m in Sources */,
 				B260ECE21BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.m in Sources */,
 				B229767E1BB1901500FC2772 /* WTRThankYouButton.m in Sources */,
 				B2102A3C1BB59AE60025DABC /* WTRSurvey.m in Sources */,
