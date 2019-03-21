@@ -1,3 +1,9 @@
+## 0.11.1 (2019-03-21)
+
+### Changes:
+
+- Fix email param bug
+
 ## 0.11.0 (2018-12-18)
 
 ### Changes:

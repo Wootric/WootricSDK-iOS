@@ -56,6 +56,7 @@
 - (NSString *)addSurveyServerCustomSettingsToURLString:(NSString *)baseURLString;
 - (NSString *)addVersionsToURLString:(NSString *)baseURLString;
 - (NSString *)addPropertiesToURLString:(NSString *)baseURLString;
+- (NSString *)addEmailToURLString:(NSString *)baseURLString;
 
 @end
 
@@ -181,6 +182,16 @@
   
   _apiClient.settings.phoneNumber = @"+0123456789";
   XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&language[code]=ES&language[product_name]=productName&language[audience_text]=customAudience&first_survey_delay=1&external_id=a1b2c3d4&phone_number=+0123456789&end_user_last_seen=0");
+}
+
+- (void) testAddEmailToURLString {
+  NSString *baseURLString = @"https://survey.wootric.com/eligible.json?account_token=NPS-token";
+
+  XCTAssertEqualObjects([_apiClient addEmailToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token");
+
+  _apiClient.settings.endUserEmail = @"test@wootric.com";
+
+  XCTAssertEqualObjects([_apiClient addEmailToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=test%40wootric.com");
 }
 
 - (void)testRequestURL {

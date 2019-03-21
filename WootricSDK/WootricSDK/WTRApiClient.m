@@ -279,24 +279,18 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
 }
 
 - (void)checkEligibility:(void (^)(void))eligible {
-  NSString *endUserEmail = [_settings getEndUserEmailOrUnknown];
   NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@",
                              _surveyServerURL, _accountToken];
-  NSString *params = [NSString new];
   
   baseURLString = [self addVersionsToURLString:baseURLString];
-
-  if (![endUserEmail isEqual: @"Unknown"]) {
-    params = [NSString stringWithFormat:@"email=%@", [WTRUtils percentEscapeString:endUserEmail]];
-  }
-
+  baseURLString = [self addEmailToURLString:baseURLString];
   baseURLString = [self addSurveyServerCustomSettingsToURLString:baseURLString];
   baseURLString = [self addPropertiesToURLString:baseURLString];
 
   NSURL *url = [NSURL URLWithString:baseURLString];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
   [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"User-Agent"];
-  
+
   [WTRLogger log:@"eligibility - %@", urlRequest];
 
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -365,6 +359,16 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
   }
 
   return urlRequest;
+}
+
+- (NSString *)addEmailToURLString:(NSString *)baseURLString {
+  NSString *endUserEmail = [_settings getEndUserEmailOrUnknown];
+
+  if (![endUserEmail isEqual: @"Unknown"]) {
+    baseURLString = [NSString stringWithFormat:@"%@&email=%@", baseURLString, [WTRUtils percentEscapeString:endUserEmail]];
+  }
+
+  return baseURLString;
 }
 
 - (NSString *)addVersionsToURLString:(NSString *)baseURLString {
