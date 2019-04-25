@@ -33,6 +33,7 @@
 #import "WTRApiClient.h"
 #import "NSString+FontAwesome.h"
 #import "Wootric.h"
+#import "WTRSurveyDelegate.h"
 #import <Social/Social.h>
 
 @interface WTRSurveyViewController ()
@@ -46,6 +47,7 @@
 @property (nonatomic, strong) NSString *endUserId;
 @property (nonatomic, strong) NSString *uniqueLink;
 @property (nonatomic, strong) NSString *token;
+@property (nonatomic, strong) NSString *feedbackText;
 @property (nonatomic, strong) WTRNotificationCenter *notificationCenter;
 
 @end
@@ -57,6 +59,7 @@
     _gradient = [CAGradientLayer layer];
     _settings = settings;
     _notificationCenter = notificationCenter;
+    _feedbackText = @"";
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
   }
@@ -85,18 +88,21 @@
   [super viewWillAppear:animated];
   [_notificationCenter postNotificationName:[Wootric surveyWillAppearNotification]
                                      object:self];
+  [[Wootric delegate] willPresentSurvey];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   [_notificationCenter postNotificationName:[Wootric surveyWillDisappearNotification]
                                      object:self];
+  [[Wootric delegate] willHideSurvey];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   [_notificationCenter postNotificationName:[Wootric surveyDidAppearNotification]
                                      object:self];
+  [[Wootric delegate] didPresentSurvey];
 
   [UIView animateWithDuration:0.25 animations:^{
     self.view.backgroundColor = [WTRColor viewBackgroundColor];
@@ -115,7 +121,12 @@
   [super viewDidDisappear:animated];
   [_notificationCenter postNotificationName:[Wootric surveyDidDisappearNotification]
                                      object:self
-                                   userInfo:@{@"score": @(_currentScore), @"voted": @(_alreadyVoted)}];
+                                   userInfo:@{@"score": @(_currentScore), @"voted": @(_alreadyVoted), @"text": _feedbackText}];
+  if (_alreadyVoted) {
+    [[Wootric delegate] didHideSurvey:@{@"score": @(_currentScore), @"type": @"response", @"text": _feedbackText}];
+  } else {
+    [[Wootric delegate] didHideSurvey:@{@"score": @"", @"type": @"response", @"text": @""}];
+  }
 }
 
 #pragma mark - Button methods
@@ -147,8 +158,8 @@
   _alreadyVoted = YES;
   _currentScore = [_questionView getScoreSliderValue];
   NSString *placeholderText = [_settings followupPlaceholderTextForScore:_currentScore];
-  NSString *text = [_feedbackView feedbackText];
-  [self endUserVotedWithScore:_currentScore andText:text];
+  _feedbackText = [_feedbackView feedbackText];
+  [self endUserVotedWithScore:_currentScore andText:_feedbackText];
   if ([_feedbackView isActive]) {
     [_feedbackView textViewResignFirstResponder];
     [self presentShareScreenOrDismissForScore:_currentScore];

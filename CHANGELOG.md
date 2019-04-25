@@ -1,3 +1,9 @@
+## 0.12.0 (2019-05-02)
+
+### Changes:
+
+- Add delegate pattern
+
 ## 0.11.1 (2019-03-21)
 
 ### Changes:

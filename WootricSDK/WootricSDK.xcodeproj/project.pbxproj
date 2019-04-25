@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0F370D5921ACAAF10007C27A /* WTRUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F370D5721ACAAF10007C27A /* WTRUtils.h */; };
 		0F370D5A21ACAAF10007C27A /* WTRUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F370D5821ACAAF10007C27A /* WTRUtils.m */; };
+		0F8DE568226A2E6000A69F10 /* WTRSurveyDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F8DE567226A2E5F00A69F10 /* WTRSurveyDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0F963EF720E14D5D001EE0D2 /* WTRNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F963EF620E14D5D001EE0D2 /* WTRNotificationCenter.m */; };
 		0F963EF920E156E6001EE0D2 /* WTRiPADSurveyViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F963EF820E156E6001EE0D2 /* WTRiPADSurveyViewControllerTests.m */; };
 		0FAB0CAB1CFE1DCE00977346 /* SEGWootricTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAB0CAA1CFE1DCE00977346 /* SEGWootricTests.m */; };
@@ -21,6 +22,7 @@
 		0FE0F40920DC1AE000499248 /* WTRSurveyViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE0F40820DC1AE000499248 /* WTRSurveyViewControllerTests.m */; };
 		0FE2FAC81CE4356F0065823C /* WTRApiClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE2FAC71CE4356F0065823C /* WTRApiClientTests.m */; };
 		0FEC4B6D1D669E7300D7E941 /* WTRDefaultsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FEC4B6C1D669E7300D7E941 /* WTRDefaultsTests.m */; };
+		0FF406B9227262B000C18075 /* WTRDelegateMockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FF406B8227262B000C18075 /* WTRDelegateMockViewController.m */; };
 		178571982088FCA800CCBE02 /* WTRLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 178571962088FCA700CCBE02 /* WTRLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		178571992088FCA800CCBE02 /* WTRLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 178571972088FCA700CCBE02 /* WTRLogger.m */; };
 		1785719B2088FD1500CCBE02 /* WTRLogLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1785719A2088FD1500CCBE02 /* WTRLogLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -125,6 +127,7 @@
 		0F04153A1FA8F11000E3C926 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F370D5721ACAAF10007C27A /* WTRUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRUtils.h; sourceTree = "<group>"; };
 		0F370D5821ACAAF10007C27A /* WTRUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRUtils.m; sourceTree = "<group>"; };
+		0F8DE567226A2E5F00A69F10 /* WTRSurveyDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRSurveyDelegate.h; sourceTree = "<group>"; };
 		0F963EF620E14D5D001EE0D2 /* WTRNotificationCenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRNotificationCenter.m; sourceTree = "<group>"; };
 		0F963EF820E156E6001EE0D2 /* WTRiPADSurveyViewControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRiPADSurveyViewControllerTests.m; sourceTree = "<group>"; };
 		0FAB0CAA1CFE1DCE00977346 /* SEGWootricTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEGWootricTests.m; sourceTree = "<group>"; };
@@ -138,6 +141,8 @@
 		0FE0F40820DC1AE000499248 /* WTRSurveyViewControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRSurveyViewControllerTests.m; sourceTree = "<group>"; };
 		0FE2FAC71CE4356F0065823C /* WTRApiClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRApiClientTests.m; sourceTree = "<group>"; };
 		0FEC4B6C1D669E7300D7E941 /* WTRDefaultsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRDefaultsTests.m; sourceTree = "<group>"; };
+		0FF406B7227262B000C18075 /* WTRDelegateMockViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRDelegateMockViewController.h; sourceTree = "<group>"; };
+		0FF406B8227262B000C18075 /* WTRDelegateMockViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRDelegateMockViewController.m; sourceTree = "<group>"; };
 		178571962088FCA700CCBE02 /* WTRLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRLogger.h; sourceTree = "<group>"; };
 		178571972088FCA700CCBE02 /* WTRLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRLogger.m; sourceTree = "<group>"; };
 		1785719A2088FD1500CCBE02 /* WTRLogLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRLogLevel.h; sourceTree = "<group>"; };
@@ -262,6 +267,8 @@
 			children = (
 				0FE0F40120DC0D4800499248 /* WTRMockNotificationCenter.h */,
 				0FE0F40220DC0D4800499248 /* WTRMockNotificationCenter.m */,
+				0FF406B7227262B000C18075 /* WTRDelegateMockViewController.h */,
+				0FF406B8227262B000C18075 /* WTRDelegateMockViewController.m */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -466,6 +473,7 @@
 				B2D9FCDD1BF9F18E00479F9F /* SEGWootric.h */,
 				B2D9FCDE1BF9F18E00479F9F /* SEGWootric.m */,
 				B2DC6F051B81E6F900F599B3 /* Supporting Files */,
+				0F8DE567226A2E5F00A69F10 /* WTRSurveyDelegate.h */,
 			);
 			path = WootricSDK;
 			sourceTree = "<group>";
@@ -551,6 +559,7 @@
 				B2DC6F371B82143B00F599B3 /* WTRSettings.h in Headers */,
 				B25CE75F1BAADC920063E6E5 /* WTRQuestionView.h in Headers */,
 				B245509D1B909A03001AC1FB /* WTRSurveyViewController.h in Headers */,
+				0F8DE568226A2E6000A69F10 /* WTRSurveyDelegate.h in Headers */,
 				B27889701BDA5520001D5696 /* WTRiPADFeedbackView.h in Headers */,
 				B2BED80C1BA8610900DD1EFC /* WTRSingleScoreLabel.h in Headers */,
 				B27889751BDF85FD001D5696 /* UIItems.h in Headers */,
@@ -723,6 +732,7 @@
 				0FE0F40320DC0D4800499248 /* WTRMockNotificationCenter.m in Sources */,
 				0FC321FE21ADE4A0000E19DF /* WTRUtilsTests.m in Sources */,
 				0FEC4B6D1D669E7300D7E941 /* WTRDefaultsTests.m in Sources */,
+				0FF406B9227262B000C18075 /* WTRDelegateMockViewController.m in Sources */,
 				0FAB0CAB1CFE1DCE00977346 /* SEGWootricTests.m in Sources */,
 				B21372961BED0DB1009F5974 /* WTRSurveyTests.m in Sources */,
 				0FE2FAC81CE4356F0065823C /* WTRApiClientTests.m in Sources */,

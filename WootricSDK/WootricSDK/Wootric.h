@@ -287,4 +287,14 @@
  @discussion Notification posted when the survey view disappears, with userInfo as follows: `score` The NPS score as a NSNumber. `voted` Boolean NSNumber indicating whether the user voted or not.
  */
 + (NSNotificationName)surveyDidDisappearNotification;
+/**
+ @discussion Sets the delegate that receives notifications about SDK actions
+ @param delegate WTRSurveyDelegate to receive the notifications
+ */
++ (void)setDelegate:(id)delegate;
+/**
+ @discussion returns the delegate
+ */
++ (id)delegate;
+
 @end

@@ -84,7 +84,7 @@
   if ([self feedbackTextPresent]) {
     return _feedbackTextView.text;
   }
-  return nil;
+  return @"";
 }
 
 - (BOOL)feedbackTextPresent {

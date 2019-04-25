@@ -26,10 +26,13 @@
 #import "WTRiPADSurveyViewController.h"
 #import "WTRApiClient.h"
 #import "Wootric.h"
+#import "WTRSurveyDelegate.h"
+#import "WTRDelegateMockViewController.h"
 #import "WTRMockNotificationCenter.h"
 
 @interface WTRiPADSurveyViewControllerTests : XCTestCase
 @property (nonatomic, strong) WTRiPADSurveyViewController *viewController;
+@property (nonatomic, strong) WTRDelegateMockViewController *testViewController;
 @property (nonatomic, strong) WTRMockNotificationCenter *notificationCenter;
 @end
 
@@ -37,6 +40,8 @@
 
 - (void)setUp {
   [super setUp];
+  _testViewController = [[WTRDelegateMockViewController alloc] init];
+  [Wootric setDelegate:_testViewController];
   _notificationCenter = [WTRMockNotificationCenter new];
   _viewController = [[WTRiPADSurveyViewController alloc] initWithSurveySettings:[WTRApiClient sharedInstance].settings
                                                              notificationCenter:_notificationCenter];
@@ -46,26 +51,31 @@
   [super tearDown];
   _notificationCenter = nil;
   _viewController = nil;
+  _testViewController = nil;
 }
 
 - (void)testViewWillAppear {
   [_viewController viewWillAppear:YES];
   XCTAssertEqual([Wootric surveyWillAppearNotification], _notificationCenter.notifications.firstObject, @"notification not equal to 'com.wootric.surveyWillAppearNotification'");
+  XCTAssertTrue(_testViewController.willPresentSurveyBool, @"willPresentSurvey callback not executed");
 }
 
 - (void)testViewWillDisappear {
   [_viewController viewWillDisappear:YES];
   XCTAssertEqual([Wootric surveyWillDisappearNotification], _notificationCenter.notifications.firstObject, @"notification not equal to 'com.wootric.surveyWillDisappearNotification'");
+  XCTAssertTrue(_testViewController.willHideSurveyBool, @"willHideSurvey callback not executed");
 }
 
 - (void)testViewDidAppear {
   [_viewController viewDidAppear:YES];
   XCTAssertEqual([Wootric surveyDidAppearNotification], _notificationCenter.notifications.firstObject, @"notification not equal to 'com.wootric.surveyDidAppearNotification'");
+  XCTAssertTrue(_testViewController.didPresentSurveyBool, @"didPresentSurvey callback not executed");
 }
 
 - (void)testViewDidDisappear {
   [_viewController viewDidDisappear:YES];
   XCTAssertEqual([Wootric surveyDidDisappearNotification], _notificationCenter.notifications.firstObject, @"notification not equal to 'com.wootric.surveyDidDisappearNotification'");
+  XCTAssertTrue(_testViewController.didHideSurveyBool, @"didHideSurvey callback not executed");
 }
 
 @end

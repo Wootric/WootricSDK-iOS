@@ -1,8 +1,8 @@
 //
-//  WootricSDK.h
+//  WTRSurveyDelegate.h
 //  WootricSDK
 //
-// Copyright (c) 2018 Wootric (https://wootric.com)
+// Copyright (c) 2019 Wootric (https://wootric.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "Wootric.h"
-#import "SEGWootric.h"
-#import "WTRLogger.h"
-#import "WTRSurveyDelegate.h"
+@protocol WTRSurveyDelegate <NSObject>
 
-FOUNDATION_EXPORT double WootricSDKMainVersionNumber;
-FOUNDATION_EXPORT const unsigned char WootricSDKMainVersionString[];
+@required
+- (void)willPresentSurvey;
+- (void)didPresentSurvey;
+- (void)willHideSurvey;
+- (void)didHideSurvey:(NSDictionary *)data;
+
+@end

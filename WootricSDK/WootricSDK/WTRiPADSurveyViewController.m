@@ -34,6 +34,7 @@
 #import "NSString+FontAwesome.h"
 #import "WTRDefaultNotificationCenter.h"
 #import "Wootric.h"
+#import "WTRSurveyDelegate.h"
 #import <Social/Social.h>
 
 @interface WTRiPADSurveyViewController ()
@@ -46,6 +47,7 @@
 @property (nonatomic, strong) NSString *endUserId;
 @property (nonatomic, strong) NSString *uniqueLink;
 @property (nonatomic, strong) NSString *token;
+@property (nonatomic, strong) NSString *feedbackText;
 @property (nonatomic, strong) WTRNotificationCenter *notificationCenter;
 
 @end
@@ -56,6 +58,7 @@
   if (self = [super init]) {
     _settings = settings;
     _notificationCenter = notificationCenter;
+    _feedbackText = @"";
     self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
   }
@@ -84,18 +87,21 @@
   [super viewWillAppear:animated];
   [_notificationCenter postNotificationName:[Wootric surveyWillAppearNotification]
                                      object:self];
+  [[Wootric delegate] willPresentSurvey];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   [_notificationCenter postNotificationName:[Wootric surveyWillDisappearNotification]
                                      object:self];
+  [[Wootric delegate] willHideSurvey];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   [_notificationCenter postNotificationName:[Wootric surveyDidAppearNotification]
                                      object:self];
+  [[Wootric delegate] didPresentSurvey];
 
   [UIView animateWithDuration:0.25 animations:^{
     self.view.backgroundColor = [WTRColor viewBackgroundColor];
@@ -112,6 +118,12 @@
   [_notificationCenter postNotificationName:[Wootric surveyDidDisappearNotification]
                                      object:self
                                    userInfo:@{@"score": @(_currentScore), @"voted": @(_alreadyVoted)}];
+  [[Wootric delegate] didHideSurvey:@{@"score": @(_currentScore), @"voted": @(_alreadyVoted)}];
+  if (_alreadyVoted) {
+    [[Wootric delegate] didHideSurvey:@{@"score": @"", @"type": @"response", @"text": @""}];
+  } else {
+    [[Wootric delegate] didHideSurvey:@{@"score": @(_currentScore), @"type": @"response", @"text": _feedbackText}];
+  }
 }
 
 - (void)selectScore:(WTRCircleScoreButton *)sender {
@@ -176,19 +188,18 @@
 }
 
 - (void)sendButtonPressed {
-  NSString *text;
   if ([_feedbackView feedbackTextPresent]) {
-    text = [_feedbackView feedbackText];
+    _feedbackText = [_feedbackView feedbackText];
   }
   if ([self socialShareAvailableForScore:_currentScore]) {
-    [_socialShareView setThankYouButtonTextAndURLDependingOnScore:_currentScore andText:text];
+    [_socialShareView setThankYouButtonTextAndURLDependingOnScore:_currentScore andText:_feedbackText];
     [_socialShareView setThankYouMessageDependingOnScore:_currentScore];
     [self setupFacebookAndTwitterForScore:_currentScore];
     [self presentSocialShareViewWithScore:_currentScore];
   } else {
     [self dismissWithFinalThankYou];
   }
-  [self endUserVotedWithScore:_currentScore andText:text];
+  [self endUserVotedWithScore:_currentScore andText:_feedbackText];
 }
 
 - (void)dismissButtonPressed {

@@ -30,8 +30,11 @@
 #import "WTRiPADSurveyViewController.h"
 #import "WTRApiClient.h"
 #import "WTRLogger.h"
+#import "WTRSurveyDelegate.h"
 
 #define IPAD UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
+
+static id<WTRSurveyDelegate> _delegate = nil;
 
 @implementation Wootric
 
@@ -154,7 +157,6 @@
         
       [WTRLogger log:@"presenting survey view"];
 
-      
       WTRApiClient *apiClient = [WTRApiClient sharedInstance];
       
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -317,6 +319,16 @@
 
 + (NSNotificationName)surveyDidDisappearNotification {
   return @"com.wootric.surveyDidDisappearNotification";
+}
+
+#pragma mark - Delegate
+
++ (void)setDelegate:(id<WTRSurveyDelegate>)delegate {
+  _delegate = delegate;
+}
+
++ (id<WTRSurveyDelegate>)delegate {
+  return _delegate;
 }
 
 @end
