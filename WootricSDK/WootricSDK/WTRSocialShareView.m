@@ -37,12 +37,15 @@
 @property (nonatomic, strong) UIButton *facebookButton;
 @property (nonatomic, strong) UIButton *twitterButton;
 @property (nonatomic, strong) UIButton *facebookLikeButton;
-@property (nonatomic, strong) UILabel *finalThankYouLabel;
-@property (nonatomic, strong) UILabel *socialShareQuestionLabel;
-@property (nonatomic, strong) UILabel *customThankYouLabel;
+@property (nonatomic, strong) UILabel *thankYouMainLabel;
+@property (nonatomic, strong) UILabel *thankYouSetupLabel;
 @property (nonatomic, strong) NSLayoutConstraint *facebookXConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *twitterXConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *facebookLikeXConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *facebookTopConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *twitterTopConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *facebookLikeTopConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *thankYouButtonTopConstraint;
 
 @end
 
@@ -65,6 +68,14 @@
   NSString *text = [_settings thankYouLinkTextDependingOnScore:score];
   NSURL *url = [_settings thankYouLinkURLDependingOnScore:score andText:feedbackText];
 
+  if (!text || !url) {
+    _thankYouButton.hidden = YES;
+    [self setupFacebookButtonTopConstraints:_thankYouSetupLabel];
+    [self setupTwitterButtonTopConstraints:_thankYouSetupLabel];
+    [self setupFacebookLikeButtonTopConstraints:_thankYouSetupLabel];
+    return;
+  }
+
   [_thankYouButton setText:text andURL:url];
 }
 
@@ -85,21 +96,28 @@
   } else if (!twitterAvailable && facebookAvailable) {
     _facebookLikeXConstraint.constant = 32;
     _facebookXConstraint.constant = -32;
-  } else if (!twitterAvailable && !facebookAvailable) {
-    _socialShareQuestionLabel.hidden = YES;
   }
 }
 
-- (void)setThankYouMessageDependingOnScore:(int)score {
-  _customThankYouLabel.text = [_settings thankYouMessageDependingOnScore:score];
+- (void)setThankYouMainDependingOnScore:(int)score {
+  _thankYouMainLabel.text = [_settings thankYouMainDependingOnScore:score];
+}
+
+- (void)setThankYouSetupDependingOnScore:(int)score {
+  _thankYouSetupLabel.text = [_settings thankYouSetupDependingOnScore:score];
+  
+  if (!_thankYouSetupLabel.text) {
+    _thankYouSetupLabel.hidden = YES;
+    [self setupThankYouButtonTopConstraints:_thankYouMainLabel];
+    return;
+  }
 }
 
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController {
   [self setupThankYouButtonWithTargetViewController:viewController];
   [self setupNoThanksButtonWithTargetViewController:viewController];
-  [self setupSocialShareQuestionLabel];
-  [self setupFinalThankYouLabel];
-  [self setupCustomThankYouLabel];
+  [self setupThankYouMainLabel];
+  [self setupThankYouSetupLabel];
   [self setupFacebookButtonWithTargetViewController:viewController];
   [self setupTwitterButtonWithTargetViewController:viewController];
   [self setupFacebookLikeButtonWithTargetViewController:viewController];
@@ -107,11 +125,10 @@
 }
 
 - (void)setupSubviewsConstraints {
-  [self setupFinalThankYouLabelConstraints];
-  [self setupCustomThankYouLabelConstraints];
+  [self setupThankYouMainLabelConstraints];
+  [self setupThankYouSetupLabelConstraints];
   [self setupThankYouButtonConstraints];
   [self setupNoThanksButtonConstraints];
-  [self setupSocialShareQuestionLabelConstraints];
   [self setupFacebookButtonConstraints];
   [self setupTwitterButtonConstraints];
   [self setupFacebookLikeButtonConstraints];
@@ -120,16 +137,11 @@
 - (void)addSubviews {
   [self addSubview:_thankYouButton];
   [self addSubview:_noThanksButton];
-  [self addSubview:_socialShareQuestionLabel];
-  [self addSubview:_finalThankYouLabel];
-  [self addSubview:_customThankYouLabel];
+  [self addSubview:_thankYouMainLabel];
+  [self addSubview:_thankYouSetupLabel];
   [self addSubview:_facebookButton];
   [self addSubview:_twitterButton];
   [self addSubview:_facebookLikeButton];
-}
-
-- (void)setupCustomThankYouLabel {
-  _customThankYouLabel = [UIItems customThankYouLabelWithFont:[UIFont boldSystemFontOfSize:12]];
 }
 
 - (void)setupThankYouButtonWithTargetViewController:(UIViewController *)viewController {
@@ -159,39 +171,29 @@
             forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)setupFinalThankYouLabel {
+- (void)setupThankYouMainLabel {
   if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    _finalThankYouLabel = [UIItems finalThankYouLabelWithSettings:_settings
-                                                        textColor:[UIColor blackColor]
-                                                          andFont:[UIFont systemFontOfSize:18 weight:UIFontWeightMedium]];
+    _thankYouMainLabel = [UIItems thankYouMainLabelWithSettings:_settings textColor:[UIColor blackColor] font:[UIFont systemFontOfSize:18 weight:UIFontWeightMedium]];
   } else {
-    _finalThankYouLabel = [UIItems finalThankYouLabelWithSettings:_settings
-                                                        textColor:[UIColor blackColor]
-                                                          andFont:[UIFont systemFontOfSize:18]];
+    _thankYouMainLabel = [UIItems thankYouMainLabelWithSettings:_settings textColor:[UIColor blackColor] font:[UIFont systemFontOfSize:18]];
   }
 }
 
-- (void)setupSocialShareQuestionLabel {
-  _socialShareQuestionLabel = [[UILabel alloc] init];
-  _socialShareQuestionLabel.textAlignment = NSTextAlignmentCenter;
-  _socialShareQuestionLabel.textColor = [_settings socialSharingColor];
-  _socialShareQuestionLabel.numberOfLines = 0;
-  _socialShareQuestionLabel.lineBreakMode = NSLineBreakByWordWrapping;
-  _socialShareQuestionLabel.font = [UIFont boldSystemFontOfSize:12];
-  _socialShareQuestionLabel.text = [_settings socialShareQuestionText];
-  [_socialShareQuestionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-}
-
-- (void)setupCustomThankYouLabelConstraints {
-  [[[[_customThankYouLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
-  [[[[_customThankYouLabel wtr_rightConstraint] toSecondViewRight:self] withConstant:-24] addToView:self];
-  [[[[_customThankYouLabel wtr_topConstraint] toSecondViewBottom:_finalThankYouLabel] withConstant:8] addToView:self];
+- (void)setupThankYouSetupLabel {
+  _thankYouSetupLabel = [[UILabel alloc] init];
+  _thankYouSetupLabel.textAlignment = NSTextAlignmentCenter;
+  _thankYouSetupLabel.textColor = [_settings socialSharingColor];
+  _thankYouSetupLabel.numberOfLines = 0;
+  _thankYouSetupLabel.lineBreakMode = NSLineBreakByWordWrapping;
+  _thankYouSetupLabel.font = [UIFont boldSystemFontOfSize:12];
+  [_thankYouSetupLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 - (void)setupFacebookButtonConstraints {
   [_facebookButton wtr_constraintWidth:32];
   [_facebookButton wtr_constraintHeight:32];
-  [[[[_facebookButton wtr_topConstraint] toSecondViewBottom:_socialShareQuestionLabel] withConstant:18] addToView:self];
+  
+  [self setupFacebookButtonTopConstraints:_thankYouButton];
 
   _facebookXConstraint = [NSLayoutConstraint constraintWithItem:_facebookButton
                                                       attribute:NSLayoutAttributeCenterX
@@ -203,10 +205,20 @@
   [self addConstraint:_facebookXConstraint];
 }
 
+- (void)setupFacebookButtonTopConstraints:(UIView *)secondViewBottom {
+  if (_facebookTopConstraint) {
+    [_facebookTopConstraint removeFromView:self];
+  }
+  
+  _facebookTopConstraint = [[[_facebookButton wtr_topConstraint] toSecondViewBottom:secondViewBottom] withConstant:18];
+  [_facebookTopConstraint addToView:self];
+}
+
 - (void)setupTwitterButtonConstraints {
   [_twitterButton wtr_constraintWidth:32];
   [_twitterButton wtr_constraintHeight:32];
-  [[[[_twitterButton wtr_topConstraint] toSecondViewBottom:_socialShareQuestionLabel] withConstant:18] addToView:self];
+
+  [self setupTwitterButtonTopConstraints:_thankYouButton];
 
   _twitterXConstraint = [NSLayoutConstraint constraintWithItem:_twitterButton
                                                      attribute:NSLayoutAttributeCenterX
@@ -218,31 +230,52 @@
   [self addConstraint:_twitterXConstraint];
 }
 
+- (void)setupTwitterButtonTopConstraints:(UIView *)secondViewBottom {
+  if (_twitterTopConstraint) {
+    [_twitterTopConstraint removeFromView:self];
+  }
+  
+  _twitterTopConstraint = [[[_twitterButton wtr_topConstraint] toSecondViewBottom:secondViewBottom] withConstant:18];
+  [_twitterTopConstraint addToView:self];
+}
+
 - (void)setupFacebookLikeButtonConstraints {
-    [_facebookLikeButton wtr_constraintWidth:32];
-    [_facebookLikeButton wtr_constraintHeight:32];
-    [[[[_facebookLikeButton wtr_topConstraint] toSecondViewBottom:_socialShareQuestionLabel] withConstant:18] addToView:self];
+  [_facebookLikeButton wtr_constraintWidth:32];
+  [_facebookLikeButton wtr_constraintHeight:32];
+  
+  [self setupFacebookLikeButtonTopConstraints:_thankYouButton];
     
-    _facebookLikeXConstraint = [NSLayoutConstraint constraintWithItem:_facebookLikeButton
-                                                        attribute:NSLayoutAttributeCenterX
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeCenterX
-                                                       multiplier:1
-                                                         constant:0];
-    [self addConstraint:_facebookLikeXConstraint];
+  _facebookLikeXConstraint = [NSLayoutConstraint constraintWithItem:_facebookLikeButton
+                                                      attribute:NSLayoutAttributeCenterX
+                                                      relatedBy:NSLayoutRelationEqual
+                                                         toItem:self
+                                                      attribute:NSLayoutAttributeCenterX
+                                                     multiplier:1
+                                                       constant:0];
+  [self addConstraint:_facebookLikeXConstraint];
 }
 
-- (void)setupSocialShareQuestionLabelConstraints {
-  [[[[_socialShareQuestionLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
-  [[[[_socialShareQuestionLabel wtr_rightConstraint] toSecondViewRight:self] withConstant:-24] addToView:self];
-  [[[[_socialShareQuestionLabel wtr_topConstraint] toSecondViewBottom:_thankYouButton] withConstant:16] addToView:self];
+- (void)setupFacebookLikeButtonTopConstraints:(UIView *)secondViewBottom {
+  if (_facebookLikeTopConstraint) {
+    [_facebookLikeTopConstraint removeFromView:self];
+  }
+  
+  _facebookLikeTopConstraint = [[[_facebookLikeButton wtr_topConstraint] toSecondViewBottom:secondViewBottom] withConstant:18];
+  [_facebookLikeTopConstraint addToView:self];
 }
 
-- (void)setupFinalThankYouLabelConstraints {
-  [[[[_finalThankYouLabel wtr_topConstraint] toSecondViewTop:self] withConstant:16] addToView:self];
-  [[[[_finalThankYouLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
-  [[[[self wtr_rightConstraint] toSecondViewRight:_finalThankYouLabel] withConstant:24] addToView:self];
+- (void)setupThankYouMainLabelConstraints {
+  [_thankYouMainLabel wtr_constraintHeight:50];
+  [[[[_thankYouMainLabel wtr_topConstraint] toSecondViewTop:self] withConstant:16] addToView:self];
+  [[[[_thankYouMainLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
+  [[[[self wtr_rightConstraint] toSecondViewRight:_thankYouMainLabel] withConstant:24] addToView:self];
+}
+
+- (void)setupThankYouSetupLabelConstraints {
+  [_thankYouSetupLabel wtr_constraintHeight:30];
+  [[[[_thankYouSetupLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
+  [[[[_thankYouSetupLabel wtr_rightConstraint] toSecondViewRight:self] withConstant:-24] addToView:self];
+  [[[[_thankYouSetupLabel wtr_topConstraint] toSecondViewBottom:_thankYouMainLabel] withConstant:8] addToView:self];
 }
 
 - (void)setupThankYouButtonConstraints {
@@ -250,7 +283,16 @@
   [[[_thankYouButton wtr_centerXConstraint] toSecondViewCenterX:self] addToView:self];
   [[[[_thankYouButton wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
   [[[[_thankYouButton wtr_rightConstraint] toSecondViewRight:self] withConstant:-24] addToView:self];
-  [[[[_thankYouButton wtr_topConstraint] toSecondViewBottom:_finalThankYouLabel] withConstant:38] addToView:self];
+  [self setupThankYouButtonTopConstraints:_thankYouSetupLabel];
+}
+
+- (void)setupThankYouButtonTopConstraints:(UIView *)secondViewBottom {
+  if (_thankYouButtonTopConstraint) {
+    [_thankYouButtonTopConstraint removeFromView:self];
+  }
+  
+  _thankYouButtonTopConstraint = [[[_thankYouButton wtr_topConstraint] toSecondViewBottom:secondViewBottom] withConstant:8];
+  [_thankYouButtonTopConstraint addToView:self];
 }
 
 - (void)setupNoThanksButtonConstraints {

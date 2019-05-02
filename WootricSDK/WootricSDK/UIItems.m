@@ -46,7 +46,7 @@
   }
 }
 
-+ (UILabel *)likelyAnchorWithSettings:(WTRSettings *)settings andFont:(UIFont *)font {
++ (UILabel *)likelyAnchorWithSettings:(WTRSettings *)settings font:(UIFont *)font {
   UILabel *tempLabel = [[UILabel alloc] init];
   tempLabel.textColor = [WTRColor anchorAndScoreColor];
   tempLabel.text = [settings likelyAnchorText];
@@ -56,7 +56,7 @@
   return tempLabel;
 }
 
-+ (UILabel *)notLikelyAnchorWithSettings:(WTRSettings *)settings andFont:(UIFont *)font {
++ (UILabel *)notLikelyAnchorWithSettings:(WTRSettings *)settings font:(UIFont *)font {
   UILabel *tempLabel = [[UILabel alloc] init];
   tempLabel.textColor = [WTRColor anchorAndScoreColor];
   tempLabel.text = [settings notLikelyAnchorText];
@@ -104,7 +104,7 @@
   return tempTextView;
 }
 
-+ (UILabel *)questionLabelWithSettings:(WTRSettings *)settings andFont:(UIFont *)font {
++ (UILabel *)questionLabelWithSettings:(WTRSettings *)settings font:(UIFont *)font {
   UILabel *tempLabel = [[UILabel alloc] init];
   tempLabel.textAlignment = NSTextAlignmentCenter;
   tempLabel.textColor = [UIColor blackColor];
@@ -117,7 +117,7 @@
   return tempLabel;
 }
 
-+ (UILabel *)finalThankYouLabelWithSettings:(WTRSettings *)settings textColor:(UIColor *)textColor andFont:(UIFont *)font {
++ (UILabel *)thankYouMainLabelWithSettings:(WTRSettings *)settings textColor:(UIColor *)textColor font:(UIFont *)font {
   UILabel *tempLabel = [[UILabel alloc] init];
   tempLabel.textAlignment = NSTextAlignmentCenter;
   tempLabel.textColor = textColor;
@@ -130,7 +130,7 @@
   return tempLabel;
 }
 
-+ (UILabel *)customThankYouLabelWithFont:(UIFont *)font {
++ (UILabel *)thankYouSetupLabelWithFont:(UIFont *)font {
   UILabel *tempLabel = [[UILabel alloc] init];
   tempLabel.textAlignment = NSTextAlignmentCenter;
   tempLabel.textColor = [UIColor blackColor];

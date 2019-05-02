@@ -36,9 +36,8 @@
 @property (nonatomic, strong) UIButton *noThanksButton;
 @property (nonatomic, strong) UIButton *facebookButton;
 @property (nonatomic, strong) UIButton *facebookLikeButton;
-@property (nonatomic, strong) UILabel *finalThankYouLabel;
-@property (nonatomic, strong) UILabel *customThankYouLabel;
-@property (nonatomic, strong) UILabel *socialShareQuestionLabel;
+@property (nonatomic, strong) UILabel *thankYouMainLabel;
+@property (nonatomic, strong) UILabel *thankYouSetupLabel;
 @property (nonatomic, strong) WTRiPADThankYouButton *thankYouButton;
 @property (nonatomic, strong) NSLayoutConstraint *twitterXConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *facebookXConstraint;
@@ -63,8 +62,8 @@
 }
 
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController {
-  [self setupFinalThankYouLabel];
-  [self setupCustomThankYouLabel];
+  [self setupThankYouMainLabel];
+  [self setupThankYouSetupLabel];
   [self setupTwitterButtonWithTargetViewController:viewController];
   [self setupThankYouButtonWithTargetViewController:viewController];
   [self setupNoThanksButtonWithTargetViewController:viewController];
@@ -74,8 +73,8 @@
 }
 
 - (void)setupSubviewsConstraints {
-  [self setupFinalThankYouLabelConstraints];
-  [self setupCustomThankYouLabelConstraints];
+  [self setupThankYouMainLabelConstraints];
+  [self setupThankYouSetupLabelConstraints];
   [self setupThankYouButtonConstraints];
   [self setupNoThanksButtonConstraints];
   [self setupFacebookButtonConstraints];
@@ -89,16 +88,21 @@
   [self addSubview:_facebookButton];
   [self addSubview:_thankYouButton];
   [self addSubview:_noThanksButton];
-  [self addSubview:_finalThankYouLabel];
-  [self addSubview:_customThankYouLabel];
-  [self addSubview:_socialShareQuestionLabel];
+  [self addSubview:_thankYouMainLabel];
+  [self addSubview:_thankYouSetupLabel];
 }
 
-- (void)setThankYouMessageDependingOnScore:(int)score {
-  if ([_settings thankYouMessageDependingOnScore:score]) {
-    _customThankYouLabel.text = [_settings thankYouMessageDependingOnScore:score];
+- (void)setThankYouMainDependingOnScore:(int)score {
+  if ([_settings thankYouMainDependingOnScore:score]) {
+    _thankYouMainLabel.text = [_settings thankYouMainDependingOnScore:score];
+  }
+}
+
+- (void)setThankYouSetupDependingOnScore:(int)score {
+  if ([_settings thankYouSetupDependingOnScore:score]) {
+    _thankYouSetupLabel.text = [_settings thankYouSetupDependingOnScore:score];
   } else {
-    _customThankYouLabel.text = [_settings socialShareQuestionText];
+    _thankYouSetupLabel.hidden = YES;
   }
 }
 
@@ -197,28 +201,26 @@
   _thankYouButton = [[WTRiPADThankYouButton alloc] initWithViewController:viewController];
 }
 
-- (void)setupCustomThankYouLabel {
-  _customThankYouLabel = [UIItems customThankYouLabelWithFont:[UIFont systemFontOfSize:14]];
+- (void)setupThankYouMainLabel {
+  _thankYouMainLabel = [UIItems thankYouMainLabelWithSettings:_settings textColor:[WTRColor iPadQuestionsTextColor] font:[UIFont boldSystemFontOfSize:16]];
 }
 
-- (void)setupFinalThankYouLabel {
-  _finalThankYouLabel = [UIItems finalThankYouLabelWithSettings:_settings
-                                                      textColor:[WTRColor iPadQuestionsTextColor]
-                                                        andFont:[UIFont boldSystemFontOfSize:16]];
+- (void)setupThankYouSetupLabel {
+  _thankYouSetupLabel = [UIItems thankYouSetupLabelWithFont:[UIFont systemFontOfSize:14]];
 }
 
 #pragma mark - Setup Constraints
 
-- (void)setupFinalThankYouLabelConstraints {
-  [[[[_finalThankYouLabel wtr_topConstraint] toSecondViewTop:self] withConstant:16] addToView:self];
-  [[[[_finalThankYouLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
-  [[[[self wtr_rightConstraint] toSecondViewRight:_finalThankYouLabel] withConstant:24] addToView:self];
+- (void)setupThankYouMainLabelConstraints {
+  [[[[_thankYouMainLabel wtr_topConstraint] toSecondViewTop:self] withConstant:16] addToView:self];
+  [[[[_thankYouMainLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
+  [[[[self wtr_rightConstraint] toSecondViewRight:_thankYouMainLabel] withConstant:24] addToView:self];
 }
 
-- (void)setupCustomThankYouLabelConstraints {
-  [[[[_customThankYouLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
-  [[[[_customThankYouLabel wtr_rightConstraint] toSecondViewRight:self] withConstant:-24] addToView:self];
-  [[[[_customThankYouLabel wtr_topConstraint] toSecondViewBottom:_finalThankYouLabel] withConstant:12] addToView:self];
+- (void)setupThankYouSetupLabelConstraints {
+  [[[[_thankYouSetupLabel wtr_leftConstraint] toSecondViewLeft:self] withConstant:24] addToView:self];
+  [[[[_thankYouSetupLabel wtr_rightConstraint] toSecondViewRight:self] withConstant:-24] addToView:self];
+  [[[[_thankYouSetupLabel wtr_topConstraint] toSecondViewBottom:_thankYouMainLabel] withConstant:12] addToView:self];
 }
 
 - (void)setupThankYouButtonConstraints {

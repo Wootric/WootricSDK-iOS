@@ -33,15 +33,19 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  [self startSurvey:nil];
+}
+
+- (IBAction)startSurvey:(UIButton *)sender {
   NSString *clientID = @"YOUR_CLIENT_ID";
   NSString *accountToken = @"YOUR_ACCOUNT_TOKEN";
-  
+
   [Wootric configureWithClientID:clientID accountToken:accountToken];
   [Wootric setEndUserEmail:@"END_USER_EMAIL"];
   [Wootric setEndUserCreatedAt:@1234567890];
-  
+
   [Wootric forceSurvey:YES];
-  
+
   [Wootric showSurveyInViewController:self];
 }
 

@@ -1,3 +1,10 @@
+## 0.15.0 (2019-10-18)
+
+### Changes:
+
+- Add button to Demo project to start the survey
+- Add support of admin panel values for 3rd screen
+
 ## 0.14.0 (2019-08-12)
 
 ### Changes:

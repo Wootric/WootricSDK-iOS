@@ -167,45 +167,40 @@
   XCTAssertEqualObjects(editScoreButtonTitle, @"edit");
 }
 
-- (void)testSocialShareQuestion {
-  NSString *socialShareQuestion = [_settings socialShareQuestionText];
-  XCTAssertEqualObjects(socialShareQuestion, @"Would you be willing to share your positive comments?");
-}
-
 - (void)testSocialShareDecline {
   NSString *socialShareDecline = [_settings socialShareDeclineText];
   XCTAssertEqualObjects(socialShareDecline, @"No thanks...");
 }
 
-- (void)testThankYouMessage {
-  [_settings setThankYouMessage:@"thank you message"];
-  NSString *thankYouMessage = [_settings thankYouMessageDependingOnScore:1];
-  XCTAssertEqualObjects(thankYouMessage, @"thank you message");
-  NSString *thankYouMessageTwo = [_settings thankYouMessageDependingOnScore:8];
-  XCTAssertEqualObjects(thankYouMessageTwo, @"thank you message");
-  NSString *thankYouMessageThree = [_settings thankYouMessageDependingOnScore:10];
-  XCTAssertEqualObjects(thankYouMessageThree, @"thank you message");
+- (void)testThankYouMain {
+  [_settings setThankYouMain:@"thank you message"];
+  NSString *thankYouMain = [_settings thankYouMainDependingOnScore:1];
+  XCTAssertEqualObjects(thankYouMain, @"thank you message");
+  NSString *thankYouMainTwo = [_settings thankYouMainDependingOnScore:8];
+  XCTAssertEqualObjects(thankYouMainTwo, @"thank you message");
+  NSString *thankYouMainThree = [_settings thankYouMainDependingOnScore:10];
+  XCTAssertEqualObjects(thankYouMainThree, @"thank you message");
 }
 
-- (void)testThankYouMessageDetractor {
-  [_settings setThankYouMessage:@"thank you message"];
-  [_settings setDetractorThankYouMessage:@"detractor thank you message"];
-  NSString *thankYouMessage = [_settings thankYouMessageDependingOnScore:1];
-  XCTAssertEqualObjects(thankYouMessage, @"detractor thank you message");
+- (void)testThankYouMainDetractor {
+  [_settings setThankYouMain:@"thank you message"];
+  [_settings setDetractorThankYouMain:@"detractor thank you message"];
+  NSString *thankYouMain = [_settings thankYouMainDependingOnScore:1];
+  XCTAssertEqualObjects(thankYouMain, @"detractor thank you message");
 }
 
-- (void)testThankYouMessagePassive {
-  [_settings setThankYouMessage:@"thank you message"];
-  [_settings setPassiveThankYouMessage:@"passive thank you message"];
-  NSString *thankYouMessage = [_settings thankYouMessageDependingOnScore:8];
-  XCTAssertEqualObjects(thankYouMessage, @"passive thank you message");
+- (void)testThankYouMainPassive {
+  [_settings setThankYouMain:@"thank you message"];
+  [_settings setPassiveThankYouMain:@"passive thank you message"];
+  NSString *thankYouMain = [_settings thankYouMainDependingOnScore:8];
+  XCTAssertEqualObjects(thankYouMain, @"passive thank you message");
 }
 
-- (void)testThankYouMessagePromoter {
-  [_settings setThankYouMessage:@"thank you message"];
-  [_settings setPromoterThankYouMessage:@"promoter thank you message"];
-  NSString *thankYouMessage = [_settings thankYouMessageDependingOnScore:10];
-  XCTAssertEqualObjects(thankYouMessage, @"promoter thank you message");
+- (void)testThankYouMainPromoter {
+  [_settings setThankYouMain:@"thank you message"];
+  [_settings setPromoterThankYouMain:@"promoter thank you message"];
+  NSString *thankYouMain = [_settings thankYouMainDependingOnScore:10];
+  XCTAssertEqualObjects(thankYouMain, @"promoter thank you message");
 }
 
 - (void)testThankYouLinkWithURL {

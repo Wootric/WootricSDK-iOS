@@ -30,6 +30,10 @@
   [view addConstraint:self];
 }
 
+- (void)removeFromView:(UIView *)view {
+  [view removeConstraint:self];
+}
+
 - (NSLayoutConstraint *)withConstant:(CGFloat)constant {
   NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.firstItem
                                                                 attribute:self.firstAttribute

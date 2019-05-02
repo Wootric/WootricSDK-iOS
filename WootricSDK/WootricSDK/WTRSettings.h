@@ -30,7 +30,6 @@
 @property (nonatomic, strong) NSString *endUserEmail;
 @property (nonatomic, strong) NSString *originURL;
 @property (nonatomic, strong) NSString *productName;
-@property (nonatomic, strong) NSString *twitterHandler;
 @property (nonatomic, strong) NSString *customProductName;
 @property (nonatomic, strong) NSString *languageCode;
 @property (nonatomic, strong) NSString *surveyType;
@@ -48,7 +47,6 @@
 @property (nonatomic, strong) NSNumber *dailyResponseCap;
 @property (nonatomic, strong) NSNumber *externalCreatedAt;
 @property (nonatomic, strong) NSNumber *firstSurveyAfter;
-@property (nonatomic, strong) NSURL *facebookPage;
 @property (nonatomic, strong) NSMutableDictionary *customProperties;
 @property (nonatomic, assign) NSInteger surveyedDefaultDuration;
 @property (nonatomic, assign) NSInteger surveyedDefaultDurationDecline;
@@ -82,7 +80,6 @@
 - (NSString *)sendButtonText;
 - (NSString *)dismissButtonText;
 - (NSString *)editScoreButtonText;
-- (NSString *)socialShareQuestionText;
 - (NSString *)socialShareDeclineText;
 
 
@@ -92,20 +89,29 @@
 - (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder detractor:(NSString *)detractorPlaceholder;
 - (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion detractor:(NSString *)detractorQuestion;
 
-- (void)setThankYouMessage:(NSString *)thankYouMessage;
-- (void)setDetractorThankYouMessage:(NSString *)detractorThankYouMessage;
-- (void)setPassiveThankYouMessage:(NSString *)passiveThankYouMessage;
-- (void)setPromoterThankYouMessage:(NSString *)promoterThankYouMessage;
+- (void)setThankYouMain:(NSString *)thankYouMain;
+- (void)setDetractorThankYouMain:(NSString *)detractorThankYouMain;
+- (void)setPassiveThankYouMain:(NSString *)passiveThankYouMain;
+- (void)setPromoterThankYouMain:(NSString *)promoterThankYouMain;
+- (void)setThankYouSetup:(NSString *)thankYouSetup;
+- (void)setDetractorThankYouSetup:(NSString *)detractorThankYouSetup;
+- (void)setPassiveThankYouSetup:(NSString *)passiveThankYouSetup;
+- (void)setPromoterThankYouSetup:(NSString *)promoterThankYouSetup;
 - (void)setThankYouLinkWithText:(NSString *)thankYouLinkText URL:(NSURL *)thankYouLinkURL;
 - (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText URL:(NSURL *)detractorThankYouLinkURL;
 - (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText URL:(NSURL *)passiveThankYouLinkURL;
 - (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText URL:(NSURL *)promoterThankYouLinkURL;
 
-- (NSString *)thankYouMessageDependingOnScore:(int)score;
+- (NSString *)thankYouMainDependingOnScore:(int)score;
+- (NSString *)thankYouSetupDependingOnScore:(int)score;
 - (NSString *)thankYouLinkTextDependingOnScore:(int)score;
 - (NSURL *)thankYouLinkURLDependingOnScore:(int)score andText:(NSString *)text;
 - (BOOL)thankYouLinkConfiguredForScore:(int)score;
 
+- (void)setTwitterHandler:(NSString *)twitterHandler;
+- (void)setFacebookPage:(NSURL *)facebookPage;
+- (NSString *)twitterHandler;
+- (NSURL *)facebookPage;
 - (BOOL)twitterHandlerSet;
 - (BOOL)facebookPageSet;
 

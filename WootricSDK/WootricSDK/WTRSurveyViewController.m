@@ -132,11 +132,31 @@
 #pragma mark - Button methods
 
 - (void)openThankYouURL:(WTRThankYouButton *)sender {
+  UIApplication *application = [UIApplication sharedApplication];
   [WTRLogger log:@"%@", sender.buttonURL];
-  if (![[UIApplication sharedApplication] openURL:sender.buttonURL]) {
-    [WTRLogger logError:@"Failed to open 'thank you' url"];
+
+  if (!sender.buttonURL) {
+    [WTRLogger logError:@"Invalid URL"];
+    return;
+  }
+  
+  if ([application respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+    [application openURL:sender.buttonURL
+                                       options:@{}
+                             completionHandler:^(BOOL success) {
+      if (success) {
+        [self dismissViewControllerWithBackgroundFade];
+      } else {
+        [WTRLogger logError:@"Failed to open 'thank you' url"];
+      }
+    }];
   } else {
-    [self dismissViewControllerWithBackgroundFade];
+    BOOL success = [application openURL:sender.buttonURL];
+    if (success) {
+      [self dismissViewControllerWithBackgroundFade];
+    } else {
+      [WTRLogger logError:@"Failed to open 'thank you' url"];
+    }
   }
 }
 
@@ -181,7 +201,7 @@
     [self setupFacebookAndTwitterForScore:score];
     [self presentSocialShareViewWithScore:score];
   } else {
-    [self dismissWithFinalThankYou];
+    [self dismissWithFinalThankYouForScore:score];
   }
 }
 
@@ -288,15 +308,30 @@
 - (void)setupFacebookAndTwitterForScore:(int)score {
   BOOL twitterAvailable = ([self twitterHandlerAndFeedbackTextPresent] && [_settings positiveTypeScore:score]);
   BOOL facebookAvailable = ([_settings facebookPageSet] && [_settings positiveTypeScore:score]);
+  
   if (!twitterAvailable && !facebookAvailable) {
-    _constraintModalHeight.constant = 230;
-    _socialShareViewHeightConstraint.constant = 190;
-    _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
-    [UIView animateWithDuration:0.2 animations:^{
-      [self.view layoutIfNeeded];
-    }];
+    if ([_settings thankYouSetupDependingOnScore:score] == nil) {
+      [self updateConstraintModalHeight:220 socialShareViewHeight:180];
+    } else {
+      [self updateConstraintModalHeight:240 socialShareViewHeight:200];
+    }
+  } else if ((twitterAvailable || facebookAvailable) && ![_settings thankYouLinkConfiguredForScore:score]) {
+    [self updateConstraintModalHeight:240 socialShareViewHeight:200];
+  } else if (![_settings positiveTypeScore:score] && ![_settings thankYouLinkConfiguredForScore:score]) {
+    [self updateConstraintModalHeight:240 socialShareViewHeight:200];
   }
+  
   [_socialShareView displayShareButtonsWithTwitterAvailable:twitterAvailable andFacebookAvailable:facebookAvailable];
+}
+
+- (void)updateConstraintModalHeight:(CGFloat)constraintModalHeight socialShareViewHeight:(CGFloat)socialShareViewHeightConstraint {
+  _constraintModalHeight.constant = constraintModalHeight;
+  _socialShareViewHeightConstraint.constant = socialShareViewHeightConstraint;
+  _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
+  
+  [UIView animateWithDuration:0.2 animations:^{
+    [self.view layoutIfNeeded];
+  }];
 }
 
 - (BOOL)socialShareAvailableForScore:(int)score {
@@ -312,7 +347,8 @@
 - (void)presentSocialShareViewWithScore:(int)score {
   NSString *text = [_feedbackView feedbackText];
   [_socialShareView setThankYouButtonTextAndURLDependingOnScore:score andText:text];
-  [_socialShareView setThankYouMessageDependingOnScore:score];
+  [_socialShareView setThankYouMainDependingOnScore:score];
+  [_socialShareView setThankYouSetupDependingOnScore:score];
   [self setQuestionViewVisible:NO andFeedbackViewVisible:NO];
   _sendButton.hidden = YES;
   _socialShareView.hidden = NO;
@@ -320,7 +356,7 @@
   [self setupPoweredByWootricConstraintsCenteredX];
 }
 
-- (void)dismissWithFinalThankYou {
+- (void)dismissWithFinalThankYouForScore:(int)score {
   _feedbackView.hidden = YES;
   _questionView.hidden = YES;
   _socialShareView.hidden = YES;
@@ -328,6 +364,7 @@
   _poweredByWootric.hidden = YES;
   _optOutButton.hidden = YES;
   _finalThankYouLabel.hidden = NO;
+  _finalThankYouLabel.text = [_settings thankYouMainDependingOnScore:score];
   [_modalView hideDismissButton];
   _constraintModalHeight.constant = 125;
   _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;

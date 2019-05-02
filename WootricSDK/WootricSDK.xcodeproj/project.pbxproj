@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F23A96A227A4C000093765A /* WTRUserCustomThankYou.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F23A968227A4C000093765A /* WTRUserCustomThankYou.h */; };
+		0F23A96B227A4C000093765A /* WTRUserCustomThankYou.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F23A969227A4C000093765A /* WTRUserCustomThankYou.m */; };
 		0F370D5921ACAAF10007C27A /* WTRUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F370D5721ACAAF10007C27A /* WTRUtils.h */; };
 		0F370D5A21ACAAF10007C27A /* WTRUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F370D5821ACAAF10007C27A /* WTRUtils.m */; };
 		0F8DE568226A2E6000A69F10 /* WTRSurveyDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F8DE567226A2E5F00A69F10 /* WTRSurveyDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0F963EF720E14D5D001EE0D2 /* WTRNotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F963EF620E14D5D001EE0D2 /* WTRNotificationCenter.m */; };
 		0F963EF920E156E6001EE0D2 /* WTRiPADSurveyViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F963EF820E156E6001EE0D2 /* WTRiPADSurveyViewControllerTests.m */; };
+		0FA645112289E475008A1C00 /* WTRCustomSocial.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FA6450F2289E475008A1C00 /* WTRCustomSocial.h */; };
+		0FA645122289E475008A1C00 /* WTRCustomSocial.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA645102289E475008A1C00 /* WTRCustomSocial.m */; };
 		0FAB0CAB1CFE1DCE00977346 /* SEGWootricTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAB0CAA1CFE1DCE00977346 /* SEGWootricTests.m */; };
 		0FC321FE21ADE4A0000E19DF /* WTRUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC321FD21ADE4A0000E19DF /* WTRUtilsTests.m */; };
 		0FC7D23122F9E98200C170AF /* WTRWootricTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC7D23022F9E98200C170AF /* WTRWootricTests.m */; };
@@ -124,11 +128,15 @@
 
 /* Begin PBXFileReference section */
 		0F04153A1FA8F11000E3C926 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0F23A968227A4C000093765A /* WTRUserCustomThankYou.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRUserCustomThankYou.h; sourceTree = "<group>"; };
+		0F23A969227A4C000093765A /* WTRUserCustomThankYou.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRUserCustomThankYou.m; sourceTree = "<group>"; };
 		0F370D5721ACAAF10007C27A /* WTRUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRUtils.h; sourceTree = "<group>"; };
 		0F370D5821ACAAF10007C27A /* WTRUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRUtils.m; sourceTree = "<group>"; };
 		0F8DE567226A2E5F00A69F10 /* WTRSurveyDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRSurveyDelegate.h; sourceTree = "<group>"; };
 		0F963EF620E14D5D001EE0D2 /* WTRNotificationCenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRNotificationCenter.m; sourceTree = "<group>"; };
 		0F963EF820E156E6001EE0D2 /* WTRiPADSurveyViewControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRiPADSurveyViewControllerTests.m; sourceTree = "<group>"; };
+		0FA6450F2289E475008A1C00 /* WTRCustomSocial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRCustomSocial.h; sourceTree = "<group>"; };
+		0FA645102289E475008A1C00 /* WTRCustomSocial.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRCustomSocial.m; sourceTree = "<group>"; };
 		0FAB0CAA1CFE1DCE00977346 /* SEGWootricTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEGWootricTests.m; sourceTree = "<group>"; };
 		0FC321FD21ADE4A0000E19DF /* WTRUtilsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRUtilsTests.m; sourceTree = "<group>"; };
 		0FC7D23022F9E98200C170AF /* WTRWootricTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRWootricTests.m; sourceTree = "<group>"; };
@@ -393,6 +401,10 @@
 				B22976741BB1404D00FC2772 /* WTRCustomThankYou.m */,
 				B23DEF791BBBE9CA002A7FFD /* WTRUserCustomMessages.h */,
 				B23DEF7A1BBBE9CA002A7FFD /* WTRUserCustomMessages.m */,
+				0F23A968227A4C000093765A /* WTRUserCustomThankYou.h */,
+				0F23A969227A4C000093765A /* WTRUserCustomThankYou.m */,
+				0FA6450F2289E475008A1C00 /* WTRCustomSocial.h */,
+				0FA645102289E475008A1C00 /* WTRCustomSocial.m */,
 			);
 			name = SurveySettings;
 			sourceTree = "<group>";
@@ -525,6 +537,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FA645112289E475008A1C00 /* WTRCustomSocial.h in Headers */,
 				B2C940681BA71A2900482494 /* WTRSliderDot.h in Headers */,
 				B2DC6F2E1B82000900F599B3 /* Wootric.h in Headers */,
 				B2D9FCDF1BF9F18E00479F9F /* SEGWootric.h in Headers */,
@@ -571,6 +584,7 @@
 				B29A2E881BAC0B50007181D3 /* WTRFeedbackView.h in Headers */,
 				B2DC6F331B820E6B00F599B3 /* WTRApiClient.h in Headers */,
 				B2C940601BA300A000482494 /* WTRSlider.h in Headers */,
+				0F23A96A227A4C000093765A /* WTRUserCustomThankYou.h in Headers */,
 				B278896D1BD914F2001D5696 /* SimpleConstraints.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,7 +634,7 @@
 		B2DC6EF91B81E6F900F599B3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = Wootric;
 				TargetAttributes = {
 					B2DC6F011B81E6F900F599B3 = {
@@ -636,6 +650,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = B2DC6EF81B81E6F900F599B3;
@@ -705,12 +720,14 @@
 				B24550A21B909A49001AC1FB /* WTRSurveyViewController+Views.m in Sources */,
 				B23DEF7C1BBBE9CA002A7FFD /* WTRUserCustomMessages.m in Sources */,
 				B25CE7601BAADC920063E6E5 /* WTRQuestionView.m in Sources */,
+				0FA645122289E475008A1C00 /* WTRCustomSocial.m in Sources */,
 				B2BED80D1BA8610900DD1EFC /* WTRSingleScoreLabel.m in Sources */,
 				B29A2E891BAC0B50007181D3 /* WTRFeedbackView.m in Sources */,
 				B268667F1BD63B7000A4288D /* WTRCircleScoreButton.m in Sources */,
 				B2DC6F341B820E6B00F599B3 /* WTRApiClient.m in Sources */,
 				B24550921B8E0188001AC1FB /* WTRColor.m in Sources */,
 				B2102A2E1BB59ABC0025DABC /* WTRDefaults.m in Sources */,
+				0F23A96B227A4C000093765A /* WTRUserCustomThankYou.m in Sources */,
 				B2DC6F381B82143B00F599B3 /* WTRSettings.m in Sources */,
 				B260ECE21BD8D7E300E29CD5 /* NSLayoutConstraint+Simple.m in Sources */,
 				B229767E1BB1901500FC2772 /* WTRThankYouButton.m in Sources */,
@@ -751,6 +768,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -809,6 +827,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

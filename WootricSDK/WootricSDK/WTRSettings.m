@@ -26,7 +26,9 @@
 #import "WTRLocalizedTexts.h"
 #import "WTRCustomMessages.h"
 #import "WTRCustomThankYou.h"
+#import "WTRCustomSocial.h"
 #import "WTRUserCustomMessages.h"
+#import "WTRUserCustomThankYou.h"
 #import "WTRColor.h"
 
 @interface WTRSettings ()
@@ -34,7 +36,10 @@
 @property (nonatomic, strong) WTRLocalizedTexts *localizedTexts;
 @property (nonatomic, strong) WTRCustomMessages *customMessages;
 @property (nonatomic, strong) WTRCustomThankYou *customThankYou;
+@property (nonatomic, strong) WTRCustomSocial *customSocial;
 @property (nonatomic, strong) WTRUserCustomMessages *userCustomMessages;
+@property (nonatomic, strong) WTRUserCustomThankYou *userCustomThankYou;
+@property (nonatomic, strong) WTRCustomSocial *userCustomSocial;
 
 @end
 
@@ -48,8 +53,9 @@
     _surveyedDefaultDurationDecline = 30;
     _firstSurveyAfter = @0;
     _originURL = [[NSBundle mainBundle] bundleIdentifier];
-    _customThankYou = [[WTRCustomThankYou alloc] init];
+    _userCustomThankYou = [[WTRUserCustomThankYou alloc] init];
     _userCustomMessages = [[WTRUserCustomMessages alloc] init];
+    _userCustomSocial = [[WTRCustomSocial alloc] init];
     _timeDelay = -1;
     _surveyType = @"NPS";
     _scale = [self scoreRules][_surveyType][0];
@@ -62,10 +68,14 @@
 - (void)parseDataFromSurveyServer:(NSDictionary *)surveyServerSettings {
   NSDictionary *localizedTextsFromSurvey;
   NSDictionary *customMessagesFromSurvey;
+  NSDictionary *customThankYouFromSurvey;
+  NSDictionary *socialFromSurvey;
     
   if (surveyServerSettings[@"settings"]) {
     localizedTextsFromSurvey = surveyServerSettings[@"settings"][@"localized_texts"];
     customMessagesFromSurvey = surveyServerSettings[@"settings"][@"messages"];
+    customThankYouFromSurvey = surveyServerSettings[@"settings"][@"custom_thank_you"];
+    socialFromSurvey = surveyServerSettings[@"settings"][@"social"];
     NSString *surveyTypeFromSurvey = surveyServerSettings[@"settings"][@"survey_type"];
     NSInteger surveyTypeScaleFromSurvey = [surveyServerSettings[@"settings"][@"survey_type_scale"] integerValue];
     NSNumber *firstSurvey = surveyServerSettings[@"settings"][@"first_survey"];
@@ -90,6 +100,14 @@
 
     if (customMessagesFromSurvey) {
       _customMessages = [[WTRCustomMessages alloc] initWithCustomMessages:customMessagesFromSurvey];
+    }
+    
+    if (customThankYouFromSurvey) {
+      _customThankYou = [[WTRCustomThankYou alloc] initWithCustomThankYou:customThankYouFromSurvey];
+    }
+    
+    if (socialFromSurvey) {
+      _customSocial = [[WTRCustomSocial alloc] initWithCustomSocial:socialFromSurvey];
     }
 
     if (firstSurvey) {
@@ -256,6 +274,7 @@
   if (_customFinalThankYou) {
     return _customFinalThankYou;
   }
+
   return _localizedTexts.finalThankYou;
 }
 
@@ -278,8 +297,8 @@
 }
 
 - (UIColor *)thankYouButtonBackgroundColor {
-  if (_customThankYou.backgroundColor) {
-    return _customThankYou.backgroundColor;
+  if (_userCustomThankYou.backgroundColor) {
+    return _userCustomThankYou.backgroundColor;
   }
   return [WTRColor callToActionButtonBackgroundColor];
 }
@@ -299,52 +318,64 @@
   return _localizedTexts.editScore;
 }
 
-- (NSString *)socialShareQuestionText {
-  return _localizedTexts.socialShareQuestion;
-}
-
 - (NSString *)socialShareDeclineText {
   return _localizedTexts.socialShareDecline;
 }
 
 - (void)setThankYouButtonBackgroundColor:(UIColor *)thankYouButtonBackgroundColor {
-  _customThankYou.backgroundColor = thankYouButtonBackgroundColor;
+  _userCustomThankYou.backgroundColor = thankYouButtonBackgroundColor;
 }
 
-- (void)setThankYouMessage:(NSString *)thankYouMessage {
-  _customThankYou.thankYouMessage = thankYouMessage;
+- (void)setThankYouMain:(NSString *)thankYouMain {
+  _userCustomThankYou.thankYouMain = thankYouMain;
 }
 
-- (void)setDetractorThankYouMessage:(NSString *)detractorThankYouMessage {
-  _customThankYou.detractorThankYouMessage = detractorThankYouMessage;
+- (void)setDetractorThankYouMain:(NSString *)detractorThankYouMain {
+  _userCustomThankYou.detractorThankYouMain = detractorThankYouMain;
 }
 
-- (void)setPassiveThankYouMessage:(NSString *)passiveThankYouMessage {
-  _customThankYou.passiveThankYouMessage = passiveThankYouMessage;
+- (void)setPassiveThankYouMain:(NSString *)passiveThankYouMain {
+  _userCustomThankYou.passiveThankYouMain = passiveThankYouMain;
 }
 
-- (void)setPromoterThankYouMessage:(NSString *)promoterThankYouMessage {
-  _customThankYou.promoterThankYouMessage = promoterThankYouMessage;
+- (void)setPromoterThankYouMain:(NSString *)promoterThankYouMain {
+  _userCustomThankYou.promoterThankYouMain = promoterThankYouMain;
+}
+
+- (void)setThankYouSetup:(NSString *)thankYouMain {
+  _userCustomThankYou.thankYouMain = thankYouMain;
+}
+
+- (void)setDetractorThankYouSetup:(NSString *)detractorThankYouSetup {
+  _userCustomThankYou.detractorThankYouSetup = detractorThankYouSetup;
+}
+
+- (void)setPassiveThankYouSetup:(NSString *)passiveThankYouSetup {
+  _userCustomThankYou.passiveThankYouSetup = passiveThankYouSetup;
+}
+
+- (void)setPromoterThankYouSetup:(NSString *)promoterThankYouSetup {
+  _userCustomThankYou.promoterThankYouSetup = promoterThankYouSetup;
 }
 
 - (void)setThankYouLinkWithText:(NSString *)thankYouLinkText URL:(NSURL *)thankYouLinkURL {
-  _customThankYou.thankYouLinkText = thankYouLinkText;
-  _customThankYou.thankYouLinkURL = thankYouLinkURL;
+  _userCustomThankYou.thankYouLinkText = thankYouLinkText;
+  _userCustomThankYou.thankYouLinkURL = thankYouLinkURL;
 }
 
 - (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText URL:(NSURL *)detractorThankYouLinkURL {
-  _customThankYou.detractorThankYouLinkText = detractorThankYouLinkText;
-  _customThankYou.detractorThankYouLinkURL = detractorThankYouLinkURL;
+  _userCustomThankYou.detractorThankYouLinkText = detractorThankYouLinkText;
+  _userCustomThankYou.detractorThankYouLinkURL = detractorThankYouLinkURL;
 }
 
 - (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText URL:(NSURL *)passiveThankYouLinkURL {
-  _customThankYou.passiveThankYouLinkText = passiveThankYouLinkText;
-  _customThankYou.passiveThankYouLinkURL = passiveThankYouLinkURL;
+  _userCustomThankYou.passiveThankYouLinkText = passiveThankYouLinkText;
+  _userCustomThankYou.passiveThankYouLinkURL = passiveThankYouLinkURL;
 }
 
 - (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText URL:(NSURL *)promoterThankYouLinkURL {
-  _customThankYou.promoterThankYouLinkText = promoterThankYouLinkText;
-  _customThankYou.promoterThankYouLinkURL = promoterThankYouLinkURL;
+  _userCustomThankYou.promoterThankYouLinkText = promoterThankYouLinkText;
+  _userCustomThankYou.promoterThankYouLinkURL = promoterThankYouLinkURL;
 }
 
 - (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion detractor:(NSString *)detractorQuestion {
@@ -359,65 +390,81 @@
   _userCustomMessages.detractorPlaceholderText = detractorPlaceholder;
 }
 
-- (NSString *)thankYouMessageDependingOnScore:(int)score {
-    
-  if ([self negativeTypeScore:score] && _customThankYou.detractorThankYouMessage) {
-    return _customThankYou.detractorThankYouMessage;
-  } else if ([self neutralTypeScore:score] && _customThankYou.passiveThankYouMessage) {
-    return _customThankYou.passiveThankYouMessage;
-  } else if ([self positiveTypeScore:score] && _customThankYou.promoterThankYouMessage) {
-    return _customThankYou.promoterThankYouMessage;
-  } else if (_customThankYou.thankYouMessage) {
-    return _customThankYou.thankYouMessage;
+- (NSString *)thankYouMainDependingOnScore:(int)score {
+  if ([self negativeTypeScore:score] && (_customThankYou.detractorThankYouMain || _userCustomThankYou.detractorThankYouMain)) {
+    return [self detractorThankYouMain];
+  } else if ([self neutralTypeScore:score] && (_customThankYou.passiveThankYouMain || _userCustomThankYou.passiveThankYouMain)) {
+    return [self passiveThankYouMain];
+  } else if ([self positiveTypeScore:score] && (_customThankYou.promoterThankYouMain || _userCustomThankYou.promoterThankYouMain)) {
+    return [self promoterThankYouMain];
+  } else if (_customThankYou.thankYouMain || _userCustomThankYou.thankYouMain) {
+    return [self thankYouMain];
   }
     
+  return _localizedTexts.finalThankYou;
+}
+
+- (NSString *)thankYouSetupDependingOnScore:(int)score {
+  if ([self positiveTypeScore:score]) {
+    if (_customThankYou.promoterThankYouSetup || _userCustomThankYou.promoterThankYouSetup) {
+      return [self promoterThankYouSetup];
+    } else if ([_customThankYou hasShareConfiguration] || [_userCustomThankYou hasShareConfiguration] || _customSocial.twitterHandler || _customSocial.facebookPage) {
+      return _localizedTexts.socialShareQuestion;
+    }
+  } else if ([self negativeTypeScore:score] && (_customThankYou.detractorThankYouSetup || _userCustomThankYou.detractorThankYouSetup)) {
+    return [self detractorThankYouSetup];
+  } else if ([self neutralTypeScore:score] && (_customThankYou.passiveThankYouSetup || _userCustomThankYou.passiveThankYouSetup)) {
+    return [self passiveThankYouSetup];
+  }
+  
+  if (_customThankYou.thankYouSetup || _userCustomThankYou.thankYouSetup) {
+    return [self thankYouSetup];
+  }
+  
   return nil;
 }
 
 - (NSString *)thankYouLinkTextDependingOnScore:(int)score {
-    
-  if ([self negativeTypeScore:score] && _customThankYou.detractorThankYouLinkText) {
-    return _customThankYou.detractorThankYouLinkText;
-  } else if ([self neutralTypeScore:score] && _customThankYou.passiveThankYouLinkText) {
-    return _customThankYou.passiveThankYouLinkText;
-  } else if ([self positiveTypeScore:score] && _customThankYou.promoterThankYouLinkText) {
-    return _customThankYou.promoterThankYouLinkText;
-  } else if (_customThankYou.thankYouLinkText) {
-    return _customThankYou.thankYouLinkText;
+  if ([self negativeTypeScore:score] && (_customThankYou.detractorThankYouLinkText || _userCustomThankYou.detractorThankYouLinkText)) {
+    return [self detractorThankYouLinkText];
+  } else if ([self neutralTypeScore:score] && (_customThankYou.passiveThankYouLinkText || _userCustomThankYou.passiveThankYouLinkText)) {
+    return [self passiveThankYouLinkText];
+  } else if ([self positiveTypeScore:score] && (_customThankYou.promoterThankYouLinkText || _userCustomThankYou.promoterThankYouLinkText)) {
+    return [self promoterThankYouLinkText];
+  } else if (_customThankYou.thankYouLinkText || _userCustomThankYou.thankYouLinkText) {
+    return [self thankYouLinkText];
   }
     
   return nil;
 }
 
 - (NSURL *)thankYouLinkURLDependingOnScore:(int)score andText:(NSString *)text {
-    
-  if ([self negativeTypeScore:score] && _customThankYou.detractorThankYouLinkURL) {
+  if ([self negativeTypeScore:score] && (_customThankYou.detractorThankYouLinkURL || _userCustomThankYou.detractorThankYouLinkURL)) {
     if (_passScoreAndTextToURL) {
-      return [self url:_customThankYou.detractorThankYouLinkURL withScore:score andText:text];
+      return [self detractorThankYouLinkURLWithScore:score text:text];
     }
-    return _customThankYou.detractorThankYouLinkURL;
-  } else if ([self neutralTypeScore:score] && _customThankYou.passiveThankYouLinkURL) {
+    return [self detractorThankYouLinkURL];
+  } else if ([self neutralTypeScore:score] && (_customThankYou.passiveThankYouLinkURL || _userCustomThankYou.passiveThankYouLinkURL)) {
     if (_passScoreAndTextToURL) {
-      return [self url:_customThankYou.passiveThankYouLinkURL withScore:score andText:text];
+      return [self passiveThankYouLinkURLWithScore:score text:text];
     }
-    return _customThankYou.passiveThankYouLinkURL;
-  } else if ([self positiveTypeScore:score] && _customThankYou.promoterThankYouLinkURL) {
+    return [self passiveThankYouLinkURL];;
+  } else if ([self positiveTypeScore:score] && (_customThankYou.promoterThankYouLinkURL || _userCustomThankYou.promoterThankYouLinkURL)) {
     if (_passScoreAndTextToURL) {
-      return [self url:_customThankYou.promoterThankYouLinkURL withScore:score andText:text];
+      return [self promoterThankYouLinkURLWithScore:score text:text];
     }
-    return _customThankYou.promoterThankYouLinkURL;
-  } else if (_customThankYou.thankYouLinkURL) {
+    return [self promoterThankYouLinkURL];
+  } else if (_customThankYou.thankYouLinkURL || _userCustomThankYou.thankYouLinkURL) {
     if (_passScoreAndTextToURL) {
-      return [self url:_customThankYou.thankYouLinkURL withScore:score andText:text];
+      return [self thankYouLinkURLWithScore:score text:text];
     }
-    return _customThankYou.thankYouLinkURL;
+    return [self thankYouLinkURL];
   }
   
   return nil;
 }
 
 - (BOOL)thankYouLinkConfiguredForScore:(int)score {
-    
   if ([self negativeTypeScore:score] && [self detractorOrDefaultURL] && [self detractorOrDefaultText]) {
     return YES;
   }
@@ -434,36 +481,248 @@
   return NO;
 }
 
+- (NSString *)detractorThankYouMain {
+  if (_userCustomThankYou.detractorThankYouMain) {
+    return _userCustomThankYou.detractorThankYouMain;
+  }
+  
+  return _customThankYou.detractorThankYouMain;
+}
+
+- (NSString *)passiveThankYouMain {
+  if (_userCustomThankYou.passiveThankYouMain) {
+    return _userCustomThankYou.passiveThankYouMain;
+  }
+  
+  return _customThankYou.passiveThankYouMain;
+}
+
+- (NSString *)promoterThankYouMain {
+  if (_userCustomThankYou.promoterThankYouMain) {
+    return _userCustomThankYou.promoterThankYouMain;
+  }
+  
+  return _customThankYou.promoterThankYouMain;
+}
+
+- (NSString *)thankYouMain {
+  if (_userCustomThankYou.thankYouMain) {
+    return _userCustomThankYou.thankYouMain;
+  }
+  
+  return _customThankYou.thankYouMain;
+}
+
+- (NSString *)detractorThankYouSetup {
+  if (_userCustomThankYou.detractorThankYouSetup) {
+    return _userCustomThankYou.detractorThankYouSetup;
+  }
+  
+  return _customThankYou.detractorThankYouSetup;
+}
+
+- (NSString *)passiveThankYouSetup {
+  if (_userCustomThankYou.passiveThankYouSetup) {
+    return _userCustomThankYou.passiveThankYouSetup;
+  }
+  
+  return _customThankYou.passiveThankYouSetup;
+}
+
+- (NSString *)promoterThankYouSetup {
+  if (_userCustomThankYou.promoterThankYouSetup) {
+    return _userCustomThankYou.promoterThankYouSetup;
+  }
+  
+  return _customThankYou.promoterThankYouSetup;
+}
+
+- (NSString *)thankYouSetup {
+  if (_userCustomThankYou.thankYouSetup) {
+    return _userCustomThankYou.thankYouSetup;
+  }
+  
+  return _customThankYou.thankYouSetup;
+}
+
+- (NSString *)detractorThankYouLinkText {
+  if (_userCustomThankYou.detractorThankYouLinkText) {
+    return _userCustomThankYou.detractorThankYouLinkText;
+  }
+  
+  return _customThankYou.detractorThankYouLinkText;
+}
+
+- (NSString *)passiveThankYouLinkText {
+  if (_userCustomThankYou.passiveThankYouLinkText) {
+    return _userCustomThankYou.passiveThankYouLinkText;
+  }
+  
+  return _customThankYou.passiveThankYouLinkText;
+}
+
+- (NSString *)promoterThankYouLinkText {
+  if (_userCustomThankYou.promoterThankYouLinkText) {
+    return _userCustomThankYou.promoterThankYouLinkText;
+  }
+  
+  return _customThankYou.promoterThankYouLinkText;
+}
+
+- (NSString *)thankYouLinkText {
+  if (_userCustomThankYou.thankYouLinkText) {
+    return _userCustomThankYou.thankYouLinkText;
+  }
+  
+  return _customThankYou.thankYouLinkText;
+}
+
+- (NSURL *)detractorThankYouLinkURL {
+  if (_userCustomThankYou.detractorThankYouLinkURL) {
+    return _userCustomThankYou.detractorThankYouLinkURL;
+  }
+  
+  return _customThankYou.detractorThankYouLinkURL;
+}
+
+- (NSURL *)passiveThankYouLinkURL {
+  if (_userCustomThankYou.passiveThankYouLinkURL) {
+    return _userCustomThankYou.passiveThankYouLinkURL;
+  }
+  
+  return _customThankYou.passiveThankYouLinkURL;
+}
+
+- (NSURL *)promoterThankYouLinkURL {
+  if (_userCustomThankYou.promoterThankYouLinkURL) {
+    return _userCustomThankYou.promoterThankYouLinkURL;
+  }
+  
+  return _customThankYou.promoterThankYouLinkURL;
+}
+
+- (NSURL *)thankYouLinkURL {
+  if (_userCustomThankYou.thankYouLinkURL) {
+    return _userCustomThankYou.thankYouLinkURL;
+  }
+  
+  return _customThankYou.thankYouLinkURL;
+}
+
+- (NSURL *)detractorThankYouLinkURLWithScore:(int)score text:(NSString *)text {
+  if (_userCustomThankYou.detractorThankYouLinkURL) {
+    return [self url:_userCustomThankYou.detractorThankYouLinkURL withScore:score andText:text];
+  }
+  
+  return [self url:_customThankYou.detractorThankYouLinkURL withScore:score andText:text];
+}
+
+- (NSURL *)passiveThankYouLinkURLWithScore:(int)score text:(NSString *)text {
+  if (_userCustomThankYou.passiveThankYouLinkURL) {
+    return [self url:_userCustomThankYou.passiveThankYouLinkURL withScore:score andText:text];
+  }
+  
+  return [self url:_customThankYou.passiveThankYouLinkURL withScore:score andText:text];
+}
+- (NSURL *)promoterThankYouLinkURLWithScore:(int)score text:(NSString *)text {
+  if (_userCustomThankYou.promoterThankYouLinkURL) {
+    return [self url:_userCustomThankYou.promoterThankYouLinkURL withScore:score andText:text];
+  }
+  
+  return [self url:_customThankYou.promoterThankYouLinkURL withScore:score andText:text];
+}
+- (NSURL *)thankYouLinkURLWithScore:(int)score text:(NSString *)text {
+  if (_userCustomThankYou.thankYouLinkURL) {
+    return [self url:_userCustomThankYou.thankYouLinkURL withScore:score andText:text];
+  }
+  
+  return [self url:_customThankYou.thankYouLinkURL withScore:score andText:text];
+}
+
 - (BOOL)detractorOrDefaultURL {
-  return (_customThankYou.detractorThankYouLinkURL || _customThankYou.thankYouLinkURL);
+  return ([self detractorURL] || [self defaultURL]);
 }
 
 - (BOOL)detractorOrDefaultText {
-  return (_customThankYou.detractorThankYouLinkText || _customThankYou.thankYouLinkText);
+  return ([self detractorText] || [self defaultText]);
 }
 
 - (BOOL)passiveOrDefaultURL {
-  return (_customThankYou.passiveThankYouLinkURL || _customThankYou.thankYouLinkURL);
+  return ([self passiveURL] || [self defaultURL]);
 }
 
 - (BOOL)passiveOrDefaultText {
-  return (_customThankYou.passiveThankYouLinkText || _customThankYou.thankYouLinkText);
+  return ([self passiveText] || [self defaultText]);
 }
 
 - (BOOL)promoterOrDefaultURL {
-  return (_customThankYou.promoterThankYouLinkURL || _customThankYou.thankYouLinkURL);
+  return ([self promoterURL] || [self defaultURL]);
 }
 
 - (BOOL)promoterOrDefaultText {
-  return (_customThankYou.promoterThankYouLinkText || _customThankYou.thankYouLinkText);
+  return ([self promoterText] || [self defaultText]);
+}
+
+- (BOOL)detractorURL {
+  return (_customThankYou.detractorThankYouLinkURL || _userCustomThankYou.detractorThankYouLinkURL);
+}
+
+- (BOOL)passiveURL {
+  return (_customThankYou.passiveThankYouLinkURL || _userCustomThankYou.passiveThankYouLinkURL);
+}
+
+- (BOOL)promoterURL {
+  return (_customThankYou.promoterThankYouLinkURL || _userCustomThankYou.promoterThankYouLinkURL);
+}
+
+- (BOOL)defaultURL {
+  return (_customThankYou.thankYouLinkURL || _userCustomThankYou.thankYouLinkURL);
+}
+
+- (BOOL)detractorText {
+  return (_customThankYou.detractorThankYouLinkText || _userCustomThankYou.detractorThankYouLinkText);
+}
+
+- (BOOL)passiveText {
+  return (_customThankYou.passiveThankYouLinkText || _userCustomThankYou.passiveThankYouLinkText);
+}
+
+- (BOOL)promoterText {
+  return (_customThankYou.promoterThankYouLinkText || _userCustomThankYou.promoterThankYouLinkText);
+}
+
+- (BOOL)defaultText {
+  return (_customThankYou.thankYouLinkText || _userCustomThankYou.thankYouLinkText);
+}
+
+- (void)setTwitterHandler:(NSString *)twitterHandler {
+  [_userCustomSocial setTwitterHandler:twitterHandler];
+}
+
+- (void)setFacebookPage:(NSURL *)facebookPage {
+  [_userCustomSocial setFacebookPage:facebookPage];
+}
+
+- (NSString *)twitterHandler {
+  if (_userCustomSocial.twitterHandler) {
+    return _userCustomSocial.twitterHandler;
+  }
+  return _customSocial.twitterHandler;
+}
+
+- (NSURL *)facebookPage {
+  if (_userCustomSocial.facebookPage) {
+    return _userCustomSocial.facebookPage;
+  }
+  return _customSocial.facebookPage;
 }
 
 - (BOOL)twitterHandlerSet {
-  return !!_twitterHandler;
+  return !!(_customSocial.twitterHandler || _userCustomSocial.twitterHandler);
 }
 
 - (BOOL)facebookPageSet {
-  return !!_facebookPage;
+  return !!(_customSocial.facebookPage || _userCustomSocial.facebookPage);
 }
 
 - (void)setCustomResurveyThrottle:(NSNumber *)customResurveyThrottle {

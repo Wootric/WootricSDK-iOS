@@ -1,8 +1,8 @@
 //
-//  WTRiPADSocialShareView.h
+//  WTRUserCustomThankYou.h
 //  WootricSDK
 //
-// Copyright (c) 2018 Wootric (https://wootric.com)
+// Copyright (c) 2019 Wootric (https://wootric.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,36 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import "WTRSettings.h"
+#import "WTRUserCustomThankYou.h"
 
-@interface WTRiPADSocialShareView : UIView
+@implementation WTRUserCustomThankYou
 
-- (instancetype)initWithSettings:(WTRSettings *)settings;
-- (void)setupSubviewsConstraints;
-- (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
-- (void)noThankYouButton;
-- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score andText:(NSString *)text;
-- (void)setThankYouMainDependingOnScore:(int)score;
-- (void)setThankYouSetupDependingOnScore:(int)score;
-- (void)displayShareButtonsWithTwitterAvailable:(BOOL)twitterAvailable andFacebookAvailable:(BOOL)facebookAvailable;
+- (BOOL)userCustomThankYouMainPresent {
+  if (_thankYouMain || _detractorThankYouMain || _passiveThankYouMain || _promoterThankYouMain) {
+    return YES;
+  }
+  
+  return NO;
+}
+
+- (BOOL)userCustomThankYouSetupPresent {
+  if (_thankYouSetup || _detractorThankYouSetup || _passiveThankYouSetup || _promoterThankYouSetup) {
+    return YES;
+  }
+  
+  return NO;
+}
+
+- (BOOL)userCustomLinkPresent {
+  if (_thankYouLinkText || _detractorThankYouLinkText || _passiveThankYouLinkText || _promoterThankYouLinkText) {
+    return YES;
+  }
+  
+  return NO;
+}
+
+- (BOOL)hasShareConfiguration {
+  return (_promoterThankYouLinkText && _promoterThankYouLinkURL);
+}
 
 @end

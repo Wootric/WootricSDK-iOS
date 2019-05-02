@@ -34,6 +34,7 @@
 - (NSLayoutConstraint *)toSecondViewCenterX:(UIView *)secondView;
 - (NSLayoutConstraint *)toSecondViewCenterY:(UIView *)secondView;
 - (void)addToView:(UIView *)view;
+- (void)removeFromView:(UIView *)view;
 - (void)addConstraint;
 
 @end

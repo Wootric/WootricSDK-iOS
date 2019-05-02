@@ -27,13 +27,13 @@
 
 @interface UIItems : NSObject
 
-+ (UILabel *)likelyAnchorWithSettings:(WTRSettings *)settings andFont:(UIFont *)font;
-+ (UILabel *)notLikelyAnchorWithSettings:(WTRSettings *)settings andFont:(UIFont *)font;
++ (UILabel *)likelyAnchorWithSettings:(WTRSettings *)settings font:(UIFont *)font;
++ (UILabel *)notLikelyAnchorWithSettings:(WTRSettings *)settings font:(UIFont *)font;
 + (UILabel *)followupLabelWithTextColor:(UIColor *)textColor;
 + (UILabel *)feedbackPlaceholder;
-+ (UILabel *)questionLabelWithSettings:(WTRSettings *)settings andFont:(UIFont *)font;
-+ (UILabel *)finalThankYouLabelWithSettings:(WTRSettings *)settings textColor:(UIColor *)textColor andFont:(UIFont *)font;
-+ (UILabel *)customThankYouLabelWithFont:(UIFont *)font;
++ (UILabel *)questionLabelWithSettings:(WTRSettings *)settings font:(UIFont *)font;
++ (UILabel *)thankYouMainLabelWithSettings:(WTRSettings *)settings textColor:(UIColor *)textColor font:(UIFont *)font;
++ (UILabel *)thankYouSetupLabelWithFont:(UIFont *)font;
 + (UIButton *)socialButtonWithTargetViewController:(UIViewController *)viewController title:(NSString *)title textColor:(UIColor *)textColor;
 + (UITextView *)feedbackTextViewWithBackgroundColor:(UIColor *)backgroundColor;
 

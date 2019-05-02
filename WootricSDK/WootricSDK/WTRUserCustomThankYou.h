@@ -1,8 +1,8 @@
 //
-//  WTRCustomThankYou.h
+//  WTRUserCustomThankYou.h
 //  WootricSDK
 //
-// Copyright (c) 2018 Wootric (https://wootric.com)
+// Copyright (c) 2019 Wootric (https://wootric.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,9 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface WTRCustomThankYou : NSObject
+@interface WTRUserCustomThankYou : NSObject
 
 @property (nonatomic, strong) NSString *thankYouMain;
 @property (nonatomic, strong) NSString *thankYouSetup;
@@ -42,8 +43,11 @@
 @property (nonatomic, strong) NSURL *passiveThankYouLinkURL;
 @property (nonatomic, strong) NSString *promoterThankYouLinkText;
 @property (nonatomic, strong) NSURL *promoterThankYouLinkURL;
+@property (nonatomic, strong) UIColor *backgroundColor;
 
-- (instancetype)initWithCustomThankYou:(NSDictionary *)customThankYou;
+- (BOOL)userCustomThankYouMainPresent;
+- (BOOL)userCustomThankYouSetupPresent;
+- (BOOL)userCustomLinkPresent;
 - (BOOL)hasShareConfiguration;
 
 @end

@@ -127,18 +127,15 @@
 }
 
 - (void)setupQuestionLabel {
-  _questionLabel = [UIItems questionLabelWithSettings:_settings
-                                                    andFont:[UIFont systemFontOfSize:18]];
+  _questionLabel = [UIItems questionLabelWithSettings:_settings font:[UIFont systemFontOfSize:18]];
 }
 
 - (void)setupLikelyAnchor {
-  _likelyAnchor = [UIItems likelyAnchorWithSettings:_settings
-                                            andFont:[UIFont italicSystemFontOfSize:12]];
+  _likelyAnchor = [UIItems likelyAnchorWithSettings:_settings font:[UIFont italicSystemFontOfSize:12]];
 }
 
 - (void)setupNotLikelyAnchor {
-  _notLikelyAnchor = [UIItems notLikelyAnchorWithSettings:_settings
-                                                  andFont:[UIFont italicSystemFontOfSize:12]];
+  _notLikelyAnchor = [UIItems notLikelyAnchorWithSettings:_settings font:[UIFont italicSystemFontOfSize:12]];
 }
 
 @end

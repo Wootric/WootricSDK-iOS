@@ -1,8 +1,8 @@
 //
-//  WTRiPADSocialShareView.h
+//  WTRCustomSocial.m
 //  WootricSDK
 //
-// Copyright (c) 2018 Wootric (https://wootric.com)
+// Copyright (c) 2019 Wootric (https://wootric.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import "WTRSettings.h"
+#import "WTRCustomSocial.h"
 
-@interface WTRiPADSocialShareView : UIView
+@implementation WTRCustomSocial {
+  BOOL isSocialEnabled;
+}
 
-- (instancetype)initWithSettings:(WTRSettings *)settings;
-- (void)setupSubviewsConstraints;
-- (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
-- (void)noThankYouButton;
-- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score andText:(NSString *)text;
-- (void)setThankYouMainDependingOnScore:(int)score;
-- (void)setThankYouSetupDependingOnScore:(int)score;
-- (void)displayShareButtonsWithTwitterAvailable:(BOOL)twitterAvailable andFacebookAvailable:(BOOL)facebookAvailable;
+- (instancetype)initWithCustomSocial:(NSDictionary *)customSocial {
+  if (self = [super init]) {
+    isSocialEnabled = NO;
+    
+    if (customSocial[@"facebook_enabled"]) {
+      isSocialEnabled = YES;
+      _facebookPage = [NSURL URLWithString:customSocial[@"accounts"][@"facebook_page"]];
+    }
+    
+    if (customSocial[@"twitter_enabled"]) {
+      isSocialEnabled = YES;
+      _twitterHandler = customSocial[@"accounts"][@"twitter_account"];
+    }
+  }
+  return self;
+}
+
+- (BOOL)socialEnabled {
+  return isSocialEnabled;
+}
 
 @end

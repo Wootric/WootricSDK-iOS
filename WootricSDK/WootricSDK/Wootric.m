@@ -192,34 +192,50 @@ static id<WTRSurveyDelegate> _delegate = nil;
 
 + (void)setTwitterHandler:(NSString *)twitterHandler {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.twitterHandler = twitterHandler;
+  [apiClient.settings setTwitterHandler:twitterHandler];
 }
 
 + (void)setFacebookPage:(NSURL *)facebookPage {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.facebookPage = facebookPage;
+  [apiClient.settings setFacebookPage:facebookPage];
 }
 
 #pragma mark - Custom Thanks
 
 + (void)setThankYouMessage:(NSString *)thankYouMessage {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setThankYouMessage:thankYouMessage];
+  [self setThankYouMain:thankYouMessage];
 }
 
 + (void)setDetractorThankYouMessage:(NSString *)detractorThankYouMessage {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setDetractorThankYouMessage:detractorThankYouMessage];
+  [self setDetractorThankYouMain:detractorThankYouMessage];
 }
 
 + (void)setPassiveThankYouMessage:(NSString *)passiveThankYouMessage {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setPassiveThankYouMessage:passiveThankYouMessage];
+  [self setPassiveThankYouMain:passiveThankYouMessage];
 }
 
 + (void)setPromoterThankYouMessage:(NSString *)promoterThankYouMessage {
+  [self setPromoterThankYouMain:promoterThankYouMessage];
+}
+
++ (void)setThankYouMain:(NSString *)thankYouMain {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setPromoterThankYouMessage:promoterThankYouMessage];
+  [apiClient.settings setThankYouMain:thankYouMain];
+}
+
++ (void)setDetractorThankYouMain:(NSString *)detractorThankYouMain {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setDetractorThankYouMain:detractorThankYouMain];
+}
+
++ (void)setPassiveThankYouMain:(NSString *)passiveThankYouMain {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setPassiveThankYouMain:passiveThankYouMain];
+}
+
++ (void)setPromoterThankYouMain:(NSString *)promoterThankYouMain {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  [apiClient.settings setPromoterThankYouMain:promoterThankYouMain];
 }
 
 + (void)setThankYouLinkWithText:(NSString *)thankYouLinkText URL:(NSURL *)thankYouLinkURL {

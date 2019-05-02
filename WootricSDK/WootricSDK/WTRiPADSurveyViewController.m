@@ -195,7 +195,8 @@
   }
   if ([self socialShareAvailableForScore:_currentScore]) {
     [_socialShareView setThankYouButtonTextAndURLDependingOnScore:_currentScore andText:_feedbackText];
-    [_socialShareView setThankYouMessageDependingOnScore:_currentScore];
+    [_socialShareView setThankYouMainDependingOnScore:_currentScore];
+    [_socialShareView setThankYouSetupDependingOnScore:_currentScore];
     [self setupFacebookAndTwitterForScore:_currentScore];
     [self presentSocialShareViewWithScore:_currentScore];
   } else {
