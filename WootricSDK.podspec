@@ -14,6 +14,6 @@ Pod::Spec.new do |s|
 
   s.source_files = "WootricSDK/WootricSDK/*.{h,m}"
   s.resources = "WootricSDK/WootricSDK/fontawesome-webfont.ttf"
-  s.public_header_files = "WootricSDK/WootricSDK/WootricSDK.h", "WootricSDK/WootricSDK/Wootric.h", "WootricSDK/WootricSDK/SEGWootric.h", "WootricSDK/WootricSDK/WTRLogger.h", "WootricSDK/WootricSDK/WTRLogLevel.h"
+  s.public_header_files = "WootricSDK/WootricSDK/WootricSDK.h", "WootricSDK/WootricSDK/Wootric.h", "WootricSDK/WootricSDK/SEGWootric.h", "WootricSDK/WootricSDK/WTRLogger.h", "WootricSDK/WootricSDK/WTRLogLevel.h", "WootricSDK/WootricSDK/WTRSurveyDelegate.h"
 
 end
