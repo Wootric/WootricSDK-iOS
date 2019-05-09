@@ -249,6 +249,7 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
 - (void)authenticate:(void (^)(void))authenticated {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/oauth/token", _baseAPIURL]];
   NSString *params = [NSString stringWithFormat:@"grant_type=client_credentials&client_id=%@", _clientID];
+  params = [self addVersionsToURLString:params];
   
   if (_clientSecret) {
     params = [params stringByAppendingFormat:@"&client_secret=%@", _clientSecret];
@@ -509,7 +510,7 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
 }
 
 - (nullable NSString *)sdkVersion {
-  return [[NSBundle bundleForClass:[WTRApiClient class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+  return [NSString stringWithFormat:@"ios-%@", [[NSBundle bundleForClass:[WTRApiClient class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
 }
 
 - (NSString *)osVersion {

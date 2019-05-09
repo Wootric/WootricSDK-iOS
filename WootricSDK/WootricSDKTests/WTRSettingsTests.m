@@ -42,7 +42,7 @@
 - (void)setUp {
   [super setUp];
   _settings = [[WTRSettings alloc] init];
-  [_settings parseDataFromSurveyServer:[self surveyServerSettings]];
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsForMode:@"NPS"]];
 }
 
 - (void)tearDown {
@@ -320,7 +320,60 @@
   XCTAssertEqual(timeDelay, 10);
 }
 
-- (NSDictionary *)surveyServerSettings {
+- (void)testScoreRulesForNPS {
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsForMode:@"NPS"]];
+  NSDictionary *scale = @{@"min": @0, @"max": @10, @"negative_type_max": @6, @"neutral_type_max": @8};
+  XCTAssertEqualObjects(scale, _settings.scale);
+
+  [_settings setSurveyTypeScale:1];
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsForMode:@"NPS"]];
+  scale = @{@"min": @0, @"max": @10, @"negative_type_max": @6, @"neutral_type_max": @8};
+  XCTAssertEqualObjects(scale, _settings.scale);
+
+  [_settings setSurveyTypeScale:-1];
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsForMode:@"NPS"]];
+  scale = @{@"min": @0, @"max": @10, @"negative_type_max": @6, @"neutral_type_max": @8};
+  XCTAssertEqualObjects(scale, _settings.scale);
+}
+
+- (void)testScoreRulesForCES {
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsForMode:@"CES"]];
+  NSDictionary *scale = @{@"min": @1, @"max": @7, @"negative_type_max": @3, @"neutral_type_max": @5};
+  XCTAssertEqualObjects(scale, _settings.scale);
+
+  [_settings setSurveyTypeScale:1];
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsForMode:@"CES"]];
+  scale = @{@"min": @1, @"max": @7, @"negative_type_max": @3, @"neutral_type_max": @5};
+  XCTAssertEqualObjects(scale, _settings.scale);
+
+  [_settings setSurveyTypeScale:-1];
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsForMode:@"CES"]];
+  scale = @{@"min": @1, @"max": @7, @"negative_type_max": @3, @"neutral_type_max": @5};
+  XCTAssertEqualObjects(scale, _settings.scale);
+}
+
+- (void)testScoreRulesForCSAT {
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsForMode:@"CSAT"]];
+  NSDictionary *scale = @{@"min": @1, @"max": @5, @"negative_type_max": @2, @"neutral_type_max": @3};
+  XCTAssertEqualObjects(scale, _settings.scale);
+
+  [_settings setSurveyTypeScale:1];
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsForMode:@"CSAT"]];
+  scale = @{@"min": @1, @"max": @10, @"negative_type_max": @6, @"neutral_type_max": @8};
+  XCTAssertEqualObjects(scale, _settings.scale);
+
+  [_settings setSurveyTypeScale:2];
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsForMode:@"CSAT"]];
+  scale = @{@"min": @1, @"max": @5, @"negative_type_max": @2, @"neutral_type_max": @3};
+  XCTAssertEqualObjects(scale, _settings.scale);
+
+  [_settings setSurveyTypeScale:-1];
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsForMode:@"CSAT"]];
+  scale = @{@"min": @1, @"max": @5, @"negative_type_max": @2, @"neutral_type_max": @3};
+  XCTAssertEqualObjects(scale, _settings.scale);
+}
+
+- (NSDictionary *)surveyServerSettingsForMode:(NSString *)mode {
   NSDictionary *settings = @{
     @"eligible": @1,
     @"settings": @{
@@ -328,6 +381,7 @@
       @"first_survey": @30,
       @"resurvey_throttle": @180,
       @"decline_resurvey_throttle": @30,
+      @"survey_type": mode,
       @"localized_texts": @{
         @"nps_question": @"How likely are you to recommend Wootric to a friend or co-worker?",
         @"anchors": @{
@@ -377,6 +431,7 @@
       @"first_survey": @30,
       @"resurvey_throttle": @180,
       @"decline_resurvey_throttle": @30,
+      @"survey_type": @"NPS",
       @"messages": @{
         @"followup_question": @"Can you explain why?",
         @"placeholder_text": @"Please, leave a feedback"

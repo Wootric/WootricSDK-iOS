@@ -105,6 +105,11 @@ static id<WTRSurveyDelegate> _delegate = nil;
   apiClient.settings.forceSurvey = flag;
 }
 
++ (void)setSurveyTypeScale:(NSInteger)surveyTypeScale {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.surveyTypeScale = surveyTypeScale;
+}
+
 + (void)showOptOut:(BOOL)flag {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.showOptOut = flag;

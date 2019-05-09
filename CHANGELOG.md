@@ -1,3 +1,9 @@
+## 0.13.0 (2019-06-21)
+
+### Changes:
+
+- Add support for custom scales
+
 ## 0.12.1 (2019-06-04)
 
 ### Changes:

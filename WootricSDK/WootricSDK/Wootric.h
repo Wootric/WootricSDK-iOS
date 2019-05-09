@@ -267,6 +267,11 @@
  */
 + (void)setLogLevelVerbose;
 /**
+ @discussion Change the type of the scale for the survey type (not available for all types).
+ @param surveyTypeScale NSInteger representing the scale type.
+ */
++ (void)setSurveyTypeScale:(NSInteger)surveyTypeScale;
+/**
  @discussion If showOptOut is set to YES, it will show an option for the end user to opt out of being surveyed. Default value is NO.
  @param flag A boolean to show the opt out option.
  */

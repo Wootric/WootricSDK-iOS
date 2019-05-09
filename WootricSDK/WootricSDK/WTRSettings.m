@@ -79,8 +79,8 @@
         _surveyTypeScale = surveyTypeScaleFromSurvey;
         _scale = [self scoreRules][_surveyType][surveyTypeScaleFromSurvey];
       } else {
-        _surveyTypeScale = 0;
-        _scale = [self scoreRules][_surveyType][0];
+        _surveyTypeScale = _surveyTypeScale >= ((NSArray *)[self scoreRules][_surveyType]).count ? 0 : _surveyTypeScale;
+        _scale = [self scoreRules][_surveyType][_surveyTypeScale];
       }
     }
 
@@ -500,6 +500,10 @@
 
 - (void)setCustomTimeDelay:(NSInteger)customTimeDelay {
   _timeDelay = customTimeDelay < 0 ? 0 : customTimeDelay;
+}
+
+- (void)setCustomSurveyTypeScale:(NSInteger)customSurveyTypeScale {
+  _surveyTypeScale = customSurveyTypeScale < 0 ? 0 : customSurveyTypeScale;
 }
 
 - (BOOL)validEmailString {
