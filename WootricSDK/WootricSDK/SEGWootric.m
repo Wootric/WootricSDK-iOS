@@ -99,6 +99,10 @@
   [Wootric skipFeedbackScreenForPromoter:flag];
 }
 
+- (void)skipFeedbackScreen:(BOOL)flag {
+  [Wootric skipFeedbackScreen:flag];
+}
+
 - (void)passScoreAndTextToURL:(BOOL)flag {
   [Wootric passScoreAndTextToURL:flag];
 }

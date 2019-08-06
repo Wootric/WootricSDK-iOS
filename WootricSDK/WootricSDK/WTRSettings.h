@@ -58,6 +58,7 @@
 @property (nonatomic, assign) BOOL showOptOut;
 @property (nonatomic, assign) BOOL setDefaultAfterSurvey;
 @property (nonatomic, assign) BOOL skipFeedbackScreen;
+@property (nonatomic, assign) BOOL skipFeedbackScreenForPromoter;
 @property (nonatomic, assign) BOOL passScoreAndTextToURL;
 @property (nonatomic, strong) UIColor *sendButtonBackgroundColor;
 @property (nonatomic, strong) UIColor *sliderColor;
@@ -66,6 +67,9 @@
 - (void)parseDataFromSurveyServer:(NSDictionary *)surveyServerSettings;
 - (int)maximumScore;
 - (int)minimumScore;
+- (BOOL)negativeTypeScore:(int)score;
+- (BOOL)neutralTypeScore:(int)score;
+- (BOOL)positiveTypeScore:(int)score;
 - (NSDictionary *)scoreRules;
 - (NSString *)getEndUserEmailOrUnknown;
 

@@ -61,6 +61,7 @@
 - (void)surveyImmediately:(BOOL)flag;
 - (void)forceSurvey:(BOOL)flag;
 - (void)skipFeedbackScreenForPromoter:(BOOL)flag;
+- (void)skipFeedbackScreen:(BOOL)flag;
 - (void)passScoreAndTextToURL:(BOOL)flag;
 
 - (void)setFacebookPage:(NSURL *)facebookPage;

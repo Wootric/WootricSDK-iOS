@@ -142,6 +142,11 @@ static id<WTRSurveyDelegate> _delegate = nil;
 
 + (void)skipFeedbackScreenForPromoter:(BOOL)flag {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  apiClient.settings.skipFeedbackScreenForPromoter = flag;
+}
+
++ (void)skipFeedbackScreen:(BOOL)flag {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.skipFeedbackScreen = flag;
 }
 

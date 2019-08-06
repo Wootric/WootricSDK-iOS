@@ -14,6 +14,7 @@
 		0F963EF920E156E6001EE0D2 /* WTRiPADSurveyViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F963EF820E156E6001EE0D2 /* WTRiPADSurveyViewControllerTests.m */; };
 		0FAB0CAB1CFE1DCE00977346 /* SEGWootricTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FAB0CAA1CFE1DCE00977346 /* SEGWootricTests.m */; };
 		0FC321FE21ADE4A0000E19DF /* WTRUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC321FD21ADE4A0000E19DF /* WTRUtilsTests.m */; };
+		0FC7D23122F9E98200C170AF /* WTRWootricTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC7D23022F9E98200C170AF /* WTRWootricTests.m */; };
 		0FD5920F1D99EB0500DD173B /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0FD5920E1D99EAFF00DD173B /* fontawesome-webfont.ttf */; };
 		0FE0F3F920DC041B00499248 /* WTRNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FE0F3F720DC041B00499248 /* WTRNotificationCenter.h */; };
 		0FE0F3FD20DC059700499248 /* WTRDefaultNotificationCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FE0F3FB20DC059700499248 /* WTRDefaultNotificationCenter.h */; };
@@ -130,6 +131,7 @@
 		0F963EF820E156E6001EE0D2 /* WTRiPADSurveyViewControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRiPADSurveyViewControllerTests.m; sourceTree = "<group>"; };
 		0FAB0CAA1CFE1DCE00977346 /* SEGWootricTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEGWootricTests.m; sourceTree = "<group>"; };
 		0FC321FD21ADE4A0000E19DF /* WTRUtilsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRUtilsTests.m; sourceTree = "<group>"; };
+		0FC7D23022F9E98200C170AF /* WTRWootricTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRWootricTests.m; sourceTree = "<group>"; };
 		0FD5920E1D99EAFF00DD173B /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.ttf"; sourceTree = "<group>"; };
 		0FE0F3F720DC041B00499248 /* WTRNotificationCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRNotificationCenter.h; sourceTree = "<group>"; };
 		0FE0F3FB20DC059700499248 /* WTRDefaultNotificationCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRDefaultNotificationCenter.h; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 				B2DC6F121B81E6F900F599B3 /* Supporting Files */,
 				0FE2FAC71CE4356F0065823C /* WTRApiClientTests.m */,
 				0FAB0CAA1CFE1DCE00977346 /* SEGWootricTests.m */,
+				0FC7D23022F9E98200C170AF /* WTRWootricTests.m */,
 			);
 			path = WootricSDKTests;
 			sourceTree = "<group>";
@@ -727,6 +730,7 @@
 				0FF406B9227262B000C18075 /* WTRDelegateMockViewController.m in Sources */,
 				0FAB0CAB1CFE1DCE00977346 /* SEGWootricTests.m in Sources */,
 				B21372961BED0DB1009F5974 /* WTRSurveyTests.m in Sources */,
+				0FC7D23122F9E98200C170AF /* WTRWootricTests.m in Sources */,
 				0FE2FAC81CE4356F0065823C /* WTRApiClientTests.m in Sources */,
 				0FE0F40920DC1AE000499248 /* WTRSurveyViewControllerTests.m in Sources */,
 			);

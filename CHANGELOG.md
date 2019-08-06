@@ -1,3 +1,10 @@
+## 0.14.0 (2019-08-12)
+
+### Changes:
+
+- Add skipFeedbackScreen method
+- Fix promoter bug for non NPS scales
+
 ## 0.13.0 (2019-06-21)
 
 ### Changes:

@@ -142,6 +142,11 @@
 */
 + (void)skipFeedbackScreenForPromoter:(BOOL)flag;
 /**
+ @discussion With this option enabled, the open feedback screen will be skipped and go directly to the thank you message.
+ @param flag A boolean to set if the feedback screen should be skipped.
+ */
++ (void)skipFeedbackScreen:(BOOL)flag;
+/**
  @discussion If you enable this setting, score and feedback text will be added as wootric_score and wootric_text params to the "thank you" URL you have provided. (Check "Custom Thank You" section)
  @see setThankYouMessage
  @param flag A boolean to set if the score and text should be passed to the custom "thank you" URL

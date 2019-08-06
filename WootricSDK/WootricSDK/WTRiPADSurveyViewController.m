@@ -134,7 +134,9 @@
   [_feedbackView setFollowupLabelTextBasedOnScore:sender.assignedScore];
   [_feedbackView setFeedbackPlaceholderText:placeholderText];
   if (_feedbackView.hidden) {
-    if (_settings.skipFeedbackScreen && _currentScore >= 9) {
+    if (_settings.skipFeedbackScreen) {
+      [self sendButtonPressed];
+    } else if (_settings.skipFeedbackScreenForPromoter && [_settings positiveTypeScore:_currentScore]) {
       [self sendButtonPressed];
     } else {
       [self showFeedbackView];
@@ -276,8 +278,8 @@
 }
 
 - (void)setupFacebookAndTwitterForScore:(int)score {
-  BOOL twitterAvailable = ([self twitterHandlerAndFeedbackTextPresent] && score >= 9);
-  BOOL facebookAvailable = ([_settings facebookPageSet] && score >= 9);
+  BOOL twitterAvailable = ([self twitterHandlerAndFeedbackTextPresent] && [_settings positiveTypeScore:score]);
+  BOOL facebookAvailable = ([_settings facebookPageSet] && [_settings positiveTypeScore:score]);
   if (![_settings thankYouLinkConfiguredForScore:score]) {
     [_socialShareView noThankYouButton];
   }
@@ -287,8 +289,8 @@
 
 - (BOOL)socialShareAvailableForScore:(int)score {
   return ([_settings thankYouLinkConfiguredForScore:score] ||
-          ([self twitterHandlerAndFeedbackTextPresent] && score >= 9) ||
-          ([_settings facebookPageSet] && score >= 9));
+          ([self twitterHandlerAndFeedbackTextPresent] && [_settings positiveTypeScore:score]) ||
+          ([_settings facebookPageSet] && [_settings positiveTypeScore:score]));
 }
 
 - (BOOL)twitterHandlerAndFeedbackTextPresent {
