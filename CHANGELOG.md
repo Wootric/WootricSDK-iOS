@@ -1,3 +1,9 @@
+## 0.16.0 (2019-12-04)
+
+### Changes:
+
+- Add support of admin panel values for adding email, score and comment to thank you link
+
 ## 0.15.0 (2019-10-18)
 
 ### Changes:

@@ -44,6 +44,18 @@
 @property (nonatomic, strong) NSString *promoterThankYouLinkText;
 @property (nonatomic, strong) NSURL *promoterThankYouLinkURL;
 @property (nonatomic, strong) UIColor *backgroundColor;
+@property (nonatomic, assign) int isEmailInURL;
+@property (nonatomic, assign) int isDetractorEmailInURL;
+@property (nonatomic, assign) int isPassiveEmailInURL;
+@property (nonatomic, assign) int isPromoterEmailInURL;
+@property (nonatomic, assign) int isScoreInURL;
+@property (nonatomic, assign) int isDetractorScoreInURL;
+@property (nonatomic, assign) int isPassiveScoreInURL;
+@property (nonatomic, assign) int isPromoterScoreInURL;
+@property (nonatomic, assign) int isCommentInURL;
+@property (nonatomic, assign) int isDetractorCommentInURL;
+@property (nonatomic, assign) int isPassiveCommentInURL;
+@property (nonatomic, assign) int isPromoterCommentInURL;
 
 - (BOOL)userCustomThankYouMainPresent;
 - (BOOL)userCustomThankYouSetupPresent;

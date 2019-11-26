@@ -210,6 +210,48 @@
 + (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText URL:(NSURL *)promoterThankYouLinkURL;
 
 /**
+ @discussion Specifies if the email should be passed in the thank you link URL, as `wootric_email`
+ @param emailInURL Boolean.
+ */
++ (void)passEmailInURL:(BOOL)emailInURL;
+
+/**
+ @discussion Specifies if the email should be passed in the thank you link URL for each type of response, as `wootric_email`
+ @param promoterEmailInURL Boolean.
+ @param passiveEmailInURL Boolean.
+ @param detractorEmailInURL Boolean.
+ */
++ (void)passPromoterEmailInURL:(BOOL)promoterEmailInURL passiveEmailInURL:(BOOL)passiveEmailInURL detractorEmailInURL:(BOOL)detractorEmailInURL;
+
+/**
+ @discussion Specifies if the score should be passed in the thank you link URL, as `wootric_score`
+ @param scoreInURL Boolean.
+ */
++ (void)passScoreInURL:(BOOL)scoreInURL;
+
+/**
+ @discussion Specifies if the score should be passed in the thank you link URL for each type of response, as `wootric_score`
+ @param promoterScoreInURL Boolean.
+ @param passiveScoreInURL Boolean.
+ @param detractorScoreInURL Boolean.
+ */
++ (void)passPromoterScoreInURL:(BOOL)promoterScoreInURL passiveScoreInURL:(BOOL)passiveScoreInURL detractorScoreInURL:(BOOL)detractorScoreInURL;
+
+/**
+ @discussion Specifies if the feedback should be passed in the thank you link URL, as `wootric_comment`
+ @param commentInURL Boolean.
+ */
++ (void)passCommentInURL:(BOOL)commentInURL;
+
+/**
+ @discussion Specifies if the feedback should be passed in the thank you link URL for each type of response, as `wootric_comment`
+ @param promoterCommentInURL Boolean.
+ @param passiveCommentInURL Boolean.
+ @param detractorCommentInURL Boolean.
+ */
++ (void)passPromoterCommentInURL:(BOOL)promoterCommentInURL passiveCommentInURL:(BOOL)passiveCommentInURL detractorCommentInURL:(BOOL)detractorCommentInURL;
+
+/**
  @discussion This method allows you to set custom placeholder text in feedback text view for each type of end user. Be advised that this setting takes precedence over values set in Wootric's from admin panel.
  @param promoterPlaceholder NSString placeholder for promoters (score 9-10).
  @param passivePlaceholder NSString placeholder for passives (score 7-8).

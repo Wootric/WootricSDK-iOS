@@ -64,9 +64,9 @@
   return self;
 }
 
-- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score andText:(NSString *)feedbackText{
+- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score text:(NSString *)feedbackText {
   NSString *text = [_settings thankYouLinkTextDependingOnScore:score];
-  NSURL *url = [_settings thankYouLinkURLDependingOnScore:score andText:feedbackText];
+  NSURL *url = [_settings thankYouLinkURLDependingOnScore:score text:feedbackText email:_settings.endUserEmail];
 
   if (!text || !url) {
     _thankYouButton.hidden = YES;

@@ -106,9 +106,9 @@
   }
 }
 
-- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score andText:(NSString *)text {
+- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score text:(NSString *)text{
   NSString *thankYouText = [_settings thankYouLinkTextDependingOnScore:score];
-  NSURL *url = [_settings thankYouLinkURLDependingOnScore:score andText:text];
+  NSURL *url = [_settings thankYouLinkURLDependingOnScore:score text:text email:_settings.endUserEmail];
 
   [_thankYouButton setText:thankYouText andURL:url];
 }

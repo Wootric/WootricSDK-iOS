@@ -46,7 +46,6 @@
 @implementation WTRSettings
 
 - (instancetype)init {
-    
   if (self = [super init]) {
     _setDefaultAfterSurvey = YES;
     _surveyedDefaultDuration = 90;
@@ -378,6 +377,36 @@
   _userCustomThankYou.promoterThankYouLinkURL = promoterThankYouLinkURL;
 }
 
+- (void)setEmailInURL:(int)emailInURL {
+  _userCustomThankYou.isEmailInURL = emailInURL;
+}
+
+- (void)setPromoterEmailInURL:(int)promoterEmailInURL passiveEmailInURL:(int)passiveEmailInURL detractorEmailInURL:(int)detractorEmailInURL  {
+  _userCustomThankYou.isDetractorEmailInURL = detractorEmailInURL;
+  _userCustomThankYou.isPassiveEmailInURL = passiveEmailInURL;
+  _userCustomThankYou.isPromoterEmailInURL = promoterEmailInURL;
+}
+
+- (void)setScoreInURL:(int)scoreInURL {
+  _userCustomThankYou.isScoreInURL = scoreInURL;
+}
+
+- (void)setPromoterScoreInURL:(int)promoterScoreInURL passiveScoreInURL:(int)passiveScoreInURL detractorScoreInURL:(int)detractorScoreInURL  {
+  _userCustomThankYou.isDetractorScoreInURL = detractorScoreInURL;
+  _userCustomThankYou.isPassiveScoreInURL = passiveScoreInURL;
+  _userCustomThankYou.isPromoterScoreInURL = promoterScoreInURL;
+}
+
+- (void)setCommentInURL:(int)commentInURL {
+  _userCustomThankYou.isCommentInURL = commentInURL;
+}
+
+- (void)setPromoterCommentInURL:(int)promoterCommentInURL passiveCommentInURL:(int)passiveCommentInURL detractorCommentInURL:(int)detractorCommentInURL  {
+  _userCustomThankYou.isDetractorCommentInURL = detractorCommentInURL;
+  _userCustomThankYou.isPassiveCommentInURL = passiveCommentInURL;
+  _userCustomThankYou.isPromoterCommentInURL = promoterCommentInURL;
+}
+
 - (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion detractor:(NSString *)detractorQuestion {
   _userCustomMessages.promoterQuestion = promoterQuestion;
   _userCustomMessages.passiveQuestion = passiveQuestion;
@@ -438,27 +467,15 @@
   return nil;
 }
 
-- (NSURL *)thankYouLinkURLDependingOnScore:(int)score andText:(NSString *)text {
+- (NSURL *)thankYouLinkURLDependingOnScore:(int)score text:(NSString *)text email:(NSString *)email {
   if ([self negativeTypeScore:score] && (_customThankYou.detractorThankYouLinkURL || _userCustomThankYou.detractorThankYouLinkURL)) {
-    if (_passScoreAndTextToURL) {
-      return [self detractorThankYouLinkURLWithScore:score text:text];
-    }
-    return [self detractorThankYouLinkURL];
+    return [self detractorThankYouLinkURLWithScore:score text:text email:email];
   } else if ([self neutralTypeScore:score] && (_customThankYou.passiveThankYouLinkURL || _userCustomThankYou.passiveThankYouLinkURL)) {
-    if (_passScoreAndTextToURL) {
-      return [self passiveThankYouLinkURLWithScore:score text:text];
-    }
-    return [self passiveThankYouLinkURL];;
+    return [self passiveThankYouLinkURLWithScore:score text:text email:email];
   } else if ([self positiveTypeScore:score] && (_customThankYou.promoterThankYouLinkURL || _userCustomThankYou.promoterThankYouLinkURL)) {
-    if (_passScoreAndTextToURL) {
-      return [self promoterThankYouLinkURLWithScore:score text:text];
-    }
-    return [self promoterThankYouLinkURL];
+    return [self promoterThankYouLinkURLWithScore:score text:text email:email];
   } else if (_customThankYou.thankYouLinkURL || _userCustomThankYou.thankYouLinkURL) {
-    if (_passScoreAndTextToURL) {
-      return [self thankYouLinkURLWithScore:score text:text];
-    }
-    return [self thankYouLinkURL];
+    return [self thankYouLinkURLWithScore:score text:text email:email];
   }
   
   return nil;
@@ -479,6 +496,144 @@
   }
   
   return NO;
+}
+
+- (int)thankYouLinkShouldIncludeEmailDependingOnScore:(int)score {
+  if ([self negativeTypeScore:score] && (_customThankYou.isDetractorEmailInURL == 1 || _userCustomThankYou.isDetractorEmailInURL == 1)) {
+    return [self isDetractorEmailInURL];
+  } else if ([self neutralTypeScore:score] && (_customThankYou.isPassiveEmailInURL == 1 || _userCustomThankYou.isPassiveEmailInURL == 1)) {
+    return [self isPassiveEmailInURL];
+  } else if ([self positiveTypeScore:score] && (_customThankYou.isPromoterEmailInURL == 1 || _userCustomThankYou.isPromoterEmailInURL == 1)) {
+    return [self isPromoterEmailInURL];
+  } else if (_customThankYou.isEmailInURL == 1 || _userCustomThankYou.isEmailInURL == 1) {
+    return [self isEmailInURL];
+  }
+  
+  return -1;
+}
+
+- (int)thankYouLinkShouldIncludeScoreDependingOnScore:(int)score {
+  if ([self negativeTypeScore:score] && (_customThankYou.isDetractorScoreInURL == 1 || _userCustomThankYou.isDetractorScoreInURL == 1)) {
+    return [self isDetractorScoreInURL];
+  } else if ([self neutralTypeScore:score] && (_customThankYou.isPassiveScoreInURL == 1 || _userCustomThankYou.isDetractorScoreInURL == 1)) {
+    return [self isPassiveScoreInURL];
+  } else if ([self positiveTypeScore:score] && (_customThankYou.isPromoterScoreInURL == 1 || _userCustomThankYou.isPromoterScoreInURL == 1)) {
+    return [self isPromoterScoreInURL];
+  } else if (_customThankYou.isScoreInURL == 1 || _userCustomThankYou.isScoreInURL == 1) {
+    return [self isScoreInURL];
+  }
+  
+  return -1;
+}
+
+- (int)thankYouLinkShouldIncludeCommentDependingOnScore:(int)score {
+  if ([self negativeTypeScore:score] && (_customThankYou.isDetractorCommentInURL == 1 || _userCustomThankYou.isDetractorCommentInURL == 1)) {
+    return [self isDetractorCommentInURL];
+  } else if ([self neutralTypeScore:score] && (_customThankYou.isPassiveCommentInURL == 1 || _userCustomThankYou.isPassiveCommentInURL) == 1) {
+    return [self isPassiveCommentInURL];
+  } else if ([self positiveTypeScore:score] && (_customThankYou.isPromoterCommentInURL == 1 || _userCustomThankYou.isPromoterCommentInURL == 1)) {
+    return [self isPromoterCommentInURL];
+  } else if (_customThankYou.isCommentInURL == 1 || _userCustomThankYou.isCommentInURL == 1) {
+    return [self isCommentInURL];
+  }
+  
+  return -1;
+}
+
+- (int)isDetractorEmailInURL {
+  if (_userCustomThankYou.isDetractorEmailInURL != -1) {
+    return _userCustomThankYou.isDetractorEmailInURL;
+  }
+  
+  return _customThankYou.isDetractorEmailInURL;
+}
+
+- (int)isPassiveEmailInURL {
+  if (_userCustomThankYou.isPassiveEmailInURL != -1) {
+    return _userCustomThankYou.isPassiveEmailInURL;
+  }
+  
+  return _customThankYou.isPassiveEmailInURL;
+}
+
+- (int)isPromoterEmailInURL {
+  if (_userCustomThankYou.isPromoterEmailInURL != -1) {
+    return _userCustomThankYou.isPromoterEmailInURL;
+  }
+  
+  return _customThankYou.isPromoterEmailInURL;
+}
+
+- (int)isEmailInURL {
+  if (_userCustomThankYou.isEmailInURL != -1) {
+    return _userCustomThankYou.isEmailInURL;
+  }
+  
+  return _customThankYou.isEmailInURL;
+}
+
+- (int)isDetractorScoreInURL {
+  if (_userCustomThankYou.isDetractorScoreInURL != -1) {
+    return _userCustomThankYou.isDetractorScoreInURL;
+  }
+  
+  return _customThankYou.isDetractorScoreInURL;
+}
+
+- (int)isPassiveScoreInURL {
+  if (_userCustomThankYou.isPassiveScoreInURL != -1) {
+    return _userCustomThankYou.isPassiveScoreInURL;
+  }
+  
+  return _customThankYou.isPassiveScoreInURL;
+}
+
+- (int)isPromoterScoreInURL {
+  if (_userCustomThankYou.isPromoterScoreInURL != -1) {
+    return _userCustomThankYou.isPromoterScoreInURL;
+  }
+  
+  return _customThankYou.isPromoterScoreInURL;
+}
+
+- (int)isScoreInURL {
+  if (_userCustomThankYou.isScoreInURL != -1) {
+    return _userCustomThankYou.isScoreInURL;
+  }
+  
+  return _customThankYou.isScoreInURL;
+}
+
+- (int)isDetractorCommentInURL {
+  if (_userCustomThankYou.isDetractorCommentInURL != -1) {
+    return _userCustomThankYou.isDetractorCommentInURL;
+  }
+  
+  return _customThankYou.isDetractorCommentInURL;
+}
+
+- (int)isPassiveCommentInURL {
+  if (_userCustomThankYou.isPassiveCommentInURL != -1) {
+    return _userCustomThankYou.isPassiveCommentInURL;
+  }
+  
+  return _customThankYou.isPassiveCommentInURL;
+}
+
+- (int)isPromoterCommentInURL {
+  if (_userCustomThankYou.isPromoterCommentInURL != -1) {
+    return _userCustomThankYou.isPromoterCommentInURL;
+  }
+  
+  return _customThankYou.isPromoterCommentInURL;
+}
+
+- (int)isCommentInURL {
+  if (_userCustomThankYou.isCommentInURL != -1) {
+    return _userCustomThankYou.isCommentInURL;
+  }
+  
+  return _customThankYou.isCommentInURL;
 }
 
 - (NSString *)detractorThankYouMain {
@@ -609,34 +764,34 @@
   return _customThankYou.thankYouLinkURL;
 }
 
-- (NSURL *)detractorThankYouLinkURLWithScore:(int)score text:(NSString *)text {
+- (NSURL *)detractorThankYouLinkURLWithScore:(int)score text:(NSString *)text email:(NSString *)email {
   if (_userCustomThankYou.detractorThankYouLinkURL) {
-    return [self url:_userCustomThankYou.detractorThankYouLinkURL withScore:score andText:text];
+    return [self url:_userCustomThankYou.detractorThankYouLinkURL withScore:score comment:text email:email];
   }
   
-  return [self url:_customThankYou.detractorThankYouLinkURL withScore:score andText:text];
+  return [self url:_customThankYou.detractorThankYouLinkURL withScore:score comment:text email:email];
 }
 
-- (NSURL *)passiveThankYouLinkURLWithScore:(int)score text:(NSString *)text {
+- (NSURL *)passiveThankYouLinkURLWithScore:(int)score text:(NSString *)text email:(NSString *)email {
   if (_userCustomThankYou.passiveThankYouLinkURL) {
-    return [self url:_userCustomThankYou.passiveThankYouLinkURL withScore:score andText:text];
+    return [self url:_userCustomThankYou.passiveThankYouLinkURL withScore:score comment:text email:email];
   }
   
-  return [self url:_customThankYou.passiveThankYouLinkURL withScore:score andText:text];
+  return [self url:_customThankYou.passiveThankYouLinkURL withScore:score comment:text email:email];
 }
-- (NSURL *)promoterThankYouLinkURLWithScore:(int)score text:(NSString *)text {
+- (NSURL *)promoterThankYouLinkURLWithScore:(int)score text:(NSString *)text email:(NSString *)email {
   if (_userCustomThankYou.promoterThankYouLinkURL) {
-    return [self url:_userCustomThankYou.promoterThankYouLinkURL withScore:score andText:text];
+    return [self url:_userCustomThankYou.promoterThankYouLinkURL withScore:score comment:text email:email];
   }
   
-  return [self url:_customThankYou.promoterThankYouLinkURL withScore:score andText:text];
+  return [self url:_customThankYou.promoterThankYouLinkURL withScore:score comment:text email:email];
 }
-- (NSURL *)thankYouLinkURLWithScore:(int)score text:(NSString *)text {
+- (NSURL *)thankYouLinkURLWithScore:(int)score text:(NSString *)text email:(NSString *)email {
   if (_userCustomThankYou.thankYouLinkURL) {
-    return [self url:_userCustomThankYou.thankYouLinkURL withScore:score andText:text];
+    return [self url:_userCustomThankYou.thankYouLinkURL withScore:score comment:text email:email];
   }
   
-  return [self url:_customThankYou.thankYouLinkURL withScore:score andText:text];
+  return [self url:_customThankYou.thankYouLinkURL withScore:score comment:text email:email];
 }
 
 - (BOOL)detractorOrDefaultURL {
@@ -770,20 +925,42 @@
   return !([[_endUserEmail stringByTrimmingCharactersInSet:set] length] == 0);
 }
 
-- (NSURL *)url:(NSURL *)baseUrl withScore:(int)score andText:(NSString *)text {
-  NSString *paramsString;
-  NSString *escapedText = [text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+- (NSURL *)url:(NSURL *)baseUrl withScore:(int)score comment:(NSString *)comment email:(NSString *)email {
+  NSMutableString *paramsString = [NSMutableString new];
+  NSString *escapedText = [comment stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
   
   if (!escapedText) {
     escapedText = @"";
   }
   
-  if ([[baseUrl absoluteString] rangeOfString:@"?"].location == NSNotFound) {
-    paramsString = [NSString stringWithFormat:@"?wootric_score=%d&wootric_text=%@", score, escapedText];
-    return [NSURL URLWithString:paramsString relativeToURL:baseUrl];
+  if ([self thankYouLinkShouldIncludeEmailDependingOnScore:score] == 1) {
+    [paramsString appendString:[NSString stringWithFormat:@"wootric_email=%@", email]];
+  }
+  
+  if ([self thankYouLinkShouldIncludeScoreDependingOnScore:score] == 1) {
+    if (paramsString.length == 0) {
+      [paramsString appendString:[NSString stringWithFormat:@"wootric_score=%i", score]];
+    } else {
+      [paramsString appendString:[NSString stringWithFormat:@"&wootric_score=%i", score]];
+    }
+  }
+  
+  if ([self thankYouLinkShouldIncludeCommentDependingOnScore:score] == 1) {
+    if (paramsString.length == 0) {
+      [paramsString appendString:[NSString stringWithFormat:@"wootric_comment=%@", escapedText]];
+    } else {
+      [paramsString appendString:[NSString stringWithFormat:@"&wootric_comment=%@", escapedText]];
+    }
+  }
+  
+  if (paramsString.length > 0) {
+    if ([[baseUrl absoluteString] rangeOfString:@"?"].location == NSNotFound) {
+      return [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", baseUrl, paramsString]];
+    } else {
+      return [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@", baseUrl, paramsString]];
+    }
   } else {
-    paramsString = [NSString stringWithFormat:@"&wootric_score=%d&wootric_text=%@", score, escapedText];
-    return [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseUrl, paramsString]];
+    return baseUrl;
   }
 }
 
