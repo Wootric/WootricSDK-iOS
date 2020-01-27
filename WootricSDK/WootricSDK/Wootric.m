@@ -150,9 +150,108 @@ static id<WTRSurveyDelegate> _delegate = nil;
   apiClient.settings.skipFeedbackScreen = flag;
 }
 
-+ (void)passScoreAndTextToURL:(BOOL)flag {
++ (void) passScoreAndTextToURL:(BOOL)flag {
   WTRApiClient *apiClient = [WTRApiClient sharedInstance];
   apiClient.settings.passScoreAndTextToURL = flag;
+}
+
++ (void)passEmailInURL:(BOOL)emailInURL {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  if (emailInURL) {
+    [apiClient.settings setEmailInURL:1];
+  } else {
+    [apiClient.settings setEmailInURL:0];
+  }
+}
+
++ (void)passPromoterEmailInURL:(BOOL)promoterEmailInURL passiveEmailInURL:(BOOL)passiveEmailInURL detractorEmailInURL:(BOOL)detractorEmailInURL {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  int promoter = -1;
+  int passive = -1;
+  int detractor = -1;
+  if (promoterEmailInURL) {
+    promoter = 1;
+  } else {
+    promoter = 0;
+  }
+  if (passiveEmailInURL) {
+    passive = 1;
+  } else {
+    passive = 0;
+  }
+  if (detractorEmailInURL) {
+    detractor = 1;
+  } else {
+    detractor = 0;
+  }
+  
+  [apiClient.settings setPromoterEmailInURL:promoter passiveEmailInURL:passive detractorEmailInURL:detractor];
+}
+
++ (void)passScoreInURL:(BOOL)scoreInURL {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  if (scoreInURL) {
+    [apiClient.settings setScoreInURL:1];
+  } else {
+    [apiClient.settings setScoreInURL:0];
+  }
+}
+
++ (void)passPromoterScoreInURL:(BOOL)promoterScoreInURL passiveScoreInURL:(BOOL)passiveScoreInURL detractorScoreInURL:(BOOL)detractorScoreInURL {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  int promoter = -1;
+  int passive = -1;
+  int detractor = -1;
+  if (promoterScoreInURL) {
+    promoter = 1;
+  } else {
+    promoter = 0;
+  }
+  if (passiveScoreInURL) {
+    passive = 1;
+  } else {
+    passive = 0;
+  }
+  if (detractorScoreInURL) {
+    detractor = 1;
+  } else {
+    detractor = 0;
+  }
+  
+  [apiClient.settings setPromoterScoreInURL:promoter passiveScoreInURL:passive detractorScoreInURL:detractor];
+}
+
++ (void)passCommentInURL:(BOOL)commentInURL {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  if (commentInURL) {
+    [apiClient.settings setCommentInURL:1];
+  } else {
+    [apiClient.settings setCommentInURL:0];
+  }
+}
+
++ (void)passPromoterCommentInURL:(BOOL)promoterCommentInURL passiveCommentInURL:(BOOL)passiveCommentInURL detractorCommentInURL:(BOOL)detractorCommentInURL {
+  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  int promoter = -1;
+  int passive = -1;
+  int detractor = -1;
+  if (promoterCommentInURL) {
+    promoter = 1;
+  } else {
+    promoter = 0;
+  }
+  if (passiveCommentInURL) {
+    passive = 1;
+  } else {
+    passive = 0;
+  }
+  if (detractorCommentInURL) {
+    detractor = 1;
+  } else {
+    detractor = 0;
+  }
+  
+  [apiClient.settings setPromoterCommentInURL:promoter passiveCommentInURL:passive detractorCommentInURL:detractor];
 }
 
 + (void)showSurveyInViewController:(UIViewController *)viewController {

@@ -31,7 +31,7 @@
 - (void)setupSubviewsConstraints;
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
 - (void)noThankYouButton;
-- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score andText:(NSString *)text;
+- (void)setThankYouButtonTextAndURLDependingOnScore:(int)score text:(NSString *)text;
 - (void)setThankYouMainDependingOnScore:(int)score;
 - (void)setThankYouSetupDependingOnScore:(int)score;
 - (void)displayShareButtonsWithTwitterAvailable:(BOOL)twitterAvailable andFacebookAvailable:(BOOL)facebookAvailable;

@@ -346,7 +346,7 @@
 
 - (void)presentSocialShareViewWithScore:(int)score {
   NSString *text = [_feedbackView feedbackText];
-  [_socialShareView setThankYouButtonTextAndURLDependingOnScore:score andText:text];
+  [_socialShareView setThankYouButtonTextAndURLDependingOnScore:score text:text];
   [_socialShareView setThankYouMainDependingOnScore:score];
   [_socialShareView setThankYouSetupDependingOnScore:score];
   [self setQuestionViewVisible:NO andFeedbackViewVisible:NO];

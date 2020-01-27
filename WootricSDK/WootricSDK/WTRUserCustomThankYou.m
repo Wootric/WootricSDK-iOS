@@ -26,6 +26,25 @@
 
 @implementation WTRUserCustomThankYou
 
+- (instancetype)init {
+  if (self = [super init]) {
+    _isEmailInURL = -1;
+    _isDetractorEmailInURL = -1;
+    _isPassiveEmailInURL = -1;
+    _isPromoterEmailInURL = -1;
+    _isScoreInURL = -1;
+    _isDetractorScoreInURL = -1;
+    _isPassiveScoreInURL = -1;
+    _isPromoterScoreInURL = -1;
+    _isCommentInURL = -1;
+    _isDetractorCommentInURL = -1;
+    _isPassiveCommentInURL = -1;
+    _isPromoterCommentInURL = -1;
+  }
+  
+  return self;
+}
+
 - (BOOL)userCustomThankYouMainPresent {
   if (_thankYouMain || _detractorThankYouMain || _passiveThankYouMain || _promoterThankYouMain) {
     return YES;

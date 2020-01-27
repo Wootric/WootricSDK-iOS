@@ -102,10 +102,17 @@
 - (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText URL:(NSURL *)passiveThankYouLinkURL;
 - (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText URL:(NSURL *)promoterThankYouLinkURL;
 
+- (void)setEmailInURL:(int)emailInURL;
+- (void)setPromoterEmailInURL:(int)promoterEmailInURL passiveEmailInURL:(int)passiveEmailInURL detractorEmailInURL:(int)detractorEmailInURL;
+- (void)setScoreInURL:(int)scoreInURL;
+- (void)setPromoterScoreInURL:(int)promoterScoreInURL passiveScoreInURL:(int)passiveScoreInURL detractorScoreInURL:(int)detractorScoreInURL;
+- (void)setCommentInURL:(int)commentInURL;
+- (void)setPromoterCommentInURL:(int)promoterCommentInURL passiveCommentInURL:(int)passiveCommentInURL detractorCommentInURL:(int)detractorCommentInURL;
+
 - (NSString *)thankYouMainDependingOnScore:(int)score;
 - (NSString *)thankYouSetupDependingOnScore:(int)score;
 - (NSString *)thankYouLinkTextDependingOnScore:(int)score;
-- (NSURL *)thankYouLinkURLDependingOnScore:(int)score andText:(NSString *)text;
+- (NSURL *)thankYouLinkURLDependingOnScore:(int)score text:(NSString *)text email:(NSString *)email;
 - (BOOL)thankYouLinkConfiguredForScore:(int)score;
 
 - (void)setTwitterHandler:(NSString *)twitterHandler;
