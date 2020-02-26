@@ -1,5 +1,5 @@
 //
-//  WTRSurvey.h
+//  WTREvent.h
 //  WootricSDK
 //
 // Copyright (c) 2018 Wootric (https://wootric.com)
@@ -23,19 +23,15 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#import "WTROperation.h"
 #import "WTRSettings.h"
 
-@interface WTRSurvey : NSObject
+NS_ASSUME_NONNULL_BEGIN
 
-@property (nonatomic, strong) WTRSettings *settings;
-@property (nonatomic, strong) NSString *clientSecret;
-@property (nonatomic, strong) NSString *clientID;
-@property (nonatomic, strong) NSString *accountToken;
+@interface WTREvent : WTROperation
 
-+ (instancetype)sharedInstance;
-- (BOOL)checkConfiguration;
-- (void)survey:(void (^)(WTRSettings *))completionHandler;
-- (void)endUserDeclined;
-- (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text;
+- (instancetype)initWithRequest:(NSDictionary *)request eventList:(NSArray *)eventList completion:(void (^)(WTRSettings *settings))completion;
 
 @end
+
+NS_ASSUME_NONNULL_END

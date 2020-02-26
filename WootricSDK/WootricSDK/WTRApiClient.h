@@ -31,12 +31,11 @@
 @property (nonatomic, strong) NSString *clientSecret;
 @property (nonatomic, strong) NSString *clientID;
 @property (nonatomic, strong) NSString *accountToken;
-@property (nonatomic, strong) NSString *apiVersion;
 
 + (instancetype)sharedInstance;
-- (BOOL)checkConfiguration;
+- (void)getRegisteredEventList:(void (^)(NSArray *))completionHandler;
 - (void)authenticate:(void (^)(void))completionHandler;
-- (void)checkEligibility:(void (^)(void))completionHandler;
+- (void)checkEligibility:(void (^)(BOOL))completionHandler;
 - (void)endUserDeclined;
 - (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text;
 

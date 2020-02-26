@@ -48,6 +48,12 @@
 */
 + (void)showSurveyInViewController:(UIViewController *)viewController;
 /**
+ @discussion It shows survey if end user is eligible.
+ @param viewController View controller in which you would like to display the survey.
+ @param eventName Event Name.
+*/
++ (void)showSurveyInViewController:(UIViewController *)viewController event:(NSString *)eventName;
+/**
  @discussion It sets end user's account creation date to provided value (UNIX Timestamp truncated to seconds).
  @param externalCreatedAt UNIX Timestamp truncated to seconds.
 */
@@ -109,6 +115,11 @@
  @param customProperties NSDictionary containing custom properties.
 */
 + (void)setEndUserProperties:(NSDictionary *)customProperties;
+/**
+ @discussion It sets the Event Name
+ @param eventName NSString with the event name.
+*/
++ (void)setEventName:(NSString *)eventName;
 /**
  @discussion Returns an NSDictionary of the end user properties.
  @return NSDictionary of endUserProperties.

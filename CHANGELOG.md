@@ -1,3 +1,9 @@
+## 0.17.0 (2020-03-26)
+
+### Changes:
+
+- Add support for events (Targeted Sampling)
+
 ## 0.16.0 (2019-12-04)
 
 ### Changes:

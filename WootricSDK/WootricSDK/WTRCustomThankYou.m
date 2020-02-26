@@ -49,9 +49,9 @@
       if (thankYouLinks[@"thank_you_link_text"] && thankYouLinks[@"thank_you_link_url"]) {
         _thankYouLinkText = thankYouLinks[@"thank_you_link_text"];
         _thankYouLinkURL = [NSURL URLWithString:thankYouLinks[@"thank_you_link_url"]];
-        _isEmailInURL = [thankYouLinks[@"thank_you_link_url_settings"][@"add_email_param_to_url"] integerValue];
-        _isScoreInURL = [thankYouLinks[@"thank_you_link_url_settings"][@"add_score_param_to_url"] integerValue];
-        _isCommentInURL = [thankYouLinks[@"thank_you_link_url_settings"][@"add_comment_param_to_url"] integerValue];
+        _isEmailInURL = [thankYouLinks[@"thank_you_link_url_settings"][@"add_email_param_to_url"] intValue];
+        _isScoreInURL = [thankYouLinks[@"thank_you_link_url_settings"][@"add_score_param_to_url"] intValue];
+        _isCommentInURL = [thankYouLinks[@"thank_you_link_url_settings"][@"add_comment_param_to_url"] intValue];
       } else {
         NSDictionary *thankYouLinkUrlSettingsList = thankYouLinks[@"thank_you_link_url_settings_list"];
         NSDictionary *detractorThankYouLinkUrlSettings = thankYouLinkUrlSettingsList[@"detractor_thank_you_link_url_settings"];
@@ -60,21 +60,21 @@
         
         _detractorThankYouLinkText = thankYouLinks[@"thank_you_link_text_list"][@"detractor_thank_you_link_text"];
         _detractorThankYouLinkURL = [NSURL URLWithString:thankYouLinks[@"thank_you_link_url_list"][@"detractor_thank_you_link_url"]];
-        _isDetractorEmailInURL = [detractorThankYouLinkUrlSettings[@"add_email_param_to_url"] integerValue];
-        _isDetractorScoreInURL = [detractorThankYouLinkUrlSettings[@"add_score_param_to_url"] integerValue];
-        _isDetractorCommentInURL = [detractorThankYouLinkUrlSettings[@"add_comment_param_to_url"] integerValue];
+        _isDetractorEmailInURL = [detractorThankYouLinkUrlSettings[@"add_email_param_to_url"] intValue];
+        _isDetractorScoreInURL = [detractorThankYouLinkUrlSettings[@"add_score_param_to_url"] intValue];
+        _isDetractorCommentInURL = [detractorThankYouLinkUrlSettings[@"add_comment_param_to_url"] intValue];
         
         _passiveThankYouLinkText = thankYouLinks[@"thank_you_link_text_list"][@"passive_thank_you_link_text"];
         _passiveThankYouLinkURL = [NSURL URLWithString:thankYouLinks[@"thank_you_link_url_list"][@"passive_thank_you_link_url"]];
-        _isPassiveEmailInURL = [passiveThankYouLinkUrlSettings[@"add_email_param_to_url"] integerValue];
-        _isPassiveScoreInURL = [passiveThankYouLinkUrlSettings[@"add_score_param_to_url"] integerValue];
-        _isPassiveCommentInURL = [passiveThankYouLinkUrlSettings[@"add_comment_param_to_url"] integerValue];
+        _isPassiveEmailInURL = [passiveThankYouLinkUrlSettings[@"add_email_param_to_url"] intValue];
+        _isPassiveScoreInURL = [passiveThankYouLinkUrlSettings[@"add_score_param_to_url"] intValue];
+        _isPassiveCommentInURL = [passiveThankYouLinkUrlSettings[@"add_comment_param_to_url"] intValue];
         
         _promoterThankYouLinkText = thankYouLinks[@"thank_you_link_text_list"][@"promoter_thank_you_link_text"];
         _promoterThankYouLinkURL = [NSURL URLWithString:thankYouLinks[@"thank_you_link_url_list"][@"promoter_thank_you_link_url"]];
-        _isPromoterEmailInURL = [promoterThankYouLinkUrlSettings[@"add_email_param_to_url"] integerValue];
-        _isPromoterScoreInURL = [promoterThankYouLinkUrlSettings[@"add_score_param_to_url"] integerValue];
-        _isPromoterCommentInURL = [promoterThankYouLinkUrlSettings[@"add_comment_param_to_url"] integerValue];
+        _isPromoterEmailInURL = [promoterThankYouLinkUrlSettings[@"add_email_param_to_url"] intValue];
+        _isPromoterScoreInURL = [promoterThankYouLinkUrlSettings[@"add_score_param_to_url"] intValue];
+        _isPromoterCommentInURL = [promoterThankYouLinkUrlSettings[@"add_comment_param_to_url"] intValue];
       }
     }
   }

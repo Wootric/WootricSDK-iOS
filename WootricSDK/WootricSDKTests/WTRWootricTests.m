@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 #import <WootricSDK/WootricSDK.h>
-#import "WTRApiClient.h"
+#import "WTRSurvey.h"
 
 @interface WTRWootricTests : XCTestCase
 
-@property (nonatomic, strong) WTRApiClient *apiClient;
+@property (nonatomic, strong) WTRSurvey *surveyClient;
 @property (nonatomic, strong) UIColor *color;
 
 @end
@@ -21,7 +21,7 @@
 
 - (void)setUp {
   [Wootric configureWithClientID:@"NPS-abc123" accountToken:@"abcdefg12345677"];
-  _apiClient = [WTRApiClient sharedInstance];
+  _surveyClient = [WTRSurvey sharedInstance];
   _color = [UIColor colorWithRed:0.1f green:0.2f blue:0.3f alpha:1.0f];
 }
 
@@ -29,161 +29,162 @@
   NSNumber *endUserCreatedAt = @123;
   [Wootric setEndUserCreatedAt:endUserCreatedAt];
   
-  XCTAssertEqualObjects(_apiClient.settings.externalCreatedAt, endUserCreatedAt, @"externalCreatedAt should be equal to 123");
+  XCTAssertEqualObjects(_surveyClient.settings.externalCreatedAt, endUserCreatedAt, @"externalCreatedAt should be equal to 123");
 }
 
 - (void)testSetEndUserEmail {
   static NSString *endUserEmail = @"test@example.com";
   [Wootric setEndUserEmail:endUserEmail];
   
-  XCTAssertEqualObjects(_apiClient.settings.endUserEmail, endUserEmail, @"endUserEmail should be equal to test@example.com");
+  XCTAssertEqualObjects(_surveyClient.settings.endUserEmail, endUserEmail, @"endUserEmail should be equal to test@example.com");
 }
 
 - (void)testSetProductNameForEndUser {
   static NSString *productName = @"Example";
   [Wootric setProductNameForEndUser:@"Example"];
   
-  XCTAssertEqualObjects(_apiClient.settings.productName, productName, @"productName should be equal to Example");
+  XCTAssertEqualObjects(_surveyClient.settings.productName, productName, @"productName should be equal to Example");
 }
 
 - (void)testSetCustomLanguage {
   static NSString *language = @"Epañol";
   [Wootric setCustomLanguage:language];
   
-  XCTAssertEqualObjects(_apiClient.settings.languageCode, language, @"languageCode should be equal to Español");
+  XCTAssertEqualObjects(_surveyClient.settings.languageCode, language, @"languageCode should be equal to Español");
 }
 
 - (void)testSetCustomAudience {
   static NSString *audience = @"Custom audience";
   [Wootric setCustomAudience:audience];
   
-  XCTAssertEqualObjects(_apiClient.settings.customAudience, audience, @"customAudience should be equal to Custom audience");
+  XCTAssertEqualObjects(_surveyClient.settings.customAudience, audience, @"customAudience should be equal to Custom audience");
 }
 
 - (void)testSetCustomProductName {
   static NSString *customProductName = @"Custom product";
   [Wootric setCustomProductName:customProductName];
   
-  XCTAssertEqualObjects(_apiClient.settings.customProductName, customProductName, @"customProductName should be equal to Custom product");
+  XCTAssertEqualObjects(_surveyClient.settings.customProductName, customProductName, @"customProductName should be equal to Custom product");
 }
 
 - (void)testSetCustomFinalThankYou {
   static NSString *customFinalThankYou = @"CustomFinalThankYou";
   [Wootric setCustomFinalThankYou:customFinalThankYou];
-  XCTAssertEqualObjects(_apiClient.settings.customFinalThankYou, customFinalThankYou, @"customFinalThankYou should be equal to CustomFinalThankYou");
+  XCTAssertEqualObjects(_surveyClient.settings.customFinalThankYou, customFinalThankYou, @"customFinalThankYou should be equal to CustomFinalThankYou");
 }
 
 - (void)testSetCustomQuestion {
   static NSString *customQuestion = @"Would you recommend this to a friend?";
   [Wootric setCustomQuestion:customQuestion];
   
-  XCTAssertEqualObjects(_apiClient.settings.customQuestion, customQuestion, @"customQuestion should be equal to Would you recommend this to a friend?");
+  XCTAssertEqualObjects(_surveyClient.settings.customQuestion, customQuestion, @"customQuestion should be equal to Would you recommend this to a friend?");
 }
 
 - (void)testSetEndUserProperties {
   NSDictionary *endUserProperties = @{@"email": @"test@example.com"};
   [Wootric setEndUserProperties:endUserProperties];
   
-  XCTAssertEqualObjects(_apiClient.settings.customProperties, endUserProperties, @"customProperties should be equal to @{@\"email\": @\"test@example.com\"}");
-  XCTAssertEqualObjects([_apiClient.settings.customProperties objectForKey:@"email"], @"test@example.com", @"email should be equal to test@example.com");
+  XCTAssertEqualObjects(_surveyClient.settings.customProperties, endUserProperties, @"customProperties should be equal to @{@\"email\": @\"test@example.com\"}");
+  XCTAssertEqualObjects([_surveyClient.settings.customProperties objectForKey:@"email"], @"test@example.com", @"email should be equal to test@example.com");
 }
 
 - (void)testSetFirstSurveyAfter {
-  XCTAssertEqualObjects(_apiClient.settings.firstSurveyAfter, @0, @"firstSurveyAfter should be equal to 0");
+  [Wootric setFirstSurveyAfter:@0];
+  XCTAssertEqualObjects(_surveyClient.settings.firstSurveyAfter, @0, @"firstSurveyAfter should be equal to 0");
   [Wootric setFirstSurveyAfter:@15];
-  XCTAssertEqualObjects(_apiClient.settings.firstSurveyAfter, @15, @"firstSurveyAfter should be equal to 15");
+  XCTAssertEqualObjects(_surveyClient.settings.firstSurveyAfter, @15, @"firstSurveyAfter should be equal to 15");
 }
 
 - (void)testSetSurveyedDefault {
-  XCTAssertTrue(_apiClient.settings.setDefaultAfterSurvey, @"setDefaultAfterSurvey should be true");
+  XCTAssertTrue(_surveyClient.settings.setDefaultAfterSurvey, @"setDefaultAfterSurvey should be true");
   [Wootric setSurveyedDefault:NO];
-  XCTAssertFalse(_apiClient.settings.setDefaultAfterSurvey, @"setDefaultAfterSurvey should be false");
+  XCTAssertFalse(_surveyClient.settings.setDefaultAfterSurvey, @"setDefaultAfterSurvey should be false");
 }
 
 - (void)testSurveyImmediately {
   [Wootric surveyImmediately:YES];
-  XCTAssertTrue(_apiClient.settings.surveyImmediately, @"surveyImmediately should be true");
+  XCTAssertTrue(_surveyClient.settings.surveyImmediately, @"surveyImmediately should be true");
   [Wootric surveyImmediately:NO];
-  XCTAssertFalse(_apiClient.settings.surveyImmediately, @"surveyImmediately should be false");
+  XCTAssertFalse(_surveyClient.settings.surveyImmediately, @"surveyImmediately should be false");
 }
 
 - (void)testForceSurvey {
   [Wootric forceSurvey:YES];
   
-  XCTAssertTrue(_apiClient.settings.forceSurvey, @"forceSurvey should be true");
+  XCTAssertTrue(_surveyClient.settings.forceSurvey, @"forceSurvey should be true");
 }
 
 - (void)testSkipFeedbackScreenForPromoter {
   [Wootric skipFeedbackScreenForPromoter:NO];
-  XCTAssertFalse(_apiClient.settings.skipFeedbackScreenForPromoter, @"skipFeedbackScreenForPromoter should be false");
+  XCTAssertFalse(_surveyClient.settings.skipFeedbackScreenForPromoter, @"skipFeedbackScreenForPromoter should be false");
   [Wootric skipFeedbackScreenForPromoter:YES];
-  XCTAssertTrue(_apiClient.settings.skipFeedbackScreenForPromoter, @"skipFeedbackScreenForPromoter should be true");
+  XCTAssertTrue(_surveyClient.settings.skipFeedbackScreenForPromoter, @"skipFeedbackScreenForPromoter should be true");
 }
 
 - (void)testSkipFeedbackScreen {
   [Wootric skipFeedbackScreen:NO];
-  XCTAssertFalse(_apiClient.settings.skipFeedbackScreen, @"skipFeedbackScreen should be false");
+  XCTAssertFalse(_surveyClient.settings.skipFeedbackScreen, @"skipFeedbackScreen should be false");
   [Wootric skipFeedbackScreen:YES];
-  XCTAssertTrue(_apiClient.settings.skipFeedbackScreen, @"skipFeedbackScreen should be true");
+  XCTAssertTrue(_surveyClient.settings.skipFeedbackScreen, @"skipFeedbackScreen should be true");
 }
 
 - (void)testPassScoreAndTextToURL {
   [Wootric passScoreAndTextToURL:NO];
   
-  XCTAssertFalse(_apiClient.settings.passScoreAndTextToURL, @"passScoreAndTextToURL should be false");
+  XCTAssertFalse(_surveyClient.settings.passScoreAndTextToURL, @"passScoreAndTextToURL should be false");
   
   [Wootric passScoreAndTextToURL:YES];
   
-  XCTAssertTrue(_apiClient.settings.passScoreAndTextToURL, @"passScoreAndTextToURL should be true");
+  XCTAssertTrue(_surveyClient.settings.passScoreAndTextToURL, @"passScoreAndTextToURL should be true");
 }
 
 - (void)testSetFacebookPage {
   NSURL *url = [NSURL URLWithString:@"facebook.com/test"];
   [Wootric setFacebookPage:url];
   
-  XCTAssertEqualObjects(_apiClient.settings.facebookPage, url, @"facebookPage should be facebook.com/test");
+  XCTAssertEqualObjects(_surveyClient.settings.facebookPage, url, @"facebookPage should be facebook.com/test");
 }
 
 - (void)testSetTwitterHandler {
   static NSString *twitterHandler = @"twitter";
   [Wootric setTwitterHandler:twitterHandler];
   
-  XCTAssertEqualObjects(_apiClient.settings.twitterHandler, twitterHandler, @"twitterHandler should be twitter");
+  XCTAssertEqualObjects(_surveyClient.settings.twitterHandler, twitterHandler, @"twitterHandler should be twitter");
 }
 
 - (void)testSetSendButtonBackgroundColor {
   [Wootric setSendButtonBackgroundColor:_color];
   
-  XCTAssertEqualObjects(_apiClient.settings.sendButtonBackgroundColor, _color, @"sendButtonBackgroundColor should equal to color");
+  XCTAssertEqualObjects(_surveyClient.settings.sendButtonBackgroundColor, _color, @"sendButtonBackgroundColor should equal to color");
 }
 
 - (void)testSetSliderColor {
   [Wootric setSliderColor:_color];
   
-  XCTAssertEqualObjects(_apiClient.settings.sliderColor, _color, @"sliderColor should equal to color");
+  XCTAssertEqualObjects(_surveyClient.settings.sliderColor, _color, @"sliderColor should equal to color");
 }
 
 - (void)testSetThankYouButtonBackgroundColor {
   [Wootric setThankYouButtonBackgroundColor:_color];
   
-  XCTAssertEqualObjects(_apiClient.settings.thankYouButtonBackgroundColor, _color, @"thankYouButtonBackgroundColor should equal to color");
+  XCTAssertEqualObjects(_surveyClient.settings.thankYouButtonBackgroundColor, _color, @"thankYouButtonBackgroundColor should equal to color");
 }
 
 - (void)testSetSocialSharingColor {
   [Wootric setSocialSharingColor:_color];
   
-  XCTAssertEqualObjects(_apiClient.settings.socialSharingColor, _color, @"socialSharingColor should equal to color");
+  XCTAssertEqualObjects(_surveyClient.settings.socialSharingColor, _color, @"socialSharingColor should equal to color");
 }
 
 - (void)testShowOptOutDefaultNo {
-  XCTAssertFalse(_apiClient.settings.showOptOut, @"showOptOut default value should be NO");
+  XCTAssertFalse(_surveyClient.settings.showOptOut, @"showOptOut default value should be NO");
 }
 
 - (void)testSetShowOptOut {
   [Wootric showOptOut:YES];
   
-  XCTAssertTrue(_apiClient.settings.showOptOut, @"showOptOut default value should be YES");
-  _apiClient.settings.showOptOut = NO;
+  XCTAssertTrue(_surveyClient.settings.showOptOut, @"showOptOut default value should be YES");
+  _surveyClient.settings.showOptOut = NO;
 }
 
 @end

@@ -23,20 +23,29 @@
 // THE SOFTWARE.
 
 #import <XCTest/XCTest.h>
+#import <WootricSDK/WootricSDK.h>
 #import "WTRSurvey.h"
-#import "WTRApiClient.h"
-#import "WTRDefaults.h"
+#import "WTREvent.h"
+#import "WTREventListOperation.h"
 
 @interface WTRSurveyTests : XCTestCase
 
-@property (nonatomic, strong) WTRApiClient *apiClient;
 @property (nonatomic, strong) WTRSurvey *surveyClient;
+@property (nonatomic, strong) UIViewController *testViewController;
 
 @end
 
 @interface WTRSurvey (Tests)
 
-- (BOOL)needsSurvey;
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
+
+@end
+
+@interface WTREvent (Tests)
+
+@property (nonatomic, copy) void (^completion)(WTRSettings *settings);
+@property (nonatomic, strong) NSDictionary *request;
+@property (nonatomic, strong) NSArray *eventList;
 
 @end
 
@@ -44,170 +53,117 @@
 
 - (void)setUp {
   [super setUp];
-  _apiClient = [WTRApiClient sharedInstance];
-  _surveyClient = [[WTRSurvey alloc] init];
-  _apiClient.settings.setDefaultAfterSurvey = YES;
+  [Wootric configureWithClientID:@"NPS-abc123" accountToken:@"abcdefg12345677"];
+  _testViewController = [[UIViewController alloc] init];
+  _surveyClient = [WTRSurvey sharedInstance];
 }
 
 - (void)tearDown {
   [super tearDown];
-  _apiClient.settings.externalCreatedAt = nil;
-  _apiClient.settings.surveyImmediately = NO;
-  _apiClient.settings.firstSurveyAfter = @0;
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setBool:NO forKey:@"surveyed"];
-  [defaults setDouble:0 forKey:@"lastSeenAt"];
-  [defaults setObject:nil forKey:@"resurvey_days"];
+  
+  [[_surveyClient operationQueue] cancelAllOperations];
 }
 
-// surveyImmediately = YES
-- (void)testNeedsSurveyOne {
-  _apiClient.settings.surveyImmediately = YES;
-  XCTAssertTrue([_surveyClient needsSurvey]);
+-(void)testInstance {
+  XCTAssertNotNil(_surveyClient, "WTRSurvey instance should not have been nil.");
+  
+  XCTAssertNotNil(_surveyClient.operationQueue, "operationQueue should not have been nil.");
+  
+  XCTAssertEqual(_surveyClient.operationQueue.maxConcurrentOperationCount, 1, @"operationQueue maxConcurrentOperationCount should be 1");
 }
 
-// surveyImmediately = YES, surveyed = YES
-- (void)testNeedsSurveyTwo {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setBool:YES forKey:@"surveyed"];
-  _apiClient.settings.surveyImmediately = YES;
-  XCTAssertFalse([_surveyClient needsSurvey]);
+- (void)testCheckConfiguration {
+  _surveyClient.clientID = @"";
+  _surveyClient.clientSecret = @"";
+  _surveyClient.accountToken = @"";
+  
+  XCTAssertFalse([_surveyClient checkConfiguration]);
+  
+  _surveyClient.clientID = @"clientIDtestString";
+  _surveyClient.clientSecret = @"clientSecretTestString";
+  _surveyClient.accountToken = @"";
+  XCTAssertFalse([_surveyClient checkConfiguration]);
+  
+  _surveyClient.clientID = @"";
+  _surveyClient.clientSecret = @"clientSecretTestString";
+  _surveyClient.accountToken = @"";
+  XCTAssertFalse([_surveyClient checkConfiguration]);
+  
+  _surveyClient.clientID = @"";
+  _surveyClient.clientSecret = @"";
+  _surveyClient.accountToken = @"NPS-token";
+  XCTAssertFalse([_surveyClient checkConfiguration]);
+  
+  _surveyClient.clientID = @"clientIDtestString";
+  _surveyClient.clientSecret = @"clientSecretTestString";
+  _surveyClient.accountToken = @"";
+  XCTAssertFalse([_surveyClient checkConfiguration]);
+  
+  _surveyClient.clientID = @"";
+  _surveyClient.clientSecret = @"clientSecretTestString";
+  _surveyClient.accountToken = @"NPS-token";
+  XCTAssertFalse([_surveyClient checkConfiguration]);
+  
+  _surveyClient.clientID = @"clientIDtestString";
+  _surveyClient.clientSecret = @"";
+  _surveyClient.accountToken = @"NPS-token";
+  XCTAssertTrue([_surveyClient checkConfiguration]);
+
+  _surveyClient.clientID = @"clientIDtestString";
+  _surveyClient.clientSecret = @"clientSecretTestString";
+  _surveyClient.accountToken = @"NPS-token";
+  XCTAssertTrue([_surveyClient checkConfiguration]);
 }
 
-// firstSurveyAfter = 31, externalCreatedAt = 32
-- (void)testNeedsSurveyThree {
-  _apiClient.settings.firstSurveyAfter = @31;
-  _apiClient.settings.externalCreatedAt = [self createdDaysAgo:32]; // 32 days ago
-  XCTAssertTrue([_surveyClient needsSurvey]);
+-(void)testEventListOperation {
+  [Wootric setEndUserEmail:@"event1@example.com"];
+  [Wootric showSurveyInViewController:_testViewController event:@"event 1"];
+
+  XCTAssertTrue([[[_surveyClient.operationQueue operations] objectAtIndex:0] isKindOfClass:[WTREventListOperation class]], @"First operation is not from class WTREventListOperation object");
 }
 
-// firstSurveyAfter = 0, surveyed = N0
-- (void)testNeedsSurveyFour {
-  _apiClient.settings.externalCreatedAt = [self createdDaysAgo:32]; // 32 days ago
-  XCTAssertTrue([_surveyClient needsSurvey]);
+- (void)testEventsInQueue {
+  [Wootric setEndUserEmail:@"event1@example.com"];
+  [Wootric showSurveyInViewController:_testViewController event:@"event_1"];
+  
+  [Wootric setEndUserEmail:@"event2@example.com"];
+  [Wootric showSurveyInViewController:_testViewController event:@"event_2"];
+  
+  [Wootric setEndUserEmail:@"event3@example.com"];
+  [Wootric showSurveyInViewController:_testViewController event:@"event_3"];
+  
+  WTREvent *operationOne = [[_surveyClient.operationQueue operations] objectAtIndex:1];
+  WTRSettings *settingsOne = [[operationOne request] objectForKey:@"settings"];
+  
+  WTREvent *operationTwo = [[_surveyClient.operationQueue operations] objectAtIndex:2];
+  WTRSettings *settingsTwo = [[operationTwo request] objectForKey:@"settings"];
+  
+  WTREvent *operationThree = [[_surveyClient.operationQueue operations] objectAtIndex:3];
+  WTRSettings *settingsThree = [[operationThree request] objectForKey:@"settings"];
+  
+  XCTAssertEqual(settingsOne.eventName, @"event_1", @"Event name not event_1");
+  XCTAssertEqual(settingsOne.endUserEmail, @"event1@example.com", @"Email not event1@example.com");
+  XCTAssertEqual(settingsTwo.eventName, @"event_2", @"Event name not event_2");
+  XCTAssertEqual(settingsTwo.endUserEmail, @"event2@example.com", @"Email not event2@example.com");
+  XCTAssertEqual(settingsThree.eventName, @"event_3", @"Event name not event_3");
+  XCTAssertEqual(settingsThree.endUserEmail, @"event3@example.com", @"Email not event3@example.com");
 }
 
-// firstSurveyAfter = 0, surveyed = YES
-- (void)testNeedsSurveyFive {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setBool:YES forKey:@"surveyed"];
-  _apiClient.settings.externalCreatedAt = [self createdDaysAgo:32]; // 32 days ago
-  XCTAssertFalse([_surveyClient needsSurvey]);
-}
-
-// surveyed > 90 days, surveyed = YES
-- (void)testNeedsSurveySix {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setBool:YES forKey:@"surveyed"];
-  [defaults setDouble:[[self createdDaysAgo:95] doubleValue] forKey:@"surveyedAt"];
-  [WTRDefaults checkIfSurveyedDefaultExpired];
-  XCTAssertTrue([_surveyClient needsSurvey]);
-}
-
-// surveyed > 90 days, surveyed = YES, type = response
-- (void)testNeedsSurveySeven {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setBool:YES forKey:@"surveyed"];
-  [defaults setObject:@"response" forKey:@"type"];
-  [defaults setDouble:[[self createdDaysAgo:95] doubleValue] forKey:@"surveyedAt"];
-  [WTRDefaults checkIfSurveyedDefaultExpired];
-  XCTAssertTrue([_surveyClient needsSurvey]);
-}
-
-// surveyed < 90 days, surveyed = YES, type = response
-- (void)testNeedsSurveyEight {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setBool:YES forKey:@"surveyed"];
-  [defaults setObject:@"response" forKey:@"type"];
-  [defaults setDouble:[[self createdDaysAgo:85] doubleValue] forKey:@"surveyedAt"];
-  [WTRDefaults checkIfSurveyedDefaultExpired];
-  XCTAssertFalse([_surveyClient needsSurvey]);
-}
-
-// surveyed > 30 days, surveyed = YES, type = decline
-- (void)testNeedsSurveyNine {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setBool:YES forKey:@"surveyed"];
-  [defaults setObject:@"decline" forKey:@"type"];
-  [defaults setDouble:[[self createdDaysAgo:35] doubleValue] forKey:@"surveyedAt"];
-  [WTRDefaults checkIfSurveyedDefaultExpired];
-  XCTAssertTrue([_surveyClient needsSurvey]);
-}
-
-// surveyed < 30 days, surveyed = YES, type = decline
-- (void)testNeedsSurveyTen {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setBool:YES forKey:@"surveyed"];
-  [defaults setObject:@"decline" forKey:@"type"];
-  [defaults setDouble:[[self createdDaysAgo:25] doubleValue] forKey:@"surveyedAt"];
-  [WTRDefaults checkIfSurveyedDefaultExpired];
-  XCTAssertFalse([_surveyClient needsSurvey]);
-}
-
-// surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 60, externalCreatedAt = 20, lastSeenAt = 40
-- (void)testNeedsSurveyEleven {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setDouble:[[self createdDaysAgo:40] doubleValue] forKey:@"lastSeenAt"];
-  _apiClient.settings.firstSurveyAfter = @60;
-  _apiClient.settings.externalCreatedAt = [self createdDaysAgo:20];
-  XCTAssertFalse([_surveyClient needsSurvey]);
-}
-
-// surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 31, externalCreatedAt = 20, lastSeenAt = 40
-- (void)testNeedsSurveyTwelve {
-  _apiClient.settings.firstSurveyAfter = @31;
-  _apiClient.settings.externalCreatedAt = [self createdDaysAgo:20];
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setDouble:[[self createdDaysAgo:40] doubleValue] forKey:@"lastSeenAt"];
-  XCTAssertTrue([_surveyClient needsSurvey]);
-}
-
-// surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 2, externalCreatedAt = 2, lastSeenAt = 4
-- (void)testNeedsSurveyThirteen {
-  _apiClient.settings.firstSurveyAfter = @2;
-  _apiClient.settings.externalCreatedAt = [self createdDaysAgo:2];
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setDouble:[[self createdDaysAgo:4] doubleValue] forKey:@"lastSeenAt"];
-  XCTAssertTrue([_surveyClient needsSurvey]);
-}
-
-// surveyed = YES, surveyImmediately = NO, firstSurveyAfter = 0, setDefaultAfterSurvey = YES
-- (void)testNeedsSurveyFourteen {
-  _apiClient.settings.firstSurveyAfter = @0;
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setBool:YES forKey:@"surveyed"];
-  XCTAssertFalse([_surveyClient needsSurvey]);
-}
-
-// surveyed = YES, surveyImmediately = NO, firstSurveyAfter = 0, setDefaultAfterSurvey = NO
-- (void)testNeedsSurveyFifteen {
-  _apiClient.settings.firstSurveyAfter = @0;
-  _apiClient.settings.setDefaultAfterSurvey = NO;
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setBool:YES forKey:@"surveyed"];
-  XCTAssertTrue([_surveyClient needsSurvey]);
-}
-
-// surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 0, setDefaultAfterSurvey = YES
-- (void)testNeedsSurveySixteen {
-  _apiClient.settings.firstSurveyAfter = @0;
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setBool:NO forKey:@"surveyed"];
-  XCTAssertTrue([_surveyClient needsSurvey]);
-}
-
-// surveyed = NO, surveyImmediately = NO, firstSurveyAfter = 0, setDefaultAfterSurvey = NO
-- (void)testNeedsSurveySeventeen {
-  _apiClient.settings.firstSurveyAfter = @0;
-  _apiClient.settings.setDefaultAfterSurvey = NO;
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setBool:NO forKey:@"surveyed"];
-  [defaults setDouble:[[self createdDaysAgo:4] doubleValue] forKey:@"lastSeenAt"];
-  XCTAssertTrue([_surveyClient needsSurvey]);
-}
-
-- (NSNumber *)createdDaysAgo:(int)daysAgo {
-  return [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970] - (daysAgo * 60 * 60 * 24)];
+- (void)testEventsGetCancelled {
+  [Wootric setEndUserEmail:@"event1@example.com"];
+  [Wootric showSurveyInViewController:_testViewController event:@"event_1"];
+  
+  [_surveyClient.operationQueue cancelAllOperations];
+  
+  [Wootric setEndUserEmail:@"event2@example.com"];
+  [Wootric showSurveyInViewController:_testViewController event:@"event_2"];
+  
+  WTREvent *operationOne = [[_surveyClient.operationQueue operations] objectAtIndex:1];
+  WTRSettings *settingsOne = [[operationOne request] objectForKey:@"settings"];
+  
+  
+  XCTAssertEqual(settingsOne.eventName, @"event_2", @"Event name not event_2");
+  XCTAssertEqual(settingsOne.endUserEmail, @"event2@example.com", @"Email not event2@example.com");
 }
 
 @end

@@ -964,4 +964,46 @@
   }
 }
 
+-(id)copyWithZone:(NSZone *)zone{
+  WTRSettings *settingsCopy = [[WTRSettings allocWithZone:zone] init];
+
+  settingsCopy.endUserEmail = self.endUserEmail;
+  settingsCopy.originURL = self.originURL;
+  settingsCopy.productName = self.productName;
+  settingsCopy.customProductName = self.customProductName;
+  settingsCopy.languageCode = self.languageCode;
+  settingsCopy.surveyType = self.surveyType;
+  settingsCopy.eventName = self.eventName;
+  settingsCopy.surveyTypeScale = self.surveyTypeScale;
+  settingsCopy.scale = self.scale;
+  settingsCopy.customAudience = self.customAudience;
+  settingsCopy.customFinalThankYou = self.customFinalThankYou;
+  settingsCopy.customQuestion = self.customQuestion;
+  settingsCopy.externalId = self.externalId;
+  settingsCopy.phoneNumber = self.phoneNumber;
+  settingsCopy.registeredPercentage = self.registeredPercentage;
+  settingsCopy.visitorPercentage = self.visitorPercentage;
+  settingsCopy.resurveyThrottle = self.resurveyThrottle;
+  settingsCopy.declineResurveyThrottle = self.declineResurveyThrottle;
+  settingsCopy.dailyResponseCap = self.dailyResponseCap;
+  settingsCopy.externalCreatedAt = self.externalCreatedAt;
+  settingsCopy.firstSurveyAfter = self.firstSurveyAfter;
+  settingsCopy.customProperties = self.customProperties;
+  settingsCopy.surveyedDefaultDuration = self.surveyedDefaultDuration;
+  settingsCopy.surveyedDefaultDurationDecline = self.surveyedDefaultDurationDecline;
+  settingsCopy.timeDelay = self.timeDelay;
+  settingsCopy.surveyImmediately = self.surveyImmediately;
+  settingsCopy.forceSurvey = self.forceSurvey;
+  settingsCopy.showOptOut = self.showOptOut;
+  settingsCopy.setDefaultAfterSurvey = self.setDefaultAfterSurvey;
+  settingsCopy.skipFeedbackScreen = self.skipFeedbackScreen;
+  settingsCopy.skipFeedbackScreenForPromoter = self.skipFeedbackScreenForPromoter;
+  settingsCopy.passScoreAndTextToURL = self.passScoreAndTextToURL;
+  settingsCopy.sendButtonBackgroundColor = self.sendButtonBackgroundColor;
+  settingsCopy.sliderColor = self.sliderColor;
+  settingsCopy.socialSharingColor = self.socialSharingColor;
+  
+  return settingsCopy;
+}
+
 @end

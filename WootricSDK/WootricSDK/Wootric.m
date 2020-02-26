@@ -27,7 +27,6 @@
 #import "WTRSurveyViewController.h"
 #import "WTRDefaultNotificationCenter.h"
 #import "WTRiPADSurveyViewController.h"
-#import "WTRApiClient.h"
 #import "WTRLogger.h"
 #import "WTRSurveyDelegate.h"
 
@@ -38,134 +37,139 @@ static id<WTRSurveyDelegate> _delegate = nil;
 @implementation Wootric
 
 + (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret accountToken:(NSString *)accountToken {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.clientID = clientID;
-  apiClient.clientSecret = clientSecret;
-  apiClient.accountToken = accountToken;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.clientID = clientID;
+  surveyClient.clientSecret = clientSecret;
+  surveyClient.accountToken = accountToken;
 }
 
 + (void)configureWithClientID:(NSString *)clientID accountToken:(NSString *)accountToken {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.clientID = clientID;
-  apiClient.accountToken = accountToken;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.clientID = clientID;
+  surveyClient.accountToken = accountToken;
 }
 
 + (void)setEndUserEmail:(NSString *)endUserEmail {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.endUserEmail = endUserEmail;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.endUserEmail = endUserEmail;
 }
 
 + (void)setEndUserCreatedAt:(NSNumber *)externalCreatedAt {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.externalCreatedAt = externalCreatedAt;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.externalCreatedAt = externalCreatedAt;
 }
 
 + (void)setEndUserExternalId:(NSString *)externalId {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.externalId = externalId;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.externalId = externalId;
 }
 
 + (void)setEndUserPhoneNumber:(NSString *)phoneNumber {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.phoneNumber = phoneNumber;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.phoneNumber = phoneNumber;
 }
 
 + (void)setCustomAudience:(NSString *)audience {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.customAudience = audience;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.customAudience = audience;
 }
 
 + (void)setCustomLanguage:(NSString *)languageCode {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.languageCode = languageCode;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.languageCode = languageCode;
 }
 
 + (void)setCustomProductName:(NSString *)productName {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.customProductName = productName;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.customProductName = productName;
 }
 
 + (void)setCustomFinalThankYou:(NSString *)finalThankYou {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.customFinalThankYou = finalThankYou;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.customFinalThankYou = finalThankYou;
 }
 
 + (void)setCustomQuestion:(NSString *)question {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.customQuestion = question;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.customQuestion = question;
 }
 
 + (void)setSurveyedDefault:(BOOL)flag {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.setDefaultAfterSurvey = flag;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.setDefaultAfterSurvey = flag;
 }
 
 + (void)forceSurvey:(BOOL)flag {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.forceSurvey = flag;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.forceSurvey = flag;
 }
 
 + (void)setSurveyTypeScale:(NSInteger)surveyTypeScale {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.surveyTypeScale = surveyTypeScale;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.surveyTypeScale = surveyTypeScale;
 }
 
 + (void)showOptOut:(BOOL)flag {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.showOptOut = flag;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.showOptOut = flag;
 }
 
 + (void)surveyImmediately:(BOOL)flag {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.surveyImmediately = flag;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.surveyImmediately = flag;
 }
 
 + (void)setEndUserProperties:(NSDictionary *)customProperties {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.customProperties = [NSMutableDictionary dictionaryWithDictionary:customProperties];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.customProperties = [NSMutableDictionary dictionaryWithDictionary:customProperties];
+}
+
++ (void)setEventName:(NSString *)eventName {
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.eventName = eventName;
 }
 
 + (NSDictionary *)endUserProperties {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  return apiClient.settings.customProperties;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  return surveyClient.settings.customProperties;
 }
 
 + (void)setProductNameForEndUser:(NSString *)productName {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.productName = productName;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.productName = productName;
 }
 
 + (void)setFirstSurveyAfter:(NSNumber *)firstSurveyAfter {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.firstSurveyAfter = firstSurveyAfter;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.firstSurveyAfter = firstSurveyAfter;
 }
 
 + (void)skipFeedbackScreenForPromoter:(BOOL)flag {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.skipFeedbackScreenForPromoter = flag;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.skipFeedbackScreenForPromoter = flag;
 }
 
 + (void)skipFeedbackScreen:(BOOL)flag {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.skipFeedbackScreen = flag;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.skipFeedbackScreen = flag;
 }
 
 + (void) passScoreAndTextToURL:(BOOL)flag {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  apiClient.settings.passScoreAndTextToURL = flag;
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.passScoreAndTextToURL = flag;
 }
 
 + (void)passEmailInURL:(BOOL)emailInURL {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
   if (emailInURL) {
-    [apiClient.settings setEmailInURL:1];
+    [surveyClient.settings setEmailInURL:1];
   } else {
-    [apiClient.settings setEmailInURL:0];
+    [surveyClient.settings setEmailInURL:0];
   }
 }
 
 + (void)passPromoterEmailInURL:(BOOL)promoterEmailInURL passiveEmailInURL:(BOOL)passiveEmailInURL detractorEmailInURL:(BOOL)detractorEmailInURL {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
   int promoter = -1;
   int passive = -1;
   int detractor = -1;
@@ -185,20 +189,20 @@ static id<WTRSurveyDelegate> _delegate = nil;
     detractor = 0;
   }
   
-  [apiClient.settings setPromoterEmailInURL:promoter passiveEmailInURL:passive detractorEmailInURL:detractor];
+  [surveyClient.settings setPromoterEmailInURL:promoter passiveEmailInURL:passive detractorEmailInURL:detractor];
 }
 
 + (void)passScoreInURL:(BOOL)scoreInURL {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
   if (scoreInURL) {
-    [apiClient.settings setScoreInURL:1];
+    [surveyClient.settings setScoreInURL:1];
   } else {
-    [apiClient.settings setScoreInURL:0];
+    [surveyClient.settings setScoreInURL:0];
   }
 }
 
 + (void)passPromoterScoreInURL:(BOOL)promoterScoreInURL passiveScoreInURL:(BOOL)passiveScoreInURL detractorScoreInURL:(BOOL)detractorScoreInURL {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
   int promoter = -1;
   int passive = -1;
   int detractor = -1;
@@ -218,20 +222,20 @@ static id<WTRSurveyDelegate> _delegate = nil;
     detractor = 0;
   }
   
-  [apiClient.settings setPromoterScoreInURL:promoter passiveScoreInURL:passive detractorScoreInURL:detractor];
+  [surveyClient.settings setPromoterScoreInURL:promoter passiveScoreInURL:passive detractorScoreInURL:detractor];
 }
 
 + (void)passCommentInURL:(BOOL)commentInURL {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
   if (commentInURL) {
-    [apiClient.settings setCommentInURL:1];
+    [surveyClient.settings setCommentInURL:1];
   } else {
-    [apiClient.settings setCommentInURL:0];
+    [surveyClient.settings setCommentInURL:0];
   }
 }
 
 + (void)passPromoterCommentInURL:(BOOL)promoterCommentInURL passiveCommentInURL:(BOOL)passiveCommentInURL detractorCommentInURL:(BOOL)detractorCommentInURL {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
   int promoter = -1;
   int passive = -1;
   int detractor = -1;
@@ -251,21 +255,24 @@ static id<WTRSurveyDelegate> _delegate = nil;
     detractor = 0;
   }
   
-  [apiClient.settings setPromoterCommentInURL:promoter passiveCommentInURL:passive detractorCommentInURL:detractor];
+  [surveyClient.settings setPromoterCommentInURL:promoter passiveCommentInURL:passive detractorCommentInURL:detractor];
+}
+
++ (void)showSurveyInViewController:(UIViewController *)viewController event:(NSString *)eventName {
+  [self setEventName:eventName];
+  [self showSurveyInViewController:viewController];
 }
 
 + (void)showSurveyInViewController:(UIViewController *)viewController {
-    
-  if ([[WTRApiClient sharedInstance] checkConfiguration]) {
-    WTRSurvey *surveyClient = [[WTRSurvey alloc] init];
-    [surveyClient survey:^{
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  if ([surveyClient checkConfiguration]) {
+    [surveyClient survey:^(WTRSettings *settings){
       [WTRLogger log:@"presenting survey view"];
-      WTRApiClient *apiClient = [WTRApiClient sharedInstance];
       
       dispatch_async(dispatch_get_main_queue(), ^{
         [self performSelector:@selector(presentSurveyInViewController:)
-                   withObject:viewController
-                   afterDelay:apiClient.settings.timeDelay];
+                   withObject:@[viewController, settings]
+                   afterDelay:settings.timeDelay];
       });
     }];
   } else {
@@ -273,15 +280,16 @@ static id<WTRSurveyDelegate> _delegate = nil;
   }
 }
 
-+ (void)presentSurveyInViewController:(UIViewController *)viewController {
-  WTRSettings *surveySettings = [WTRApiClient sharedInstance].settings;
-  
++ (void)presentSurveyInViewController:(NSArray *)objects {
+  UIViewController *viewController = objects[0];
+  WTRSettings *settings = objects[1];
+
   if (IPAD) {
-    WTRiPADSurveyViewController *surveyViewController = [[WTRiPADSurveyViewController alloc] initWithSurveySettings:surveySettings
+    WTRiPADSurveyViewController *surveyViewController = [[WTRiPADSurveyViewController alloc] initWithSurveySettings:settings
                                                                                                  notificationCenter:[[WTRDefaultNotificationCenter alloc] initWithNotificationCenter:[NSNotificationCenter defaultCenter]]];
     [viewController presentViewController:surveyViewController animated:YES completion:nil];
   } else {
-    WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:surveySettings
+    WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:settings
                                                                                          notificationCenter:[[WTRDefaultNotificationCenter alloc] initWithNotificationCenter:[NSNotificationCenter defaultCenter]]];
     [viewController presentViewController:surveyViewController animated:YES completion:nil];
   }
@@ -290,13 +298,13 @@ static id<WTRSurveyDelegate> _delegate = nil;
 #pragma mark - Social Share
 
 + (void)setTwitterHandler:(NSString *)twitterHandler {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setTwitterHandler:twitterHandler];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setTwitterHandler:twitterHandler];
 }
 
 + (void)setFacebookPage:(NSURL *)facebookPage {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setFacebookPage:facebookPage];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setFacebookPage:facebookPage];
 }
 
 #pragma mark - Custom Thanks
@@ -318,92 +326,92 @@ static id<WTRSurveyDelegate> _delegate = nil;
 }
 
 + (void)setThankYouMain:(NSString *)thankYouMain {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setThankYouMain:thankYouMain];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setThankYouMain:thankYouMain];
 }
 
 + (void)setDetractorThankYouMain:(NSString *)detractorThankYouMain {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setDetractorThankYouMain:detractorThankYouMain];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setDetractorThankYouMain:detractorThankYouMain];
 }
 
 + (void)setPassiveThankYouMain:(NSString *)passiveThankYouMain {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setPassiveThankYouMain:passiveThankYouMain];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setPassiveThankYouMain:passiveThankYouMain];
 }
 
 + (void)setPromoterThankYouMain:(NSString *)promoterThankYouMain {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setPromoterThankYouMain:promoterThankYouMain];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setPromoterThankYouMain:promoterThankYouMain];
 }
 
 + (void)setThankYouLinkWithText:(NSString *)thankYouLinkText URL:(NSURL *)thankYouLinkURL {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setThankYouLinkWithText:thankYouLinkText URL:thankYouLinkURL];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setThankYouLinkWithText:thankYouLinkText URL:thankYouLinkURL];
 }
 
 + (void)setDetractorThankYouLinkWithText:(NSString *)detractorThankYouLinkText URL:(NSURL *)detractorThankYouLinkURL {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setDetractorThankYouLinkWithText:detractorThankYouLinkText URL:detractorThankYouLinkURL];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setDetractorThankYouLinkWithText:detractorThankYouLinkText URL:detractorThankYouLinkURL];
 }
 
 + (void)setPassiveThankYouLinkWithText:(NSString *)passiveThankYouLinkText URL:(NSURL *)passiveThankYouLinkURL {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setPassiveThankYouLinkWithText:passiveThankYouLinkText URL:passiveThankYouLinkURL];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setPassiveThankYouLinkWithText:passiveThankYouLinkText URL:passiveThankYouLinkURL];
 }
 
 + (void)setPromoterThankYouLinkWithText:(NSString *)promoterThankYouLinkText URL:(NSURL *)promoterThankYouLinkURL {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setPromoterThankYouLinkWithText:promoterThankYouLinkText URL:promoterThankYouLinkURL];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setPromoterThankYouLinkWithText:promoterThankYouLinkText URL:promoterThankYouLinkURL];
 }
 
 #pragma mark - Application Set Custom Messages
 
 + (void)setCustomFollowupPlaceholderForPromoter:(NSString *)promoterPlaceholder passive:(NSString *)passivePlaceholder detractor:(NSString *)detractorPlaceholder {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setCustomFollowupPlaceholderForPromoter:promoterPlaceholder passive:passivePlaceholder detractor:detractorPlaceholder];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setCustomFollowupPlaceholderForPromoter:promoterPlaceholder passive:passivePlaceholder detractor:detractorPlaceholder];
 }
 
 + (void)setCustomFollowupQuestionForPromoter:(NSString *)promoterQuestion passive:(NSString *)passiveQuestion detractor:(NSString *)detractorQuestion {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setCustomFollowupQuestionForPromoter:promoterQuestion passive:passiveQuestion detractor:detractorQuestion];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setCustomFollowupQuestionForPromoter:promoterQuestion passive:passiveQuestion detractor:detractorQuestion];
 }
 
 #pragma mark - Custom Values For Eligibility
 
 + (void)setCustomValueForResurveyThrottle:(NSNumber *)resurveyThrottle visitorPercentage:(NSNumber *)visitorPercentage registeredPercentage:(NSNumber *)registeredPercentage dailyResponseCap:(NSNumber *)dailyResponseCap {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setCustomResurveyThrottle:resurveyThrottle];
-  [apiClient.settings setCustomVisitorPercentage:visitorPercentage];
-  [apiClient.settings setCustomRegisteredPercentage:registeredPercentage];
-  [apiClient.settings setCustomDailyResponseCap:dailyResponseCap];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setCustomResurveyThrottle:resurveyThrottle];
+  [surveyClient.settings setCustomVisitorPercentage:visitorPercentage];
+  [surveyClient.settings setCustomRegisteredPercentage:registeredPercentage];
+  [surveyClient.settings setCustomDailyResponseCap:dailyResponseCap];
 }
 
 + (void)setCustomTimeDelay:(NSInteger)customTimeDelay {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setCustomTimeDelay:customTimeDelay];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setCustomTimeDelay:customTimeDelay];
 }
 
 #pragma mark - Color Customization
 
 + (void)setSendButtonBackgroundColor:(UIColor *)color {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setSendButtonBackgroundColor:color];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setSendButtonBackgroundColor:color];
 }
 
 + (void)setSliderColor:(UIColor *)color {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setSliderColor:color];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setSliderColor:color];
 }
 
 + (void)setSocialSharingColor:(UIColor *)color {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setSocialSharingColor:color];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setSocialSharingColor:color];
 }
 
 + (void)setThankYouButtonBackgroundColor:(UIColor *)color {
-  WTRApiClient *apiClient = [WTRApiClient sharedInstance];
-  [apiClient.settings setThankYouButtonBackgroundColor:color];
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  [surveyClient.settings setThankYouButtonBackgroundColor:color];
 }
 
 #pragma mark - WTRLogger setters

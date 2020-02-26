@@ -25,7 +25,7 @@
 #import <Foundation/Foundation.h>
 
 @interface WTRNotificationCenter : NSObject
-- (void)addObserver:(id)observer selector:(SEL)aSelector name:(nullable NSNotificationName)aName object:(nullable id)anObject;
-- (void)postNotificationName:(NSNotificationName)aName object:(nullable id)anObject;
-- (void)postNotificationName:(NSNotificationName)aName object:(nullable id)anObject userInfo:(nullable NSDictionary *)aUserInfo;
+- (void)addObserver:(id _Nonnull )observer selector:(SEL _Nonnull )aSelector name:(nullable NSNotificationName)aName object:(nullable id)anObject;
+- (void)postNotificationName:(NSNotificationName _Nonnull )aName object:(nullable id)anObject;
+- (void)postNotificationName:(NSNotificationName _Nonnull )aName object:(nullable id)anObject userInfo:(nullable NSDictionary *)aUserInfo;
 @end

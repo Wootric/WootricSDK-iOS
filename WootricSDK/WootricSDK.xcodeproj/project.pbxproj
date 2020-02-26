@@ -31,6 +31,12 @@
 		178571982088FCA800CCBE02 /* WTRLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 178571962088FCA700CCBE02 /* WTRLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		178571992088FCA800CCBE02 /* WTRLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 178571972088FCA700CCBE02 /* WTRLogger.m */; };
 		1785719B2088FD1500CCBE02 /* WTRLogLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1785719A2088FD1500CCBE02 /* WTRLogLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7E0D323B242041FD0034CEBD /* WTREvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E0D3239242041FD0034CEBD /* WTREvent.h */; };
+		7E0D323C242041FD0034CEBD /* WTREvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E0D323A242041FD0034CEBD /* WTREvent.m */; };
+		7E0D323F24207C960034CEBD /* WTROperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E0D323D24207C960034CEBD /* WTROperation.h */; };
+		7E0D324024207C960034CEBD /* WTROperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E0D323E24207C960034CEBD /* WTROperation.m */; };
+		7E6BA6C524297B9600D27EE8 /* WTREventListOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E6BA6C324297B9600D27EE8 /* WTREventListOperation.h */; };
+		7E6BA6C624297B9600D27EE8 /* WTREventListOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BA6C424297B9600D27EE8 /* WTREventListOperation.m */; };
 		7E74E3361C8E987000BCB84F /* NSString+FontAwesome.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E74E3341C8E986F00BCB84F /* NSString+FontAwesome.h */; };
 		7E74E3371C8E987000BCB84F /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E74E3351C8E987000BCB84F /* NSString+FontAwesome.m */; };
 		B2102A2D1BB59ABC0025DABC /* WTRDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */; };
@@ -154,6 +160,12 @@
 		178571962088FCA700CCBE02 /* WTRLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRLogger.h; sourceTree = "<group>"; };
 		178571972088FCA700CCBE02 /* WTRLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRLogger.m; sourceTree = "<group>"; };
 		1785719A2088FD1500CCBE02 /* WTRLogLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRLogLevel.h; sourceTree = "<group>"; };
+		7E0D3239242041FD0034CEBD /* WTREvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTREvent.h; sourceTree = "<group>"; };
+		7E0D323A242041FD0034CEBD /* WTREvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTREvent.m; sourceTree = "<group>"; };
+		7E0D323D24207C960034CEBD /* WTROperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTROperation.h; sourceTree = "<group>"; };
+		7E0D323E24207C960034CEBD /* WTROperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTROperation.m; sourceTree = "<group>"; };
+		7E6BA6C324297B9600D27EE8 /* WTREventListOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTREventListOperation.h; sourceTree = "<group>"; };
+		7E6BA6C424297B9600D27EE8 /* WTREventListOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTREventListOperation.m; sourceTree = "<group>"; };
 		7E74E3341C8E986F00BCB84F /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
 		7E74E3351C8E987000BCB84F /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
 		B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRDefaults.h; sourceTree = "<group>"; };
@@ -431,6 +443,12 @@
 				0FE0F3FC20DC059700499248 /* WTRDefaultNotificationCenter.m */,
 				0F370D5721ACAAF10007C27A /* WTRUtils.h */,
 				0F370D5821ACAAF10007C27A /* WTRUtils.m */,
+				7E0D3239242041FD0034CEBD /* WTREvent.h */,
+				7E0D323A242041FD0034CEBD /* WTREvent.m */,
+				7E0D323D24207C960034CEBD /* WTROperation.h */,
+				7E0D323E24207C960034CEBD /* WTROperation.m */,
+				7E6BA6C324297B9600D27EE8 /* WTREventListOperation.h */,
+				7E6BA6C424297B9600D27EE8 /* WTREventListOperation.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -538,6 +556,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FA645112289E475008A1C00 /* WTRCustomSocial.h in Headers */,
+				7E6BA6C524297B9600D27EE8 /* WTREventListOperation.h in Headers */,
 				B2C940681BA71A2900482494 /* WTRSliderDot.h in Headers */,
 				B2DC6F2E1B82000900F599B3 /* Wootric.h in Headers */,
 				B2D9FCDF1BF9F18E00479F9F /* SEGWootric.h in Headers */,
@@ -554,6 +573,7 @@
 				B260ECDD1BD7E5B200E29CD5 /* UIView+Constraints.h in Headers */,
 				0FE0F3FD20DC059700499248 /* WTRDefaultNotificationCenter.h in Headers */,
 				B268667E1BD63B7000A4288D /* WTRCircleScoreButton.h in Headers */,
+				7E0D323B242041FD0034CEBD /* WTREvent.h in Headers */,
 				7E74E3361C8E987000BCB84F /* NSString+FontAwesome.h in Headers */,
 				B24550A51B909AC9001AC1FB /* WTRSurveyViewController+Constraints.h in Headers */,
 				B27889791BE0E168001D5696 /* WTRiPADSocialShareView.h in Headers */,
@@ -585,6 +605,7 @@
 				B2DC6F331B820E6B00F599B3 /* WTRApiClient.h in Headers */,
 				B2C940601BA300A000482494 /* WTRSlider.h in Headers */,
 				0F23A96A227A4C000093765A /* WTRUserCustomThankYou.h in Headers */,
+				7E0D323F24207C960034CEBD /* WTROperation.h in Headers */,
 				B278896D1BD914F2001D5696 /* SimpleConstraints.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -694,6 +715,7 @@
 				B2102A341BB59ACE0025DABC /* WTRCustomMessages.m in Sources */,
 				B22976761BB1404D00FC2772 /* WTRCustomThankYou.m in Sources */,
 				B229766E1BB0036100FC2772 /* WTRPropertiesParser.m in Sources */,
+				7E0D324024207C960034CEBD /* WTROperation.m in Sources */,
 				B260ECDE1BD7E5B200E29CD5 /* UIView+Constraints.m in Sources */,
 				B268666F1BD5339800A4288D /* WTRiPADSurveyViewController.m in Sources */,
 				B2C940651BA30AFB00482494 /* UIImage+ImageFromColor.m in Sources */,
@@ -709,12 +731,14 @@
 				B245509E1B909A03001AC1FB /* WTRSurveyViewController.m in Sources */,
 				B24550A61B909AC9001AC1FB /* WTRSurveyViewController+Constraints.m in Sources */,
 				B2C940611BA300A000482494 /* WTRSlider.m in Sources */,
+				7E0D323C242041FD0034CEBD /* WTREvent.m in Sources */,
 				7E74E3371C8E987000BCB84F /* NSString+FontAwesome.m in Sources */,
 				B2D9FCE01BF9F18E00479F9F /* SEGWootric.m in Sources */,
 				178571992088FCA800CCBE02 /* WTRLogger.m in Sources */,
 				B278897E1BE105D6001D5696 /* WTRiPADThankYouButton.m in Sources */,
 				B27889711BDA5520001D5696 /* WTRiPADFeedbackView.m in Sources */,
 				0F370D5A21ACAAF10007C27A /* WTRUtils.m in Sources */,
+				7E6BA6C624297B9600D27EE8 /* WTREventListOperation.m in Sources */,
 				B27889761BDF85FD001D5696 /* UIItems.m in Sources */,
 				B268668B1BD671D200A4288D /* WTRiPADQuestionView.m in Sources */,
 				B24550A21B909A49001AC1FB /* WTRSurveyViewController+Views.m in Sources */,
@@ -888,6 +912,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = mh_dylib;
+				MARKETING_VERSION = 0.17.0;
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wootric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -908,6 +933,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = mh_dylib;
+				MARKETING_VERSION = 0.17.0;
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wootric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -33,6 +33,7 @@
 @property (nonatomic, strong) NSString *customProductName;
 @property (nonatomic, strong) NSString *languageCode;
 @property (nonatomic, strong) NSString *surveyType;
+@property (nonatomic, strong) NSString *eventName;
 @property (nonatomic, assign) NSInteger surveyTypeScale;
 @property (nonatomic, strong) NSDictionary *scale;
 @property (nonatomic, strong) NSString *customAudience;
@@ -128,4 +129,5 @@
 - (void)setCustomDailyResponseCap:(NSNumber *)customDailyResponseCap;
 - (void)setCustomTimeDelay:(NSInteger)customTimeDelay;
 
+-(id)copyWithZone:(NSZone *)zone;
 @end

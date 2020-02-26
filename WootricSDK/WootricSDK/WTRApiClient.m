@@ -28,12 +28,16 @@
 #import "WTRLogger.h"
 #import <CommonCrypto/CommonHMAC.h>
 
-NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
+static NSString *const WTRSamplingRule = @"Wootric Sampling Rule";
+static NSString *const WTRCustomEventName = @"custom_event_name";
+static NSString *const WTRRegisterEventsEndpoint = @"/registered_events.json";
+static NSString *const WTREligibleEndpoint = @"/eligible.json";
+static NSString *const WTRSurveyServerURL = @"https://survey.wootric.com";
+static NSString *const WTRBaseAPIURL = @"https://api.wootric.com";
+static NSString *const WTRAPIVersion = @"api/v1";
 
 @interface WTRApiClient ()
 
-@property (nonatomic, strong) NSString *baseAPIURL;
-@property (nonatomic, strong) NSString *surveyServerURL;
 @property (nonatomic, strong) NSString *accessToken;
 @property (nonatomic, strong) NSURLSession *wootricSession;
 @property (nonatomic) NSInteger userID;
@@ -60,24 +64,13 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
 
 - (instancetype)init {
   if (self = [super init]) {
-    _baseAPIURL = @"https://api.wootric.com";
-    _surveyServerURL = @"https://survey.wootric.com/eligible.json";
     _wootricSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     _settings = [[WTRSettings alloc] init];
-    _apiVersion = @"api/v1";
     _priority = 0;
     _osVersion = [self osVersion];
     _sdkVersion = [self sdkVersion];
   }
   return self;
-}
-
-- (BOOL)checkConfiguration {
-  if ([_clientID length] != 0 &&
-      [_accountToken length] != 0) {
-    return YES;
-  }
-  return NO;
 }
 
 - (void)endUserDeclined {
@@ -107,7 +100,7 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
   
   escapedEmail = [self addVersionsToURLString:escapedEmail];
   
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", _baseAPIURL, _apiVersion, escapedEmail]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", WTRBaseAPIURL, WTRAPIVersion, escapedEmail]];
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:nil andHTTPBody:nil];
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
@@ -169,7 +162,7 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
   params = [self addVersionsToURLString:params];
 
   if (needsUpdate) {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld?%@", _baseAPIURL, _apiVersion, (long)endUserID, params]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld?%@", WTRBaseAPIURL, WTRAPIVersion, (long)endUserID, params]];
     NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"PUT" andHTTPBody:nil];
 
     NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -186,7 +179,7 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
 }
 
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", _baseAPIURL, _apiVersion]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", WTRBaseAPIURL, WTRAPIVersion]];
   NSString *escapedEmail = [WTRUtils percentEscapeString:[_settings getEndUserEmailOrUnknown]];
   NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
     
@@ -230,7 +223,7 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
 }
 
 - (void)createResponseForEndUser:(NSInteger)endUserID withScore:(NSInteger)score text:(NSString *)text endpoint:(NSString *)endpoint {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/%@", _baseAPIURL, _apiVersion, (long)endUserID, endpoint]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/%@", WTRBaseAPIURL, WTRAPIVersion, (long)endUserID, endpoint]];
   NSString *params = [self paramsWithScore:score endUserID:endUserID accountID:_accountID uniqueLink:_uniqueLink priority:_priority text:text];
   
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
@@ -239,7 +232,39 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
     if (error) {
       [WTRLogger logError:@"ResponseError: %@", error];
     } else {
-      [WTRLogger log:@"Create response added to queue"];
+      if ([endpoint containsString:@"response"]) {
+        [WTRLogger log:@"Response added to queue"];
+      } else {
+        [WTRLogger log:@"Decline added to queue"];
+      }
+    }
+  }];
+
+  [dataTask resume];
+}
+
+- (void)getRegisteredEventList:(void (^)(NSArray *))events {
+  NSString *baseURLString = [NSString stringWithFormat:@"%@%@?account_token=%@",
+                             WTRSurveyServerURL, WTRRegisterEventsEndpoint, _accountToken];
+
+  NSURL *url = [NSURL URLWithString:baseURLString];
+  NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+  [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"User-Agent"];
+
+  [WTRLogger log:@"eligibility - %@", urlRequest];
+
+  NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    if (error) {
+      [WTRLogger logError:@"%@", error];
+    } else {
+      NSArray *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+      if ([responseJSON isKindOfClass:[NSArray class]]) {
+        if (responseJSON) {
+          events(responseJSON);
+        }
+      } else {
+        [WTRLogger logError:@"%@", responseJSON];
+      }
     }
   }];
 
@@ -247,13 +272,10 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
 }
 
 - (void)authenticate:(void (^)(void))authenticated {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/oauth/token", _baseAPIURL]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/oauth/token", WTRBaseAPIURL]];
   NSString *params = [NSString stringWithFormat:@"grant_type=client_credentials&client_id=%@", _clientID];
   params = [self addVersionsToURLString:params];
   
-  if (_clientSecret) {
-    params = [params stringByAppendingFormat:@"&client_secret=%@", _clientSecret];
-  }
 
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
 
@@ -279,68 +301,83 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
   [dataTask resume];
 }
 
-- (void)checkEligibility:(void (^)(void))eligible {
-  NSString *baseURLString = [NSString stringWithFormat:@"%@?account_token=%@",
-                             _surveyServerURL, _accountToken];
-  
-  baseURLString = [self addVersionsToURLString:baseURLString];
-  baseURLString = [self addEmailToURLString:baseURLString];
-  baseURLString = [self addSurveyServerCustomSettingsToURLString:baseURLString];
-  baseURLString = [self addPropertiesToURLString:baseURLString];
+- (void)checkEligibility:(void (^)(BOOL))eligible {
+  if (self.settings.forceSurvey || [self needsSurvey]) {
+    NSString *baseURLString = [NSString stringWithFormat:@"%@%@?account_token=%@",
+                               WTRSurveyServerURL, WTREligibleEndpoint, _accountToken];
+    
+    baseURLString = [self addVersionsToURLString:baseURLString];
+    baseURLString = [self addEmailToURLString:baseURLString];
+    baseURLString = [self addSurveyServerCustomSettingsToURLString:baseURLString];
+    baseURLString = [self addPropertiesToURLString:baseURLString];
+    baseURLString = [self addEventNameToURLString:baseURLString];
 
-  NSURL *url = [NSURL URLWithString:baseURLString];
-  NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-  [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"User-Agent"];
+    NSURL *url = [NSURL URLWithString:baseURLString];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"User-Agent"];
 
-  [WTRLogger log:@"eligibility - %@", urlRequest];
+    [WTRLogger log:@"eligibility - %@", urlRequest];
 
-  NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-    if (error) {
-      [WTRLogger logError:@"%@", error];
-    } else {
-      NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-      NSLog(@"responseJSON: %@", responseJSON);
-      if (responseJSON) {
-        if ([responseJSON[@"eligible"] isEqual:@1]) {
-          if (self->_settings.forceSurvey) {
-            [WTRLogger logError:@"forced survey (remove for production!)"];
-          };
+    NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      if (error) {
+        [WTRLogger logError:@"%@", error];
+        eligible(NO);
+      } else {
+        NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if (responseJSON) {
+          if ([responseJSON[@"eligible"] isEqual:@1]) {
+            if (self->_settings.forceSurvey) {
+              [WTRLogger logError:@"forced survey (remove for production!)"];
+            };
+            [WTRLogger log:@"User eligible. Code: %@. Description: %@.", responseJSON[@"details"][@"code"], responseJSON[@"details"][@"why"]];
 
-          [WTRLogger log:@"User eligible. Code: %@. Description: %@.", responseJSON[@"details"][@"code"], responseJSON[@"details"][@"why"]];
+            [self->_settings parseDataFromSurveyServer:responseJSON];
 
-          [self->_settings parseDataFromSurveyServer:responseJSON];
+            if (responseJSON[@"settings"][@"end_user_id"] != [NSNull null]) {
+              self.userID = [responseJSON[@"settings"][@"end_user_id"] integerValue];
+            }
 
-          if (responseJSON[@"settings"][@"end_user_id"] != [NSNull null]) {
-            self.userID = [responseJSON[@"settings"][@"end_user_id"] integerValue];
-          }
-
-          if (responseJSON[@"sampling_rule"][@"name"]) {
-            [self->_settings.customProperties setValue:responseJSON[@"sampling_rule"][@"name"] forKey:WootricSamplingRule];
-          }
-          
-          self->_uniqueLink = [self buildUniqueLinkAccountToken:self->_accountToken
-                                                   endUserEmail:[self->_settings getEndUserEmailOrUnknown]
-                                                           date:[[NSDate date] timeIntervalSince1970]
-                                                   randomString:[self randomString]];
-          
-          if (responseJSON[@"settings"][@"account_id"] != nil) {
-            self->_accountID = responseJSON[@"settings"][@"account_id"];
-          }
-          eligible();
-        } else {
-          NSString *logString = @"User ineligible";
-          if (responseJSON[@"error"]){
-            logString = [NSString stringWithFormat:@"%@ - %@", logString, responseJSON[@"error"]];
-            [WTRLogger logError:@"%@", logString];
+            if (responseJSON[@"sampling_rule"][@"name"]) {
+              if (!self->_settings.customProperties) {
+                [self->_settings setCustomProperties:[NSMutableDictionary new]];
+              }
+              [self->_settings.customProperties setValue:responseJSON[@"sampling_rule"][@"name"] forKey:WTRSamplingRule];
+            }
+            
+            if (self->_settings.eventName) {
+              if (!self->_settings.customProperties) {
+                [self->_settings setCustomProperties:[NSMutableDictionary new]];
+              }
+              [self->_settings.customProperties setValue:self->_settings.eventName forKey:WTRCustomEventName];
+            }
+            
+            self->_uniqueLink = [self buildUniqueLinkAccountToken:self->_accountToken
+                                                     endUserEmail:[self->_settings getEndUserEmailOrUnknown]
+                                                             date:[[NSDate date] timeIntervalSince1970]
+                                                     randomString:[self randomString]];
+            
+            if (responseJSON[@"settings"][@"account_id"] != nil) {
+              self->_accountID = responseJSON[@"settings"][@"account_id"];
+            }
+            eligible(YES);
           } else {
-            [WTRLogger log:@"%@. Code: %@. Description: %@.", logString, responseJSON[@"details"][@"code"], responseJSON[@"details"][@"why"]];
+            NSString *logString = @"User ineligible";
+            if (responseJSON[@"error"]){
+              logString = [NSString stringWithFormat:@"%@ - %@", logString, responseJSON[@"error"]];
+              [WTRLogger logError:@"%@", logString];
+            } else {
+              [WTRLogger log:@"%@. Code: %@. Description: %@.", logString, responseJSON[@"details"][@"code"], responseJSON[@"details"][@"why"]];
+            }
+            eligible(NO);
           }
         }
       }
-    }
-  }];
+    }];
 
-  [dataTask resume];
+    [dataTask resume];
+  } else {
+    eligible(NO);
+  }
 }
 
 - (NSMutableURLRequest *)requestWithURL:(NSURL *)url HTTPMethod:(NSString *)httpMethod andHTTPBody:(NSString *)httpBody {
@@ -464,6 +501,14 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
   return baseURLString;
 }
 
+- (NSString *)addEventNameToURLString:(NSString *)baseURLString {
+  if (_settings.eventName) {
+    baseURLString = [NSString stringWithFormat:@"%@&event_name=%@", baseURLString, [WTRUtils percentEscapeString:_settings.eventName]];
+    ;
+  }
+  return baseURLString;
+}
+
 - (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text {
   
   NSString *params = [NSString stringWithFormat:@"origin_url=%@&end_user[id]=%ld&survey[channel]=mobile&survey[unique_link]=%@&priority=%i&metric_type=%@", _settings.originURL, endUserID, uniqueLink, priority, [_settings.surveyType lowercaseString]];
@@ -515,6 +560,47 @@ NSString *const WootricSamplingRule = @"Wootric Sampling Rule";
 
 - (NSString *)osVersion {
   return [[UIDevice currentDevice] systemVersion];
+}
+
+- (BOOL)needsSurvey {
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  
+  if ([defaults boolForKey:@"surveyed"] && self.settings.setDefaultAfterSurvey) {
+    NSInteger days;
+    if ([defaults objectForKey:@"resurvey_days"]) {
+      days = [defaults integerForKey:@"resurvey_days"];
+    } else if([[defaults objectForKey:@"type"] isEqualToString:@"response"]){
+      days = self.settings.surveyedDefaultDuration;
+    } else {
+      days = self.settings.surveyedDefaultDurationDecline;
+    }
+    [WTRLogger log:@"needsSurvey(NO) - Already surveyed in last %li days", (long)days];
+    return NO;
+  } else if (self.settings.surveyImmediately) {
+    [WTRLogger log:@"needsSurvey(YES) - surveyImmediately"];
+    return YES;
+  } else if (!self.settings.externalCreatedAt) {
+    [WTRLogger log:@"needsSurvey(YES) - no externalCreatedAt"];
+    return YES;
+  } else {
+    if ([self.settings.firstSurveyAfter intValue] > 0) {
+      NSInteger age = [[NSDate date] timeIntervalSince1970] - [self.settings.externalCreatedAt intValue];
+      if (age > ([self.settings.firstSurveyAfter intValue] * 60 * 60 * 24)) {
+        [WTRLogger log:@"needsSurvey(YES) - end user's account older than firstSurveyAfter value"];
+        return YES;
+      } else {
+        if (([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"lastSeenAt"]) >= ([self.settings.firstSurveyAfter intValue] * 60 * 60 * 24)) {
+          [WTRLogger log:@"needsSurvey(YES) - end user's lastSeenAt greater than or equal firstSurveyAfter value"];
+          return YES;
+        }
+      }
+    } else {
+      [WTRLogger log:@"needsSurvey(YES) - firstSurveyAfter is set to less than or equal 0 in SDK (will be compared to admin panel value)"];
+      return YES;
+    }
+  }
+  [WTRLogger log:@"needsSurvey(NO) - No check passed"];
+  return NO;
 }
 
 #pragma Getters

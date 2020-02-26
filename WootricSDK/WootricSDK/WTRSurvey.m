@@ -26,20 +26,56 @@
 #import "WTRApiClient.h"
 #import "WTRDefaults.h"
 #import "WTRLogger.h"
+#import "WTREvent.h"
+#import "WTREventListOperation.h"
 
 @interface WTRSurvey ()
 
-@property (nonatomic, strong) WTRApiClient *apiClient;
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
+@property (nonatomic, strong) NSArray *eventList;
+@property (nonatomic, strong) WTREventListOperation *eventListOperation;
 
 @end
 
 @implementation WTRSurvey
 
++ (instancetype)sharedInstance {
+  static WTRSurvey *sharedInstance = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    sharedInstance = [[self alloc] init];
+  });
+
+  return sharedInstance;
+}
+
 - (instancetype)init {
   if (self = [super init]) {
-    _apiClient = [WTRApiClient sharedInstance];
+    _settings = [[WTRSettings alloc] init];
+    _operationQueue = [NSOperationQueue new];
+    [_operationQueue setMaxConcurrentOperationCount:1];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(applicationWillResign)
+        name:UIApplicationWillResignActiveNotification
+        object:nil];
   }
   return self;
+}
+
+- (void)applicationWillResign {
+  if ([_operationQueue operationCount] == 0) {
+    _eventListOperation = nil;
+    _eventList = nil;
+  }
+}
+
+- (BOOL)checkConfiguration {
+  if ([_clientID length] != 0 &&
+      [_accountToken length] != 0) {
+    return YES;
+  }
+  return NO;
 }
 
 - (void)endUserDeclined {
@@ -52,57 +88,33 @@
   [WTRDefaults setSurveyedWithType:@"response"];
 }
 
-- (void)survey:(void (^)(void))showSurvey {
+- (void)survey:(void (^)(WTRSettings *))showSurvey {
   [WTRDefaults setLastSeenAt];
   [WTRDefaults checkIfSurveyedDefaultExpired];
   
-  if (_apiClient.settings.forceSurvey || [self needsSurvey]) {
-    [_apiClient checkEligibility:^{
-      [self.apiClient authenticate:^{
-          showSurvey();
-      }];
+  NSMutableDictionary *request = [NSMutableDictionary new];
+  [request setValue:self.clientID forKey:@"clientID"];
+  [request setValue:self.clientSecret forKey:@"clientSecret"];
+  [request setValue:self.accountToken forKey:@"accountToken"];
+  WTRSettings *requestSettings = [self.settings copy];
+  [request setValue:requestSettings forKey:@"settings"];
+  
+  if (_eventListOperation == nil) {
+    _eventListOperation = [[WTREventListOperation alloc] initWithAccountToken:self.accountToken completion:^(NSArray * _Nonnull eventList) {
+      self.eventList = eventList;
     }];
+    [_operationQueue addOperation:_eventListOperation];
   }
-}
-
-- (BOOL)needsSurvey {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  if ([defaults boolForKey:@"surveyed"] && _apiClient.settings.setDefaultAfterSurvey) {
-    NSInteger days;
-    if ([defaults objectForKey:@"resurvey_days"]) {
-      days = [defaults integerForKey:@"resurvey_days"];
-    } else if([[defaults objectForKey:@"type"] isEqualToString:@"response"]){
-      days = _apiClient.settings.surveyedDefaultDuration;
-    } else {
-      days = _apiClient.settings.surveyedDefaultDurationDecline;
+  
+  WTREvent *event = [[WTREvent alloc] initWithRequest:request eventList:self.eventList completion:^(WTRSettings *settings) {
+    if (settings != nil) {
+      [self->_operationQueue cancelAllOperations];
+      showSurvey(settings);
     }
-    [WTRLogger log:@"needsSurvey(NO) - Already surveyed in last %li days", (long)days];
-    return NO;
-  } else if (_apiClient.settings.surveyImmediately) {
-    [WTRLogger log:@"needsSurvey(YES) - surveyImmediately"];
-    return YES;
-  } else if (!_apiClient.settings.externalCreatedAt) {
-    [WTRLogger log:@"needsSurvey(YES) - no externalCreatedAt"];
-    return YES;
-  } else {
-    if ([_apiClient.settings.firstSurveyAfter intValue] > 0) {
-      NSInteger age = [[NSDate date] timeIntervalSince1970] - [_apiClient.settings.externalCreatedAt intValue];
-      if (age > ([_apiClient.settings.firstSurveyAfter intValue] * 60 * 60 * 24)) {
-        [WTRLogger log:@"needsSurvey(YES) - end user's account older than firstSurveyAfter value"];
-        return YES;
-      } else {
-        if (([[NSDate date] timeIntervalSince1970] - [defaults doubleForKey:@"lastSeenAt"]) >= ([_apiClient.settings.firstSurveyAfter intValue] * 60 * 60 * 24)) {
-          [WTRLogger log:@"needsSurvey(YES) - end user's lastSeenAt greater than or equal firstSurveyAfter value"];
-          return YES;
-        }
-      }
-    } else {
-      [WTRLogger log:@"needsSurvey(YES) - firstSurveyAfter is set to less than or equal 0 in SDK (will be compared to admin panel value)"];
-      return YES;
-    }
-  }
-  [WTRLogger log:@"needsSurvey(NO) - No check passed"];
-  return NO;
+  }];
+  
+  [event addDependency:_eventListOperation];
+  [_operationQueue addOperation:event];
 }
 
 @end
