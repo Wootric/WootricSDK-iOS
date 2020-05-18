@@ -92,7 +92,7 @@
   _surveyClient.clientID = @"";
   _surveyClient.clientSecret = @"";
   _surveyClient.accountToken = @"NPS-token";
-  XCTAssertFalse([_surveyClient checkConfiguration]);
+  XCTAssertTrue([_surveyClient checkConfiguration]);
   
   _surveyClient.clientID = @"clientIDtestString";
   _surveyClient.clientSecret = @"clientSecretTestString";
@@ -102,7 +102,7 @@
   _surveyClient.clientID = @"";
   _surveyClient.clientSecret = @"clientSecretTestString";
   _surveyClient.accountToken = @"NPS-token";
-  XCTAssertFalse([_surveyClient checkConfiguration]);
+  XCTAssertTrue([_surveyClient checkConfiguration]);
   
   _surveyClient.clientID = @"clientIDtestString";
   _surveyClient.clientSecret = @"";

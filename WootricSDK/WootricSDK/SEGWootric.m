@@ -27,12 +27,20 @@
 
 @implementation SEGWootric
 
-- (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret accountToken:(NSString *)accountToken {
-  [Wootric configureWithClientID:clientID clientSecret:clientSecret accountToken:accountToken];
+- (void)configureWithAccountToken:(NSString *)accountToken {
+  [Wootric configureWithAccountToken:accountToken];
+}
+
+- (void)configureWithClientID:(NSString *)clientID accountToken:(NSString *)accountToken {
+  [Wootric configureWithClientID:clientID accountToken:accountToken];
 }
 
 - (void)showSurveyInViewController:(UIViewController *)viewController {
   [Wootric showSurveyInViewController:viewController];
+}
+
+- (void)showSurveyInViewController:(UIViewController *)viewController event:(NSString *)eventName {
+  [Wootric showSurveyInViewController:viewController event:eventName];
 }
 
 - (void)setEndUserCreatedAt:(NSNumber *)externalCreatedAt {

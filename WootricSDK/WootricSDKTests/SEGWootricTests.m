@@ -50,12 +50,10 @@
 
 - (void)testConfiguration {
   static NSString *clientId = @"testClientID";
-  static NSString *clientSecret = @"testClientSecret";
   static NSString *accountToken = @"NP-Token";
-  [_segWootric configureWithClientID:clientId clientSecret:clientSecret accountToken:accountToken];
+  [_segWootric configureWithClientID:clientId accountToken:accountToken];
   
   XCTAssertEqualObjects(_surveyClient.clientID, clientId, @"clientID should be equal to testClientID");
-  XCTAssertEqualObjects(_surveyClient.clientSecret, clientSecret, @"clientSecret should be equal to testClientSecret");
   XCTAssertEqualObjects(_surveyClient.accountToken, accountToken, @"accountToken should be equal to NP-Token");
   
   _surveyClient.clientID = nil;
@@ -279,4 +277,9 @@
   _surveyClient.settings.showOptOut = NO;
 }
 
+- (void)testShowSurveyInViewControllerWithEvent {
+  [_segWootric showSurveyInViewController:[UIViewController new] event:@"One event name"];
+
+  XCTAssertEqualObjects(_surveyClient.settings.eventName, @"One event name");
+}
 @end

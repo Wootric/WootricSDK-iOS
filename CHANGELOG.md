@@ -1,3 +1,11 @@
+## 0.18.0 (2020-05-29)
+
+### Changes:
+
+- Fix deprecated method warnings
+- Add new configuration method with only accountToken param
+- Update SEGWootric class
+
 ## 0.17.0 (2020-03-26)
 
 ### Changes:

@@ -332,6 +332,13 @@ static NSString *const WTRAPIVersion = @"api/v1";
             [WTRLogger log:@"User eligible. Code: %@. Description: %@.", responseJSON[@"details"][@"code"], responseJSON[@"details"][@"why"]];
 
             [self->_settings parseDataFromSurveyServer:responseJSON];
+            self->_accountToken = responseJSON[@"settings"][@"account_token"];
+            self->_clientID = responseJSON[@"settings"][@"client_id"];
+
+            if (self->_accountToken == nil || self->_clientID == nil) {
+              [WTRLogger logError:@"Error retreiving token."];
+              eligible(NO);
+            }
 
             if (responseJSON[@"settings"][@"end_user_id"] != [NSNull null]) {
               self.userID = [responseJSON[@"settings"][@"end_user_id"] integerValue];

@@ -28,20 +28,16 @@
 @interface Wootric : NSObject
 
 /**
- @discussion It configures the SDK with required parameters.
- @param clientID Found in API section of the Wootric's admin panel.
- @param clientSecret Found in API section of the Wootric's admin panel.
+ @discussion It configures the SDK with account token.
  @param accountToken Found in Install section of the Wootric's admin panel.
 */
-+ (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret accountToken:(NSString *)accountToken;
-
++ (void)configureWithAccountToken:(NSString *)accountToken;
 /**
  @discussion It configures the SDK with required parameters.
  @param clientID Found in API section of the Wootric's admin panel.
  @param accountToken Found in Install section of the Wootric's admin panel.
  */
 + (void)configureWithClientID:(NSString *)clientID accountToken:(NSString *)accountToken;
-
 /**
  @discussion It shows survey if end user is eligible.
  @param viewController View controller in which you would like to display the survey.

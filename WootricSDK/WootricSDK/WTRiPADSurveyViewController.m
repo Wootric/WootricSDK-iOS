@@ -339,28 +339,20 @@
   _feedbackView.hidden = !feedbackFlag;
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+    CGFloat modalPosition;
+    CGRect bounds = self.view.bounds;
 
-  BOOL isToLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
-  CGFloat modalPosition;
-  CGRect bounds = self.view.bounds;
+    modalPosition = bounds.size.height - self->_modalView.frame.size.height;
 
-  if ((bounds.size.width > bounds.size.height) && isToLandscape) {
-    modalPosition = bounds.size.height - _modalView.frame.size.height;
-  } else {
-    modalPosition = bounds.size.width - _modalView.frame.size.height;
-  }
-
-  _constraintTopToModalTop.constant = modalPosition;
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-  [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-
-  if (_keyboardHeight == 0) {
-    [_scrollView setContentOffset:CGPointMake(0, _keyboardHeight) animated:YES];
-  }
+    self->_constraintTopToModalTop.constant = modalPosition;
+  } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+    if (self->_keyboardHeight == 0) {
+      [self->_scrollView setContentOffset:CGPointMake(0, self->_keyboardHeight) animated:YES];
+    }
+  }];
 }
 
 - (void)registerForKeyboardNotification {

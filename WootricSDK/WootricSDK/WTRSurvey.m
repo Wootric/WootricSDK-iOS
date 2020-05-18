@@ -71,8 +71,7 @@
 }
 
 - (BOOL)checkConfiguration {
-  if ([_clientID length] != 0 &&
-      [_accountToken length] != 0) {
+  if ([_accountToken length] != 0) {
     return YES;
   }
   return NO;

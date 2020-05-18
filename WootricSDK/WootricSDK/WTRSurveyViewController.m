@@ -389,55 +389,48 @@
   _gradient.colors = @[(id)[WTRColor grayGradientTopColor].CGColor, (id)[WTRColor grayGradientBottomColor].CGColor];
 }
 
-- (void)getSizeAndRecalculatePositionsBasedOnOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  BOOL isFromLandscape = UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
-  BOOL isToLandscape = UIInterfaceOrientationIsLandscape(interfaceOrientation);
-  if ((!isFromLandscape && isToLandscape) || (isFromLandscape && !isToLandscape)) {
-    CGFloat widthAfterRotation;
-    CGFloat leftAndRightMargins = 28;
-    if (IS_OS_8_OR_LATER || isToLandscape) {
-      widthAfterRotation = self.view.frame.size.height - leftAndRightMargins;
+- (void)getSizeAndRecalculatePositionsBasedOnOrientation {
+  BOOL isFromLandscape = !UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
+  CGFloat widthAfterRotation;
+  CGFloat leftAndRightMargins = 28;
+  if (IS_OS_8_OR_LATER || isFromLandscape) {
+    widthAfterRotation = self.view.frame.size.width - leftAndRightMargins;
+  } else {
+    widthAfterRotation = self.view.frame.size.height - leftAndRightMargins;
+  }
+  [_questionView recalculateDotsAndScorePositionForWidth:widthAfterRotation];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  
+  UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+  [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+    BOOL isFromLandscape = UIInterfaceOrientationIsLandscape(interfaceOrientation);
+    CGFloat modalPosition;
+    CGRect bounds = self.view.bounds;
+    CGRect gradientBounds;
+
+    modalPosition = bounds.size.height - self->_modalView.frame.size.height;
+
+    if ((bounds.size.height > bounds.size.width) && !isFromLandscape) {
+      gradientBounds = CGRectMake(bounds.origin.y, bounds.origin.x, bounds.size.height, bounds.size.width);
     } else {
-      widthAfterRotation = self.view.frame.size.width - leftAndRightMargins;
+      gradientBounds = bounds;
     }
-    [_questionView recalculateDotsAndScorePositionForWidth:widthAfterRotation];
-  }
-}
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-  [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-
-  BOOL isToLandscape = UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
-  CGFloat modalPosition;
-  CGRect bounds = self.view.bounds;
-  CGRect gradientBounds;
-
-  if ((bounds.size.width > bounds.size.height) && isToLandscape) {
-    modalPosition = bounds.size.height - _modalView.frame.size.height;
-  } else {
-    modalPosition = bounds.size.width - _modalView.frame.size.height;
-  }
-
-  if ((bounds.size.height > bounds.size.width) && isToLandscape) {
-    gradientBounds = CGRectMake(bounds.origin.y, bounds.origin.x, bounds.size.height, bounds.size.width);
-  } else {
-    gradientBounds = bounds;
-  }
-
-  _constraintTopToModalTop.constant = modalPosition;
-  [self getSizeAndRecalculatePositionsBasedOnOrientation:toInterfaceOrientation];
-  [self setModalGradient:gradientBounds];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-  [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-  _scrolled = NO;
-
-  BOOL isFromLandscape = UIInterfaceOrientationIsLandscape(fromInterfaceOrientation);
-  CGRect bounds = self.view.bounds;
-  if (_keyboardHeight == 0 && isFromLandscape && (bounds.size.width > bounds.size.height)) {
-    [_scrollView scrollRectToVisible:_modalView.frame animated:YES];
-  }
+    self->_constraintTopToModalTop.constant = modalPosition;
+    [self getSizeAndRecalculatePositionsBasedOnOrientation];
+    [self setModalGradient:gradientBounds];
+  } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+    self->_scrolled = NO;
+    
+    BOOL isFromLandscape = UIInterfaceOrientationIsLandscape(interfaceOrientation);
+    CGRect bounds = self.view.bounds;
+    if (self->_keyboardHeight == 0 && isFromLandscape && (bounds.size.width > bounds.size.height)) {
+      [self->_scrollView scrollRectToVisible:self->_modalView.frame animated:YES];
+    }
+  }];
 }
 
 - (void)registerForKeyboardNotification {

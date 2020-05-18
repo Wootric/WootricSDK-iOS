@@ -36,6 +36,11 @@ static id<WTRSurveyDelegate> _delegate = nil;
 
 @implementation Wootric
 
++ (void)configureWithAccountToken:(NSString *)accountToken {
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.accountToken = accountToken;
+}
+
 + (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret accountToken:(NSString *)accountToken {
   WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
   surveyClient.clientID = clientID;
