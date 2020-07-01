@@ -73,4 +73,37 @@
   return (_promoterThankYouLinkText && _promoterThankYouLinkURL);
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+  WTRUserCustomThankYou *userCustomThankYouCopy = [[WTRUserCustomThankYou allocWithZone:zone] init];
+  userCustomThankYouCopy.thankYouMain = self.thankYouMain;
+  userCustomThankYouCopy.thankYouSetup = self.thankYouSetup;
+  userCustomThankYouCopy.detractorThankYouMain = self.detractorThankYouMain;
+  userCustomThankYouCopy.detractorThankYouSetup = self.detractorThankYouSetup;
+  userCustomThankYouCopy.passiveThankYouMain = self.passiveThankYouMain;
+  userCustomThankYouCopy.passiveThankYouSetup = self.passiveThankYouSetup;
+  userCustomThankYouCopy.promoterThankYouMain = self.promoterThankYouMain;
+  userCustomThankYouCopy.promoterThankYouSetup = self.promoterThankYouSetup;
+  userCustomThankYouCopy.thankYouLinkText = self.thankYouLinkText;
+  userCustomThankYouCopy.thankYouLinkURL = self.thankYouLinkURL;
+  userCustomThankYouCopy.detractorThankYouLinkText = self.detractorThankYouLinkText;
+  userCustomThankYouCopy.detractorThankYouLinkURL = self.detractorThankYouLinkURL;
+  userCustomThankYouCopy.passiveThankYouLinkText = self.passiveThankYouLinkText;
+  userCustomThankYouCopy.passiveThankYouLinkURL = self.passiveThankYouLinkURL;
+  userCustomThankYouCopy.promoterThankYouLinkText = self.promoterThankYouLinkText;
+  userCustomThankYouCopy.promoterThankYouLinkURL = self.promoterThankYouLinkURL;
+  userCustomThankYouCopy.backgroundColor = self.backgroundColor;
+  userCustomThankYouCopy.isEmailInURL = self.isEmailInURL;
+  userCustomThankYouCopy.isDetractorEmailInURL = self.isDetractorEmailInURL;
+  userCustomThankYouCopy.isPassiveEmailInURL = self.isPassiveEmailInURL;
+  userCustomThankYouCopy.isPromoterEmailInURL = self.isPromoterEmailInURL;
+  userCustomThankYouCopy.isScoreInURL = self.isScoreInURL;
+  userCustomThankYouCopy.isDetractorScoreInURL = self.isDetractorScoreInURL;
+  userCustomThankYouCopy.isPassiveScoreInURL = self.isPassiveScoreInURL;
+  userCustomThankYouCopy.isPromoterScoreInURL = self.isPromoterScoreInURL;
+  userCustomThankYouCopy.isCommentInURL = self.isCommentInURL;
+  userCustomThankYouCopy.isDetractorCommentInURL = self.isDetractorCommentInURL;
+  userCustomThankYouCopy.isPassiveCommentInURL = self.isPassiveCommentInURL;
+  userCustomThankYouCopy.isPromoterCommentInURL = self.isPromoterCommentInURL;
+  return userCustomThankYouCopy;
+}
 @end

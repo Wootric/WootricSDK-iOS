@@ -37,10 +37,9 @@
 }
 
 - (IBAction)startSurvey:(UIButton *)sender {
-  NSString *clientID = @"YOUR_CLIENT_ID";
   NSString *accountToken = @"YOUR_ACCOUNT_TOKEN";
 
-  [Wootric configureWithClientID:clientID accountToken:accountToken];
+  [Wootric configureWithAccountToken:accountToken];
   [Wootric setEndUserEmail:@"END_USER_EMAIL"];
   [Wootric setEndUserCreatedAt:@1234567890];
 

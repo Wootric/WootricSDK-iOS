@@ -57,5 +57,6 @@
 
 - (instancetype)initWithCustomThankYou:(NSDictionary *)customThankYou;
 - (BOOL)hasShareConfiguration;
+- (id)copyWithZone:(NSZone *)zone;
 
 @end

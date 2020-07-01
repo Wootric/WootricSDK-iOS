@@ -1,3 +1,9 @@
+## 0.18.1 (2020-07-07)
+
+### Changes:
+
+- Fix copy for CustomMessages, CustomSocial, CustomThankYou and LocalizedText objects
+
 ## 0.18.0 (2020-05-29)
 
 ### Changes:

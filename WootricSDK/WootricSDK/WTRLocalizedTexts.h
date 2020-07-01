@@ -39,5 +39,6 @@
 @property (nonatomic, strong) NSString *socialShareDecline;
 
 - (instancetype)initWithLocalizedTexts:(NSDictionary *)localizedTexts;
+- (id)copyWithZone:(NSZone *)zone;
 
 @end

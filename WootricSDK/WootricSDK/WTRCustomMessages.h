@@ -36,5 +36,6 @@
 @property (nonatomic, strong) NSString *promoterText;
 
 - (instancetype)initWithCustomMessages:(NSDictionary *)customMessages;
+- (id)copyWithZone:(NSZone *)zone;
 
 @end

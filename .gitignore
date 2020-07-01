@@ -19,3 +19,4 @@ xcuserdata/
 *.playground
 
 .DS_Store
+bin/

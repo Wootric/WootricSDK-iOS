@@ -31,5 +31,6 @@
 
 - (instancetype)initWithCustomSocial:(NSDictionary *)customSocial;
 - (BOOL)socialEnabled;
+- (id)copyWithZone:(NSZone *)zone;
 
 @end

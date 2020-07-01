@@ -37,5 +37,6 @@
 
 - (BOOL)userCustomQuestionPresent;
 - (BOOL)userCustomPlaceholderPresent;
+- (id)copyWithZone:(NSZone *)zone;
 
 @end

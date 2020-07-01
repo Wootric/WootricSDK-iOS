@@ -61,5 +61,6 @@
 - (BOOL)userCustomThankYouSetupPresent;
 - (BOOL)userCustomLinkPresent;
 - (BOOL)hasShareConfiguration;
+- (id)copyWithZone:(NSZone *)zone;
 
 @end

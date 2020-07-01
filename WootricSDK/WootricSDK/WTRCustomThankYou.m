@@ -85,4 +85,36 @@
   return (_promoterThankYouLinkText && _promoterThankYouLinkURL);
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+  WTRCustomThankYou *customThankYouCopy = [[WTRCustomThankYou allocWithZone:zone] init];
+  customThankYouCopy.thankYouMain = self.thankYouMain;
+  customThankYouCopy.thankYouSetup = self.thankYouSetup;
+  customThankYouCopy.detractorThankYouMain = self.detractorThankYouMain;
+  customThankYouCopy.detractorThankYouSetup = self.detractorThankYouSetup;
+  customThankYouCopy.passiveThankYouMain = self.passiveThankYouMain;
+  customThankYouCopy.passiveThankYouSetup = self.passiveThankYouSetup;
+  customThankYouCopy.promoterThankYouMain = self.promoterThankYouMain;
+  customThankYouCopy.promoterThankYouSetup = self.promoterThankYouSetup;
+  customThankYouCopy.thankYouLinkText = self.thankYouLinkText;
+  customThankYouCopy.thankYouLinkURL = self.thankYouLinkURL;
+  customThankYouCopy.detractorThankYouLinkText = self.detractorThankYouLinkText;
+  customThankYouCopy.detractorThankYouLinkURL = self.detractorThankYouLinkURL;
+  customThankYouCopy.passiveThankYouLinkText = self.passiveThankYouLinkText;
+  customThankYouCopy.passiveThankYouLinkURL = self.passiveThankYouLinkURL;
+  customThankYouCopy.promoterThankYouLinkText = self.promoterThankYouLinkText;
+  customThankYouCopy.promoterThankYouLinkURL = self.promoterThankYouLinkURL;
+  customThankYouCopy.isEmailInURL = self.isEmailInURL;
+  customThankYouCopy.isDetractorEmailInURL = self.isDetractorEmailInURL;
+  customThankYouCopy.isPassiveEmailInURL = self.isPassiveEmailInURL;
+  customThankYouCopy.isPromoterEmailInURL = self.isPromoterEmailInURL;
+  customThankYouCopy.isScoreInURL = self.isScoreInURL;
+  customThankYouCopy.isDetractorScoreInURL = self.isDetractorScoreInURL;
+  customThankYouCopy.isPassiveScoreInURL = self.isPassiveScoreInURL;
+  customThankYouCopy.isPromoterScoreInURL = self.isPromoterScoreInURL;
+  customThankYouCopy.isCommentInURL = self.isCommentInURL;
+  customThankYouCopy.isDetractorCommentInURL = self.isDetractorCommentInURL;
+  customThankYouCopy.isPassiveCommentInURL = self.isPassiveCommentInURL;
+  customThankYouCopy.isPromoterCommentInURL = self.isPromoterCommentInURL;
+  return customThankYouCopy;
+}
 @end

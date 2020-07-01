@@ -964,7 +964,7 @@
   }
 }
 
--(id)copyWithZone:(NSZone *)zone{
+- (id)copyWithZone:(NSZone *)zone {
   WTRSettings *settingsCopy = [[WTRSettings allocWithZone:zone] init];
 
   settingsCopy.endUserEmail = self.endUserEmail;
@@ -1002,6 +1002,14 @@
   settingsCopy.sendButtonBackgroundColor = self.sendButtonBackgroundColor;
   settingsCopy.sliderColor = self.sliderColor;
   settingsCopy.socialSharingColor = self.socialSharingColor;
+  
+  settingsCopy.localizedTexts = [self.localizedTexts copy];
+  settingsCopy.customMessages = [self.customMessages copy];
+  settingsCopy.customThankYou = [self.customThankYou copy];
+  settingsCopy.customSocial = [self.customSocial copy];
+  settingsCopy.userCustomMessages = [self.userCustomMessages copy];
+  settingsCopy.userCustomThankYou = [self.userCustomThankYou copy];
+  settingsCopy.userCustomSocial = [self.userCustomSocial copy];
   
   return settingsCopy;
 }

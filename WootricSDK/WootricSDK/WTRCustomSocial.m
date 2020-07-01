@@ -49,4 +49,10 @@
   return isSocialEnabled;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+  WTRCustomSocial *customSocialCopy = [[WTRCustomSocial allocWithZone:zone] init];
+  customSocialCopy.twitterHandler = self.twitterHandler;
+  customSocialCopy.facebookPage = self.facebookPage;
+  return customSocialCopy;
+}
 @end

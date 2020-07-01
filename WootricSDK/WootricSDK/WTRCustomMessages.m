@@ -54,4 +54,16 @@
   return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+  WTRCustomMessages *customMessagesCopy = [[WTRCustomMessages allocWithZone:zone] init];
+  customMessagesCopy.followupQuestion = self.followupQuestion;
+  customMessagesCopy.detractorQuestion = self.detractorQuestion;
+  customMessagesCopy.passiveQuestion = self.passiveQuestion;
+  customMessagesCopy.promoterQuestion = self.promoterQuestion;
+  customMessagesCopy.followupText = self.followupText;
+  customMessagesCopy.detractorText = self.detractorText;
+  customMessagesCopy.passiveText = self.passiveText;
+  customMessagesCopy.promoterText = self.promoterText;
+  return customMessagesCopy;
+}
 @end

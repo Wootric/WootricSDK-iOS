@@ -55,4 +55,19 @@
   return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+  WTRLocalizedTexts *localizedTextsCopy = [[WTRLocalizedTexts allocWithZone:zone] init];
+  localizedTextsCopy.question = self.question;
+  localizedTextsCopy.likelyAnchor = self.likelyAnchor;
+  localizedTextsCopy.notLikelyAnchor = self.notLikelyAnchor;
+  localizedTextsCopy.followupQuestion = self.followupQuestion;
+  localizedTextsCopy.followupPlaceholder = self.followupPlaceholder;
+  localizedTextsCopy.finalThankYou = self.finalThankYou;
+  localizedTextsCopy.send = self.send;
+  localizedTextsCopy.dismiss = self.dismiss;
+  localizedTextsCopy.editScore = self.editScore;
+  localizedTextsCopy.socialShareQuestion = self.socialShareQuestion;
+  localizedTextsCopy.socialShareDecline = self.socialShareDecline;
+  return localizedTextsCopy;
+}
 @end

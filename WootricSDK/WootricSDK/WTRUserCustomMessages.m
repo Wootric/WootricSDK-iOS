@@ -42,4 +42,16 @@
   return NO;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+  WTRUserCustomMessages *userCustomMessagesCopy = [[WTRUserCustomMessages allocWithZone:zone] init];
+  userCustomMessagesCopy.followupQuestion = self.followupQuestion;
+  userCustomMessagesCopy.detractorQuestion = self.detractorQuestion;
+  userCustomMessagesCopy.passiveQuestion = self.passiveQuestion;
+  userCustomMessagesCopy.promoterQuestion = self.promoterQuestion;
+  userCustomMessagesCopy.placeholderText = self.placeholderText;
+  userCustomMessagesCopy.detractorPlaceholderText = self.detractorPlaceholderText;
+  userCustomMessagesCopy.passivePlaceholderText = self.passivePlaceholderText;
+  userCustomMessagesCopy.promoterPlaceholderText = self.promoterPlaceholderText;
+  return userCustomMessagesCopy;
+}
 @end
