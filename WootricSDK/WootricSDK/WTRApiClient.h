@@ -34,7 +34,7 @@
 
 + (instancetype)sharedInstance;
 - (void)getRegisteredEventList:(void (^)(NSArray *))completionHandler;
-- (void)authenticate:(void (^)(void))completionHandler;
+- (void)authenticate:(void (^)(BOOL))completionHandler;
 - (void)checkEligibility:(void (^)(BOOL))completionHandler;
 - (void)endUserDeclined;
 - (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text;

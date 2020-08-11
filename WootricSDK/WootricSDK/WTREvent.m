@@ -78,8 +78,8 @@
 - (void)checkEligibility:(WTRApiClient *)apiClient {
   [apiClient checkEligibility:^(BOOL eligible){
     if (eligible) {
-      [apiClient authenticate:^{
-        self.completion(apiClient.settings);
+      [apiClient authenticate:^(BOOL succeeded){
+        self.completion(succeeded? apiClient.settings : nil);
         [self finish];
       }];
     } else {

@@ -54,7 +54,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 - (NSMutableURLRequest *)requestWithURL:(NSURL *)url HTTPMethod:(NSString *)httpMethod andHTTPBody:(NSString *)httpBody;
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID;
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID;
-- (void)authenticate:(void (^)(void))authenticated;
+- (void)authenticate:(void (^)(BOOL))authenticated;
 - (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text;
 - (NSString *)randomString;
 - (NSString *)buildUniqueLinkAccountToken:(NSString *)accountToken endUserEmail:(NSString *)endUserEmail date:(NSTimeInterval)date randomString:(NSString *)randomString;
@@ -168,6 +168,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
   _apiClient.accessToken = @"accessToken";
   urlRequest = [_apiClient requestWithURL:url HTTPMethod:nil andHTTPBody:nil];
   XCTAssertEqualObjects([urlRequest valueForHTTPHeaderField:@"Authorization"], @"Bearer accessToken");
+  XCTAssertEqualObjects([urlRequest valueForHTTPHeaderField:@"User-Agent"], @"Wootric-Mobile-SDK");
   
   NSString *httpBody = [[NSString alloc] initWithData:urlRequest.HTTPBody encoding:NSUTF8StringEncoding];
   XCTAssertEqualObjects(httpBody, @"");
@@ -217,10 +218,9 @@ static NSString *const WTRAPIVersion = @"api/v1";
   NSTimeInterval date = 1234567890;
   
   XCTAssertEqualObjects([_apiClient buildUniqueLinkAccountToken:_apiClient.accountToken
-                                            endUserEmail:_apiClient.settings.endUserEmail
-                                                    date:date
-                                            randomString:randomString],
-                 @"1ed9f1c96018e2d577b3f864dc59dffe2baccc7103f6dcdadc40c3b6ec98cb0b");
+                                                   endUserEmail:_apiClient.settings.endUserEmail
+                                                           date:date
+                                                   randomString:randomString], @"1ed9f1c96018e2d577b3f864dc59dffe2baccc7103f6dcdadc40c3b6ec98cb0b");
 }
 
 - (void)testResponseParams {

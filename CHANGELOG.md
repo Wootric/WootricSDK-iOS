@@ -1,3 +1,10 @@
+## 0.18.2 (2020-08-11)
+
+### Changes:
+
+- Fix authenticate bug
+- Fix User-Agent in all requests
+
 ## 0.18.1 (2020-07-07)
 
 ### Changes:

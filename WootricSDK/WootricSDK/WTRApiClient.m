@@ -46,6 +46,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 @property (nonatomic, strong) NSString *osVersion;
 @property (nonatomic, strong) NSString *sdkVersion;
 @property (nonatomic, assign) BOOL endUserAlreadyUpdated;
+@property (nonatomic, strong) NSString *eligibilitySamplingRule;
 @property (nonatomic) int priority;
 
 @end
@@ -71,6 +72,13 @@ static NSString *const WTRAPIVersion = @"api/v1";
     _sdkVersion = [self sdkVersion];
   }
   return self;
+}
+
+- (void) resetVars {
+  _priority = 0;
+  _endUserAlreadyUpdated = NO;
+  _eligibilitySamplingRule = nil;
+  _uniqueLink = nil;
 }
 
 - (void)endUserDeclined {
@@ -152,6 +160,16 @@ static NSString *const WTRAPIVersion = @"api/v1";
     needsUpdate = YES;
     params = [NSString stringWithFormat:@"%@&phone_number=%@", params, _settings.phoneNumber];
   }
+  
+  if (self.eligibilitySamplingRule) {
+    needsUpdate = YES;
+    params = [NSString stringWithFormat:@"%@&properties[%@]=%@", params, [WTRUtils percentEscapeString:WTRSamplingRule], [WTRUtils percentEscapeString:self.eligibilitySamplingRule]];
+  }
+  
+  if (_settings.eventName) {
+    needsUpdate = YES;
+    params = [NSString stringWithFormat:@"%@&properties[%@]=%@", params, [WTRUtils percentEscapeString:WTRCustomEventName], [WTRUtils percentEscapeString:_settings.eventName]];
+  }
 
   if (_settings.customProperties) {
     needsUpdate = YES;
@@ -166,11 +184,13 @@ static NSString *const WTRAPIVersion = @"api/v1";
     NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"PUT" andHTTPBody:nil];
 
     NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-      if (error) {
-        [WTRLogger logError:@"(update end user): %@", error];
-      } else {
+      id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+      if (httpResponse.statusCode == 200) {
         [WTRLogger log:@"(update end user): user updated"];
         self->_endUserAlreadyUpdated = YES;
+      } else {
+        [WTRLogger logError:@"(update end user): %@", responseJSON];
       }
     }];
     
@@ -197,6 +217,14 @@ static NSString *const WTRAPIVersion = @"api/v1";
     
   if (_settings.productName) {
     params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, _settings.productName];
+  }
+  
+  if (self.eligibilitySamplingRule) {
+    params = [NSString stringWithFormat:@"%@&properties[%@]=%@", params, [WTRUtils percentEscapeString:WTRSamplingRule], [WTRUtils percentEscapeString:self.eligibilitySamplingRule]];
+  }
+  
+  if (_settings.eventName) {
+    params = [NSString stringWithFormat:@"%@&properties[%@]=%@", params, [WTRUtils percentEscapeString:WTRCustomEventName], [WTRUtils percentEscapeString:_settings.eventName]];
   }
     
   if (_settings.customProperties) {
@@ -271,31 +299,44 @@ static NSString *const WTRAPIVersion = @"api/v1";
   [dataTask resume];
 }
 
-- (void)authenticate:(void (^)(void))authenticated {
+- (void)authenticate:(void (^)(BOOL))authenticated {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/oauth/token", WTRBaseAPIURL]];
   NSString *params = [NSString stringWithFormat:@"grant_type=client_credentials&client_id=%@", _clientID];
   params = [self addVersionsToURLString:params];
-  
 
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
+  [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"User-Agent"];
 
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       [WTRLogger logError:@"(authentication): %@", error];
-    } else {
-      NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-      [WTRLogger log:@"(authentication): %@", responseJSON];
-      if (responseJSON) {
-        NSString *accessToken = responseJSON[@"access_token"];
-        if (accessToken) {
-          self->_accessToken = accessToken;
-          [self getEndUserWithEmail:^(NSInteger endUserID) {
-            self.userID = endUserID;
-          }];
-          authenticated();
-        }
-      }
+      authenticated(NO);
+      return;
     }
+    
+    NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    [WTRLogger log:@"(authentication): %@", responseJSON];
+    if (!responseJSON) {
+      authenticated(NO);
+      return;
+    }
+    
+    NSString *accessToken = responseJSON[@"access_token"];
+    if (!accessToken) {
+      authenticated(NO);
+      return;
+    }
+    
+    self->_accessToken = accessToken;
+    [self getEndUserWithEmail:^(NSInteger endUserID) {
+      if (endUserID != 0) {
+        self.userID = endUserID;
+        authenticated(YES);
+      } else {
+        [WTRLogger logError:@"Error getting/creating End User"];
+        authenticated(NO);
+      }
+    }];
   }];
 
   [dataTask resume];
@@ -323,6 +364,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
         [WTRLogger logError:@"%@", error];
         eligible(NO);
       } else {
+        [self resetVars];
         NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
         if (responseJSON) {
           if ([responseJSON[@"eligible"] isEqual:@1]) {
@@ -343,19 +385,9 @@ static NSString *const WTRAPIVersion = @"api/v1";
             if (responseJSON[@"settings"][@"end_user_id"] != [NSNull null]) {
               self.userID = [responseJSON[@"settings"][@"end_user_id"] integerValue];
             }
-
-            if (responseJSON[@"sampling_rule"][@"name"]) {
-              if (!self->_settings.customProperties) {
-                [self->_settings setCustomProperties:[NSMutableDictionary new]];
-              }
-              [self->_settings.customProperties setValue:responseJSON[@"sampling_rule"][@"name"] forKey:WTRSamplingRule];
-            }
             
-            if (self->_settings.eventName) {
-              if (!self->_settings.customProperties) {
-                [self->_settings setCustomProperties:[NSMutableDictionary new]];
-              }
-              [self->_settings.customProperties setValue:self->_settings.eventName forKey:WTRCustomEventName];
+            if (responseJSON[@"sampling_rule"][@"name"]) {
+              self.eligibilitySamplingRule = responseJSON[@"sampling_rule"][@"name"];
             }
             
             self->_uniqueLink = [self buildUniqueLinkAccountToken:self->_accountToken
@@ -389,6 +421,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 
 - (NSMutableURLRequest *)requestWithURL:(NSURL *)url HTTPMethod:(NSString *)httpMethod andHTTPBody:(NSString *)httpBody {
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+  [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"User-Agent"];
   
   if (httpBody) {
     httpBody = [self addVersionsToURLString:httpBody];
@@ -517,7 +550,6 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text {
-  
   NSString *params = [NSString stringWithFormat:@"origin_url=%@&end_user[id]=%ld&survey[channel]=mobile&survey[unique_link]=%@&priority=%i&metric_type=%@", _settings.originURL, endUserID, uniqueLink, priority, [_settings.surveyType lowercaseString]];
   
   if (score > -1) {
