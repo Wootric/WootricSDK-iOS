@@ -39,6 +39,10 @@
  */
 + (void)configureWithClientID:(NSString *)clientID accountToken:(NSString *)accountToken;
 /**
+ @discussion Hides a survey if it’s displayed without generating a decline. If the delay time is still running stop will abort that survey from happening.
+*/
++ (void)stop;
+/**
  @discussion It shows survey if end user is eligible.
  @param viewController View controller in which you would like to display the survey.
 */

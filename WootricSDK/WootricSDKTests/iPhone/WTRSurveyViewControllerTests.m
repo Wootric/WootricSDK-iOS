@@ -55,12 +55,6 @@
   _testViewController = nil;
 }
 
-- (void)testViewWillAppear {
-  [_viewController viewWillAppear:YES];
-  XCTAssertEqual([Wootric surveyWillAppearNotification], _notificationCenter.notifications.firstObject, @"notification not equal to 'com.wootric.surveyWillAppearNotification'");
-  XCTAssertTrue(_testViewController.willPresentSurveyBool, @"willPresentSurvey callback not executed");
-}
-
 - (void)testViewWillDisappear {
   [_viewController viewWillDisappear:YES];
   XCTAssertEqual([Wootric surveyWillDisappearNotification], _notificationCenter.notifications.firstObject, @"notification not equal to 'com.wootric.surveyWillDisappearNotification'");

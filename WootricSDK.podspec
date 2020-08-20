@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'WootricSDK'
-  s.version  = '0.18.2'
+  s.version  = '0.19.0'
   s.license  = 'MIT'
   s.summary  = 'Wootric SDK for displaying survey for end user.'
   s.homepage = 'https://github.com/Wootric/WootricSDK-iOS'

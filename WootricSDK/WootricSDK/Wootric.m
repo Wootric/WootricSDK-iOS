@@ -33,6 +33,8 @@
 #define IPAD UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
 
 static id<WTRSurveyDelegate> _delegate = nil;
+static UIViewController *_presentedViewController;
+static WTRSettings *_presentedSettings;
 
 @implementation Wootric
 
@@ -263,6 +265,25 @@ static id<WTRSurveyDelegate> _delegate = nil;
   [surveyClient.settings setPromoterCommentInURL:promoter passiveCommentInURL:passive detractorCommentInURL:detractor];
 }
 
++ (void)stop {
+  if (_presentedViewController == nil || _presentedSettings == nil) {
+    [WTRLogger log:@"No survey triggered."];
+    return;
+  }
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  
+  [surveyClient stopSurvey];
+  
+  [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(presentSurveyInViewController:) object:@[_presentedViewController, _presentedSettings]];
+  if (_presentedViewController != nil) {
+    [_presentedViewController dismissViewControllerAnimated:YES completion:^{
+      
+    }];
+  }
+  
+  [WTRLogger log:@"Stopping survey..."];
+}
+
 + (void)showSurveyInViewController:(UIViewController *)viewController event:(NSString *)eventName {
   [self setEventName:eventName];
   [self showSurveyInViewController:viewController];
@@ -273,11 +294,17 @@ static id<WTRSurveyDelegate> _delegate = nil;
   if ([surveyClient checkConfiguration]) {
     [surveyClient survey:^(WTRSettings *settings){
       [WTRLogger log:@"presenting survey view"];
+       
+      _presentedViewController = viewController;
+      _presentedSettings = settings;
       
       dispatch_async(dispatch_get_main_queue(), ^{
         [self performSelector:@selector(presentSurveyInViewController:)
                    withObject:@[viewController, settings]
                    afterDelay:settings.timeDelay];
+        
+        [[[WTRDefaultNotificationCenter alloc] initWithNotificationCenter:[NSNotificationCenter defaultCenter]] postNotificationName:[Wootric surveyWillAppearNotification] object:self];
+        [[Wootric delegate] willPresentSurvey];
       });
     }];
   } else {
@@ -291,11 +318,12 @@ static id<WTRSurveyDelegate> _delegate = nil;
 
   if (IPAD) {
     WTRiPADSurveyViewController *surveyViewController = [[WTRiPADSurveyViewController alloc] initWithSurveySettings:settings
-                                                                                                 notificationCenter:[[WTRDefaultNotificationCenter alloc] initWithNotificationCenter:[NSNotificationCenter defaultCenter]]];
+                                                                                                 notificationCenter:[[WTRDefaultNotificationCenter alloc ]initWithNotificationCenter:[NSNotificationCenter defaultCenter]]];
     [viewController presentViewController:surveyViewController animated:YES completion:nil];
   } else {
     WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:settings
-                                                                                         notificationCenter:[[WTRDefaultNotificationCenter alloc] initWithNotificationCenter:[NSNotificationCenter defaultCenter]]];
+                                                                                         notificationCenter:[[WTRDefaultNotificationCenter alloc]
+                                                                                 initWithNotificationCenter:[NSNotificationCenter defaultCenter]]];
     [viewController presentViewController:surveyViewController animated:YES completion:nil];
   }
 }

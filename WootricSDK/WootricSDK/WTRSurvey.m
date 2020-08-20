@@ -77,6 +77,10 @@
   return NO;
 }
 
+- (void)stopSurvey {
+  [self->_operationQueue cancelAllOperations];
+}
+
 - (void)endUserDeclined {
   [[WTRApiClient sharedInstance] endUserDeclined];
   [WTRDefaults setSurveyedWithType:@"decline"];

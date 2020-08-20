@@ -84,13 +84,6 @@
   [super didReceiveMemoryWarning];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  [_notificationCenter postNotificationName:[Wootric surveyWillAppearNotification]
-                                     object:self];
-  [[Wootric delegate] willPresentSurvey];
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   [_notificationCenter postNotificationName:[Wootric surveyWillDisappearNotification]
