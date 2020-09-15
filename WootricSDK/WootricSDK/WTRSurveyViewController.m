@@ -285,14 +285,17 @@
 #pragma mark - Slider methods
 
 - (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer {
-  if (!_sendButton.enabled) {
-    _sendButton.enabled = YES;
-    _sendButton.backgroundColor = [_settings sendButtonBackgroundColor];
-  }
   [_questionView sliderTapped:gestureRecognizer];
 }
 
 #pragma mark - Helper methods
+
+- (void)toggleSenderButton {
+  if (!_sendButton.enabled) {
+    _sendButton.enabled = YES;
+    _sendButton.backgroundColor = [_settings sendButtonBackgroundColor];
+  }
+}
 
 - (NSURL *)optOutURL {
   return [NSURL URLWithString:[NSString stringWithFormat:@"https://app.wootric.com/opt_out?token=%@&metric_type=%@&end_user_id=%@&end_user_email=%@&unique_link=%@&opt_out_token=%@", _accountToken, _settings.surveyType, _endUserId, _settings.endUserEmail, _uniqueLink, _token]];

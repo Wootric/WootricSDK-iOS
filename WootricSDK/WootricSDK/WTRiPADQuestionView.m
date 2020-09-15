@@ -30,7 +30,6 @@
 
 @interface WTRiPADQuestionView ()
 
-@property (nonatomic, assign) BOOL firstTap;
 @property (nonatomic, strong) UILabel *questionLabel;
 @property (nonatomic, strong) UILabel *likelyAnchor;
 @property (nonatomic, strong) UILabel *notLikelyAnchor;
@@ -45,7 +44,6 @@
   if (self = [super init]) {
     self.backgroundColor = [UIColor whiteColor];
     _settings = settings;
-    _firstTap = YES;
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
   }
   return self;

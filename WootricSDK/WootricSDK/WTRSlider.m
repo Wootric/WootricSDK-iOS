@@ -66,8 +66,7 @@
     [self setThumbImage:image forState:UIControlStateHighlighted];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addTarget:superview action:NSSelectorFromString(@"updateSliderScore:") forControlEvents:UIControlEventValueChanged];
-    UILongPressGestureRecognizer *gr = [[UILongPressGestureRecognizer alloc] initWithTarget:viewController action:NSSelectorFromString(@"sliderTapped:")];
-    gr.minimumPressDuration = 0;
+    UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:viewController action:NSSelectorFromString(@"sliderTapped:")];
     [self addGestureRecognizer:gr];
   }
   return self;
@@ -80,12 +79,7 @@
 }
 
 - (void)didAddSubview:(UIView *)subview {
-  if ([subview isKindOfClass:[UIImageView class]]) {
-    if (!_thumbAdded) {
-      [self sendSubviewToBack:subview];
-      _thumbAdded = YES;
-    }
-  } else if ([subview isKindOfClass:[UIView class]]) {
+  if (![subview isKindOfClass:[UIImageView class]]) {
     [self sendSubviewToBack:subview];
   }
 }

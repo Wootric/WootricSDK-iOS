@@ -27,6 +27,7 @@
 #import "WTRScoreView.h"
 #import "WTRSlider.h"
 #import "UIItems.h"
+#import "WTRSurveyViewController.h"
 
 @interface WTRQuestionView ()
 
@@ -37,6 +38,7 @@
 @property (nonatomic, strong) WTRSlider *scoreSlider;
 @property (nonatomic, strong) WTRScoreView *scoreLabel;
 @property (nonatomic, strong) WTRSettings *settings;
+@property (nonatomic, strong) WTRSurveyViewController *viewController;
 
 @end
 
@@ -82,13 +84,15 @@
 }
 
 - (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer {
-  [_scoreSlider tappedAtPoint:[gestureRecognizer locationInView: _scoreSlider]];
+  [_scoreSlider tappedAtPoint:[gestureRecognizer locationInView:_scoreSlider]];
   [self updateSliderScore:_scoreSlider];
 }
 
 - (void)updateSliderScore:(UISlider *)sender {
   if (_firstTap) {
+    _firstTap = NO;
     [_scoreSlider showThumb];
+    [self.viewController toggleSenderButton];
   }
   float currentValue = round(sender.value);
   int currentScore = (int)currentValue;
@@ -99,6 +103,7 @@
 }
 
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController {
+  self.viewController = (WTRSurveyViewController *) viewController;
   [self setupQuestionLabel];
   [self setupLikelyAnchor];
   [self setupNotLikelyAnchor];

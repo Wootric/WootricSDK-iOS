@@ -50,5 +50,6 @@
 @property (nonatomic, strong) UILabel *finalThankYouLabel;
 
 - (instancetype)initWithSurveySettings:(WTRSettings *)settings notificationCenter:(WTRNotificationCenter *)notificationCenter;
+- (void)toggleSenderButton;
 
 @end
