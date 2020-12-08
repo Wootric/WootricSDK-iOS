@@ -1,3 +1,9 @@
+## 0.21.1 (2021-11-08)
+
+### Changes:
+
+- Fix updateExistingEndUser bug
+
 ## 0.21.0 (2021-08-04)
 
 ### Changes:

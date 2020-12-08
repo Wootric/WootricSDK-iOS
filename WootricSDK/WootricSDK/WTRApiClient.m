@@ -186,6 +186,11 @@ static NSString *const WTRAPIVersion = @"api/v1";
     NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"PUT" andHTTPBody:nil];
 
     NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      if (error || data == nil) {
+        [WTRLogger logError:@"(update end user): %@, %@", error, data];
+        return;
+      }
+
       id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
       NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
       if (httpResponse.statusCode == 200) {
