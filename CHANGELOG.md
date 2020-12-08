@@ -1,3 +1,10 @@
+## 0.19.2 (2020-12-16)
+
+### Changes:
+
+- Fix updateExistingEndUser bug
+- Update project
+
 ## 0.19.1 (2020-09-21)
 
 ### Changes:

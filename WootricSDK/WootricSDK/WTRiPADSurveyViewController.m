@@ -257,12 +257,16 @@
       [self presentViewController:sheet animated:YES completion:nil];
     } else {
       NSString *message = [NSString stringWithFormat:@"You can't post right now, make sure your device has an internet connection and you have at least one %@ account setup", socialNetwork];
-      UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Sorry"
-                                                          message:message
-                                                         delegate:self
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil];
-      [alertView show];
+      UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"Sorry"
+                                                                         message:message
+                                                                  preferredStyle:UIAlertControllerStyleAlert];
+      UIAlertAction *okButton = [UIAlertAction actionWithTitle:@"OK"
+                                                          style:UIAlertActionStyleDefault
+                                                        handler:nil];
+
+      [alertView addAction:okButton];
+
+      [self presentViewController:alertView animated:YES completion:nil];
     }
   }
 }

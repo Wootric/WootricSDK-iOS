@@ -927,7 +927,7 @@
 
 - (NSURL *)url:(NSURL *)baseUrl withScore:(int)score comment:(NSString *)comment email:(NSString *)email {
   NSMutableString *paramsString = [NSMutableString new];
-  NSString *escapedText = [comment stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+  NSString *escapedText = [comment stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
   
   if (!escapedText) {
     escapedText = @"";

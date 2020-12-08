@@ -32,7 +32,7 @@
 @implementation WTRUtilsTests
 
 - (void)testEscapeSpace {
-  XCTAssertEqualObjects(@"abc+def", [WTRUtils percentEscapeString:@"abc def"]);
+  XCTAssertEqualObjects(@"abc%20def", [WTRUtils percentEscapeString:@"abc def"]);
 }
 
 @end
