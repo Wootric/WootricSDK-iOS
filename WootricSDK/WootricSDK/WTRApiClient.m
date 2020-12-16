@@ -179,23 +179,27 @@ static NSString *const WTRAPIVersion = @"api/v1";
 
   params = [self addVersionsToURLString:params];
 
-  if (needsUpdate) {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld?%@", WTRBaseAPIURL, WTRAPIVersion, (long)endUserID, params]];
-    NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"PUT" andHTTPBody:nil];
+    if (needsUpdate) {
+      NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld?%@", WTRBaseAPIURL, WTRAPIVersion, (long)endUserID, params]];
+      NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"PUT" andHTTPBody:nil];
 
-    NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-      id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-      NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-      if (httpResponse.statusCode == 200) {
-        [WTRLogger log:@"(update end user): user updated"];
-        self->_endUserAlreadyUpdated = YES;
-      } else {
-        [WTRLogger logError:@"(update end user): %@", responseJSON];
-      }
-    }];
-    
-    [dataTask resume];
-  }
+        NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if (error) {
+                [WTRLogger logError:@"(update end user): %@", error];
+            } else {
+                id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+                if (httpResponse.statusCode == 200) {
+                    [WTRLogger log:@"(update end user): user updated"];
+                    self->_endUserAlreadyUpdated = YES;
+                } else {
+                    [WTRLogger logError:@"(update end user): %@", responseJSON];
+                }
+            }
+        }];
+
+        [dataTask resume];
+    }
 }
 
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID {
