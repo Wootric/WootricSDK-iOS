@@ -27,6 +27,11 @@
 
 @interface UIItems : NSObject
 
++ (void)dynamicallyAddFont;
++ (UIFont *)regularFontWithSize:(CGFloat)fontSize;
++ (UIFont *)boldFontWithSize:(CGFloat)fontSize;
++ (UIFont *)mediumFontWithSize:(CGFloat)fontSize;
++ (UIFont *)italicFontWithSize:(CGFloat)fontSize;
 + (UILabel *)likelyAnchorWithSettings:(WTRSettings *)settings font:(UIFont *)font;
 + (UILabel *)notLikelyAnchorWithSettings:(WTRSettings *)settings font:(UIFont *)font;
 + (UILabel *)followupLabelWithTextColor:(UIColor *)textColor;

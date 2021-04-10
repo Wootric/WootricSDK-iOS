@@ -204,7 +204,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 
   _apiClient.settings.customProperties = [NSMutableDictionary dictionaryWithDictionary:@{ @"pricing_plan": @"pro plan" }];
   versionString = [_apiClient addPropertiesToURLString:@"string"];
-  XCTAssertEqualObjects(versionString, @"string&properties[pricing_plan]=pro+plan");
+  XCTAssertEqualObjects(versionString, @"string&properties[pricing_plan]=pro%20plan");
 }
 
 - (void)testRandomStringLength {

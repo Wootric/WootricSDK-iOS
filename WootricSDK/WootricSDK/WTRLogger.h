@@ -23,7 +23,7 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import "WTRLogLevel.h"
+#import <WootricSDK/WTRLogLevel.h>
 
 @interface WTRLogger : NSObject
 

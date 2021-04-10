@@ -31,7 +31,7 @@
 }
 
 + (UIColor *)dismissXColor {
-  return [self colorWithHexString:@"#C8C8C8"];
+  return [self colorWithHexString:@"#253746"];
 }
 
 + (UIColor *)sliderModalBorderColor {
@@ -55,43 +55,43 @@
 }
 
 + (UIColor *)anchorAndScoreColor {
-  return [self colorWithHexString:@"#C8C8C8"];
+  return [self colorWithHexString:@"#66737E"];
 }
 
 + (UIColor *)sendButtonDisabledBackgroundColor {
-  return [[self colorWithHexString:@"#D43B69"] colorWithAlphaComponent:0.4f];
+  return [[self colorWithHexString:@"#0058FF"] colorWithAlphaComponent:0.4f];
 }
 
 + (UIColor *)sendButtonBackgroundColor {
-  return [self colorWithHexString:@"#D43B69"];
+  return [self colorWithHexString:@"#0058FF"];
 }
 
 + (UIColor *)poweredByColor {
-  return [self colorWithHexString:@"#AFAFAF"];
+  return [self colorWithHexString:@"#253746"];
 }
 
 + (UIColor *)optOutTextColor {
-  return [self colorWithHexString:@"AFAFAF"];
+  return [self colorWithHexString:@"#253746"];
 }
 
 + (UIColor *)wootricTextColor {
-  return [self colorWithHexString:@"4A4A4A"];
+  return [self colorWithHexString:@"#253746"];
 }
 
 + (UIColor *)sliderValueColor {
-  return [self colorWithHexString:@"#3081C2"];
+  return [self colorWithHexString:@"#024EA9"];
 }
 
 + (UIColor *)sliderDotSelectedColor {
-  return [self colorWithHexString:@"#105DA0"];
+  return [self colorWithHexString:@"#024EA9"];
 }
 
 + (UIColor *)selectedValueDotColor {
-  return [self colorWithHexString:@"#3081C2"];
+  return [self colorWithHexString:@"#024EA9"];
 }
 
 + (UIColor *)selectedValueScoreColor {
-  return [self colorWithHexString:@"#3081C2"];
+  return [self colorWithHexString:@"#024EA9"];
 }
 
 + (UIColor *)socialShareQuestionTextColor {
@@ -99,23 +99,23 @@
 }
 
 + (UIColor *)facebookLogoTextColor {
-  return [self colorWithHexString:@"#3b5998"];
+  return [self colorWithHexString:@"#105DA0"];
 }
 
 + (UIColor *)twitterLogoTextColor {
-  return [self colorWithHexString:@"#00aced"];
+  return [self colorWithHexString:@"#105DA0"];
 }
 
 + (UIColor *)selectedValueUnderlineColor {
-  return [self colorWithHexString:@"#D43B69"];
+  return [self colorWithHexString:@"#0058FF"];
 }
 
 + (UIColor *)editScoreTextColor {
-  return [self colorWithHexString:@"#437FC5"];
+  return [self colorWithHexString:@"#0058FF"];
 }
 
 + (UIColor *)textAreaBorderColor {
-  return [self colorWithHexString:@"#DEDEDE"];
+  return [self colorWithHexString:@"#253746"];
 }
 
 + (UIColor *)textAreaTextColor {
@@ -127,11 +127,7 @@
 }
 
 + (UIColor *)callToActionButtonBackgroundColor {
-  return [self colorWithHexString:@"#18BB71"];
-}
-
-+ (UIColor *)callToActionButtonBorderColor {
-  return [self colorWithHexString:@"#13AF68"];
+  return [self colorWithHexString:@"#0058FF"];
 }
 
 + (UIColor *)iPadCircleButtonBorderColor {
@@ -139,23 +135,23 @@
 }
 
 + (UIColor *)iPadCircleButtonTextColor {
-  return [self colorWithHexString:@"#737373"];
+  return [self colorWithHexString:@"#253746"];
 }
 
 + (UIColor *)iPadCircleButtonSelectedBackgroundColor {
-  return [self colorWithHexString:@"#2D91D7"];
+  return [self colorWithHexString:@"#B3CDFF"];
 }
 
 + (UIColor *)iPadCircleButtonSelectedBorderColor {
-  return [self colorWithHexString:@"#2475AE"];
+  return [self colorWithHexString:@"#B3CDFF"];
 }
 
 + (UIColor *)iPadPoweredByWootricTextColor {
-  return [self colorWithHexString:@"#82BED3"];
+  return [self colorWithHexString:@"#253746"];
 }
 
 + (UIColor *)iPadQuestionsTextColor {
-  return [self colorWithHexString:@"#7DA52D"];
+  return [self colorWithHexString:@"#253746"];
 }
 
 + (UIColor *)iPadFeedbackTextViewBackgroundColor {
@@ -163,23 +159,23 @@
 }
 
 + (UIColor *)iPadSendButtonBackgroundColor {
-  return [self colorWithHexString:@"#808080"];
+  return [self colorWithHexString:@"#253746"];
 }
 
 + (UIColor *)iPadThankYouButtonBorderColor {
-  return [self colorWithHexString:@"#97C7E8"];
+  return [self colorWithHexString:@"#0058FF"];
 }
 
 + (UIColor *)iPadThankYouButtonTextColor {
-  return [self colorWithHexString:@"#3492D5"];
+  return [self colorWithHexString:@"#0058FF"];
 }
 
 + (UIColor *)iPadNoThanksButtonBorderColor {
-  return [self colorWithHexString:@"#E6E6E6"];
+  return [self colorWithHexString:@"#253746"];
 }
 
 + (UIColor *)iPadNoThanksButtonTextColor {
-  return [self colorWithHexString:@"#888888"];
+  return [self colorWithHexString:@"#253746"];
 }
 
 + (UIColor *)colorWithHexString:(NSString *)hexString {

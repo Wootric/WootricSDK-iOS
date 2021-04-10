@@ -30,20 +30,40 @@
 @implementation UIItems
 
 + (void)dynamicallyAddFont {
-  NSString *fontPath = [[NSBundle bundleForClass:[UIItems class]] pathForResource:@"fontawesome-webfont" ofType:@"ttf"];
-  
-  CFErrorRef error;
-  NSURL *url = [NSURL fileURLWithPath:fontPath isDirectory:NO];
-  if (!CTFontManagerRegisterFontsForURL((__bridge CFURLRef)url, kCTFontManagerScopeNone, &error)) {
-    if (CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) {
+  NSArray *fonts = @[@"fontawesome-webfont", @"IBMPlexSans-Italic", @"IBMPlexSans-Bold", @"IBMPlexSans-Medium", @"IBMPlexSans-Regular"];
+
+  for (NSString *font in fonts) {
+    NSString *fontPath = [[NSBundle bundleForClass:[UIItems class]] pathForResource:font ofType:@"ttf"];
+
+    CFErrorRef error;
+    NSURL *url = [NSURL fileURLWithPath:fontPath isDirectory:NO];
+    if (!CTFontManagerRegisterFontsForURL((__bridge CFURLRef)url, kCTFontManagerScopeNone, &error)) {
+      if (CFErrorGetCode(error) == kCTFontManagerErrorAlreadyRegistered) {
+        CFRelease(error);
+        return;
+      }
+      CFStringRef errorDescription = CFErrorCopyDescription(error);
+      NSLog(@"WootricSDK: Failed to load font: %@", errorDescription);
+      CFRelease(errorDescription);
       CFRelease(error);
-      return;
     }
-    CFStringRef errorDescription = CFErrorCopyDescription(error);
-    NSLog(@"WootricSDK: Failed to load font: %@", errorDescription);
-    CFRelease(errorDescription);
-    CFRelease(error);
   }
+}
+
++ (UIFont *)regularFontWithSize:(CGFloat)fontSize {
+  return [UIFont fontWithName:@"IBMPlexSans" size:fontSize];
+}
+
++ (UIFont *)boldFontWithSize:(CGFloat)fontSize {
+  return [UIFont fontWithName:@"IBMPlexSans-Bold" size:fontSize];
+}
+
++ (UIFont *)mediumFontWithSize:(CGFloat)fontSize {
+  return [UIFont fontWithName:@"IBMPlexSans-Medium" size:fontSize];
+}
+
++ (UIFont *)italicFontWithSize:(CGFloat)fontSize {
+  return [UIFont fontWithName:@"IBMPlexSans-Italic" size:fontSize];
 }
 
 + (UILabel *)likelyAnchorWithSettings:(WTRSettings *)settings font:(UIFont *)font {
@@ -68,7 +88,7 @@
 
 + (UILabel *)followupLabelWithTextColor:(UIColor *)textColor {
   UILabel *tempLabel = [[UILabel alloc] init];
-  tempLabel.font = [UIFont boldSystemFontOfSize:16];
+  tempLabel.font = [self boldFontWithSize:16];
   tempLabel.numberOfLines = 0;
   tempLabel.lineBreakMode = NSLineBreakByWordWrapping;
   tempLabel.textAlignment = NSTextAlignmentCenter;
@@ -81,7 +101,7 @@
 + (UILabel *)feedbackPlaceholder {
   UILabel *tempLabel = [[UILabel alloc] init];
   tempLabel.textColor = [WTRColor textAreaTextColor];
-  tempLabel.font = [UIFont systemFontOfSize:16];
+  tempLabel.font = [self regularFontWithSize:16];
   tempLabel.numberOfLines = 0;
   tempLabel.lineBreakMode = NSLineBreakByWordWrapping;
   [tempLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -92,7 +112,7 @@
 + (UITextView *)feedbackTextViewWithBackgroundColor:(UIColor *)backgroundColor {
   UITextView *tempTextView = [[UITextView alloc] init];
   tempTextView.backgroundColor = backgroundColor;
-  tempTextView.font = [UIFont systemFontOfSize:16];
+  tempTextView.font = [self regularFontWithSize:16];
   tempTextView.textColor = [WTRColor textAreaTextColor];
   tempTextView.layer.borderColor = [WTRColor textAreaBorderColor].CGColor;
   tempTextView.layer.borderWidth = 1;
@@ -143,8 +163,6 @@
 }
 
 + (UIButton *)socialButtonWithTargetViewController:(UIViewController *)viewController title:(NSString *)title textColor:(UIColor *)textColor {
-  [self dynamicallyAddFont];
-  
   UIButton *tempButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
   tempButton.hidden = YES;
     

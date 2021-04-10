@@ -1,3 +1,11 @@
+## 0.20.0 (2021-04-19)
+
+### Changes:
+
+- Reskin
+- Update demo project
+- Fix deprecations
+
 ## 0.19.1 (2020-09-21)
 
 ### Changes:

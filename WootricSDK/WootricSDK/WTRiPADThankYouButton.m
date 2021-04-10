@@ -24,6 +24,7 @@
 
 #import "WTRiPADThankYouButton.h"
 #import "WTRColor.h"
+#import "UIItems.h"
 
 @implementation WTRiPADThankYouButton
 
@@ -33,7 +34,7 @@
     self.layer.borderWidth = 1;
     self.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
     self.layer.borderColor = [WTRColor iPadThankYouButtonBorderColor].CGColor;
-    self.titleLabel.font = [UIFont systemFontOfSize:14];
+    self.titleLabel.font = [UIItems regularFontWithSize:14];
     [self setTitleColor:[WTRColor iPadThankYouButtonTextColor] forState:UIControlStateNormal];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addTarget:viewController action:NSSelectorFromString(@"openThankYouURL:") forControlEvents:UIControlEventTouchUpInside];

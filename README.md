@@ -1,9 +1,9 @@
 <p align="center" >
-  <img src="https://cloud.githubusercontent.com/assets/1431421/16471739/4e28eec8-3e24-11e6-8ee1-39d36bbf679e.png" alt="Wootric" title="Wootric">
+  <img src="https://user-images.githubusercontent.com/1431421/114659755-ff80c500-9ca8-11eb-9960-8f55a18d03cb.png" alt="Wootric" title="Wootric">
 </p>
 
 <p align="center" >
-  <img src="https://cloud.githubusercontent.com/assets/1431421/16506354/73eb99e4-3ee7-11e6-8396-0e6591eb6671.gif" alt="Wootric survey" title="Wootric">
+  <img src="https://user-images.githubusercontent.com/1431421/114664156-28f11f00-9cb0-11eb-8a8a-d9fb92d25b12.gif" alt="Wootric survey" title="Wootric">
 </p>
 
 
@@ -11,11 +11,10 @@
 
 
 ## Requirements
-- iOS 8.0+
+- iOS 9.0+
 
 ## Demos
-- View the iOS demo video with referral prompt [here.](http://cl.ly/1Q1l0w242f05)
-- View the iOS demo with App Store rating prompt [here.](http://cl.ly/2R3j0T283k2p)
+- View the iOS demo video with referral prompt [here.](https://share.getcloudapp.com/rRuGkdBA)
 
 ## Installation
 
@@ -29,7 +28,7 @@ The easiest way to get Wootric into your iOS project is to use [CocoaPods](http:
 
 2. Create a file in your Xcode project called Podfile and add the following line:
 	```ruby
-	pod "WootricSDK", "~> 0.19.1"
+	pod "WootricSDK", "~> 0.20.0"
 	```
 
 3. In your Xcode project directory run the following command:
@@ -42,7 +41,7 @@ The easiest way to get Wootric into your iOS project is to use [CocoaPods](http:
 
 ### Manually
 If you want to, you can download the SDK and add it to your project without using any dependency manager.
-*Note: Make sure you are using the latest version of Xcode and targeting iOS 8.0 or higher.*
+*Note: Make sure you are using the latest version of Xcode and targeting iOS 9.0 or higher.*
 
 1. [Download](https://github.com/Wootric/WootricSDK-iOS/releases) & unzip the Wootric SDK
 

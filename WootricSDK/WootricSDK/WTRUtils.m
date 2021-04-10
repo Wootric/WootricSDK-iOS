@@ -27,11 +27,7 @@
 @implementation WTRUtils
 
 + (NSString *)percentEscapeString:(NSString *)string {
-  NSString *result = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                               (CFStringRef)string,
-                                                                               (CFStringRef)@" ",
-                                                                               (CFStringRef)@":/?@!$&'()*+,;=",
-                                                                               kCFStringEncodingUTF8));
+  NSString *result = [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
   return [result stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 }
 

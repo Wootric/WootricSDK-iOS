@@ -188,7 +188,7 @@
   _noThanksButton.layer.cornerRadius = 3;
   _noThanksButton.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
   _noThanksButton.layer.borderColor = [WTRColor iPadNoThanksButtonBorderColor].CGColor;
-  _noThanksButton.titleLabel.font = [UIFont systemFontOfSize:14];
+  _noThanksButton.titleLabel.font = [UIItems regularFontWithSize:14];
   [_noThanksButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_noThanksButton setTitle:[_settings socialShareDeclineText] forState:UIControlStateNormal];
   [_noThanksButton setTitleColor:[WTRColor iPadNoThanksButtonTextColor] forState:UIControlStateNormal];
@@ -202,11 +202,11 @@
 }
 
 - (void)setupThankYouMainLabel {
-  _thankYouMainLabel = [UIItems thankYouMainLabelWithSettings:_settings textColor:[WTRColor iPadQuestionsTextColor] font:[UIFont boldSystemFontOfSize:16]];
+  _thankYouMainLabel = [UIItems thankYouMainLabelWithSettings:_settings textColor:[WTRColor iPadQuestionsTextColor] font:[UIItems boldFontWithSize:16]];
 }
 
 - (void)setupThankYouSetupLabel {
-  _thankYouSetupLabel = [UIItems thankYouSetupLabelWithFont:[UIFont systemFontOfSize:14]];
+  _thankYouSetupLabel = [UIItems thankYouSetupLabelWithFont:[UIItems regularFontWithSize:14]];
 }
 
 #pragma mark - Setup Constraints

@@ -101,7 +101,7 @@
   _sendButton = [[UIButton alloc] init];
   _sendButton.backgroundColor = [WTRColor iPadSendButtonBackgroundColor];
   _sendButton.layer.cornerRadius = 3;
-  _sendButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+  _sendButton.titleLabel.font = [UIItems boldFontWithSize:14];
   [_sendButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_sendButton setTitle:[self.settings sendButtonText] forState:UIControlStateNormal];
   [_sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

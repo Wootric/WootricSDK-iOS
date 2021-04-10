@@ -24,9 +24,11 @@
 
 #import "WTRiPADSurveyViewController+Views.h"
 #import "WTRColor.h"
+#import "UIItems.h"
 
-static NSString * const kPoweredByWootric = @"Powered by Wootric";
-static NSString * const kPoweredByWootricOptOut = @"Powered by Wootric •";
+static NSString *const kPoweredBy = @"powered by ";
+static NSString *const kInMoment = @"InMoment";
+static NSString *const kInMomentOptOut = @"InMoment •";
 
 @implementation WTRiPADSurveyViewController (Views)
 
@@ -39,10 +41,10 @@ static NSString * const kPoweredByWootricOptOut = @"Powered by Wootric •";
   [self setupFinalThankYouLabel];
   [self setupDismissButton];
   if ([self.settings showOptOut]) {
-    [self setupPoweredByWootric:kPoweredByWootricOptOut];
+    [self setupPoweredByWootric:[NSString stringWithFormat:@"%@%@", kPoweredBy, kInMomentOptOut]];
     [self setupOptOutButton];
   } else {
-    [self setupPoweredByWootric:kPoweredByWootric];
+    [self setupPoweredByWootric:[NSString stringWithFormat:@"%@%@", kPoweredBy, kInMoment]];
   }
 
   [self addViewsToModal];
@@ -80,7 +82,7 @@ static NSString * const kPoweredByWootricOptOut = @"Powered by Wootric •";
   self.dismissButton.layer.cornerRadius = 15;
   self.dismissButton.layer.borderWidth = 1;
   self.dismissButton.layer.borderColor = [WTRColor iPadCircleButtonBorderColor].CGColor;
-  self.dismissButton.titleLabel.font = [UIFont systemFontOfSize:20];
+  self.dismissButton.titleLabel.font = [UIItems regularFontWithSize:20];
   [self.dismissButton setTitle:@"\u00D7" forState:UIControlStateNormal];
   [self.dismissButton setTitleColor:[WTRColor iPadCircleButtonTextColor] forState:UIControlStateNormal];
   [self.dismissButton setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -94,7 +96,7 @@ static NSString * const kPoweredByWootricOptOut = @"Powered by Wootric •";
   self.finalThankYouLabel.numberOfLines = 0;
   self.finalThankYouLabel.lineBreakMode = NSLineBreakByWordWrapping;
   self.finalThankYouLabel.hidden = YES;
-  self.finalThankYouLabel.font = [UIFont systemFontOfSize:18];
+  self.finalThankYouLabel.font = [UIItems regularFontWithSize:18];
   self.finalThankYouLabel.text = [self.settings finalThankYouText];
   [self.finalThankYouLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
@@ -103,9 +105,9 @@ static NSString * const kPoweredByWootricOptOut = @"Powered by Wootric •";
   self.poweredByWootric = [[UIButton alloc] init];
   [self.poweredByWootric setTranslatesAutoresizingMaskIntoConstraints:NO];
   NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:text];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, text.length)];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor iPadPoweredByWootricTextColor] range:NSMakeRange(11, 7)];
-  [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, text.length)];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, kPoweredBy.length - 1)];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor iPadPoweredByWootricTextColor] range:NSMakeRange(kPoweredBy.length, kInMoment.length)];
+  [attrStr addAttribute:NSFontAttributeName value:[UIItems regularFontWithSize:10] range:NSMakeRange(0, text.length)];
   [self.poweredByWootric setAttributedTitle:attrStr forState:UIControlStateNormal];
   [self.poweredByWootric addTarget:self
                             action:NSSelectorFromString(@"openWootricHomepage:")
@@ -113,10 +115,11 @@ static NSString * const kPoweredByWootricOptOut = @"Powered by Wootric •";
 }
 
 - (void)setupPoweredByWootricForSocialShareView {
-  NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:kPoweredByWootric]];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, 18)];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor iPadPoweredByWootricTextColor] range:NSMakeRange(11, 7)];
-  [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, 18)];
+  NSString *text = [NSString stringWithFormat:@"%@%@", kPoweredBy, kInMoment];
+  NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:text];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, kPoweredBy.length - 1)];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor iPadPoweredByWootricTextColor] range:NSMakeRange(kPoweredBy.length, kInMoment.length)];
+  [attrStr addAttribute:NSFontAttributeName value:[UIItems regularFontWithSize:10] range:NSMakeRange(0, text.length)];
   [self.poweredByWootric setAttributedTitle:attrStr forState:UIControlStateNormal];
 }
 
@@ -125,7 +128,7 @@ static NSString * const kPoweredByWootricOptOut = @"Powered by Wootric •";
   [self.optOutButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.optOutButton setTitle:@"opt out" forState:UIControlStateNormal];
   [self.optOutButton setTitleColor:[WTRColor optOutTextColor] forState:UIControlStateNormal];
-  [self.optOutButton.titleLabel setFont:[UIFont systemFontOfSize:10]];
+  [self.optOutButton.titleLabel setFont:[UIItems regularFontWithSize:10]];
   [self.optOutButton addTarget:self
                         action:NSSelectorFromString(@"optOutButtonPressed:")
               forControlEvents:UIControlEventTouchUpInside];

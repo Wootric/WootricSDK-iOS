@@ -25,6 +25,7 @@
 #import "WTRCircleScoreButton.h"
 #import "WTRColor.h"
 #import "SimpleConstraints.h"
+#import "UIItems.h"
 
 @implementation WTRCircleScoreButton
 
@@ -34,7 +35,7 @@
     self.layer.cornerRadius = 21;
     self.layer.borderWidth = 1;
     self.layer.borderColor = [WTRColor iPadCircleButtonBorderColor].CGColor;
-    self.titleLabel.font = [UIFont systemFontOfSize:14];
+    self.titleLabel.font = [UIItems regularFontWithSize:14];
     [self setTitleColor:[WTRColor iPadCircleButtonTextColor] forState:UIControlStateNormal];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self setupConstraints];

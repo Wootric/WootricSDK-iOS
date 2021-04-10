@@ -25,6 +25,7 @@
 #import "WTRSingleScoreLabel.h"
 #import "SimpleConstraints.h"
 #import "WTRColor.h"
+#import "UIItems.h"
 
 @interface WTRSingleScoreLabel ()
 
@@ -42,7 +43,7 @@
   if (self = [super init]) {
     _selectedColor = color;
     self.textColor = [WTRColor anchorAndScoreColor];
-    self.font = [UIFont systemFontOfSize:16];
+    self.font = [UIItems regularFontWithSize:16];
     self.textAlignment = NSTextAlignmentCenter;
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
   }
@@ -51,12 +52,12 @@
 
 - (void)setAsSelected {
   self.textColor = _selectedColor;
-  self.font = [UIFont boldSystemFontOfSize:20];
+  self.font = [UIItems boldFontWithSize:20];
 }
 
 - (void)setAsUnselected {
   self.textColor = [WTRColor anchorAndScoreColor];
-  self.font = [UIFont systemFontOfSize:16];
+  self.font = [UIItems regularFontWithSize:16];
 }
 
 - (void)addConstraintsWithLeftConstraintConstant:(CGFloat)leftConstant {

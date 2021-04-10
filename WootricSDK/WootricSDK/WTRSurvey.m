@@ -28,6 +28,7 @@
 #import "WTRLogger.h"
 #import "WTREvent.h"
 #import "WTREventListOperation.h"
+#import "UIItems.h"
 
 @interface WTRSurvey ()
 
@@ -51,6 +52,7 @@
 
 - (instancetype)init {
   if (self = [super init]) {
+    [UIItems dynamicallyAddFont];
     _settings = [[WTRSettings alloc] init];
     _operationQueue = [NSOperationQueue new];
     [_operationQueue setMaxConcurrentOperationCount:1];

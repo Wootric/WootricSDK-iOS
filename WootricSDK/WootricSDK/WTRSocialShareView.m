@@ -162,7 +162,7 @@
 
 - (void)setupNoThanksButtonWithTargetViewController:(UIViewController *)viewController {
   _noThanksButton = [[UIButton alloc] init];
-  _noThanksButton.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+  _noThanksButton.titleLabel.font = [UIItems boldFontWithSize:12];
   [_noThanksButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_noThanksButton setTitle:[[_settings socialShareDeclineText] uppercaseString] forState:UIControlStateNormal];
   [_noThanksButton setTitleColor:[_settings sendButtonBackgroundColor] forState:UIControlStateNormal];
@@ -172,11 +172,7 @@
 }
 
 - (void)setupThankYouMainLabel {
-  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    _thankYouMainLabel = [UIItems thankYouMainLabelWithSettings:_settings textColor:[UIColor blackColor] font:[UIFont systemFontOfSize:18 weight:UIFontWeightMedium]];
-  } else {
-    _thankYouMainLabel = [UIItems thankYouMainLabelWithSettings:_settings textColor:[UIColor blackColor] font:[UIFont systemFontOfSize:18]];
-  }
+  _thankYouMainLabel = [UIItems thankYouMainLabelWithSettings:_settings textColor:[UIColor blackColor] font:[UIItems mediumFontWithSize:18]];
 }
 
 - (void)setupThankYouSetupLabel {
@@ -185,7 +181,7 @@
   _thankYouSetupLabel.textColor = [_settings socialSharingColor];
   _thankYouSetupLabel.numberOfLines = 0;
   _thankYouSetupLabel.lineBreakMode = NSLineBreakByWordWrapping;
-  _thankYouSetupLabel.font = [UIFont boldSystemFontOfSize:12];
+  _thankYouSetupLabel.font = [UIItems boldFontWithSize:12];
   [_thankYouSetupLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 

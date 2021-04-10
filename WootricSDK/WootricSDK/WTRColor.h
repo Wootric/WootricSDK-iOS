@@ -50,7 +50,6 @@
 + (UIColor *)textAreaTextColor;
 + (UIColor *)textAreaCursorColor;
 + (UIColor *)callToActionButtonBackgroundColor;
-+ (UIColor *)callToActionButtonBorderColor;
 + (UIColor *)socialShareQuestionTextColor;
 + (UIColor *)facebookLogoTextColor;
 + (UIColor *)twitterLogoTextColor;

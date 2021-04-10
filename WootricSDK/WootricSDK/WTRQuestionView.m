@@ -123,19 +123,15 @@
 #pragma mark - Subviews setup
 
 - (void)setupQuestionLabel {
-  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    _questionLabel = [UIItems questionLabelWithSettings:_settings font:[UIFont systemFontOfSize:18 weight:UIFontWeightMedium]];
-  } else {
-    _questionLabel = [UIItems questionLabelWithSettings:_settings font:[UIFont systemFontOfSize:18]];
-  }
+  _questionLabel = [UIItems questionLabelWithSettings:_settings font:[UIItems mediumFontWithSize:18]];
 }
 
 - (void)setupLikelyAnchor {
-  _likelyAnchor = [UIItems likelyAnchorWithSettings:_settings font:[UIFont systemFontOfSize:14]];
+  _likelyAnchor = [UIItems likelyAnchorWithSettings:_settings font:[UIItems regularFontWithSize:14]];
 }
 
 - (void)setupNotLikelyAnchor {
-  _notLikelyAnchor = [UIItems notLikelyAnchorWithSettings:_settings font:[UIFont systemFontOfSize:14]];
+  _notLikelyAnchor = [UIItems notLikelyAnchorWithSettings:_settings font:[UIItems regularFontWithSize:14]];
 }
 
 - (void)setupSliderWithSuperview:(UIView *)superview andViewController:(UIViewController *)viewController {

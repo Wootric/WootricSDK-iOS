@@ -24,6 +24,7 @@
 
 #import "WTRThankYouButton.h"
 #import "WTRColor.h"
+#import "UIItems.h"
 
 @implementation WTRThankYouButton
 
@@ -33,7 +34,7 @@
     self.layer.borderWidth = 1;
     self.backgroundColor = backgroundColor;
     self.layer.borderColor = [backgroundColor colorWithAlphaComponent:0.65f].CGColor;
-    self.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    self.titleLabel.font = [UIItems boldFontWithSize:14];
     self.titleLabel.adjustsFontSizeToFitWidth = YES;
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];

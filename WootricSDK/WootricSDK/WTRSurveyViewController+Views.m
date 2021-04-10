@@ -25,8 +25,10 @@
 #import "WTRSurveyViewController+Views.h"
 #import "WTRColor.h"
 #import "UIImage+ImageFromColor.h"
+#import "UIItems.h"
 
-static NSString *const kPoweredByWootric = @"Powered by Wootric";
+static NSString *const kPoweredBy = @"powered by ";
+static NSString *const kInMoment = @"InMoment";
 
 @implementation WTRSurveyViewController (Views)
 
@@ -55,7 +57,7 @@ static NSString *const kPoweredByWootric = @"Powered by Wootric";
   // This button is positioned beyond modalView bounds
   // We need to add it as a property on modalView with overriden hitTest:withEvent: method
   UIButton *dismissButton = [[UIButton alloc] init];
-  dismissButton.titleLabel.font = [UIFont systemFontOfSize:32];
+  dismissButton.titleLabel.font = [UIItems regularFontWithSize:32];
   [dismissButton setTitle:@"\u00D7" forState:UIControlStateNormal];
   [dismissButton setTitleColor:[WTRColor dismissXColor] forState:UIControlStateNormal];
   [dismissButton setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -71,11 +73,7 @@ static NSString *const kPoweredByWootric = @"Powered by Wootric";
   self.finalThankYouLabel.numberOfLines = 0;
   self.finalThankYouLabel.lineBreakMode = NSLineBreakByWordWrapping;
   self.finalThankYouLabel.hidden = YES;
-  if ([UIFont respondsToSelector:@selector(systemFontOfSize:weight:)]) {
-    self.finalThankYouLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightMedium];
-  } else {
-    self.finalThankYouLabel.font = [UIFont systemFontOfSize:18];
-  }
+  self.finalThankYouLabel.font = [UIItems mediumFontWithSize:18];
   self.finalThankYouLabel.text = [self.settings finalThankYouText];
   [self.finalThankYouLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
@@ -85,7 +83,7 @@ static NSString *const kPoweredByWootric = @"Powered by Wootric";
   self.sendButton.backgroundColor = [[self.settings sendButtonBackgroundColor] colorWithAlphaComponent:0.4f];
   self.sendButton.enabled = NO;
   self.sendButton.layer.cornerRadius = 3;
-  self.sendButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+  self.sendButton.titleLabel.font = [UIItems boldFontWithSize:14];
   [self.sendButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.sendButton setTitle:[self.settings sendButtonText] forState:UIControlStateNormal];
   [self.sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -98,10 +96,10 @@ static NSString *const kPoweredByWootric = @"Powered by Wootric";
 - (void)setupPoweredByWootric {
   self.poweredByWootric = [[UIButton alloc] init];
   [self.poweredByWootric setTranslatesAutoresizingMaskIntoConstraints:NO];
-  NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:kPoweredByWootric];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, 10)];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColor] range:NSMakeRange(11, 7)];
-  [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, 18)];
+  NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", kPoweredBy, kInMoment]];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, kPoweredBy.length - 1)];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColor] range:NSMakeRange(kPoweredBy.length, kInMoment.length)];
+  [attrStr addAttribute:NSFontAttributeName value:[UIItems regularFontWithSize:10] range:NSMakeRange(0, kPoweredBy.length + kInMoment.length)];
   [self.poweredByWootric setAttributedTitle:attrStr forState:UIControlStateNormal];
   [self.poweredByWootric addTarget:self
                       action:NSSelectorFromString(@"openWootricHomepage:")
@@ -113,7 +111,7 @@ static NSString *const kPoweredByWootric = @"Powered by Wootric";
   [self.optOutButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.optOutButton setTitle:@"opt out" forState:UIControlStateNormal];
   [self.optOutButton setTitleColor:[WTRColor optOutTextColor] forState:UIControlStateNormal];
-  [self.optOutButton.titleLabel setFont:[UIFont systemFontOfSize:10]];
+  [self.optOutButton.titleLabel setFont:[UIItems regularFontWithSize:10]];
   [self.optOutButton addTarget:self
                             action:NSSelectorFromString(@"optOutButtonPressed:")
                   forControlEvents:UIControlEventTouchUpInside];
