@@ -1,3 +1,9 @@
+## 0.20.1 (2021-07-07)
+
+### Changes:
+
+- Fix dismiss X color
+
 ## 0.20.0 (2021-04-19)
 
 ### Changes:

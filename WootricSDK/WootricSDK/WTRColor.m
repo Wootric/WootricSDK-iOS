@@ -31,7 +31,7 @@
 }
 
 + (UIColor *)dismissXColor {
-  return [self colorWithHexString:@"#253746"];
+  return [self colorWithHexString:@"#C8C8C8"];
 }
 
 + (UIColor *)sliderModalBorderColor {
