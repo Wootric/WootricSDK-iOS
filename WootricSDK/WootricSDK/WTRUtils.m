@@ -31,4 +31,7 @@
   return [result stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 }
 
++ (BOOL)startsWithEU:(NSString *)aString {
+  return [[aString substringToIndex:2] isEqualToString:@"EU"];
+}
 @end
