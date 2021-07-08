@@ -1002,6 +1002,8 @@
   settingsCopy.sendButtonBackgroundColor = self.sendButtonBackgroundColor;
   settingsCopy.sliderColor = self.sliderColor;
   settingsCopy.socialSharingColor = self.socialSharingColor;
+  settingsCopy.userCustomThankYou = self.userCustomThankYou;
+  settingsCopy.userCustomMessages = self.userCustomMessages;
   
   settingsCopy.localizedTexts = [self.localizedTexts copy];
   settingsCopy.customMessages = [self.customMessages copy];
