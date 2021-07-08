@@ -35,4 +35,12 @@
   XCTAssertEqualObjects(@"abc%20def", [WTRUtils percentEscapeString:@"abc def"]);
 }
 
+- (void)testStartsWithEU {
+  XCTAssertTrue([WTRUtils startsWithEU:@"NPS-EU"]);
+  XCTAssertFalse([WTRUtils startsWithEU:@"nps-eu"]);
+  XCTAssertFalse([WTRUtils startsWithEU:@"NPS"]);
+  XCTAssertFalse([WTRUtils startsWithEU:@"eu-NPS"]);
+  XCTAssertFalse([WTRUtils startsWithEU:@"EU-NPS"]);
+}
+
 @end

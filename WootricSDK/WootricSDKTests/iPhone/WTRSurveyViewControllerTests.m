@@ -34,17 +34,24 @@
 @property (nonatomic, strong) WTRSurveyViewController *viewController;
 @property (nonatomic, strong) WTRDelegateMockViewController *testViewController;
 @property (nonatomic, strong) WTRMockNotificationCenter *notificationCenter;
+@property (nonatomic, strong) WTRApiClient *apiClient;
+@end
+
+@interface WTRSurveyViewController (Tests)
+@property (nonatomic, strong) NSString *accountToken;
+- (NSURL *)optOutURL;
 @end
 
 @implementation WTRSurveyViewControllerTests
 
 - (void)setUp {
   [super setUp];
+  _apiClient = [WTRApiClient sharedInstance];
   [Wootric configureWithClientID:@"id123" accountToken:@"nps-test"];
   _testViewController = [[WTRDelegateMockViewController alloc] init];
   [Wootric setDelegate:_testViewController];
   _notificationCenter = [WTRMockNotificationCenter new];
-  _viewController = [[WTRSurveyViewController alloc] initWithSurveySettings:[WTRApiClient sharedInstance].settings
+  _viewController = [[WTRSurveyViewController alloc] initWithSurveySettings:_apiClient.settings
                                                          notificationCenter:_notificationCenter];
 }
 
@@ -71,6 +78,14 @@
   [_viewController viewDidDisappear:YES];
   XCTAssertEqual([Wootric surveyDidDisappearNotification], _notificationCenter.notifications.firstObject, @"notification not equal to 'com.wootric.surveyDidDisappearNotification'");
   XCTAssertTrue(_testViewController.didHideSurveyBool, @"didHideSurvey callback not executed");
+}
+
+- (void)testOptOutUrl {
+  XCTAssertTrue([[[_viewController optOutURL] absoluteString] hasPrefix:@"https://app.wootric.com/"]);
+
+  [_viewController setAccountToken:@"NPS-EU"];
+
+  XCTAssertTrue([[[_viewController optOutURL] absoluteString] hasPrefix:@"https://app.wootric.eu/"]);
 }
 
 @end

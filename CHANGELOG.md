@@ -1,3 +1,9 @@
+## 0.21.0 (2021-08-04)
+
+### Changes:
+
+- Add support for EU tokens
+
 ## 0.20.1 (2021-07-07)
 
 ### Changes:

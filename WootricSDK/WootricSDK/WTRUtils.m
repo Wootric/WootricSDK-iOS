@@ -31,4 +31,10 @@
   return [result stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 }
 
++ (BOOL)startsWithEU:(NSString *)aString {
+  if ([aString length] < 6) {
+    return false;
+  }
+  return [[aString substringToIndex:6] isEqualToString:@"NPS-EU"];
+}
 @end

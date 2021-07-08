@@ -34,6 +34,8 @@ static NSString *const WTRRegisterEventsEndpoint = @"/registered_events.json";
 static NSString *const WTREligibleEndpoint = @"/eligible.json";
 static NSString *const WTRSurveyServerURL = @"https://survey.wootric.com";
 static NSString *const WTRBaseAPIURL = @"https://api.wootric.com";
+static NSString *const WTRSurveyEUServerURL = @"https://eligibility.wootric.eu";
+static NSString *const WTRBaseEUAPIURL = @"https://app.wootric.eu";
 static NSString *const WTRAPIVersion = @"api/v1";
 
 @interface WTRApiClient ()
@@ -74,7 +76,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
   return self;
 }
 
-- (void) resetVars {
+- (void)resetVars {
   _priority = 0;
   _endUserAlreadyUpdated = NO;
   _eligibilitySamplingRule = nil;
@@ -108,7 +110,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
   
   escapedEmail = [self addVersionsToURLString:escapedEmail];
   
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", WTRBaseAPIURL, WTRAPIVersion, escapedEmail]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", [self baseApiUrl], WTRAPIVersion, escapedEmail]];
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:nil andHTTPBody:nil];
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
@@ -180,7 +182,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
   params = [self addVersionsToURLString:params];
 
   if (needsUpdate) {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld?%@", WTRBaseAPIURL, WTRAPIVersion, (long)endUserID, params]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld?%@", [self baseApiUrl], WTRAPIVersion, (long)endUserID, params]];
     NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"PUT" andHTTPBody:nil];
 
     NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -199,7 +201,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", WTRBaseAPIURL, WTRAPIVersion]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", [self baseApiUrl], WTRAPIVersion]];
   NSString *escapedEmail = [WTRUtils percentEscapeString:[_settings getEndUserEmailOrUnknown]];
   NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
     
@@ -251,7 +253,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (void)createResponseForEndUser:(NSInteger)endUserID withScore:(NSInteger)score text:(NSString *)text endpoint:(NSString *)endpoint {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/%@", WTRBaseAPIURL, WTRAPIVersion, (long)endUserID, endpoint]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/%@", [self baseApiUrl], WTRAPIVersion, (long)endUserID, endpoint]];
   NSString *params = [self paramsWithScore:score endUserID:endUserID accountID:_accountID uniqueLink:_uniqueLink priority:_priority text:text];
   
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
@@ -272,8 +274,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (void)getRegisteredEventList:(void (^)(NSArray *))events {
-  NSString *baseURLString = [NSString stringWithFormat:@"%@%@?account_token=%@",
-                             WTRSurveyServerURL, WTRRegisterEventsEndpoint, _accountToken];
+  NSString *baseURLString = [NSString stringWithFormat:@"%@%@?account_token=%@", [self eligibilityUrl], WTRRegisterEventsEndpoint, _accountToken];
 
   NSURL *url = [NSURL URLWithString:baseURLString];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -300,7 +301,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (void)authenticate:(void (^)(BOOL))authenticated {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/oauth/token", WTRBaseAPIURL]];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/oauth/token", [self baseApiUrl]]];
   NSString *params = [NSString stringWithFormat:@"grant_type=client_credentials&client_id=%@", _clientID];
   params = [self addVersionsToURLString:params];
 
@@ -344,8 +345,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 
 - (void)checkEligibility:(void (^)(BOOL))eligible {
   if (self.settings.forceSurvey || [self needsSurvey]) {
-    NSString *baseURLString = [NSString stringWithFormat:@"%@%@?account_token=%@",
-                               WTRSurveyServerURL, WTREligibleEndpoint, _accountToken];
+    NSString *baseURLString = [NSString stringWithFormat:@"%@%@?account_token=%@", [self eligibilityUrl], WTREligibleEndpoint, _accountToken];
     
     baseURLString = [self addVersionsToURLString:baseURLString];
     baseURLString = [self addEmailToURLString:baseURLString];
@@ -599,6 +599,14 @@ static NSString *const WTRAPIVersion = @"api/v1";
 
 - (NSString *)osVersion {
   return [[UIDevice currentDevice] systemVersion];
+}
+
+- (NSString *)baseApiUrl {
+  return [WTRUtils startsWithEU:_accountToken] ? WTRBaseEUAPIURL : WTRBaseAPIURL;
+}
+
+- (NSString *)eligibilityUrl {
+  return [WTRUtils startsWithEU:_accountToken] ? WTRSurveyEUServerURL : WTRSurveyServerURL;
 }
 
 - (BOOL)needsSurvey {

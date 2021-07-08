@@ -27,5 +27,6 @@
 @interface WTRUtils : NSObject
 
 + (NSString *)percentEscapeString:(NSString *)string;
++ (BOOL)startsWithEU:(NSString *)aString;
 
 @end

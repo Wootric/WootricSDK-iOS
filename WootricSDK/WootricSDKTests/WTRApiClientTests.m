@@ -31,6 +31,8 @@ static NSString *const WTRRegisterEventsEndpoint = @"/registered_events.json";
 static NSString *const WTREligibleEndpoint = @"/eligible.json";
 static NSString *const WTRSurveyServerURL = @"https://survey.wootric.com";
 static NSString *const WTRBaseAPIURL = @"https://api.wootric.com";
+static NSString *const WTRSurveyEUServerURL = @"https://eligibility.wootric.eu";
+static NSString *const WTRBaseEUAPIURL = @"https://app.wootric.eu";
 static NSString *const WTRAPIVersion = @"api/v1";
 
 @interface WTRApiClientTests : XCTestCase
@@ -63,6 +65,8 @@ static NSString *const WTRAPIVersion = @"api/v1";
 - (NSString *)addPropertiesToURLString:(NSString *)baseURLString;
 - (NSString *)addEmailToURLString:(NSString *)baseURLString;
 - (BOOL)needsSurvey;
+- (NSString *)baseApiUrl;
+- (NSString *)eligibilityUrl;
 
 @end
 
@@ -176,6 +180,22 @@ static NSString *const WTRAPIVersion = @"api/v1";
   urlRequest = [_apiClient requestWithURL:url HTTPMethod:nil andHTTPBody:params];
   httpBody = [[NSString alloc] initWithData:urlRequest.HTTPBody encoding:NSUTF8StringEncoding];
   XCTAssertEqualObjects(httpBody, @"params&os_name=iOS&sdk_version=0.6.0&os_version=10.0");
+}
+
+- (void)testEligibilityURL {
+  _apiClient.accountToken = @"NPS-EU-token";
+  XCTAssertEqualObjects([_apiClient eligibilityUrl], WTRSurveyEUServerURL);
+
+  _apiClient.accountToken = @"NPS-token";
+  XCTAssertEqualObjects([_apiClient eligibilityUrl], WTRSurveyServerURL);
+}
+
+- (void)testBaseApiURL {
+  _apiClient.accountToken = @"NPS-EU-token";
+  XCTAssertEqualObjects([_apiClient baseApiUrl], WTRBaseEUAPIURL);
+
+  _apiClient.accountToken = @"NPS-token";
+  XCTAssertEqualObjects([_apiClient baseApiUrl], WTRBaseAPIURL);
 }
 
 - (void)testAddVersionsToURLString {
