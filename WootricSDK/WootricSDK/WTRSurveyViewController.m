@@ -31,6 +31,7 @@
 #import "WTRThankYouButton.h"
 #import "WTRLogger.h"
 #import "WTRApiClient.h"
+#import "WTRUtils.h"
 #import "NSString+FontAwesome.h"
 #import "Wootric.h"
 #import "WTRSurveyDelegate.h"
@@ -300,7 +301,8 @@
 }
 
 - (NSURL *)optOutURL {
-  return [NSURL URLWithString:[NSString stringWithFormat:@"https://app.wootric.com/opt_out?token=%@&metric_type=%@&end_user_id=%@&end_user_email=%@&unique_link=%@&opt_out_token=%@", _accountToken, _settings.surveyType, _endUserId, _settings.endUserEmail, _uniqueLink, _token]];
+  NSString *tld = [WTRUtils startsWithEU:_accountToken] ? @"eu" : @"com";
+  return [NSURL URLWithString:[NSString stringWithFormat:@"https://app.wootric.%@/opt_out?token=%@&metric_type=%@&end_user_id=%@&end_user_email=%@&unique_link=%@&opt_out_token=%@", tld, _accountToken, _settings.surveyType, _endUserId, _settings.endUserEmail, _uniqueLink, _token]];
 }
 
 - (void)setupFacebookAndTwitterForScore:(int)score {
