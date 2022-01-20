@@ -22,10 +22,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <WootricSDK/Wootric.h>
-#import <WootricSDK/SEGWootric.h>
-#import <WootricSDK/WTRLogger.h>
-#import <WootricSDK/WTRSurveyDelegate.h>
+#import "Wootric.h"
+#import "SEGWootric.h"
+#import "WTRLogger.h"
+#import "WTRSurveyDelegate.h"
 
 FOUNDATION_EXPORT double WootricSDKMainVersionNumber;
 FOUNDATION_EXPORT const unsigned char WootricSDKMainVersionString[];
