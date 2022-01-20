@@ -1,9 +1,14 @@
-// swift-tools-version:4.2
+// swift-tools-version:5.5
 import PackageDescription
 
 let package = Package(
     name: "WootricSDK",
-    // platforms: [.iOS("8.0"), .macOS("10.10"), .tvOS("9.0"), .watchOS("2.0")],
+    platforms: [
+        .iOS(.v9),
+        .macOS(.v10_10),
+        .tvOS(.v9),
+        .watchOS(.v2)
+    ],
     products: [
         .library(name: "WootricSDK", targets: ["WootricSDK"])
     ],
@@ -12,7 +17,19 @@ let package = Package(
         .target(
             name: "WootricSDK",
             dependencies: [],
-            path: "WootricSDK/WootricSDK"
-        )
-    ]
+            path: "WootricSDK/WootricSDK",
+            exclude: ["Info.plist"],
+            resources: [
+                .process("fontawesome-webfont.ttf"),
+                .process("IBMPlexSans-Bold.ttf"),
+                .process("IBMPlexSans-Italic.ttf"),
+                .process("IBMPlexSans-Medium.ttf"),
+                .process("IBMPlexSans-Regular.ttf"),
+            ],
+            publicHeadersPath: "Public",
+            cSettings: [
+                .headerSearchPath("."),
+            ]),
+    ],
+    cxxLanguageStandard: CXXLanguageStandard(rawValue: "gnu++17")
 )

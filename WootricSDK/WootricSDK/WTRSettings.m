@@ -51,7 +51,7 @@
     _surveyedDefaultDuration = 90;
     _surveyedDefaultDurationDecline = 30;
     _firstSurveyAfter = @0;
-    _originURL = [[NSBundle mainBundle] bundleIdentifier];
+    _originURL = [SWIFTPM_MODULE_BUNDLE bundleIdentifier];
     _userCustomThankYou = [[WTRUserCustomThankYou alloc] init];
     _userCustomMessages = [[WTRUserCustomMessages alloc] init];
     _userCustomSocial = [[WTRCustomSocial alloc] init];
