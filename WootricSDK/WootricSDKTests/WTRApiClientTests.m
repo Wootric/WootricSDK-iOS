@@ -57,7 +57,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID;
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID;
 - (void)authenticate:(void (^)(BOOL))authenticated;
-- (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text;
+- (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text picklistAnswers:(NSDictionary *)picklistAnswers;
 - (NSString *)randomString;
 - (NSString *)buildUniqueLinkAccountToken:(NSString *)accountToken endUserEmail:(NSString *)endUserEmail date:(NSTimeInterval)date randomString:(NSString *)randomString;
 - (NSString *)addSurveyServerCustomSettingsToURLString:(NSString *)baseURLString;
@@ -244,7 +244,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (void)testResponseParams {
-  static NSString *expectedResponse = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps&score=9";
+  static NSString *expectedResponse = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps&driver_picklist[Price]=Precio&score=9";
   static NSString *expectedResponseAccountId = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps&score=9&account_id=1234";
   
   static NSString *expectedResponseAccountIdText = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps&score=9&text=test&account_id=1234";
@@ -257,18 +257,18 @@ static NSString *const WTRAPIVersion = @"api/v1";
   NSString *text = nil;
   int priority = 0;
   
-  NSString *params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil];
+  NSString *params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil picklistAnswers:@{@"Price": @"Precio"}];
   XCTAssertEqualObjects(params, expectedResponse, "Should not have account_id nor text in params");
   
-  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text];
+  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text picklistAnswers:@{@"Price": @"Precio"}];
   XCTAssertEqualObjects(params, expectedResponse, "Should not have account_id nor text in params");
   
   accountID = @1234;
-  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text];
+  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text picklistAnswers:nil];
   XCTAssertEqualObjects(params, expectedResponseAccountId);
   
   text = @"test";
-  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text];
+  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text picklistAnswers:nil];
   XCTAssertEqualObjects(params, expectedResponseAccountIdText);
 }
 
@@ -282,11 +282,11 @@ static NSString *const WTRAPIVersion = @"api/v1";
   NSString *uniqueLink = @"5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e";
   int priority = 0;
   
-  NSString *params = [_apiClient paramsWithScore:-1 endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil];
+  NSString *params = [_apiClient paramsWithScore:-1 endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil picklistAnswers:nil];
   XCTAssertEqualObjects(params, expectedResponse);
   
   accountID = @1234;
-  params = [_apiClient paramsWithScore:-1 endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil];
+  params = [_apiClient paramsWithScore:-1 endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil picklistAnswers:nil];
   XCTAssertEqualObjects(params, expectedResponseAccountId);
 }
 
@@ -298,10 +298,10 @@ static NSString *const WTRAPIVersion = @"api/v1";
   NSString *uniqueLink = @"5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e";
   _apiClient.priority = 0;
   
-  NSString *params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:_apiClient.priority text:nil];
+  NSString *params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:_apiClient.priority text:nil picklistAnswers:@{@"Price": @"Precio"}];
   XCTAssertEqual(_apiClient.priority, 1, "priority should be 1");
-  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:_apiClient.priority text:nil];
-  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:_apiClient.priority text:nil];
+  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:_apiClient.priority text:nil picklistAnswers:nil];
+  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:_apiClient.priority text:nil picklistAnswers:nil];
   XCTAssertEqual(_apiClient.priority, 3, "priority should be 3");
 }
 

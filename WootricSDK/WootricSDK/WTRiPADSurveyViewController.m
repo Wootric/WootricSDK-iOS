@@ -156,7 +156,7 @@
 
 - (void)endUserVotedWithScore:(int)score andText:(NSString *)text {
   WTRSurvey *survey = [[WTRSurvey alloc] init];
-  [survey endUserVotedWithScore:score andText:text];
+  [survey endUserVotedWithScore:score text:text picklistAnswers:nil];
   _alreadyVoted = YES;
   [WTRLogger log:@"Vote"];
 }

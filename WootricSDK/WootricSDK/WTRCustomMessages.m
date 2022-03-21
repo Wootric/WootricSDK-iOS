@@ -30,6 +30,7 @@
   if (self = [super init]) {
     NSDictionary *followupQuestionList = customMessages[@"followup_questions_list"];
     NSDictionary *placeholderTextList = customMessages[@"placeholder_texts_list"];
+    NSDictionary *driverPicklistList = customMessages[@"driver_picklist"];
 
     if (customMessages[@"followup_question"]) {
       _followupQuestion = customMessages[@"followup_question"];
@@ -37,6 +38,10 @@
 
     if (customMessages[@"placeholder_text"]) {
       _followupText = customMessages[@"placeholder_text"];
+    }
+    
+    if (customMessages[@"picklist"]) {
+      _driverPicklist = customMessages[@"picklist"];
     }
 
     if (followupQuestionList) {
@@ -49,6 +54,12 @@
       _detractorText = placeholderTextList[@"detractor_text"];
       _passiveText = placeholderTextList[@"passive_text"];
       _promoterText = placeholderTextList[@"promoter_text"];
+    }
+    
+    if (driverPicklistList) {
+      _detractorPicklist = driverPicklistList[@"detractor_picklist"];
+      _passivePicklist = driverPicklistList[@"passive_picklist"];
+      _promoterPicklist = driverPicklistList[@"promoter_picklist"];
     }
   }
   return self;
@@ -64,6 +75,10 @@
   customMessagesCopy.detractorText = self.detractorText;
   customMessagesCopy.passiveText = self.passiveText;
   customMessagesCopy.promoterText = self.promoterText;
+  customMessagesCopy.driverPicklist = self.driverPicklist;
+  customMessagesCopy.detractorPicklist = self.detractorPicklist;
+  customMessagesCopy.passivePicklist = self.passivePicklist;
+  customMessagesCopy.promoterPicklist = self.promoterPicklist;
   return customMessagesCopy;
 }
 @end

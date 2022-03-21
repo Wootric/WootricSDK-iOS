@@ -146,6 +146,7 @@
   [_feedbackView textViewResignFirstResponder];
   _scrolled = NO;
   [self setQuestionViewVisible:YES andFeedbackViewVisible:NO];
+  [self updateConstraints];
 }
 
 - (void)dismissButtonPressed:(UIButton *)sender {
@@ -159,9 +160,11 @@
 - (void)sendButtonPressed:(UIButton *)sender {
   _alreadyVoted = YES;
   _currentScore = [_questionView getScoreSliderValue];
+  NSDictionary *picklistAnswers = [_feedbackView getDriverPicklistSelectedAnswers];
+
   NSString *placeholderText = [_settings followupPlaceholderTextForScore:_currentScore];
   _feedbackText = [_feedbackView feedbackText];
-  [self endUserVotedWithScore:_currentScore andText:_feedbackText];
+  [self endUserVotedWithScore:_currentScore text:_feedbackText picklistAnswers:picklistAnswers];
   if ([_feedbackView isActive]) {
     [_feedbackView textViewResignFirstResponder];
     [self presentShareScreenOrDismissForScore:_currentScore];
@@ -174,6 +177,26 @@
       [self setQuestionViewVisible:NO andFeedbackViewVisible:YES];
       [_feedbackView setFollowupLabelTextBasedOnScore:_currentScore];
       [_feedbackView setFeedbackPlaceholderText:placeholderText];
+      [_feedbackView setDriverPicklistBasedOnScore:_currentScore];
+
+      [self updateConstraints];
+    }
+  }
+}
+
+- (void)updateConstraints {
+  if (_feedbackView.hidden) {
+    if ([_settings driverPicklistAnswers]) {
+      [self updateConstraintModalHeight:308];
+      [self setModalGradient:_modalView.bounds];
+      [_modalView.layer insertSublayer:_gradient atIndex:0];
+    }
+  } else {
+    if ([_settings driverPicklistAnswers]) {
+      int numberOfRows = [_feedbackView numberOfRows];
+      [self updateConstraintModalHeight:(308 + (numberOfRows * 43)) feedbackViewHeight:(213 + (numberOfRows * 43))];
+      [self setModalGradient:_modalView.bounds];
+      [_modalView.layer insertSublayer:_gradient atIndex:0];
     }
   }
 }
@@ -191,9 +214,9 @@
   [self dismissViewControllerWithBackgroundFade];
 }
 
-- (void)endUserVotedWithScore:(int)score andText:(NSString *)text {
+- (void)endUserVotedWithScore:(int)score text:(NSString *)text picklistAnswers:(NSDictionary *)picklistAnswers {
   WTRSurvey *survey = [[WTRSurvey alloc] init];
-  [survey endUserVotedWithScore:score andText:text];
+  [survey endUserVotedWithScore:score text:text picklistAnswers:picklistAnswers];
   [WTRLogger log:@"Vote"];
 }
 
@@ -297,14 +320,23 @@
   [_socialShareView displayShareButtonsWithTwitterAvailable:twitterAvailable andFacebookAvailable:facebookAvailable];
 }
 
-- (void)updateConstraintModalHeight:(CGFloat)constraintModalHeight socialShareViewHeight:(CGFloat)socialShareViewHeightConstraint {
+- (void)updateConstraintModalHeight:(CGFloat)constraintModalHeight {
   _constraintModalHeight.constant = constraintModalHeight;
-  _socialShareViewHeightConstraint.constant = socialShareViewHeightConstraint;
   _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
   
   [UIView animateWithDuration:0.2 animations:^{
     [self.view layoutIfNeeded];
   }];
+}
+
+- (void)updateConstraintModalHeight:(CGFloat)constraintModalHeight feedbackViewHeight:(CGFloat)feedbackViewHeightConstraint {
+  _constraintFeedbackViewHeight.constant = feedbackViewHeightConstraint;
+  [self updateConstraintModalHeight:constraintModalHeight];
+}
+
+- (void)updateConstraintModalHeight:(CGFloat)constraintModalHeight socialShareViewHeight:(CGFloat)socialShareViewHeightConstraint {
+  _socialShareViewHeightConstraint.constant = socialShareViewHeightConstraint;
+  [self updateConstraintModalHeight:constraintModalHeight];
 }
 
 - (BOOL)socialShareAvailableForScore:(int)score {
@@ -396,6 +428,7 @@
     self->_constraintTopToModalTop.constant = modalPosition;
     [self getSizeAndRecalculatePositionsBasedOnOrientation];
     [self setModalGradient:gradientBounds];
+    [self updateConstraints];
   } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
     self->_scrolled = NO;
     
