@@ -31,11 +31,14 @@
 - (void)initializeSubviewsWithTargetViewController:(UIViewController *)viewController;
 - (void)setupSubviewsConstraints;
 - (void)setFollowupLabelTextBasedOnScore:(int)score;
+- (void)setDriverPicklistBasedOnScore:(int)score;
 - (void)textViewResignFirstResponder;
 - (void)showFeedbackPlaceholder:(BOOL)flag;
 - (void)setFeedbackPlaceholderText:(NSString *)text;
 - (NSString *)feedbackText;
 - (BOOL)feedbackTextPresent;
 - (BOOL)isActive;
+- (NSDictionary *)getDriverPicklistSelectedAnswers;
+- (int)numberOfRows;
 
 @end

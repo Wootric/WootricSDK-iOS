@@ -37,6 +37,6 @@
 - (void)stopSurvey;
 - (void)survey:(void (^)(WTRSettings *))completionHandler;
 - (void)endUserDeclined;
-- (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text;
+- (void)endUserVotedWithScore:(NSInteger)score text:(NSString *)text picklistAnswers:(NSDictionary *)picklistAnswers;
 
 @end

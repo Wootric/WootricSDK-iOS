@@ -33,7 +33,6 @@
 @property (nonatomic, strong) UIColor *sliderColor;
 @property (nonatomic, strong) WTRSettings *settings;
 
-
 @end
 
 @implementation WTRSlider
@@ -51,7 +50,6 @@
     if ([self respondsToSelector:NSSelectorFromString(@"setSemanticContentAttribute:")]) {
       [self setSemanticContentAttribute:UISemanticContentAttributeForceLeftToRight];
     }
-    
 
     self.minimumValue = [_settings minimumScore];
     self.maximumValue = [_settings maximumScore];

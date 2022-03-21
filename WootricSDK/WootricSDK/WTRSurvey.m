@@ -88,8 +88,8 @@
   [WTRDefaults setSurveyedWithType:@"decline"];
 }
 
-- (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text {
-  [[WTRApiClient sharedInstance] endUserVotedWithScore:score andText:text];
+- (void)endUserVotedWithScore:(NSInteger)score text:(NSString *)text picklistAnswers:(NSDictionary *)picklistAnswers {
+  [[WTRApiClient sharedInstance] endUserVotedWithScore:score andText:text picklistAnswers:picklistAnswers];
   [WTRDefaults setSurveyedWithType:@"response"];
 }
 
