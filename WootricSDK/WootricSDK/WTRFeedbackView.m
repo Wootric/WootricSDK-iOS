@@ -125,10 +125,17 @@
 - (void)setupDriverPicklistView {
   CollectionViewCenterLayout *centerLayout = [CollectionViewCenterLayout new];
   _driverPicklistCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:centerLayout];
+<<<<<<< HEAD
   _driverPicklistCollectionView.translatesAutoresizingMaskIntoConstraints = false;
   _driverPicklistCollectionView.delegate = self;
   _driverPicklistCollectionView.dataSource = self;
   [_driverPicklistCollectionView setBackgroundColor:[UIColor clearColor]];
+=======
+  
+  _driverPicklistCollectionView.translatesAutoresizingMaskIntoConstraints = false;
+  _driverPicklistCollectionView.delegate = self;
+  _driverPicklistCollectionView.dataSource = self;
+>>>>>>> efb165f (Add Driver Picklist)
   [_driverPicklistCollectionView registerClass:[WTRDriverPicklistCollectionViewCell class] forCellWithReuseIdentifier:@"driverPicklistIdentifier"];
 }
 

@@ -42,7 +42,11 @@ class CollectionViewRow {
           currentRowY = attribute.frame.midY
           rows.append(CollectionViewRow(spacing: 10))
       }
+<<<<<<< HEAD
       rows.last?.add(attribute: attribute.copy() as! UICollectionViewLayoutAttributes)
+=======
+      rows.last?.add(attribute: attribute)
+>>>>>>> efb165f (Add Driver Picklist)
     }
     rows.forEach { $0.centerLayout(collectionViewWidth: collectionView?.frame.width ?? 0) }
     return rows.flatMap { $0.attributes }
