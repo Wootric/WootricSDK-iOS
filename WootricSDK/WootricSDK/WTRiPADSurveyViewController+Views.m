@@ -83,6 +83,7 @@ static NSString *const kInMomentOptOut = @"InMoment •";
   self.dismissButton.layer.borderWidth = 1;
   self.dismissButton.layer.borderColor = [WTRColor iPadCircleButtonBorderColor].CGColor;
   self.dismissButton.titleLabel.font = [UIItems regularFontWithSize:20];
+  [self.dismissButton setContentEdgeInsets:UIEdgeInsetsMake(0.0f, 0.0f, 3.0f, 0.0f)];
   [self.dismissButton setTitle:@"\u00D7" forState:UIControlStateNormal];
   [self.dismissButton setTitleColor:[WTRColor iPadCircleButtonTextColor] forState:UIControlStateNormal];
   [self.dismissButton setTranslatesAutoresizingMaskIntoConstraints:NO];

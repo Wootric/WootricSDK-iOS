@@ -33,7 +33,6 @@
 @property (nonatomic, strong) UIColor *sliderColor;
 @property (nonatomic, strong) WTRSettings *settings;
 
-
 @end
 
 @implementation WTRSlider
@@ -51,7 +50,6 @@
     if ([self respondsToSelector:NSSelectorFromString(@"setSemanticContentAttribute:")]) {
       [self setSemanticContentAttribute:UISemanticContentAttributeForceLeftToRight];
     }
-    
 
     self.minimumValue = [_settings minimumScore];
     self.maximumValue = [_settings maximumScore];
@@ -130,7 +128,7 @@
             dotOffset = 2;
           }
         }
-        dotX += round(sliderWidth / (float) (self.maximumValue - self.minimumValue) * (i - self.minimumValue)) - dotOffset * (i - self.minimumValue);
+        dotX += round(self.frame.size.width / (float) (self.maximumValue - self.minimumValue) * (i - self.minimumValue)) - dotOffset * (i - self.minimumValue);
         dot.leftConstraint.constant = dotX;
       }
     }

@@ -34,6 +34,14 @@
 @property (nonatomic, strong) NSString *detractorText;
 @property (nonatomic, strong) NSString *passiveText;
 @property (nonatomic, strong) NSString *promoterText;
+@property (nonatomic, copy) NSArray *driverPicklist;
+@property (nonatomic, copy) NSArray *detractorPicklist;
+@property (nonatomic, copy) NSArray *passivePicklist;
+@property (nonatomic, copy) NSArray *promoterPicklist;
+@property (nonatomic, copy) NSDictionary *driverPicklistSettings;
+@property (nonatomic, copy) NSDictionary *detractorPicklistSettings;
+@property (nonatomic, copy) NSDictionary *passivePicklistSettings;
+@property (nonatomic, copy) NSDictionary *promoterPicklistSettings;
 
 - (instancetype)initWithCustomMessages:(NSDictionary *)customMessages;
 - (id)copyWithZone:(NSZone *)zone;

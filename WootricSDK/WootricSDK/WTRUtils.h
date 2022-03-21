@@ -23,10 +23,13 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface WTRUtils : NSObject
 
 + (NSString *)percentEscapeString:(NSString *)string;
 + (BOOL)startsWithEU:(NSString *)aString;
++ (NSArray *)shuffleArray:(NSArray *)array;
++ (CGSize)sizeForText:(NSString *)text fontSize:(int)fontSize;
 
 @end

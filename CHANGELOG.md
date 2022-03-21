@@ -1,3 +1,9 @@
+## 0.23.0 (2023-01-19)
+
+### Changes:
+
+- Add support for driver picklist feature
+
 ## 0.22.1 (2022-10-24)
 
 ### Changes:

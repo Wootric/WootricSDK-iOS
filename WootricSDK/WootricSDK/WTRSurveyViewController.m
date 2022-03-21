@@ -116,10 +116,11 @@
   [_notificationCenter postNotificationName:[Wootric surveyDidDisappearNotification]
                                      object:self
                                    userInfo:@{@"score": @(_currentScore), @"voted": @(_alreadyVoted), @"text": _feedbackText}];
+  NSDictionary *driverPicklist = [[NSDictionary alloc] initWithDictionary:[_feedbackView getDriverPicklistSelectedAnswers]];
   if (_alreadyVoted) {
-    [[Wootric delegate] didHideSurvey:@{@"score": @(_currentScore), @"type": @"response", @"text": _feedbackText}];
+    [[Wootric delegate] didHideSurvey:@{@"score": @(_currentScore), @"type": @"response", @"text": @"", @"driver_picklist_answers": driverPicklist}];
   } else {
-    [[Wootric delegate] didHideSurvey:@{@"score": @"", @"type": @"response", @"text": @""}];
+    [[Wootric delegate] didHideSurvey:@{@"score": @(_currentScore), @"type": @"response", @"text": _feedbackText, @"driver_picklist_answers": driverPicklist}];
   }
 }
 
@@ -156,9 +157,16 @@
 }
 
 - (void)editScoreButtonPressed:(UIButton *)sender {
+  if ([_settings driverPicklistAnswers]) {
+    [self updateConstraintModalHeight:308];
+    [self setModalGradient:_modalView.bounds];
+    [_modalView.layer insertSublayer:_gradient atIndex:0];
+  }
+
   [_feedbackView textViewResignFirstResponder];
   _scrolled = NO;
   [self setQuestionViewVisible:YES andFeedbackViewVisible:NO];
+  [self updateConstraints];
 }
 
 - (void)dismissButtonPressed:(UIButton *)sender {
@@ -172,9 +180,11 @@
 - (void)sendButtonPressed:(UIButton *)sender {
   _alreadyVoted = YES;
   _currentScore = [_questionView getScoreSliderValue];
+  NSDictionary *picklistAnswers = [_feedbackView getDriverPicklistSelectedAnswers];
+
   NSString *placeholderText = [_settings followupPlaceholderTextForScore:_currentScore];
   _feedbackText = [_feedbackView feedbackText];
-  [self endUserVotedWithScore:_currentScore andText:_feedbackText];
+  [self endUserVotedWithScore:_currentScore text:_feedbackText picklistAnswers:picklistAnswers];
   if ([_feedbackView isActive]) {
     [_feedbackView textViewResignFirstResponder];
     [self presentShareScreenOrDismissForScore:_currentScore];
@@ -187,8 +197,31 @@
       [self setQuestionViewVisible:NO andFeedbackViewVisible:YES];
       [_feedbackView setFollowupLabelTextBasedOnScore:_currentScore];
       [_feedbackView setFeedbackPlaceholderText:placeholderText];
+      [_feedbackView setDriverPicklistBasedOnScore:_currentScore];
+
+      [self updateConstraints];
     }
   }
+}
+
+- (void)updateConstraints {
+  if (_feedbackView.hidden) {
+    if ([_settings driverPicklistAnswers]) {
+      [self updateConstraintModalHeight:308];
+    }
+  } else {
+    if ([_settings driverPicklistAnswers]) {
+      NSDictionary *driverPicklistSettings = [_settings driverPicklistSettingsForScore:_currentScore];
+      if (driverPicklistSettings[@"dpl_hide_open_ended"] && [driverPicklistSettings[@"dpl_hide_open_ended"] intValue] == 1) {
+        [self updateConstraintModalHeight:((308 - 148) + 10 + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight]) feedbackViewHeight:(213 + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight])];
+      } else {
+        [self updateConstraintModalHeight:(308 + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight]) feedbackViewHeight:(217 + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight])];
+      }
+    }
+  }
+  
+  [self setModalGradient:_modalView.bounds];
+  [_modalView.layer insertSublayer:_gradient atIndex:0];
 }
 
 - (void)presentShareScreenOrDismissForScore:(int)score {
@@ -204,9 +237,9 @@
   [self dismissViewControllerWithBackgroundFade];
 }
 
-- (void)endUserVotedWithScore:(int)score andText:(NSString *)text {
+- (void)endUserVotedWithScore:(int)score text:(NSString *)text picklistAnswers:(NSDictionary *)picklistAnswers {
   WTRSurvey *survey = [[WTRSurvey alloc] init];
-  [survey endUserVotedWithScore:score andText:text];
+  [survey endUserVotedWithScore:score text:text picklistAnswers:picklistAnswers];
   [WTRLogger log:@"Vote"];
 }
 
@@ -310,14 +343,23 @@
   [_socialShareView displayShareButtonsWithTwitterAvailable:twitterAvailable andFacebookAvailable:facebookAvailable];
 }
 
-- (void)updateConstraintModalHeight:(CGFloat)constraintModalHeight socialShareViewHeight:(CGFloat)socialShareViewHeightConstraint {
+- (void)updateConstraintModalHeight:(CGFloat)constraintModalHeight {
   _constraintModalHeight.constant = constraintModalHeight;
-  _socialShareViewHeightConstraint.constant = socialShareViewHeightConstraint;
   _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
   
   [UIView animateWithDuration:0.2 animations:^{
     [self.view layoutIfNeeded];
   }];
+}
+
+- (void)updateConstraintModalHeight:(CGFloat)constraintModalHeight feedbackViewHeight:(CGFloat)feedbackViewHeightConstraint {
+  _constraintFeedbackViewHeight.constant = feedbackViewHeightConstraint;
+  [self updateConstraintModalHeight:constraintModalHeight];
+}
+
+- (void)updateConstraintModalHeight:(CGFloat)constraintModalHeight socialShareViewHeight:(CGFloat)socialShareViewHeightConstraint {
+  _socialShareViewHeightConstraint.constant = socialShareViewHeightConstraint;
+  [self updateConstraintModalHeight:constraintModalHeight];
 }
 
 - (BOOL)socialShareAvailableForScore:(int)score {
@@ -379,10 +421,12 @@
   BOOL isFromLandscape = !UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
   CGFloat widthAfterRotation;
   CGFloat leftAndRightMargins = 28;
+  
+  UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
   if (IS_OS_8_OR_LATER || isFromLandscape) {
     widthAfterRotation = self.view.frame.size.width - leftAndRightMargins;
   } else {
-    widthAfterRotation = self.view.frame.size.height - leftAndRightMargins;
+    widthAfterRotation = self.view.frame.size.height - (leftAndRightMargins + window.safeAreaInsets.top);
   }
   [_questionView recalculateDotsAndScorePositionForWidth:widthAfterRotation];
 }
@@ -408,6 +452,7 @@
     self->_constraintTopToModalTop.constant = modalPosition;
     [self getSizeAndRecalculatePositionsBasedOnOrientation];
     [self setModalGradient:gradientBounds];
+    [self updateConstraints];
   } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
     self->_scrolled = NO;
     

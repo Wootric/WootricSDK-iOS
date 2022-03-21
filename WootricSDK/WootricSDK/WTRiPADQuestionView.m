@@ -35,6 +35,7 @@
 @property (nonatomic, strong) UILabel *notLikelyAnchor;
 @property (nonatomic, strong) WTRCircleScoreView *scoreView;
 @property (nonatomic, strong) WTRSettings *settings;
+@property (nonatomic, strong) UIButton *sendButton;
 
 @end
 
@@ -54,6 +55,7 @@
   [self setupLikelyAnchor];
   [self setupNotLikelyAnchor];
   [self setupCircleScoreViewWithViewController:viewController];
+  [self setupSendButtonViewWithViewController:viewController];
   [self addSubviews];
 }
 
@@ -62,6 +64,7 @@
   [self setupScoreViewConstraints];
   [self setupLikelyAnchorConstraints];
   [self setupNotLikelyAnchorConstraints];
+  [self setupSendButtonConstraints];
 }
 
 - (void)addSubviews {
@@ -69,14 +72,34 @@
   [self addSubview:_scoreView];
   [self addSubview:_likelyAnchor];
   [self addSubview:_notLikelyAnchor];
+  [self addSubview:_sendButton];
 }
 
 - (void)hideQuestionLabel {
   _questionLabel.hidden = YES;
 }
 
+- (void)showSendButton:(BOOL)show {
+  _sendButton.hidden = !show;
+}
+
 - (void)selectCircleButton:(WTRCircleScoreButton *)button {
   [_scoreView selectCircleButton:button];
+}
+
+- (void)setupSendButtonViewWithViewController:(UIViewController *)viewController {
+  _sendButton = [[UIButton alloc] init];
+  _sendButton.backgroundColor = [WTRColor iPadSendButtonBackgroundColor];
+  _sendButton.layer.cornerRadius = 3;
+  _sendButton.hidden = true;
+  _sendButton.titleLabel.font = [UIItems boldFontWithSize:14];
+  [_sendButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [_sendButton setTitle:[self.settings sendButtonText] forState:UIControlStateNormal];
+  [_sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [_sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
+  [_sendButton addTarget:viewController
+                  action:NSSelectorFromString(@"sendButtonPressed")
+        forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupLikelyAnchorConstraints {
@@ -118,6 +141,20 @@
 - (void)setupScoreViewConstraints {
   [[[_scoreView wtr_centerXConstraint] toSecondViewCenterX:self] addToView:self];
   [[[[_scoreView wtr_topConstraint] toSecondViewBottom:_questionLabel] withConstant:20] addToView:self];
+}
+
+- (void)setupSendButtonConstraints {
+  [_sendButton wtr_constraintWidth:132];
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:_sendButton
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:32];
+  [_sendButton addConstraint:constH];
+  [[[_sendButton wtr_centerXConstraint] toSecondViewCenterX:self] addToView:self];
+  [[[[_sendButton wtr_topConstraint] toSecondViewBottom:_scoreView] withConstant:15] addToView:self];
 }
 
 - (void)setupCircleScoreViewWithViewController:(UIViewController *)viewController {

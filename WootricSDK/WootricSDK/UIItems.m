@@ -121,6 +121,7 @@
   tempTextView.layer.borderColor = [WTRColor textAreaBorderColor].CGColor;
   tempTextView.layer.borderWidth = 1;
   tempTextView.layer.cornerRadius = 3;
+  tempTextView.layer.maskedCorners = kCALayerMinXMinYCorner | kCALayerMinXMaxYCorner;
   tempTextView.textContainerInset = UIEdgeInsetsMake(16.0, 16.0, 16.0, 16.0);
   tempTextView.tintColor = [WTRColor textAreaCursorColor];
   [tempTextView setTranslatesAutoresizingMaskIntoConstraints:NO];

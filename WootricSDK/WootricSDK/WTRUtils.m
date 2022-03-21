@@ -23,6 +23,7 @@
 // THE SOFTWARE.
 
 #import "WTRUtils.h"
+#import "UIItems.h"
 
 @implementation WTRUtils
 
@@ -37,4 +38,21 @@
   }
   return [[aString substringToIndex:6] isEqualToString:@"NPS-EU"];
 }
+
++ (NSArray *)shuffleArray:(NSArray *)array {
+  int count = (int)[array count];
+  NSMutableArray *newArray = [NSMutableArray arrayWithArray:array];
+  for (int i = 0; i < count - 1; ++i) {
+      int nElements = count - i;
+      int n = arc4random_uniform(nElements) + i;
+      [newArray exchangeObjectAtIndex:i withObjectAtIndex:n];
+  }
+  return newArray;
+}
+
++ (CGSize)sizeForText:(NSString *)text fontSize:(int)fontSize {
+  NSDictionary *attributes = @{NSFontAttributeName: [UIItems boldFontWithSize:fontSize]};
+  return CGSizeMake([text sizeWithAttributes:attributes].width + 10, [text sizeWithAttributes:attributes].height + 10);
+}
+
 @end

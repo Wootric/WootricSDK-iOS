@@ -93,14 +93,28 @@
 
 - (void)setupQuestionViewConstraints {
   [self.questionView wtr_constraintWidthEqualSecondViewWidth:self.view];
-  [self.questionView wtr_constraintHeight:110];
+  self.constraintQuestionViewHeight = [NSLayoutConstraint constraintWithItem:self.questionView
+                                                                   attribute:NSLayoutAttributeHeight
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:nil
+                                                                   attribute:NSLayoutAttributeNotAnAttribute
+                                                                  multiplier:1
+                                                                    constant:130];
+  [self.questionView addConstraint:self.constraintQuestionViewHeight];
   [[[self.questionView wtr_centerXConstraint] toSecondViewCenterX:self.modalView] addToView:self.modalView];
   self.constraintQuestionTopToModalTop = [[self.questionView wtr_topConstraint] toSecondViewTop:self.modalView];
   [self.constraintQuestionTopToModalTop addToView:self.modalView];
 }
 
 - (void)setupFeedbackViewConstraints {
-  [self.feedbackView wtr_constraintHeight:100];
+  self.constraintFeedbackViewHeight = [NSLayoutConstraint constraintWithItem:self.feedbackView
+                                                                   attribute:NSLayoutAttributeHeight
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:nil
+                                                                   attribute:NSLayoutAttributeNotAnAttribute
+                                                                  multiplier:1
+                                                                    constant:110];
+  [self.feedbackView addConstraint:self.constraintFeedbackViewHeight];
   [self.feedbackView wtr_constraintWidthToSecondViewWidth:self.view withConstant:-80];
   [[[self.feedbackView wtr_topConstraint] toSecondViewTop:self.modalView] addToView:self.modalView];
   [[[self.feedbackView wtr_centerXConstraint] toSecondViewCenterX:self.modalView] addToView:self.modalView];
