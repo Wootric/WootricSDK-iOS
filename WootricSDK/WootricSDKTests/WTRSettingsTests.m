@@ -92,6 +92,19 @@
   XCTAssertEqualObjects(followupQuestion, @"promoter question");
 }
 
+- (void)testDriverPicklist {
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsWithDriverPicklist]];
+  NSDictionary *driverPicklistDetractor = [_settings driverPicklistAnswersForScore:1];
+  NSDictionary *serverDetractorPicklist = @{@"Test":@"Prueba", @"Second Test":@"Segunda Prueba"};
+  XCTAssertEqualObjects(driverPicklistDetractor, serverDetractorPicklist);
+  NSDictionary *driverPicklistPassive = [_settings driverPicklistAnswersForScore:8];
+  NSDictionary *serverPassivePicklist = @{@"Third Test": @"Tercera Prueba", @"Fourth Test": @"Cuarta Prueba"};
+  XCTAssertEqualObjects(driverPicklistPassive, serverPassivePicklist);
+  NSDictionary *driverPicklistPromoter = [_settings driverPicklistAnswersForScore:10];
+  NSDictionary *serverPromoterPicklist = @{@"Fifth Test": @"Quinta Prueba", @"Sixth Test": @"Sexta Prueba"};
+  XCTAssertEqualObjects(driverPicklistPromoter, serverPromoterPicklist);
+}
+
 - (void)testThankYouLinkWithEmailScoreCommentForDetractor {
   [_settings parseDataFromSurveyServer:[self surveyServerSettingsWithThankYouWithKey:@"detractor_thank_you_link_url_settings"
                                                                           dictionary:@{
@@ -797,6 +810,95 @@
         }
       },
       @"language": @"es_mx"
+    }
+  };
+
+  return settings;
+}
+
+- (NSDictionary *)surveyServerSettingsWithDriverPicklist {
+  NSDictionary *settings = @{
+    @"eligible": @1,
+    @"settings": @{
+      @"first_survey": @30,
+      @"resurvey_throttle": @180,
+      @"decline_resurvey_throttle": @30,
+      @"survey_type": @"NPS",
+      @"messages": @{
+        @"followup_question": @"Can you explain why?",
+        @"placeholder_text": @"Please, leave a feedback",
+        @"driver_picklist": @{
+          @"detractor_picklist": @{
+            @"Test": @"Prueba",
+            @"Second Test": @"Segunda Prueba"
+          },
+          @"passive_picklist": @{
+            @"Third Test": @"Tercera Prueba",
+            @"Fourth Test": @"Cuarta Prueba"
+          },
+          @"promoter_picklist": @{
+            @"Fifth Test": @"Quinta Prueba",
+            @"Sixth Test": @"Sexta Prueba"
+          }
+        },
+        @"driver_picklist_settings": @{
+          @"dpl_randomize_list": @0,
+          @"dpl_hide_open_ended": @0,
+          @"dpl_multi_select": @1
+        },
+        @"driver_picklist_settings_list": @{
+          @"detractor": @{
+            @"dpl_randomize_list": @0,
+            @"dpl_hide_open_ended": @1,
+            @"dpl_multi_select": @0
+          },
+          @"passive": @{
+            @"dpl_randomize_list": @1,
+            @"dpl_hide_open_ended": @1,
+            @"dpl_multi_select": @1
+          },
+          @"promoter": @{
+            @"dpl_randomize_list": @0,
+            @"dpl_hide_open_ended": @0,
+            @"dpl_multi_select": @1
+          }
+        }
+      },
+      @"localized_texts": @{
+        @"nps_question": @"How likely are you to recommend Wootric to a friend or co-worker?",
+        @"anchors": @{
+          @"likely": @"Extremely likely",
+          @"not_likely": @"Not at all likely"
+        },
+        @"ces_question": @"How easy was it for you to use Wootric?",
+        @"ces_anchors": @{
+          @"very_difficult": @"Very difficult",
+          @"difficult": @"Difficult",
+          @"somewhat_difficult": @"Somewhat difficult",
+          @"neutral": @"Neutral",
+          @"somewhat_easy": @"Somewhat easy",
+          @"easy": @"Easy",
+          @"very_easy": @"Very easy"
+        },
+        @"csat_question": @"How satisfied are you with Wootric?",
+        @"csat_anchors": @{
+          @"very_unsatisfied": @"Very unsatisfied",
+          @"unsatisfied": @"Unsatisfied",
+          @"neutral": @"Neutral",
+          @"satisfied": @"Satisfied",
+          @"very_satisfied": @"Very satisfied"
+        },
+        @"dismiss": @"dismiss",
+        @"followup_placeholder": @"Help us by explaining your score.",
+        @"followup_question": @"Thank you! Care to tell us why?",
+        @"final_thank_you": @"Thank you for your response, and your feedback!",
+        @"send": @"send",
+        @"edit_score": @"edit",
+        @"social_share": @{
+          @"decline": @"No thanks...",
+          @"question": @"Would you be willing to share your positive comments?"
+        }
+      }
     }
   };
 

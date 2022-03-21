@@ -62,6 +62,7 @@
 @property (nonatomic, strong) UIColor *sendButtonBackgroundColor;
 @property (nonatomic, strong) UIColor *sliderColor;
 @property (nonatomic, strong) UIColor *socialSharingColor;
+@property (nonatomic, copy) NSDictionary *driverPicklistAnswers;
 
 - (void)parseDataFromSurveyServer:(NSDictionary *)surveyServerSettings;
 - (int)maximumScore;
@@ -72,6 +73,7 @@
 - (NSDictionary *)scoreRules;
 - (NSString *)getEndUserEmailOrUnknown;
 
+- (NSDictionary *)driverPicklistAnswersForScore:(int)score;
 - (NSString *)followupQuestionTextForScore:(int)score;
 - (NSString *)followupPlaceholderTextForScore:(int)score;
 - (NSString *)questionText;
