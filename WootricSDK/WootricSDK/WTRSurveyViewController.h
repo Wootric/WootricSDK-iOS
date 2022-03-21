@@ -45,6 +45,8 @@
 @property (nonatomic, strong) NSLayoutConstraint *constraintTopToModalTop;
 @property (nonatomic, strong) NSLayoutConstraint *socialShareViewHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *constraintModalHeight;
+@property (nonatomic, strong) NSLayoutConstraint *constraintFeedbackViewHeight;
+@property (nonatomic, strong) NSLayoutConstraint *constraintQuestionViewHeight;
 @property (nonatomic, strong) NSLayoutConstraint *constraintPoweredByWootricX;
 @property (nonatomic, strong) WTRSettings *settings;
 @property (nonatomic, strong) UILabel *finalThankYouLabel;

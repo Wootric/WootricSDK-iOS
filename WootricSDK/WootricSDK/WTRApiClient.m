@@ -87,21 +87,21 @@ static NSString *const WTRAPIVersion = @"api/v1";
   if (!self.userID) {
     [self getEndUserWithEmail:^(NSInteger endUserID) {
       self.userID = endUserID;
-      [self createResponseForEndUser:self.userID withScore:-1 text:nil endpoint:@"declines"];
+      [self createResponseForEndUser:self.userID withScore:-1 text:nil picklistAnswers:nil endpoint:@"declines"];
     }];
   } else {
-    [self createResponseForEndUser:self.userID withScore:-1 text:nil endpoint:@"declines"];
+    [self createResponseForEndUser:self.userID withScore:-1 text:nil picklistAnswers:nil endpoint:@"declines"];
   }
 }
 
-- (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text {
+- (void)endUserVotedWithScore:(NSInteger)score andText:(NSString *)text picklistAnswers:(NSDictionary *)picklistAnswers {
   if (!self.userID) {
     [self getEndUserWithEmail:^(NSInteger endUserID) {
       self.userID = endUserID;
-      [self createResponseForEndUser:self.userID withScore:score text:text endpoint:@"responses"];
+      [self createResponseForEndUser:self.userID withScore:score text:text picklistAnswers:picklistAnswers endpoint:@"responses"];
     }];
   } else {
-    [self createResponseForEndUser:self.userID withScore:score text:text endpoint:@"responses"];
+    [self createResponseForEndUser:self.userID withScore:score text:text picklistAnswers:picklistAnswers endpoint:@"responses"];
   }
 }
 
@@ -257,9 +257,9 @@ static NSString *const WTRAPIVersion = @"api/v1";
   [dataTask resume];
 }
 
-- (void)createResponseForEndUser:(NSInteger)endUserID withScore:(NSInteger)score text:(NSString *)text endpoint:(NSString *)endpoint {
+- (void)createResponseForEndUser:(NSInteger)endUserID withScore:(NSInteger)score text:(NSString *)text picklistAnswers:(NSDictionary *)picklistAnswers endpoint:(NSString *)endpoint {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/%@", [self baseApiUrl], WTRAPIVersion, (long)endUserID, endpoint]];
-  NSString *params = [self paramsWithScore:score endUserID:endUserID accountID:_accountID uniqueLink:_uniqueLink priority:_priority text:text];
+  NSString *params = [self paramsWithScore:score endUserID:endUserID accountID:_accountID uniqueLink:_uniqueLink priority:_priority text:text picklistAnswers:picklistAnswers];
   
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
   
@@ -554,8 +554,12 @@ static NSString *const WTRAPIVersion = @"api/v1";
   return baseURLString;
 }
 
-- (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text {
+- (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text picklistAnswers:(NSDictionary *)picklistAnswers   {
   NSString *params = [NSString stringWithFormat:@"origin_url=%@&end_user[id]=%ld&survey[channel]=mobile&survey[unique_link]=%@&priority=%i&metric_type=%@", _settings.originURL, endUserID, uniqueLink, priority, [_settings.surveyType lowercaseString]];
+  
+  for (NSString *key in picklistAnswers) {
+    params = [NSString stringWithFormat:@"%@&driver_picklist[%@]=%@", params, key, picklistAnswers[key]];
+  }
   
   if (score > -1) {
     params = [NSString stringWithFormat:@"%@&score=%ld", params, (long) score];

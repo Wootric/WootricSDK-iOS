@@ -264,14 +264,14 @@
                                                              constant:2];
   [self.view addConstraint:constW];
 
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.feedbackView
+  self.constraintFeedbackViewHeight = [NSLayoutConstraint constraintWithItem:self.feedbackView
                                                             attribute:NSLayoutAttributeHeight
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
                                                              constant:213];
-  [self.feedbackView addConstraint:constH];
+  [self.feedbackView addConstraint:self.constraintFeedbackViewHeight];
 }
 
 - (void)setupModalConstraints {
@@ -368,14 +368,14 @@
                                                              constant:2];
   [self.view addConstraint:constW];
 
-  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.questionView
+  self.constraintQuestionViewHeight = [NSLayoutConstraint constraintWithItem:self.questionView
                                                             attribute:NSLayoutAttributeHeight
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
                                                              constant:213];
-  [self.questionView addConstraint:constH];
+  [self.questionView addConstraint:self.constraintQuestionViewHeight];
 }
 
 - (void)setupSocialShareViewConstraints {

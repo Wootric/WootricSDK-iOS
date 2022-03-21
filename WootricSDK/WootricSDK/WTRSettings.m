@@ -55,6 +55,7 @@
     _userCustomThankYou = [[WTRUserCustomThankYou alloc] init];
     _userCustomMessages = [[WTRUserCustomMessages alloc] init];
     _userCustomSocial = [[WTRCustomSocial alloc] init];
+    _driverPicklistAnswers = @{};
     _timeDelay = -1;
     _surveyType = @"NPS";
     _scale = [self scoreRules][_surveyType][0];
@@ -160,6 +161,18 @@
     return @"Unknown";
   }
   return _endUserEmail;
+}
+
+- (NSDictionary *)driverPicklistAnswersForScore:(int)score {
+  if ([self negativeTypeScore:score] && _customMessages.detractorPicklist) {
+    return _customMessages.detractorPicklist;
+  } else if ([self neutralTypeScore:score] && _customMessages.passivePicklist) {
+    return _customMessages.passivePicklist;
+  } else if ([self positiveTypeScore:score] && _customMessages.promoterPicklist) {
+    return _customMessages.promoterPicklist;
+  }
+  
+  return _customMessages.driverPicklist;
 }
 
 - (NSString *)followupQuestionTextForScore:(int)score {
