@@ -109,7 +109,7 @@
       _customSocial = [[WTRCustomSocial alloc] initWithCustomSocial:socialFromSurvey];
     }
 
-    if (firstSurvey) {
+    if (firstSurvey != nil) {
       _firstSurveyAfter = firstSurvey;
     }
 
@@ -117,11 +117,11 @@
       _timeDelay = delay;
     }
 
-    if (resurveyThrottleFromServer) {
+    if (resurveyThrottleFromServer != nil) {
       _surveyedDefaultDuration = [resurveyThrottleFromServer intValue];
     }
 
-    if (declineResurveyThrottleFromServer) {
+    if (declineResurveyThrottleFromServer != nil) {
       _surveyedDefaultDurationDecline = [declineResurveyThrottleFromServer intValue];
     }
   }

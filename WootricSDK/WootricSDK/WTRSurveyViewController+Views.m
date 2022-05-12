@@ -109,7 +109,7 @@ static NSString *const kInMoment = @"InMoment";
 - (void)setupOptOut {
   self.optOutButton = [[UIButton alloc] init];
   [self.optOutButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [self.optOutButton setTitle:@"opt out" forState:UIControlStateNormal];
+  [self.optOutButton setTitle:NSLocalizedString(@"opt out", "") forState:UIControlStateNormal];
   [self.optOutButton setTitleColor:[WTRColor optOutTextColor] forState:UIControlStateNormal];
   [self.optOutButton.titleLabel setFont:[UIItems regularFontWithSize:10]];
   [self.optOutButton addTarget:self

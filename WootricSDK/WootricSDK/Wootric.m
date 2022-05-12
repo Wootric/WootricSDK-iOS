@@ -30,7 +30,7 @@
 #import "WTRLogger.h"
 #import "WTRSurveyDelegate.h"
 
-#define IPAD UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
+//#define IPAD UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
 
 static id<WTRSurveyDelegate> _delegate = nil;
 static UIViewController *_presentedViewController;
@@ -316,7 +316,7 @@ static WTRSettings *_presentedSettings;
   UIViewController *viewController = objects[0];
   WTRSettings *settings = objects[1];
 
-  if (IPAD) {
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
     WTRiPADSurveyViewController *surveyViewController = [[WTRiPADSurveyViewController alloc] initWithSurveySettings:settings
                                                                                                  notificationCenter:[[WTRDefaultNotificationCenter alloc ]initWithNotificationCenter:[NSNotificationCenter defaultCenter]]];
     [viewController presentViewController:surveyViewController animated:YES completion:nil];

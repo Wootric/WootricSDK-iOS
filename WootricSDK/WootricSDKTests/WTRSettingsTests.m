@@ -731,7 +731,6 @@
         @"final_thank_you": @"Thank you for your response, and your feedback!",
         @"send": @"send",
         @"edit_score": @"edit",
-        @"dismiss": @"dismiss",
         @"social_share": @{
           @"decline": @"No thanks...",
           @"question": @"Would you be willing to share your positive comments?"
@@ -785,7 +784,6 @@
         @"final_thank_you": @"Thank you for your response, and your feedback!",
         @"send": @"send",
         @"edit_score": @"edit",
-        @"dismiss": @"dismiss",
         @"social_share": @{
           @"decline": @"No thanks...",
           @"question": @"Would you be willing to share your positive comments?"
@@ -843,7 +841,6 @@
                                      @"final_thank_you": @"Thank you for your response, and your feedback!",
                                      @"send": @"send",
                                      @"edit_score": @"edit",
-                                     @"dismiss": @"dismiss",
                                      @"social_share": @{
                                          @"decline": @"No thanks...",
                                          @"question": @"Would you be willing to share your positive comments?"

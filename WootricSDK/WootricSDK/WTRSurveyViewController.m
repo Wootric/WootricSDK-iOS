@@ -36,6 +36,7 @@
 #import "Wootric.h"
 #import "WTRSurveyDelegate.h"
 #import <Social/Social.h>
+#import <WootricSDK/WootricSDK-Swift.h>
 
 @interface WTRSurveyViewController ()
 
@@ -126,32 +127,19 @@
 #pragma mark - Button methods
 
 - (void)openThankYouURL:(WTRThankYouButton *)sender {
-  UIApplication *application = [UIApplication sharedApplication];
   [WTRLogger log:@"%@", sender.buttonURL];
 
   if (!sender.buttonURL) {
     [WTRLogger logError:@"Invalid URL"];
     return;
   }
-  
-  if ([application respondsToSelector:@selector(openURL:options:completionHandler:)]) {
-    [application openURL:sender.buttonURL
-                                       options:@{}
-                             completionHandler:^(BOOL success) {
-      if (success) {
-        [self dismissViewControllerWithBackgroundFade];
-      } else {
-        [WTRLogger logError:@"Failed to open 'thank you' url"];
-      }
-    }];
-  } else {
-    BOOL success = [application openURL:sender.buttonURL];
+  [[UIApplication sharedApplication] openExternalUrl:sender.buttonURL completion:^(BOOL success) {
     if (success) {
-      [self dismissViewControllerWithBackgroundFade];
+        [self dismissViewControllerWithBackgroundFade];
     } else {
-      [WTRLogger logError:@"Failed to open 'thank you' url"];
+        [WTRLogger logError:@"Failed to open 'thank you' url"];
     }
-  }
+  }];
 }
 
 - (void)editScoreButtonPressed:(UIButton *)sender {
@@ -222,25 +210,31 @@
 
 - (void)openWootricHomepage:(UIButton *)sender {
   NSURL *url = [NSURL URLWithString:@"https://www.wootric.com"];
-  if (![[UIApplication sharedApplication] openURL:url]) {
-    [WTRLogger logError:@"Failed to open wootric page"];
-  }
+  [[UIApplication sharedApplication] openExternalUrl:url completion:^(BOOL success) {
+      if (!success) {
+          [WTRLogger logError:@"Failed to open wootric page"];
+      }
+  }];
 }
 
 - (void)optOutButtonPressed:(UIButton *)sender {
-  if (![[UIApplication sharedApplication] openURL:[self optOutURL]]) {
-    [WTRLogger logError:@"Failed to open opt out page"];
-  } else {
-    [self dismissViewControllerWithBackgroundFade];
-  }
+    [[UIApplication sharedApplication] openExternalUrl:[self optOutURL] completion:^(BOOL success) {
+        if (success) {
+            [self dismissViewControllerWithBackgroundFade];
+        } else {
+            [WTRLogger logError:@"Failed to open wootric page"];
+        }
+    }];
 }
 
 -(void)socialButtonPressedForService:(UIButton *)sender {
   if ([sender.titleLabel.text isEqualToString:[NSString fontAwesomeIconStringForEnum:FAThumbsUp]]) {
     NSURL *url = _settings.facebookPage;
-    if (![[UIApplication sharedApplication] openURL:url]) {
-      [WTRLogger logError:@"Failed to open facebook page"];
-    }
+    [[UIApplication sharedApplication] openExternalUrl:url completion:^(BOOL success) {
+        if (!success) {
+            [WTRLogger logError:@"Failed to open facebook page"];
+        }
+    }];
   } else {
     NSString *serviceType;
     NSString *socialNetwork;
@@ -276,7 +270,7 @@
       UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Sorry"
                                                                                message:message
                                                                         preferredStyle:UIAlertControllerStyleAlert];
-      UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK"
+      UIAlertAction *action = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", "")
                                                         style:UIAlertActionStyleCancel
                                                       handler:nil];
       [alertController addAction:action];
@@ -390,7 +384,8 @@
 }
 
 - (void)getSizeAndRecalculatePositionsBasedOnOrientation {
-  BOOL isFromLandscape = !UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
+  UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] applicationOrientation];
+  BOOL isFromLandscape = !UIInterfaceOrientationIsLandscape(interfaceOrientation);
   CGFloat widthAfterRotation;
   CGFloat leftAndRightMargins = 28;
   if (IS_OS_8_OR_LATER || isFromLandscape) {
@@ -404,7 +399,7 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
   
-  UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] applicationOrientation];
   [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
     BOOL isFromLandscape = UIInterfaceOrientationIsLandscape(interfaceOrientation);
     CGFloat modalPosition;

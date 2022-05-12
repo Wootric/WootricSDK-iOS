@@ -210,7 +210,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
   NSString *escapedEmail = [WTRUtils percentEscapeString:[_settings getEndUserEmailOrUnknown]];
   NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
     
-  if (_settings.externalCreatedAt) {
+  if (_settings.externalCreatedAt != nil) {
     params = [NSString stringWithFormat:@"%@&external_created_at=%ld", params, (long)[_settings.externalCreatedAt integerValue]];
   }
   
@@ -475,27 +475,27 @@ static NSString *const WTRAPIVersion = @"api/v1";
                      baseURLString, YES];
   }
 
-  if (_settings.registeredPercentage) {
+  if (_settings.registeredPercentage != nil) {
     baseURLString = [NSString stringWithFormat:@"%@&registered_percent=%d",
                      baseURLString, [_settings.registeredPercentage intValue]];
   }
 
-  if (_settings.visitorPercentage) {
+  if (_settings.visitorPercentage != nil) {
     baseURLString = [NSString stringWithFormat:@"%@&visitor_percent=%d",
                      baseURLString, [_settings.visitorPercentage intValue]];
   }
 
-  if (_settings.resurveyThrottle) {
+  if (_settings.resurveyThrottle != nil) {
     baseURLString = [NSString stringWithFormat:@"%@&resurvey_throttle=%d",
                      baseURLString, [_settings.resurveyThrottle intValue]];
   }
 
-  if (_settings.dailyResponseCap) {
+  if (_settings.dailyResponseCap != nil) {
     baseURLString = [NSString stringWithFormat:@"%@&daily_response_cap=%d",
                      baseURLString, [_settings.dailyResponseCap intValue]];
   }
 
-  if (_settings.externalCreatedAt) {
+  if (_settings.externalCreatedAt != nil) {
     baseURLString = [NSString stringWithFormat:@"%@&end_user_created_at=%ld",
                      baseURLString, (long)[_settings.externalCreatedAt integerValue]];
   }
@@ -631,7 +631,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
   } else if (self.settings.surveyImmediately) {
     [WTRLogger log:@"needsSurvey(YES) - surveyImmediately"];
     return YES;
-  } else if (!self.settings.externalCreatedAt) {
+  } else if (self.settings.externalCreatedAt == nil) {
     [WTRLogger log:@"needsSurvey(YES) - no externalCreatedAt"];
     return YES;
   } else {
