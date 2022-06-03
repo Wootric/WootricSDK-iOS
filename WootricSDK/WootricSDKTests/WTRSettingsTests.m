@@ -49,6 +49,12 @@
   [super tearDown];
 }
 
+- (void)testLanguage {
+  XCTAssertEqualObjects([_settings languageCode], @"en");
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsWithMessages]];
+  XCTAssertEqualObjects([_settings languageCode], @"es_mx");
+}
+
 - (void)testFollowupQuestion {
   NSString *followupQuestionDetractor = [_settings followupQuestionTextForScore:1];
   XCTAssertEqualObjects(followupQuestionDetractor, @"Thank you! Care to tell us why?");
@@ -735,7 +741,8 @@
           @"decline": @"No thanks...",
           @"question": @"Would you be willing to share your positive comments?"
         }
-      }
+      },
+      @"language": @"en"
     }
   };
 
@@ -788,7 +795,8 @@
           @"decline": @"No thanks...",
           @"question": @"Would you be willing to share your positive comments?"
         }
-      }
+      },
+      @"language": @"es_mx"
     }
   };
 

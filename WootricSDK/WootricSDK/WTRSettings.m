@@ -80,6 +80,7 @@
     NSNumber *firstSurvey = surveyServerSettings[@"settings"][@"first_survey"];
     NSNumber *resurveyThrottleFromServer = surveyServerSettings[@"settings"][@"resurvey_throttle"];
     NSNumber *declineResurveyThrottleFromServer = surveyServerSettings[@"settings"][@"decline_resurvey_throttle"];
+    NSString *languageCodeFromServer = surveyServerSettings[@"settings"][@"language"];
     NSInteger delay = _timeDelay > -1 ? _timeDelay : [surveyServerSettings[@"settings"][@"time_delay"] integerValue];
       
     if (surveyTypeFromSurvey) {
@@ -123,6 +124,10 @@
 
     if (declineResurveyThrottleFromServer != nil) {
       _surveyedDefaultDurationDecline = [declineResurveyThrottleFromServer intValue];
+    }
+    
+    if (languageCodeFromServer) {
+      _languageCode = languageCodeFromServer;
     }
   }
 }

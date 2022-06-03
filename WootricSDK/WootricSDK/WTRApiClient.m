@@ -262,7 +262,6 @@ static NSString *const WTRAPIVersion = @"api/v1";
   NSString *params = [self paramsWithScore:score endUserID:endUserID accountID:_accountID uniqueLink:_uniqueLink priority:_priority text:text];
   
   NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
-  
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       [WTRLogger logError:@"ResponseError: %@", error];
@@ -556,6 +555,10 @@ static NSString *const WTRAPIVersion = @"api/v1";
 
 - (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text {
   NSString *params = [NSString stringWithFormat:@"origin_url=%@&end_user[id]=%ld&survey[channel]=mobile&survey[unique_link]=%@&priority=%i&metric_type=%@", _settings.originURL, endUserID, uniqueLink, priority, [_settings.surveyType lowercaseString]];
+  
+  if (_settings.languageCode != nil) {
+    params = [NSString stringWithFormat:@"%@&survey[language]=%@", params, _settings.languageCode];
+  }
   
   if (score > -1) {
     params = [NSString stringWithFormat:@"%@&score=%ld", params, (long) score];
