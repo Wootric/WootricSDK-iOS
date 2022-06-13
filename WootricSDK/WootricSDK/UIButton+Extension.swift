@@ -12,11 +12,11 @@ import Foundation
 {
     func configureContentInsets(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat)
     {
-        if #available(iOS 15.0, *) {
-            self.configuration = .plain()
-            self.configuration?.contentInsets = .init(top: top, leading: leading, bottom: bottom, trailing: trailing)
-        } else {
+//        if #available(iOS 15.0, *) {
+//            self.configuration = .plain()
+//            self.configuration?.contentInsets = .init(top: top, leading: leading, bottom: bottom, trailing: trailing)
+//        } else {
             self.contentEdgeInsets = UIEdgeInsets(top: top, left: leading, bottom: bottom, right: trailing)
-        }
+//        }
     }
 }
