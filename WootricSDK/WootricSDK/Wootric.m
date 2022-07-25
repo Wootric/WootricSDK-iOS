@@ -30,8 +30,6 @@
 #import "WTRLogger.h"
 #import "WTRSurveyDelegate.h"
 
-//#define IPAD UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
-
 static id<WTRSurveyDelegate> _delegate = nil;
 static UIViewController *_presentedViewController;
 static WTRSettings *_presentedSettings;
