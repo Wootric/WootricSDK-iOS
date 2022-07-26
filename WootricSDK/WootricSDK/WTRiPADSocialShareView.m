@@ -28,6 +28,7 @@
 #import "NSString+FontAwesome.h"
 #import "WTRiPADThankYouButton.h"
 #import "SimpleConstraints.h"
+#import <WootricSDK/WootricSDK-Swift.h>
 
 @interface WTRiPADSocialShareView ()
 
@@ -186,7 +187,7 @@
   _noThanksButton = [[UIButton alloc] init];
   _noThanksButton.layer.borderWidth = 1;
   _noThanksButton.layer.cornerRadius = 3;
-  _noThanksButton.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
+  [_noThanksButton configureContentInsetsWithTop:0 leading:10 bottom:0 trailing:10];
   _noThanksButton.layer.borderColor = [WTRColor iPadNoThanksButtonBorderColor].CGColor;
   _noThanksButton.titleLabel.font = [UIItems regularFontWithSize:14];
   [_noThanksButton setTranslatesAutoresizingMaskIntoConstraints:NO];
