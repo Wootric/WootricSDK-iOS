@@ -38,6 +38,7 @@
 @property (nonatomic, strong) UITextView *feedbackTextView;
 @property (nonatomic, strong) UICollectionView *driverPicklistCollectionView;
 @property (nonatomic, strong) NSDictionary *driverPicklist;
+@property (nonatomic, strong) NSArray *driverPicklistKeys;
 @property (nonatomic, strong) WTRSettings *settings;
 
 @end
@@ -76,6 +77,19 @@
 
 - (void)setDriverPicklistBasedOnScore:(int)score {
   _driverPicklist = [_settings driverPicklistAnswersForScore:score];
+  _driverPicklistKeys = _driverPicklist.allKeys;
+  NSDictionary *driverPicklistSettings = [_settings driverPicklistSettingsForScore:score];
+  NSLog(@"%@", driverPicklistSettings[@"dpl_randomize_list"]);
+  if (driverPicklistSettings[@"dpl_randomize_list"] && [driverPicklistSettings[@"dpl_randomize_list"] intValue] == 1) {
+    _driverPicklistKeys = [self shuffleArray:_driverPicklistKeys];
+  }
+  if (driverPicklistSettings[@"dpl_hide_open_ended"]) {
+    
+  }
+  if (driverPicklistSettings[@"dpl_multi_select"]) {
+    
+  }
+  
   [_driverPicklistCollectionView reloadData];
 }
 
@@ -188,12 +202,12 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
   WTRDriverPicklistCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"driverPicklistIdentifier" forIndexPath:indexPath];
   [cell setBackgroundColor:_settings.sliderColor];
-  [cell setText:_driverPicklist.allKeys[indexPath.row]];
+  [cell setText:_driverPicklistKeys[indexPath.row]];
   return cell;
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-  return [_driverPicklist count];
+  return [_driverPicklistKeys count];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -206,7 +220,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSDictionary *attributes = @{NSFontAttributeName: [UIItems boldFontWithSize:12]};
-  return CGSizeMake([(NSString*)[_driverPicklist.allKeys objectAtIndex:indexPath.row] sizeWithAttributes:attributes].width + 12, 38.0f);
+  return CGSizeMake([(NSString*)[_driverPicklistKeys objectAtIndex:indexPath.row] sizeWithAttributes:attributes].width + 12, 38.0f);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
@@ -218,15 +232,23 @@
 }
 
 - (int)numberOfRows {
-  NSInteger totalItemsInSection = [self.driverPicklistCollectionView numberOfItemsInSection:0];
+  if ([_driverPicklist count] == 0) {
+    return 0;
+  }
   CGFloat collectionViewWidth = CGRectGetWidth(self.driverPicklistCollectionView.frame);
-  CGFloat cellWidth = 100.0f;
-  CGFloat cellSpacing = 10.0f;
+  int rowCount = 1;
+  CGFloat totalWidthPerRow = 0.0f;
+  for (NSString *answer in _driverPicklist) {
+    NSDictionary *attributes = @{NSFontAttributeName: [UIItems boldFontWithSize:12]};
+    CGFloat dynamicCellWidth = [answer sizeWithAttributes:attributes].width + 12;
+    totalWidthPerRow += dynamicCellWidth + 10;
+    if (totalWidthPerRow > collectionViewWidth) {
+      rowCount += 1;
+      totalWidthPerRow = dynamicCellWidth + 10;
+    }
+  }
 
-  NSInteger totalItemsInRow = floor((CGFloat)collectionViewWidth / (cellWidth + cellSpacing));
-  int numberOfRows = ceil((CGFloat)totalItemsInSection / totalItemsInRow);
-
-  return numberOfRows;
+  return rowCount;
 }
 
 - (NSDictionary *)selectedAnswers {
@@ -237,6 +259,19 @@
     }
   }
   return answers;
+}
+
+- (NSArray *)shuffleArray:(NSArray *)array {
+  int count = (int)[array count];
+  NSMutableArray *newArray = [NSMutableArray arrayWithArray:array];
+  for (int i = 0; i < count - 1; ++i)
+  {
+      // Select a random element between i and end of array to swap with.
+      int nElements = count - i;
+      int n = arc4random_uniform(nElements) + i;
+      [newArray exchangeObjectAtIndex:i withObjectAtIndex:n];
+  }
+  return newArray;
 }
 
 @end

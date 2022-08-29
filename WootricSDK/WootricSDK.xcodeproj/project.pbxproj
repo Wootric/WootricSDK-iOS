@@ -645,9 +645,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2DC6F181B81E6F900F599B3 /* Build configuration list for PBXNativeTarget "WootricSDK" */;
 			buildPhases = (
+				B2DC6EFF1B81E6F900F599B3 /* Headers */,
 				B2DC6EFD1B81E6F900F599B3 /* Sources */,
 				B2DC6EFE1B81E6F900F599B3 /* Frameworks */,
-				B2DC6EFF1B81E6F900F599B3 /* Headers */,
 				B2DC6F001B81E6F900F599B3 /* Resources */,
 			);
 			buildRules = (

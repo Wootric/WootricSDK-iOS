@@ -74,6 +74,7 @@
 - (NSString *)getEndUserEmailOrUnknown;
 
 - (NSDictionary *)driverPicklistAnswersForScore:(int)score;
+- (NSDictionary *)driverPicklistSettingsForScore:(int)score;
 - (NSString *)followupQuestionTextForScore:(int)score;
 - (NSString *)followupPlaceholderTextForScore:(int)score;
 - (NSString *)questionText;

@@ -175,6 +175,18 @@
   return _customMessages.driverPicklist;
 }
 
+- (NSDictionary *)driverPicklistSettingsForScore:(int)score {
+  if ([self negativeTypeScore:score] && _customMessages.detractorPicklistSettings) {
+    return _customMessages.detractorPicklistSettings;
+  } else if ([self neutralTypeScore:score] && _customMessages.passivePicklistSettings) {
+    return _customMessages.passivePicklistSettings;
+  } else if ([self positiveTypeScore:score] && _customMessages.promoterPicklistSettings) {
+    return _customMessages.promoterPicklistSettings;
+  }
+  
+  return _customMessages.driverPicklistSettings;
+}
+
 - (NSString *)followupQuestionTextForScore:(int)score {
   if (!_customMessages && ![_userCustomMessages userCustomQuestionPresent]) {
     return _localizedTexts.followupQuestion;

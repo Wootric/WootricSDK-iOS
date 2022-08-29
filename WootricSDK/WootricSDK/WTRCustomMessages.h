@@ -38,6 +38,10 @@
 @property (nonatomic, copy) NSDictionary *detractorPicklist;
 @property (nonatomic, copy) NSDictionary *passivePicklist;
 @property (nonatomic, copy) NSDictionary *promoterPicklist;
+@property (nonatomic, copy) NSDictionary *driverPicklistSettings;
+@property (nonatomic, copy) NSDictionary *detractorPicklistSettings;
+@property (nonatomic, copy) NSDictionary *passivePicklistSettings;
+@property (nonatomic, copy) NSDictionary *promoterPicklistSettings;
 
 - (instancetype)initWithCustomMessages:(NSDictionary *)customMessages;
 - (id)copyWithZone:(NSZone *)zone;
