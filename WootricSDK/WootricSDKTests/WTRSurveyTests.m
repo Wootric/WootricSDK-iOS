@@ -125,22 +125,22 @@
 - (void)testEventsInQueue {
   [Wootric setEndUserEmail:@"event1@example.com"];
   [Wootric showSurveyInViewController:_testViewController event:@"event_1"];
-  
+
+  WTREvent *operationOne = [[_surveyClient.operationQueue operations] lastObject];
+  WTRSettings *settingsOne = [[operationOne request] objectForKey:@"settings"];
+
   [Wootric setEndUserEmail:@"event2@example.com"];
   [Wootric showSurveyInViewController:_testViewController event:@"event_2"];
-  
+
+  WTREvent *operationTwo = [[_surveyClient.operationQueue operations] lastObject];
+  WTRSettings *settingsTwo = [[operationTwo request] objectForKey:@"settings"];
+
   [Wootric setEndUserEmail:@"event3@example.com"];
   [Wootric showSurveyInViewController:_testViewController event:@"event_3"];
-  
-  WTREvent *operationOne = [[_surveyClient.operationQueue operations] objectAtIndex:1];
-  WTRSettings *settingsOne = [[operationOne request] objectForKey:@"settings"];
-  
-  WTREvent *operationTwo = [[_surveyClient.operationQueue operations] objectAtIndex:2];
-  WTRSettings *settingsTwo = [[operationTwo request] objectForKey:@"settings"];
-  
-  WTREvent *operationThree = [[_surveyClient.operationQueue operations] objectAtIndex:3];
+
+  WTREvent *operationThree = [[_surveyClient.operationQueue operations] lastObject];
   WTRSettings *settingsThree = [[operationThree request] objectForKey:@"settings"];
-  
+
   XCTAssertEqual(settingsOne.eventName, @"event_1", @"Event name not event_1");
   XCTAssertEqual(settingsOne.endUserEmail, @"event1@example.com", @"Email not event1@example.com");
   XCTAssertEqual(settingsTwo.eventName, @"event_2", @"Event name not event_2");
