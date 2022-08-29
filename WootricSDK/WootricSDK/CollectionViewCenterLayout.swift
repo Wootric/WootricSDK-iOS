@@ -42,26 +42,9 @@ class CollectionViewRow {
           currentRowY = attribute.frame.midY
           rows.append(CollectionViewRow(spacing: 10))
       }
-<<<<<<< HEAD
       rows.last?.add(attribute: attribute.copy() as! UICollectionViewLayoutAttributes)
-=======
-      rows.last?.add(attribute: attribute)
->>>>>>> efb165f (Add Driver Picklist)
     }
     rows.forEach { $0.centerLayout(collectionViewWidth: collectionView?.frame.width ?? 0) }
     return rows.flatMap { $0.attributes }
-  }
-  
-  public override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-      guard let layoutAttributes = super.layoutAttributesForItem(at: indexPath) else { return nil }
-      guard let collectionView = collectionView else { return nil }
-      let collectionWidth = collectionView.safeAreaLayoutGuide.layoutFrame.width
-      layoutAttributes.bounds.size.width = collectionWidth - sectionInset.left - sectionInset.right
-      return layoutAttributes
-  }
-
-  public override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-      guard let collectionView = collectionView else { return false }
-      return !newBounds.size.equalTo(collectionView.bounds.size)
   }
 }

@@ -46,13 +46,9 @@
   NSDictionary *attributes = @{NSFontAttributeName: [UIItems boldFontWithSize:12]};
   [_titleLabel setFrame:CGRectMake(0, 0, [text sizeWithAttributes:attributes].width + 12, 38.0f)];
   _titleLabel.text = text;
-<<<<<<< HEAD
   selected = false;
   self.contentView.backgroundColor = [UIColor whiteColor];
   _titleLabel.textColor = self.customColor;
-=======
-//  [self setNeedsDisplay];
->>>>>>> efb165f (Add Driver Picklist)
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
