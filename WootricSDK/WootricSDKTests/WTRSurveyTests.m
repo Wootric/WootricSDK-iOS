@@ -114,5 +114,4 @@
   _surveyClient.accountToken = @"NPS-token";
   XCTAssertTrue([_surveyClient checkConfiguration]);
 }
-
 @end

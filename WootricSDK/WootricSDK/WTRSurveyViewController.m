@@ -156,6 +156,12 @@
 }
 
 - (void)editScoreButtonPressed:(UIButton *)sender {
+  if ([_settings driverPicklistAnswers]) {
+    [self updateConstraintModalHeight:308];
+    [self setModalGradient:_modalView.bounds];
+    [_modalView.layer insertSublayer:_gradient atIndex:0];
+  }
+
   [_feedbackView textViewResignFirstResponder];
   _scrolled = NO;
   [self setQuestionViewVisible:YES andFeedbackViewVisible:NO];
