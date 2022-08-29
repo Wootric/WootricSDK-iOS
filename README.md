@@ -11,7 +11,7 @@
 
 
 ## Requirements
-- iOS 9.0+
+- iOS 12.0+
 
 ## Demos
 - View the iOS demo video with referral prompt [here.](https://share.getcloudapp.com/rRuGkdBA)
@@ -28,7 +28,7 @@ The easiest way to get Wootric into your iOS project is to use [CocoaPods](http:
 
 2. Create a file in your Xcode project called Podfile and add the following line:
 	```ruby
-	pod "WootricSDK", "~> 0.21.1"
+	pod "WootricSDK", "~> 0.22.0"
 	```
 
 3. In your Xcode project directory run the following command:

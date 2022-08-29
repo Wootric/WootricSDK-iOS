@@ -43,8 +43,6 @@
 		7E6BA6C624297B9600D27EE8 /* WTREventListOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BA6C424297B9600D27EE8 /* WTREventListOperation.m */; };
 		7E74E3361C8E987000BCB84F /* NSString+FontAwesome.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E74E3341C8E986F00BCB84F /* NSString+FontAwesome.h */; };
 		7E74E3371C8E987000BCB84F /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E74E3351C8E987000BCB84F /* NSString+FontAwesome.m */; };
-		8B4B6A9C282B8E590026B316 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4B6A9B282B8E590026B316 /* UIApplication+Extension.swift */; };
-		8B4B6A9E282BA6B00026B316 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4B6A9D282BA6B00026B316 /* UIButton+Extension.swift */; };
 		B2102A2D1BB59ABC0025DABC /* WTRDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */; };
 		B2102A2E1BB59ABC0025DABC /* WTRDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A2C1BB59ABC0025DABC /* WTRDefaults.m */; };
 		B2102A331BB59ACE0025DABC /* WTRCustomMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A2F1BB59ACE0025DABC /* WTRCustomMessages.h */; };
@@ -178,8 +176,6 @@
 		7E6BA6C424297B9600D27EE8 /* WTREventListOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTREventListOperation.m; sourceTree = "<group>"; };
 		7E74E3341C8E986F00BCB84F /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
 		7E74E3351C8E987000BCB84F /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
-		8B4B6A9B282B8E590026B316 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
-		8B4B6A9D282BA6B00026B316 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		B2102A2B1BB59ABC0025DABC /* WTRDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRDefaults.h; sourceTree = "<group>"; };
 		B2102A2C1BB59ABC0025DABC /* WTRDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRDefaults.m; sourceTree = "<group>"; };
 		B2102A2F1BB59ACE0025DABC /* WTRCustomMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRCustomMessages.h; sourceTree = "<group>"; };
@@ -319,6 +315,16 @@
 			path = iPhone;
 			sourceTree = "<group>";
 		};
+		3E52A2C128BECE4A0075BD89 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				0F8DE567226A2E5F00A69F10 /* WTRSurveyDelegate.h */,
+				B2D9FCDD1BF9F18E00479F9F /* SEGWootric.h */,
+				B2DC6F2C1B82000900F599B3 /* Wootric.h */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
 		B260ECE31BD8D7F200E29CD5 /* SimpleConstraints */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,7 +454,6 @@
 				B229766C1BB0036100FC2772 /* WTRPropertiesParser.m */,
 				178571962088FCA700CCBE02 /* WTRLogger.h */,
 				178571972088FCA700CCBE02 /* WTRLogger.m */,
-				1785719A2088FD1500CCBE02 /* WTRLogLevel.h */,
 				0FE0F3F720DC041B00499248 /* WTRNotificationCenter.h */,
 				0F963EF620E14D5D001EE0D2 /* WTRNotificationCenter.m */,
 				0FE0F3FB20DC059700499248 /* WTRDefaultNotificationCenter.h */,
@@ -461,8 +466,6 @@
 				7E0D323E24207C960034CEBD /* WTROperation.m */,
 				7E6BA6C324297B9600D27EE8 /* WTREventListOperation.h */,
 				7E6BA6C424297B9600D27EE8 /* WTREventListOperation.m */,
-				8B4B6A9B282B8E590026B316 /* UIApplication+Extension.swift */,
-				8B4B6A9D282BA6B00026B316 /* UIButton+Extension.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -499,21 +502,20 @@
 		B2DC6F041B81E6F900F599B3 /* WootricSDK */ = {
 			isa = PBXGroup;
 			children = (
+				3E52A2C128BECE4A0075BD89 /* Public */,
 				B2C9405D1BA0853700482494 /* Views */,
 				B2ADF6521B9DBD73005403AC /* Utils */,
 				B2ADF6511B9DBD52005403AC /* SurveySettings */,
 				B2DC6F301B82034100F599B3 /* ViewControllers */,
 				B2DC6F071B81E6F900F599B3 /* WootricSDK.h */,
-				B2DC6F2C1B82000900F599B3 /* Wootric.h */,
 				B2DC6F2D1B82000900F599B3 /* Wootric.m */,
+				1785719A2088FD1500CCBE02 /* WTRLogLevel.h */,
 				B2102A371BB59AE60025DABC /* WTRSurvey.h */,
 				B2102A381BB59AE60025DABC /* WTRSurvey.m */,
 				B2DC6F311B820E6B00F599B3 /* WTRApiClient.h */,
 				B2DC6F321B820E6B00F599B3 /* WTRApiClient.m */,
-				B2D9FCDD1BF9F18E00479F9F /* SEGWootric.h */,
 				B2D9FCDE1BF9F18E00479F9F /* SEGWootric.m */,
 				B2DC6F051B81E6F900F599B3 /* Supporting Files */,
-				0F8DE567226A2E5F00A69F10 /* WTRSurveyDelegate.h */,
 			);
 			path = WootricSDK;
 			sourceTree = "<group>";
@@ -635,9 +637,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2DC6F181B81E6F900F599B3 /* Build configuration list for PBXNativeTarget "WootricSDK" */;
 			buildPhases = (
+				B2DC6EFF1B81E6F900F599B3 /* Headers */,
 				B2DC6EFD1B81E6F900F599B3 /* Sources */,
 				B2DC6EFE1B81E6F900F599B3 /* Frameworks */,
-				B2DC6EFF1B81E6F900F599B3 /* Headers */,
 				B2DC6F001B81E6F900F599B3 /* Resources */,
 			);
 			buildRules = (
@@ -764,7 +766,6 @@
 				7E6BA6C624297B9600D27EE8 /* WTREventListOperation.m in Sources */,
 				B27889761BDF85FD001D5696 /* UIItems.m in Sources */,
 				B268668B1BD671D200A4288D /* WTRiPADQuestionView.m in Sources */,
-				8B4B6A9E282BA6B00026B316 /* UIButton+Extension.swift in Sources */,
 				B24550A21B909A49001AC1FB /* WTRSurveyViewController+Views.m in Sources */,
 				B23DEF7C1BBBE9CA002A7FFD /* WTRUserCustomMessages.m in Sources */,
 				B25CE7601BAADC920063E6E5 /* WTRQuestionView.m in Sources */,
@@ -773,7 +774,6 @@
 				B29A2E891BAC0B50007181D3 /* WTRFeedbackView.m in Sources */,
 				B268667F1BD63B7000A4288D /* WTRCircleScoreButton.m in Sources */,
 				B2DC6F341B820E6B00F599B3 /* WTRApiClient.m in Sources */,
-				8B4B6A9C282B8E590026B316 /* UIApplication+Extension.swift in Sources */,
 				B24550921B8E0188001AC1FB /* WTRColor.m in Sources */,
 				B2102A2E1BB59ABC0025DABC /* WTRDefaults.m in Sources */,
 				0F23A96B227A4C000093765A /* WTRUserCustomThankYou.m in Sources */,
@@ -865,7 +865,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -920,7 +920,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -945,10 +945,10 @@
 				GCC_WARN_PEDANTIC = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/WootricSDK/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = mh_dylib;
-				MARKETING_VERSION = 0.21.0;
+				MARKETING_VERSION = 0.22.0;
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wootric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -972,10 +972,10 @@
 				GCC_WARN_PEDANTIC = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/WootricSDK/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = mh_dylib;
-				MARKETING_VERSION = 0.21.0;
+				MARKETING_VERSION = 0.22.0;
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wootric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -987,7 +987,6 @@
 		B2DC6F1C1B81E6F900F599B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1004,7 +1003,6 @@
 		B2DC6F1D1B81E6F900F599B3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				GCC_WARN_PEDANTIC = NO;
 				INFOPLIST_FILE = WootricSDKTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

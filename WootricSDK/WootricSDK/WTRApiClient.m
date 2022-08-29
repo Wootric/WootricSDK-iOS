@@ -602,7 +602,11 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (nullable NSString *)sdkVersion {
+#ifdef SWIFTPM_MODULE_BUNDLE
+  return [NSString stringWithFormat:@"ios-%@", [SWIFTPM_MODULE_BUNDLE objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+#else
   return [NSString stringWithFormat:@"ios-%@", [[NSBundle bundleForClass:[WTRApiClient class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+#endif
 }
 
 - (NSString *)osVersion {

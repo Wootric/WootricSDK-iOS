@@ -37,7 +37,6 @@
 #import "Wootric.h"
 #import "WTRSurveyDelegate.h"
 #import <Social/Social.h>
-#import <WootricSDK/WootricSDK-Swift.h>
 
 @interface WTRiPADSurveyViewController ()
 
@@ -163,31 +162,31 @@
 
 - (void)openWootricHomepage:(UIButton *)sender {
   NSURL *url = [NSURL URLWithString:@"https://www.wootric.com"];
-  [[UIApplication sharedApplication] openExternalUrl:url completion:^(BOOL success) {
-        if (!success) {
-            [WTRLogger logError:@"Failed to open wootric page"];
-        }
+  [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
+    if (!success) {
+      [WTRLogger logError:@"Failed to open wootric page"];
+    }
   }];
 }
 
 - (void)optOutButtonPressed:(UIButton *)sender {
-    [[UIApplication sharedApplication] openExternalUrl:[self optOutURL] completion:^(BOOL success) {
-        if (success) {
-            [self dismissViewControllerWithBackgroundFade];
-        } else {
-            [WTRLogger logError:@"Failed to open opt out page"];
-        }
-    }];
+  [[UIApplication sharedApplication] openURL:[self optOutURL] options:@{} completionHandler:^(BOOL success) {
+    if (success) {
+      [self dismissViewControllerWithBackgroundFade];
+    } else {
+      [WTRLogger logError:@"Failed to open wootric page"];
+    }
+  }];
 }
 
 - (void)openThankYouURL:(WTRiPADThankYouButton *)sender {
-    [[UIApplication sharedApplication] openExternalUrl:sender.buttonURL completion:^(BOOL success) {
-        if (success) {
-            [self dismissViewControllerWithBackgroundFade];
-        } else {
-            [WTRLogger logError:@"Failed to open 'thank you' url"];
-        }
-    }];
+  [[UIApplication sharedApplication] openURL:sender.buttonURL options:@{} completionHandler:^(BOOL success) {
+    if (success) {
+      [self dismissViewControllerWithBackgroundFade];
+    } else {
+      [WTRLogger logError:@"Failed to open wootric page"];
+    }
+  }];
 }
 
 - (void)sendButtonPressed {
@@ -227,55 +226,34 @@
   }];
 }
 
--(void)socialButtonPressedForService:(UIButton *)sender {
+- (void)socialButtonPressedForService:(UIButton *)sender {
   if ([sender.titleLabel.text isEqualToString:[NSString fontAwesomeIconStringForEnum:FAThumbsUp]]) {
     NSURL *url = _settings.facebookPage;
-    [[UIApplication sharedApplication] openExternalUrl:url completion:^(BOOL success) {
-        if (!success) {
-            [WTRLogger logError:@"Failed to open facebook page"];
-        }
+    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
+      if (!success) {
+        [WTRLogger logError:@"Failed to open wootric page"];
+      }
     }];
   } else {
-    NSString *serviceType;
-    NSString *socialNetwork;
-    if ([sender.titleLabel.text isEqualToString:[NSString fontAwesomeIconStringForEnum:FATwitter]]) {
-      serviceType = SLServiceTypeTwitter;
-      socialNetwork = @"Twitter";
-    } else {
-      serviceType = SLServiceTypeFacebook;
-      socialNetwork = @"Facebook";
-    }
-    if ([SLComposeViewController isAvailableForServiceType:serviceType]) {
-      SLComposeViewController *sheet = [SLComposeViewController composeViewControllerForServiceType:serviceType];
-      if ([serviceType isEqualToString:SLServiceTypeFacebook]) {
-        [sheet addURL:_settings.facebookPage];
-      } else {
-        [sheet setInitialText:[NSString stringWithFormat:@"%@ @%@", [_feedbackView feedbackText], _settings.twitterHandler]];
-      }
-      [sheet setCompletionHandler:^(SLComposeViewControllerResult result){
-        switch (result) {
-          case SLComposeViewControllerResultCancelled:
-            [WTRLogger log:@"Post cancelled"];
-            break;
-          case SLComposeViewControllerResultDone:
-            [WTRLogger log:@"Post successful"];
-            break;
-          default:
-            break;
-        }
-      }];
-      [self presentViewController:sheet animated:YES completion:nil];
-    } else {
-      NSString *message = [NSString stringWithFormat:@"You can't post right now, make sure your device has an internet connection and you have at least one %@ account setup", socialNetwork];
-      UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Sorry"
-                                                                               message:message
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
-      UIAlertAction *action = [UIAlertAction actionWithTitle: NSLocalizedString(@"OK", "")
-                                                        style:UIAlertActionStyleCancel
-                                                      handler:nil];
-      [alertController addAction:action];
-      [self presentViewController:alertController animated:YES completion:nil];
-    }
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[_feedbackView feedbackText]] applicationActivities:nil];
+    activityViewController.excludedActivityTypes = @[
+      UIActivityTypePostToWeibo,
+      UIActivityTypeMessage,
+      UIActivityTypeMail,
+      UIActivityTypePrint,
+      UIActivityTypeCopyToPasteboard,
+      UIActivityTypeAssignToContact,
+      UIActivityTypeSaveToCameraRoll,
+      UIActivityTypeAddToReadingList,
+      UIActivityTypePostToFlickr,
+      UIActivityTypePostToVimeo,
+      UIActivityTypePostToTencentWeibo,
+      UIActivityTypeAirDrop,
+      UIActivityTypeOpenInIBooks
+    ];
+    [self presentViewController:activityViewController animated:YES completion:^{
+      [WTRLogger log:@"Post successful"];
+    }];
   }
 }
 

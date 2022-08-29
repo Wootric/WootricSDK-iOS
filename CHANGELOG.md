@@ -1,3 +1,14 @@
+## 0.22.0 (2022-09-01)
+
+### Changes:
+
+- Send language on response creation
+- Update lowest supported version to iOS 12 and fix deprecated code
+- Update build phases to fix cycle in dependencies
+- Remove incorrect tests. These tests were basically testing Apple's implementation of NSOperationQueue
+- Update social sharing to fix SLServiceTypeTwitter & SLServiceTypeFacebook deprecation (https://github.com/Wootric/WootricSDK-iOS/issues/55)
+- Fix SPM support (https://github.com/Wootric/WootricSDK-iOS/pull/96 & https://github.com/Wootric/WootricSDK-iOS/issues/86)
+
 ## 0.21.1 (2021-11-08)
 
 ### Changes:

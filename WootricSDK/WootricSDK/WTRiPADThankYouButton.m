@@ -25,7 +25,6 @@
 #import "WTRiPADThankYouButton.h"
 #import "WTRColor.h"
 #import "UIItems.h"
-#import <WootricSDK/WootricSDK-Swift.h>
 
 @implementation WTRiPADThankYouButton
 
@@ -33,7 +32,7 @@
   if (self = [super init]) {
     self.layer.cornerRadius = 3;
     self.layer.borderWidth = 1;
-    [self configureContentInsetsWithTop:0 leading:10 bottom:0 trailing:10];
+    self.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
     self.layer.borderColor = [WTRColor iPadThankYouButtonBorderColor].CGColor;
     self.titleLabel.font = [UIItems regularFontWithSize:14];
     [self setTitleColor:[WTRColor iPadThankYouButtonTextColor] forState:UIControlStateNormal];
