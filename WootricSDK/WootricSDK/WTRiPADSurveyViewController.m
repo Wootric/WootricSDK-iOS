@@ -227,7 +227,7 @@
   }];
 }
 
--(void)socialButtonPressedForService:(UIButton *)sender {
+- (void)socialButtonPressedForService:(UIButton *)sender {
   if ([sender.titleLabel.text isEqualToString:[NSString fontAwesomeIconStringForEnum:FAThumbsUp]]) {
     NSURL *url = _settings.facebookPage;
     [[UIApplication sharedApplication] openExternalUrl:url completion:^(BOOL success) {
@@ -236,46 +236,25 @@
         }
     }];
   } else {
-    NSString *serviceType;
-    NSString *socialNetwork;
-    if ([sender.titleLabel.text isEqualToString:[NSString fontAwesomeIconStringForEnum:FATwitter]]) {
-      serviceType = SLServiceTypeTwitter;
-      socialNetwork = @"Twitter";
-    } else {
-      serviceType = SLServiceTypeFacebook;
-      socialNetwork = @"Facebook";
-    }
-    if ([SLComposeViewController isAvailableForServiceType:serviceType]) {
-      SLComposeViewController *sheet = [SLComposeViewController composeViewControllerForServiceType:serviceType];
-      if ([serviceType isEqualToString:SLServiceTypeFacebook]) {
-        [sheet addURL:_settings.facebookPage];
-      } else {
-        [sheet setInitialText:[NSString stringWithFormat:@"%@ @%@", [_feedbackView feedbackText], _settings.twitterHandler]];
-      }
-      [sheet setCompletionHandler:^(SLComposeViewControllerResult result){
-        switch (result) {
-          case SLComposeViewControllerResultCancelled:
-            [WTRLogger log:@"Post cancelled"];
-            break;
-          case SLComposeViewControllerResultDone:
-            [WTRLogger log:@"Post successful"];
-            break;
-          default:
-            break;
-        }
-      }];
-      [self presentViewController:sheet animated:YES completion:nil];
-    } else {
-      NSString *message = [NSString stringWithFormat:@"You can't post right now, make sure your device has an internet connection and you have at least one %@ account setup", socialNetwork];
-      UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Sorry"
-                                                                               message:message
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
-      UIAlertAction *action = [UIAlertAction actionWithTitle: NSLocalizedString(@"OK", "")
-                                                        style:UIAlertActionStyleCancel
-                                                      handler:nil];
-      [alertController addAction:action];
-      [self presentViewController:alertController animated:YES completion:nil];
-    }
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[_feedbackView feedbackText]] applicationActivities:nil];
+    activityViewController.excludedActivityTypes = @[
+      UIActivityTypePostToWeibo,
+      UIActivityTypeMessage,
+      UIActivityTypeMail,
+      UIActivityTypePrint,
+      UIActivityTypeCopyToPasteboard,
+      UIActivityTypeAssignToContact,
+      UIActivityTypeSaveToCameraRoll,
+      UIActivityTypeAddToReadingList,
+      UIActivityTypePostToFlickr,
+      UIActivityTypePostToVimeo,
+      UIActivityTypePostToTencentWeibo,
+      UIActivityTypeAirDrop,
+      UIActivityTypeOpenInIBooks
+    ];
+    [self presentViewController:activityViewController animated:YES completion:^{
+      [WTRLogger log:@"Post successful"];
+    }];
   }
 }
 

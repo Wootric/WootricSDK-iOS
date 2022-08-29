@@ -33,7 +33,11 @@
   NSArray *fonts = @[@"fontawesome-webfont", @"IBMPlexSans-Italic", @"IBMPlexSans-Bold", @"IBMPlexSans-Medium", @"IBMPlexSans-Regular"];
 
   for (NSString *font in fonts) {
+#if SWIFTPM_MODULE_BUNDLE
+    NSString *fontPath = [SWIFTPM_MODULE_BUNDLE pathForResource:font ofType:@"ttf"];
+#else
     NSString *fontPath = [[NSBundle bundleForClass:[UIItems class]] pathForResource:font ofType:@"ttf"];
+#endif
 
     CFErrorRef error;
     NSURL *url = [NSURL fileURLWithPath:fontPath isDirectory:NO];

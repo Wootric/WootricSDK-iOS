@@ -11,7 +11,7 @@
 
 
 ## Requirements
-- iOS 9.0+
+- iOS 12.0+
 
 ## Demos
 - View the iOS demo video with referral prompt [here.](https://share.getcloudapp.com/rRuGkdBA)

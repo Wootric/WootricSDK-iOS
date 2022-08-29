@@ -319,6 +319,17 @@
 			path = iPhone;
 			sourceTree = "<group>";
 		};
+		3E52A2C128BECE4A0075BD89 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				0F8DE567226A2E5F00A69F10 /* WTRSurveyDelegate.h */,
+				B2D9FCDD1BF9F18E00479F9F /* SEGWootric.h */,
+				178571962088FCA700CCBE02 /* WTRLogger.h */,
+				B2DC6F2C1B82000900F599B3 /* Wootric.h */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
 		B260ECE31BD8D7F200E29CD5 /* SimpleConstraints */ = {
 			isa = PBXGroup;
 			children = (
@@ -446,7 +457,6 @@
 				B2C940631BA30AFB00482494 /* UIImage+ImageFromColor.m */,
 				B229766B1BB0036100FC2772 /* WTRPropertiesParser.h */,
 				B229766C1BB0036100FC2772 /* WTRPropertiesParser.m */,
-				178571962088FCA700CCBE02 /* WTRLogger.h */,
 				178571972088FCA700CCBE02 /* WTRLogger.m */,
 				1785719A2088FD1500CCBE02 /* WTRLogLevel.h */,
 				0FE0F3F720DC041B00499248 /* WTRNotificationCenter.h */,
@@ -499,21 +509,19 @@
 		B2DC6F041B81E6F900F599B3 /* WootricSDK */ = {
 			isa = PBXGroup;
 			children = (
+				3E52A2C128BECE4A0075BD89 /* Public */,
 				B2C9405D1BA0853700482494 /* Views */,
 				B2ADF6521B9DBD73005403AC /* Utils */,
 				B2ADF6511B9DBD52005403AC /* SurveySettings */,
 				B2DC6F301B82034100F599B3 /* ViewControllers */,
 				B2DC6F071B81E6F900F599B3 /* WootricSDK.h */,
-				B2DC6F2C1B82000900F599B3 /* Wootric.h */,
 				B2DC6F2D1B82000900F599B3 /* Wootric.m */,
 				B2102A371BB59AE60025DABC /* WTRSurvey.h */,
 				B2102A381BB59AE60025DABC /* WTRSurvey.m */,
 				B2DC6F311B820E6B00F599B3 /* WTRApiClient.h */,
 				B2DC6F321B820E6B00F599B3 /* WTRApiClient.m */,
-				B2D9FCDD1BF9F18E00479F9F /* SEGWootric.h */,
 				B2D9FCDE1BF9F18E00479F9F /* SEGWootric.m */,
 				B2DC6F051B81E6F900F599B3 /* Supporting Files */,
-				0F8DE567226A2E5F00A69F10 /* WTRSurveyDelegate.h */,
 			);
 			path = WootricSDK;
 			sourceTree = "<group>";
@@ -635,9 +643,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2DC6F181B81E6F900F599B3 /* Build configuration list for PBXNativeTarget "WootricSDK" */;
 			buildPhases = (
+				B2DC6EFF1B81E6F900F599B3 /* Headers */,
 				B2DC6EFD1B81E6F900F599B3 /* Sources */,
 				B2DC6EFE1B81E6F900F599B3 /* Frameworks */,
-				B2DC6EFF1B81E6F900F599B3 /* Headers */,
 				B2DC6F001B81E6F900F599B3 /* Resources */,
 			);
 			buildRules = (
@@ -865,7 +873,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -920,7 +928,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -948,7 +956,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = mh_dylib;
-				MARKETING_VERSION = 0.21.0;
+				MARKETING_VERSION = 0.22.0;
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wootric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -975,7 +983,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = mh_dylib;
-				MARKETING_VERSION = 0.21.0;
+				MARKETING_VERSION = 0.22.0;
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wootric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
