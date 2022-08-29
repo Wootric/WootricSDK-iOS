@@ -125,7 +125,8 @@
   NSString *placeholderText = [_settings followupPlaceholderTextForScore:sender.assignedScore];
   _currentScore = sender.assignedScore;
   [_questionView selectCircleButton:sender];
-  [self endUserVotedWithScore:sender.assignedScore andText:nil];
+  [self endUserVotedWithScore:sender.assignedScore text:nil picklistAnswers:nil];
+  [_feedbackView setDriverPicklistBasedOnScore:sender.assignedScore];
   [_feedbackView setFollowupLabelTextBasedOnScore:sender.assignedScore];
   [_feedbackView setFeedbackPlaceholderText:placeholderText];
   if (_feedbackView.hidden) {
@@ -136,15 +137,29 @@
     } else {
       [self showFeedbackView];
     }
+  } else {
+    [self updateConstraints];
   }
 }
 
 - (void)showFeedbackView {
   [_questionView hideQuestionLabel];
   _feedbackView.hidden = NO;
+  [self updateConstraints];
+}
+
+- (void)updateConstraints {
   _constraintModalHeight.constant = 215;
+  _constraintFeedbackViewHeight.constant = 100;
   _constraintQuestionTopToModalTop.constant = 50;
+  if ([_feedbackView numberOfRows] > 0) {
+    int numberOfRows = [_feedbackView numberOfRows];
+    _constraintModalHeight.constant += numberOfRows * 43;
+    _constraintFeedbackViewHeight.constant += numberOfRows * 43;
+    _constraintQuestionTopToModalTop.constant += numberOfRows * 43;
+  }
   _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
+  
   [UIView animateWithDuration:0.2 animations:^{
     [self.view layoutIfNeeded];
   } completion:^(BOOL finished) {
@@ -154,9 +169,9 @@
   }];
 }
 
-- (void)endUserVotedWithScore:(int)score andText:(NSString *)text {
+- (void)endUserVotedWithScore:(int)score text:(NSString *)text picklistAnswers:(NSDictionary *)picklistAnswers {
   WTRSurvey *survey = [[WTRSurvey alloc] init];
-  [survey endUserVotedWithScore:score text:text picklistAnswers:nil];
+  [survey endUserVotedWithScore:score text:text picklistAnswers:picklistAnswers];
   _alreadyVoted = YES;
   [WTRLogger log:@"Vote"];
 }
@@ -191,6 +206,7 @@
 }
 
 - (void)sendButtonPressed {
+  NSDictionary *picklistAnswers = [_feedbackView getDriverPicklistSelectedAnswers];
   if ([_feedbackView feedbackTextPresent]) {
     _feedbackText = [_feedbackView feedbackText];
   }
@@ -203,7 +219,7 @@
   } else {
     [self dismissWithFinalThankYou];
   }
-  [self endUserVotedWithScore:_currentScore andText:_feedbackText];
+  [self endUserVotedWithScore:_currentScore text:_feedbackText picklistAnswers:picklistAnswers];
 }
 
 - (void)dismissButtonPressed {
@@ -354,6 +370,7 @@
     modalPosition = bounds.size.height - self->_modalView.frame.size.height;
 
     self->_constraintTopToModalTop.constant = modalPosition;
+    [self updateConstraints];
   } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
     if (self->_keyboardHeight == 0) {
       [self->_scrollView setContentOffset:CGPointMake(0, self->_keyboardHeight) animated:YES];

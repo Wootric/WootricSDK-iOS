@@ -28,6 +28,5 @@
 
 - (void)setupConstraints;
 - (void)setupPoweredByWootricConstraintsCenteredX;
-- (void)updateFeedbackViewConstraints;
 
 @end

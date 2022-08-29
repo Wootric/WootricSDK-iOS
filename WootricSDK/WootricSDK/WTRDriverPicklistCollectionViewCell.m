@@ -46,7 +46,9 @@
   NSDictionary *attributes = @{NSFontAttributeName: [UIItems boldFontWithSize:12]};
   [_titleLabel setFrame:CGRectMake(0, 0, [text sizeWithAttributes:attributes].width + 12, 38.0f)];
   _titleLabel.text = text;
-//  [self setNeedsDisplay];
+  selected = false;
+  self.contentView.backgroundColor = [UIColor whiteColor];
+  _titleLabel.textColor = self.customColor;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {

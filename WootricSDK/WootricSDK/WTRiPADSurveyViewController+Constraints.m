@@ -100,7 +100,14 @@
 }
 
 - (void)setupFeedbackViewConstraints {
-  [self.feedbackView wtr_constraintHeight:100];
+  self.constraintFeedbackViewHeight = [NSLayoutConstraint constraintWithItem:self.feedbackView
+                                                                   attribute:NSLayoutAttributeHeight
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:nil
+                                                                   attribute:NSLayoutAttributeNotAnAttribute
+                                                                  multiplier:1
+                                                                    constant:100];
+  [self.feedbackView addConstraint:self.constraintFeedbackViewHeight];
   [self.feedbackView wtr_constraintWidthToSecondViewWidth:self.view withConstant:-80];
   [[[self.feedbackView wtr_topConstraint] toSecondViewTop:self.modalView] addToView:self.modalView];
   [[[self.feedbackView wtr_centerXConstraint] toSecondViewCenterX:self.modalView] addToView:self.modalView];
