@@ -40,6 +40,7 @@
 @property (nonatomic, strong) NSDictionary *driverPicklist;
 @property (nonatomic, strong) NSArray *driverPicklistKeys;
 @property (nonatomic, strong) WTRSettings *settings;
+@property BOOL multiselect;
 
 @end
 
@@ -87,7 +88,7 @@
     // TODO: add support dpl_hide_open_ended
   }
   if (driverPicklistSettings[@"dpl_multi_select"]) {
-    // TODO: add support dpl_multi_select
+    _multiselect = [driverPicklistSettings[@"dpl_multi_select"] boolValue];
   }
 
   [_driverPicklistCollectionView reloadData];
@@ -227,8 +228,18 @@
   return 5.0f;
 }
 
--(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
   return 0.0f;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (!_multiselect) {
+    for (WTRDriverPicklistCollectionViewCell *cell in [_driverPicklistCollectionView visibleCells]) {
+      if (cell != [collectionView cellForItemAtIndexPath:indexPath]) {
+        [cell unselect];
+      }
+    }
+  }
 }
 
 - (int)numberOfRows {
