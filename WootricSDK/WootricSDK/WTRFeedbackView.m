@@ -84,8 +84,12 @@
   if (driverPicklistSettings[@"dpl_randomize_list"] && [driverPicklistSettings[@"dpl_randomize_list"] intValue] == 1) {
     _driverPicklistKeys = [self shuffleArray:_driverPicklistKeys];
   }
-  if (driverPicklistSettings[@"dpl_hide_open_ended"]) {
-    // TODO: add support dpl_hide_open_ended
+  if (driverPicklistSettings[@"dpl_hide_open_ended"] && [driverPicklistSettings[@"dpl_hide_open_ended"] intValue] == 1) {
+    _feedbackTextView.hidden = true;
+    _feedbackPlaceholder.hidden = true;
+  } else {
+    _feedbackTextView.hidden = false;
+    _feedbackPlaceholder.hidden = false;
   }
   if (driverPicklistSettings[@"dpl_multi_select"]) {
     _multiselect = [driverPicklistSettings[@"dpl_multi_select"] boolValue];

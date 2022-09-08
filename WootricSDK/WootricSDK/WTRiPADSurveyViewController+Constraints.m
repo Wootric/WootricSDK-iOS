@@ -93,7 +93,14 @@
 
 - (void)setupQuestionViewConstraints {
   [self.questionView wtr_constraintWidthEqualSecondViewWidth:self.view];
-  [self.questionView wtr_constraintHeight:110];
+  self.constraintQuestionViewHeight = [NSLayoutConstraint constraintWithItem:self.questionView
+                                                                   attribute:NSLayoutAttributeHeight
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:nil
+                                                                   attribute:NSLayoutAttributeNotAnAttribute
+                                                                  multiplier:1
+                                                                    constant:110];
+  [self.questionView addConstraint:self.constraintQuestionViewHeight];
   [[[self.questionView wtr_centerXConstraint] toSecondViewCenterX:self.modalView] addToView:self.modalView];
   self.constraintQuestionTopToModalTop = [[self.questionView wtr_topConstraint] toSecondViewTop:self.modalView];
   [self.constraintQuestionTopToModalTop addToView:self.modalView];
