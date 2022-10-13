@@ -55,19 +55,19 @@
 }
 
 + (UIFont *)regularFontWithSize:(CGFloat)fontSize {
-  return [UIFont fontWithName:@"IBMPlexSans" size:fontSize];
+  return [UIFont fontWithName:@"IBMPlexSans" size:fontSize] ? [UIFont fontWithName:@"IBMPlexSans" size:fontSize] : [UIFont systemFontOfSize:fontSize];
 }
 
 + (UIFont *)boldFontWithSize:(CGFloat)fontSize {
-  return [UIFont fontWithName:@"IBMPlexSans-Bold" size:fontSize];
+  return [UIFont fontWithName:@"IBMPlexSans-Bold" size:fontSize] ? [UIFont fontWithName:@"IBMPlexSans-Bold" size:fontSize] : [UIFont systemFontOfSize:fontSize];
 }
 
 + (UIFont *)mediumFontWithSize:(CGFloat)fontSize {
-  return [UIFont fontWithName:@"IBMPlexSans-Medium" size:fontSize];
+  return [UIFont fontWithName:@"IBMPlexSans-Medium" size:fontSize] ? [UIFont fontWithName:@"IBMPlexSans-Medium" size:fontSize] : [UIFont systemFontOfSize:fontSize];
 }
 
 + (UIFont *)italicFontWithSize:(CGFloat)fontSize {
-  return [UIFont fontWithName:@"IBMPlexSans-Italic" size:fontSize];
+  return [UIFont fontWithName:@"IBMPlexSans-Italic" size:fontSize] ? [UIFont fontWithName:@"IBMPlexSans-Italic" size:fontSize] : [UIFont systemFontOfSize:fontSize];
 }
 
 + (UILabel *)likelyAnchorWithSettings:(WTRSettings *)settings font:(UIFont *)font {

@@ -1,3 +1,9 @@
+## 0.22.1 (2022-10-24)
+
+### Changes:
+
+- Default to system font when IBM font not found (https://github.com/Wootric/react-native-wootric/issues/27)
+
 ## 0.22.0 (2022-09-01)
 
 ### Changes:
