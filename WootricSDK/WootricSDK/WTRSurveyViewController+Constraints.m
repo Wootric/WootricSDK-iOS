@@ -258,7 +258,7 @@
   NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.feedbackView
                                                             attribute:NSLayoutAttributeWidth
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.view
+                                                               toItem:self.view.safeAreaLayoutGuide
                                                             attribute:NSLayoutAttributeWidth
                                                            multiplier:1
                                                              constant:2];

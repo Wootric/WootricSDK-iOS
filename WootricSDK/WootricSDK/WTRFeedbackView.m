@@ -201,12 +201,12 @@
 }
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-  return UIEdgeInsetsMake(0, 0, 0, 0);
+  return UIEdgeInsetsMake(5, 5, 5, 5);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-  NSDictionary *attributes = @{NSFontAttributeName: [UIItems boldFontWithSize:12]};
-  return CGSizeMake([(NSString*)[_driverPicklist.allKeys objectAtIndex:indexPath.row] sizeWithAttributes:attributes].width + 12, 38.0f);
+  NSDictionary *attributes = @{NSFontAttributeName: [UIItems regularFontWithSize:14]};
+  return CGSizeMake([(NSString*)[_driverPicklist.allKeys objectAtIndex:indexPath.row] sizeWithAttributes:attributes].width + 20, 29.0f);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
@@ -225,8 +225,8 @@
   int rowCount = 1;
   CGFloat totalWidthPerRow = 0.0f;
   for (NSString *answer in _driverPicklist) {
-    NSDictionary *attributes = @{NSFontAttributeName: [UIItems boldFontWithSize:12]};
-    CGFloat dynamicCellWidth = [answer sizeWithAttributes:attributes].width + 12;
+    NSDictionary *attributes = @{NSFontAttributeName: [UIItems regularFontWithSize:14]};
+    CGFloat dynamicCellWidth = [answer sizeWithAttributes:attributes].width + 20;
     totalWidthPerRow += dynamicCellWidth + 10;
     if (totalWidthPerRow > collectionViewWidth) {
       rowCount += 1;

@@ -99,7 +99,7 @@
             labelOffset = 2;
           }
         }
-        labelX += round(scoreLabelWidth / (float) (maximumScore - minimumScore) * (i - minimumScore)) - labelOffset * (i - minimumScore);
+        labelX += round(self.frame.size.width / (float) (maximumScore - minimumScore) * (i - minimumScore)) - labelOffset * (i - minimumScore);
         label.leftConstraint.constant = labelX;
       }
     }

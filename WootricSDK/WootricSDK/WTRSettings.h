@@ -85,7 +85,6 @@
 - (NSString *)editScoreButtonText;
 - (NSString *)socialShareDeclineText;
 
-
 - (void)setThankYouButtonBackgroundColor:(UIColor *)thankYouButtonBackgroundColor;
 - (UIColor *)thankYouButtonBackgroundColor;
 
