@@ -208,6 +208,23 @@
   if (_feedbackView.hidden) {
     if ([_settings driverPicklistAnswers]) {
       [self updateConstraintModalHeight:308];
+      [self setModalGradient:_modalView.bounds];
+      [_modalView.layer insertSublayer:_gradient atIndex:0];
+    }
+  } else {
+    if ([_settings driverPicklistAnswers]) {
+      int numberOfRows = [_feedbackView numberOfRows];
+      [self updateConstraintModalHeight:(308 + (numberOfRows * 29)) feedbackViewHeight:(217 + (numberOfRows * 29))];
+      [self setModalGradient:_modalView.bounds];
+      [_modalView.layer insertSublayer:_gradient atIndex:0];
+    }
+  }
+}
+
+- (void)updateConstraints {
+  if (_feedbackView.hidden) {
+    if ([_settings driverPicklistAnswers]) {
+      [self updateConstraintModalHeight:308];
     }
   } else {
     if ([_settings driverPicklistAnswers]) {
@@ -422,10 +439,12 @@
   BOOL isFromLandscape = !UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]);
   CGFloat widthAfterRotation;
   CGFloat leftAndRightMargins = 28;
+  
+  UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
   if (IS_OS_8_OR_LATER || isFromLandscape) {
     widthAfterRotation = self.view.frame.size.width - leftAndRightMargins;
   } else {
-    widthAfterRotation = self.view.frame.size.height - leftAndRightMargins;
+    widthAfterRotation = self.view.frame.size.height - (leftAndRightMargins + window.safeAreaInsets.top);
   }
   [_questionView recalculateDotsAndScorePositionForWidth:widthAfterRotation];
 }

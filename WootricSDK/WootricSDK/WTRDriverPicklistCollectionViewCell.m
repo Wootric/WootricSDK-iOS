@@ -23,13 +23,14 @@
     selected = false;
     self.layer.cornerRadius = 3;
     self.layer.borderWidth = 1;
-    self.layer.borderColor = [_backgroundColor colorWithAlphaComponent:0.65f].CGColor;
+    self.clipsToBounds = YES;
     self.contentView.layer.cornerRadius = 3;
     self.contentView.layer.borderWidth = 1;
-    self.contentMode = UIViewContentModeScaleToFill;
+    self.contentView.layer.borderColor = [_customColor colorWithAlphaComponent:1.0f].CGColor;
+    self.contentView.clipsToBounds = YES;
     
     _titleLabel = [[UILabel alloc] initWithFrame:frame];
-    _titleLabel.font = [UIItems boldFontWithSize:12];
+    _titleLabel.font = [UIItems regularFontWithSize:14];
     _titleLabel.contentMode = UIViewContentModeScaleToFill;
     _titleLabel.autoresizesSubviews = @YES;
     _titleLabel.adjustsFontSizeToFitWidth = @NO;
@@ -43,17 +44,18 @@
 }
 
 - (void)setText:(NSString *)text {
-  NSDictionary *attributes = @{NSFontAttributeName: [UIItems boldFontWithSize:12]};
-  [_titleLabel setFrame:CGRectMake(0, 0, [text sizeWithAttributes:attributes].width + 12, 38.0f)];
+  NSDictionary *attributes = @{NSFontAttributeName: [UIItems regularFontWithSize:14]};
+  [_titleLabel setFrame:CGRectMake(0, 0, [text sizeWithAttributes:attributes].width + 20, 29.0f)];
   _titleLabel.text = text;
   selected = false;
+  self.contentView.layer.borderColor = [_customColor colorWithAlphaComponent:1.0f].CGColor;
   self.contentView.backgroundColor = [UIColor whiteColor];
   _titleLabel.textColor = self.customColor;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   self.customColor = backgroundColor;
-  self.layer.borderColor = [self.customColor colorWithAlphaComponent:0.65f].CGColor;
+  self.layer.borderColor = [self.customColor colorWithAlphaComponent:1.0f].CGColor;
   _titleLabel.textColor = self.customColor;
 }
 
@@ -67,6 +69,7 @@
     _titleLabel.textColor = [UIColor whiteColor];
   } else {
     self.contentView.backgroundColor = [UIColor whiteColor];
+    self.layer.borderColor = [_customColor colorWithAlphaComponent:1.0f].CGColor;
     _titleLabel.textColor = self.customColor;
   }
 }
