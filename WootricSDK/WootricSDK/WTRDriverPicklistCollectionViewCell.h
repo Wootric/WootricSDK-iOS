@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setText:(NSString *)text;
 - (BOOL)selectedValue;
+- (void)unselect;
 
 @end
 

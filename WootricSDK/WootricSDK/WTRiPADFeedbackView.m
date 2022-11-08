@@ -40,6 +40,8 @@
 @property (nonatomic, strong) UICollectionView *driverPicklistCollectionView;
 @property (nonatomic, strong) NSDictionary *driverPicklist;
 @property (nonatomic, strong) NSArray *driverPicklistKeys;
+@property BOOL multiselect;
+@property (nonatomic, strong) NSLayoutConstraint *driverPicklistBottomConstraint;
 @end
 
 @implementation WTRiPADFeedbackView
@@ -83,11 +85,24 @@
   if (driverPicklistSettings[@"dpl_randomize_list"] && [driverPicklistSettings[@"dpl_randomize_list"] intValue] == 1) {
     _driverPicklistKeys = [self shuffleArray:_driverPicklistKeys];
   }
-  if (driverPicklistSettings[@"dpl_hide_open_ended"]) {
-    // TODO: add dpl_hide_open_ended logic
+  if (driverPicklistSettings[@"dpl_hide_open_ended"] && [driverPicklistSettings[@"dpl_hide_open_ended"] intValue] == 1) {
+    _feedbackTextView.hidden = true;
+    _feedbackPlaceholder.hidden = true;
+    _sendButton.hidden = true;
+    _driverPicklistBottomConstraint.constant = -4;
+  } else {
+    _feedbackTextView.hidden = false;
+    _feedbackPlaceholder.hidden = false;
+    _sendButton.hidden = false;
+    _driverPicklistBottomConstraint.constant = -51;
   }
   if (driverPicklistSettings[@"dpl_multi_select"]) {
-    // TODO: add dpl_multi_select logic
+    _multiselect = [driverPicklistSettings[@"dpl_multi_select"] boolValue];
+  }
+  if ([_driverPicklistKeys count] > 0) {
+    [_driverPicklistCollectionView setHidden:false];
+  } else {
+    [_driverPicklistCollectionView setHidden:true];
   }
   [_driverPicklistCollectionView reloadData];
 }
@@ -186,7 +201,8 @@
   [[[[_driverPicklistCollectionView wtr_leftConstraint] toSecondViewLeft:self] withConstant:16] addToView:self];
   [[[[_driverPicklistCollectionView wtr_rightConstraint] toSecondViewRight:self] withConstant:-16] addToView:self];
   [[[[_driverPicklistCollectionView wtr_topConstraint] toSecondViewBottom:_followupLabel] withConstant:8] addToView:self];
-  [[[[_driverPicklistCollectionView wtr_bottomConstraint] toSecondViewTop:_feedbackTextView] withConstant:-4] addToView:self];
+  _driverPicklistBottomConstraint = [[[_driverPicklistCollectionView wtr_bottomConstraint] toSecondViewBottom:self] withConstant:-4];
+  [_driverPicklistBottomConstraint addToView:self];
 }
 
 - (void)setupFeedbackTextViewConstraints {
@@ -232,8 +248,18 @@
   return 5.0f;
 }
 
--(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
   return 0.0f;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (!_multiselect) {
+    for (WTRDriverPicklistCollectionViewCell *cell in [_driverPicklistCollectionView visibleCells]) {
+      if (cell != [collectionView cellForItemAtIndexPath:indexPath]) {
+        [cell unselect];
+      }
+    }
+  }
 }
 
 - (int)numberOfRows {

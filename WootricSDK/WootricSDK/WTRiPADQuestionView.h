@@ -34,5 +34,6 @@
 - (void)setupSubviewsConstraints;
 - (void)selectCircleButton:(WTRCircleScoreButton *)button;
 - (void)hideQuestionLabel;
+- (void)showSendButton:(BOOL)show;
 
 @end
