@@ -25,6 +25,7 @@
 #import <WootricSDK/WootricSDK-Swift.h>
 #import "WTRiPADFeedbackView.h"
 #import "WTRColor.h"
+#import "WTRUtils.h"
 #import "WTRSurveyViewController.h"
 #import "SimpleConstraints.h"
 #import "UIItems.h"
@@ -83,7 +84,7 @@
   NSDictionary *driverPicklistSettings = [_settings driverPicklistSettingsForScore:score];
 
   if (driverPicklistSettings[@"dpl_randomize_list"] && [driverPicklistSettings[@"dpl_randomize_list"] intValue] == 1) {
-    _driverPicklistKeys = [self shuffleArray:_driverPicklistKeys];
+    _driverPicklistKeys = [WTRUtils shuffleArray:_driverPicklistKeys];
   }
   if (driverPicklistSettings[@"dpl_hide_open_ended"] && [driverPicklistSettings[@"dpl_hide_open_ended"] intValue] == 1) {
     _feedbackTextView.hidden = true;
@@ -292,16 +293,4 @@
   return answers;
 }
 
-- (NSArray *)shuffleArray:(NSArray *)array {
-  int count = (int)[array count];
-  NSMutableArray *newArray = [NSMutableArray arrayWithArray:array];
-  for (int i = 0; i < count - 1; ++i)
-  {
-      // Select a random element between i and end of array to swap with.
-      int nElements = count - i;
-      int n = arc4random_uniform(nElements) + i;
-      [newArray exchangeObjectAtIndex:i withObjectAtIndex:n];
-  }
-  return newArray;
-}
 @end

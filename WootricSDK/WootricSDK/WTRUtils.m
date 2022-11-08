@@ -37,4 +37,16 @@
   }
   return [[aString substringToIndex:6] isEqualToString:@"NPS-EU"];
 }
+
++ (NSArray *)shuffleArray:(NSArray *)array {
+  int count = (int)[array count];
+  NSMutableArray *newArray = [NSMutableArray arrayWithArray:array];
+  for (int i = 0; i < count - 1; ++i)
+  {
+      int nElements = count - i;
+      int n = arc4random_uniform(nElements) + i;
+      [newArray exchangeObjectAtIndex:i withObjectAtIndex:n];
+  }
+  return newArray;
+}
 @end
