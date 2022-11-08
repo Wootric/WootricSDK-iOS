@@ -150,15 +150,30 @@
 - (void)updateConstraints {
   _constraintModalHeight.constant = 215;
   _constraintFeedbackViewHeight.constant = 100;
+  _constraintQuestionViewHeight.constant = 110;
   _constraintQuestionTopToModalTop.constant = 50;
-  if ([_feedbackView numberOfRows] > 0) {
-    int numberOfRows = [_feedbackView numberOfRows];
+
+  NSDictionary *driverPicklistSettings = [_settings driverPicklistSettingsForScore:_currentScore];
+  int numberOfRows = [_feedbackView numberOfRows];
+
+  if (numberOfRows > 0 && [[_settings driverPicklistAnswersForScore:_currentScore] count] > 0) {
     _constraintModalHeight.constant += numberOfRows * 43;
     _constraintFeedbackViewHeight.constant += numberOfRows * 43;
     _constraintQuestionTopToModalTop.constant += numberOfRows * 43;
+
+    if (driverPicklistSettings[@"dpl_hide_open_ended"] && [driverPicklistSettings[@"dpl_hide_open_ended"] intValue] == 1) {
+      _constraintFeedbackViewHeight.constant = 51 + numberOfRows * 43;
+      _constraintQuestionTopToModalTop.constant = numberOfRows * 43;
+      _constraintQuestionViewHeight.constant += numberOfRows * 43;
+      [_questionView showSendButton:true];
+    } else {
+      [_questionView showSendButton:false];
+    }
+  } else {
+    [_questionView showSendButton:false];
   }
   _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
-  
+
   [UIView animateWithDuration:0.2 animations:^{
     [self.view layoutIfNeeded];
   } completion:^(BOOL finished) {
@@ -348,7 +363,9 @@
     modalPosition = bounds.size.height - self->_modalView.frame.size.height;
 
     self->_constraintTopToModalTop.constant = modalPosition;
-    [self updateConstraints];
+    if (!self->_feedbackView.hidden) {
+      [self updateConstraints];
+    }
   } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
     if (self->_keyboardHeight == 0) {
       [self->_scrollView setContentOffset:CGPointMake(0, self->_keyboardHeight) animated:YES];

@@ -208,17 +208,21 @@
   if (_feedbackView.hidden) {
     if ([_settings driverPicklistAnswers]) {
       [self updateConstraintModalHeight:308];
-      [self setModalGradient:_modalView.bounds];
-      [_modalView.layer insertSublayer:_gradient atIndex:0];
     }
   } else {
     if ([_settings driverPicklistAnswers]) {
       int numberOfRows = [_feedbackView numberOfRows];
-      [self updateConstraintModalHeight:(308 + (numberOfRows * 43)) feedbackViewHeight:(213 + (numberOfRows * 43))];
-      [self setModalGradient:_modalView.bounds];
-      [_modalView.layer insertSublayer:_gradient atIndex:0];
+      NSDictionary *driverPicklistSettings = [_settings driverPicklistSettingsForScore:_currentScore];
+      if (driverPicklistSettings[@"dpl_hide_open_ended"] && [driverPicklistSettings[@"dpl_hide_open_ended"] intValue] == 1) {
+        [self updateConstraintModalHeight:(160 + (numberOfRows * 43)) feedbackViewHeight:(213 + (numberOfRows * 43))];
+      } else {
+        [self updateConstraintModalHeight:(308 + (numberOfRows * 43)) feedbackViewHeight:(213 + (numberOfRows * 43))];
+      }
     }
   }
+  
+  [self setModalGradient:_modalView.bounds];
+  [_modalView.layer insertSublayer:_gradient atIndex:0];
 }
 
 - (void)presentShareScreenOrDismissForScore:(int)score {

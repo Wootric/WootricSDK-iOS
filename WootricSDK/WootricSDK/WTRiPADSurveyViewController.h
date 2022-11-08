@@ -45,6 +45,7 @@
 @property (nonatomic, strong) NSLayoutConstraint *constraintQuestionTopToModalTop;
 @property (nonatomic, strong) NSLayoutConstraint *constraintModalHeight;
 @property (nonatomic, strong) NSLayoutConstraint *constraintFeedbackViewHeight;
+@property (nonatomic, strong) NSLayoutConstraint *constraintQuestionViewHeight;
 @property (nonatomic, strong) NSLayoutConstraint *socialShareViewHeightConstraint;
 @property (nonatomic, strong) UILabel *finalThankYouLabel;
 
