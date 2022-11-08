@@ -28,5 +28,6 @@
 
 + (NSString *)percentEscapeString:(NSString *)string;
 + (BOOL)startsWithEU:(NSString *)aString;
++ (NSArray *)shuffleArray:(NSArray *)array;
 
 @end

@@ -25,6 +25,7 @@
 #import <WootricSDK/WootricSDK-Swift.h>
 #import "WTRFeedbackView.h"
 #import "WTRColor.h"
+#import "WTRUtils.h"
 #import "WTRSurveyViewController.h"
 #import "SimpleConstraints.h"
 #import "UIItems.h"
@@ -38,7 +39,9 @@
 @property (nonatomic, strong) UITextView *feedbackTextView;
 @property (nonatomic, strong) UICollectionView *driverPicklistCollectionView;
 @property (nonatomic, strong) NSDictionary *driverPicklist;
+@property (nonatomic, strong) NSArray *driverPicklistKeys;
 @property (nonatomic, strong) WTRSettings *settings;
+@property BOOL multiselect;
 
 @end
 
@@ -76,6 +79,23 @@
 
 - (void)setDriverPicklistBasedOnScore:(int)score {
   _driverPicklist = [_settings driverPicklistAnswersForScore:score];
+  _driverPicklistKeys = _driverPicklist.allKeys;
+  NSDictionary *driverPicklistSettings = [_settings driverPicklistSettingsForScore:score];
+  NSLog(@"%@", driverPicklistSettings[@"dpl_randomize_list"]);
+  if (driverPicklistSettings[@"dpl_randomize_list"] && [driverPicklistSettings[@"dpl_randomize_list"] intValue] == 1) {
+    _driverPicklistKeys = [WTRUtils shuffleArray:_driverPicklistKeys];
+  }
+  if (driverPicklistSettings[@"dpl_hide_open_ended"] && [driverPicklistSettings[@"dpl_hide_open_ended"] intValue] == 1) {
+    _feedbackTextView.hidden = true;
+    _feedbackPlaceholder.hidden = true;
+  } else {
+    _feedbackTextView.hidden = false;
+    _feedbackPlaceholder.hidden = false;
+  }
+  if (driverPicklistSettings[@"dpl_multi_select"]) {
+    _multiselect = [driverPicklistSettings[@"dpl_multi_select"] boolValue];
+  }
+
   [_driverPicklistCollectionView reloadData];
 }
 
@@ -188,12 +208,12 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
   WTRDriverPicklistCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"driverPicklistIdentifier" forIndexPath:indexPath];
   [cell setBackgroundColor:_settings.sliderColor];
-  [cell setText:_driverPicklist.allKeys[indexPath.row]];
+  [cell setText:_driverPicklistKeys[indexPath.row]];
   return cell;
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-  return [_driverPicklist count];
+  return [_driverPicklistKeys count];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -206,15 +226,25 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
   NSDictionary *attributes = @{NSFontAttributeName: [UIItems boldFontWithSize:12]};
-  return CGSizeMake([(NSString*)[_driverPicklist.allKeys objectAtIndex:indexPath.row] sizeWithAttributes:attributes].width + 12, 38.0f);
+  return CGSizeMake([(NSString*)[_driverPicklistKeys objectAtIndex:indexPath.row] sizeWithAttributes:attributes].width + 12, 38.0f);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
   return 5.0f;
 }
 
--(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
   return 0.0f;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+  if (!_multiselect) {
+    for (WTRDriverPicklistCollectionViewCell *cell in [_driverPicklistCollectionView visibleCells]) {
+      if (cell != [collectionView cellForItemAtIndexPath:indexPath]) {
+        [cell unselect];
+      }
+    }
+  }
 }
 
 - (int)numberOfRows {

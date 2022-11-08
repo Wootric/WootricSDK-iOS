@@ -116,10 +116,11 @@
   [_notificationCenter postNotificationName:[Wootric surveyDidDisappearNotification]
                                      object:self
                                    userInfo:@{@"score": @(_currentScore), @"voted": @(_alreadyVoted), @"text": _feedbackText}];
+  NSDictionary *driverPicklist = [[NSDictionary alloc] initWithDictionary:[_feedbackView getDriverPicklistSelectedAnswers]];
   if (_alreadyVoted) {
-    [[Wootric delegate] didHideSurvey:@{@"score": @(_currentScore), @"type": @"response", @"text": _feedbackText}];
+    [[Wootric delegate] didHideSurvey:@{@"score": @(_currentScore), @"type": @"response", @"text": @"", @"driver_picklist_answers": driverPicklist}];
   } else {
-    [[Wootric delegate] didHideSurvey:@{@"score": @"", @"type": @"response", @"text": @""}];
+    [[Wootric delegate] didHideSurvey:@{@"score": @(_currentScore), @"type": @"response", @"text": _feedbackText, @"driver_picklist_answers": driverPicklist}];
   }
 }
 
@@ -207,17 +208,21 @@
   if (_feedbackView.hidden) {
     if ([_settings driverPicklistAnswers]) {
       [self updateConstraintModalHeight:308];
-      [self setModalGradient:_modalView.bounds];
-      [_modalView.layer insertSublayer:_gradient atIndex:0];
     }
   } else {
     if ([_settings driverPicklistAnswers]) {
       int numberOfRows = [_feedbackView numberOfRows];
-      [self updateConstraintModalHeight:(308 + (numberOfRows * 43)) feedbackViewHeight:(213 + (numberOfRows * 43))];
-      [self setModalGradient:_modalView.bounds];
-      [_modalView.layer insertSublayer:_gradient atIndex:0];
+      NSDictionary *driverPicklistSettings = [_settings driverPicklistSettingsForScore:_currentScore];
+      if (driverPicklistSettings[@"dpl_hide_open_ended"] && [driverPicklistSettings[@"dpl_hide_open_ended"] intValue] == 1) {
+        [self updateConstraintModalHeight:(160 + (numberOfRows * 43)) feedbackViewHeight:(213 + (numberOfRows * 43))];
+      } else {
+        [self updateConstraintModalHeight:(308 + (numberOfRows * 43)) feedbackViewHeight:(213 + (numberOfRows * 43))];
+      }
     }
   }
+  
+  [self setModalGradient:_modalView.bounds];
+  [_modalView.layer insertSublayer:_gradient atIndex:0];
 }
 
 - (void)presentShareScreenOrDismissForScore:(int)score {
