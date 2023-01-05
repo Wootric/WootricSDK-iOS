@@ -323,6 +323,11 @@
     [self setupPoweredByWootricForSocialShareView];
     _optOutButton.hidden = YES;
   }
+  if ([self.settings showPoweredBy]) {
+    _poweredByWootric.hidden = NO;
+  } else {
+    _poweredByWootric.hidden = YES;
+  }
   [UIView animateWithDuration:0.2 animations:^{
     [self.view layoutIfNeeded];
   } completion:^(BOOL finished) {
@@ -337,6 +342,7 @@
   _questionView.hidden = YES;
   _socialShareView.hidden = YES;
   _poweredByWootric.hidden = YES;
+  _optOutButton.hidden = YES;
   _finalThankYouLabel.hidden = NO;
   _dismissButton.hidden = YES;
   _constraintModalHeight.constant = 125;

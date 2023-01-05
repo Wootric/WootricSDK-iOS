@@ -64,6 +64,7 @@
     _surveyType = @"NPS";
     _scale = [self scoreRules][_surveyType][0];
     _showOptOut = NO;
+    _showPoweredBy = YES;
   }
     
   return self;
@@ -87,6 +88,7 @@
     NSNumber *declineResurveyThrottleFromServer = surveyServerSettings[@"settings"][@"decline_resurvey_throttle"];
     NSString *languageCodeFromServer = surveyServerSettings[@"settings"][@"language"];
     NSInteger delay = _timeDelay > -1 ? _timeDelay : [surveyServerSettings[@"settings"][@"time_delay"] integerValue];
+    _showPoweredBy = [surveyServerSettings[@"settings"][@"powered_by"] boolValue];
       
     if (surveyTypeFromSurvey) {
       _surveyType = surveyTypeFromSurvey;

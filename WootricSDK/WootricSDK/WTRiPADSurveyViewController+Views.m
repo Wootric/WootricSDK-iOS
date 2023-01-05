@@ -46,6 +46,12 @@ static NSString *const kInMomentOptOut = @"InMoment •";
   } else {
     [self setupPoweredByWootric:[NSString stringWithFormat:@"%@%@", kPoweredBy, kInMoment]];
   }
+  
+  if ([self.settings showPoweredBy]) {
+    self.poweredByWootric.hidden = NO;
+  } else {
+    self.poweredByWootric.hidden = YES;
+  }
 
   [self addViewsToModal];
   [self.view addSubview:self.scrollView];

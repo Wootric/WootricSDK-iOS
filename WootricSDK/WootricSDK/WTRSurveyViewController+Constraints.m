@@ -38,11 +38,16 @@
   [self setupFinalThankYouLabelConstraints];
   [self setupSendButtonConstraints];
   [self setupDismissButtonConstraints];
-  [self setupPoweredByWootricConstraints];
+  
+  if ([self.settings showPoweredBy]) {
+    [self setupPoweredByWootricConstraints];
+  }
   if ([self.settings showOptOut]) {
     [self setupOptOutButtonConstraints];
   } else {
-    [self setupPoweredByWootricConstraintsCenteredX];
+    if ([self.settings showPoweredBy]) {
+      [self setupPoweredByWootricConstraintsCenteredX];
+    }
   }
 }
 
@@ -79,14 +84,16 @@
 
 - (void)setupPoweredByWootricConstraintsCenteredX {
   [self.poweredByWootric removeConstraint:self.constraintPoweredByWootricX];
-  self.constraintPoweredByWootricX = [NSLayoutConstraint constraintWithItem:self.poweredByWootric
-                                                                  attribute:NSLayoutAttributeCenterX
-                                                                  relatedBy:NSLayoutRelationEqual
-                                                                     toItem:self.modalView
-                                                                  attribute:NSLayoutAttributeCenterX
-                                                                 multiplier:1
-                                                                   constant:0];
-  [self.modalView addConstraint:self.constraintPoweredByWootricX];
+  if ([self.settings showPoweredBy]) {
+    self.constraintPoweredByWootricX = [NSLayoutConstraint constraintWithItem:self.poweredByWootric
+                                                                    attribute:NSLayoutAttributeCenterX
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:self.modalView
+                                                                    attribute:NSLayoutAttributeCenterX
+                                                                   multiplier:1
+                                                                     constant:0];
+    [self.modalView addConstraint:self.constraintPoweredByWootricX];
+  }
 }
 
 - (void)setupOptOutButtonConstraints {

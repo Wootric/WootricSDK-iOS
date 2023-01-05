@@ -44,7 +44,9 @@ static NSString *const kInMoment = @"InMoment";
   if ([self.settings showOptOut]) {
     [self setupOptOut];
   }
-  [self setupPoweredByWootric];
+  if ([self.settings showPoweredBy]) {
+    [self setupPoweredByWootric];
+  }
 
   [self addViewsToModal];
   [self.view addSubview:self.scrollView];
@@ -148,7 +150,9 @@ static NSString *const kInMoment = @"InMoment";
   if ([self.settings showOptOut]) {
     [self.modalView addSubview:self.optOutButton];
   }
-  [self.modalView addSubview:self.poweredByWootric];
+  if ([self.settings showPoweredBy]) {
+    [self.modalView addSubview:self.poweredByWootric];
+  }
 }
 
 #pragma mark - ScrollView

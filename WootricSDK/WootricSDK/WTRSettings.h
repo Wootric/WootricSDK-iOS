@@ -59,6 +59,7 @@
 @property (nonatomic, assign) BOOL skipFeedbackScreen;
 @property (nonatomic, assign) BOOL skipFeedbackScreenForPromoter;
 @property (nonatomic, assign) BOOL passScoreAndTextToURL;
+@property (nonatomic, assign) BOOL showPoweredBy;
 @property (nonatomic, strong) UIColor *sendButtonBackgroundColor;
 @property (nonatomic, strong) UIColor *sliderColor;
 @property (nonatomic, strong) UIColor *socialSharingColor;

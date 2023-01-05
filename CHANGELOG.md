@@ -1,3 +1,9 @@
+## 0.24.0 (2023-01-31)
+
+### Changes:
+
+- Add option to hide "powered by InMoment"
+
 ## 0.23.0 (2023-01-19)
 
 ### Changes:

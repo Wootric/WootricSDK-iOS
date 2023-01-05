@@ -37,10 +37,18 @@
   [self setupSocialShareViewConstraints];
   [self.socialShareView setupSubviewsConstraints];
   [self setupFinalThankYouLabelConstraints];
-  [self setupPoweredByWootricConstraints];
-  if ([self.settings showOptOut]) {
-    [self setupOptOutButtonConstraints];
+  
+  if ([self.settings showPoweredBy]) {
+    [self setupPoweredByWootricConstraints];
+    if ([self.settings showOptOut]) {
+      [self setupOptOutButtonConstraints];
+    }
+  } else {
+    if ([self.settings showOptOut]) {
+      [self setupOptOutButtonConstraintsCenteredX];
+    }
   }
+  
   [self setupDismissButtonConstraints];
 }
 
@@ -53,6 +61,18 @@
 - (void)setupOptOutButtonConstraints {
   [self.optOutButton wtr_constraintHeight:12];
   [[[[self.optOutButton wtr_leftConstraint] toSecondViewRight:self.poweredByWootric] withConstant:4] addToView:self.modalView];
+  [[[[self.optOutButton wtr_bottomConstraint] toSecondViewBottom:self.modalView] withConstant:-14] addToView:self.modalView];
+}
+
+- (void)setupOptOutButtonConstraintsCenteredX {
+  [self.optOutButton wtr_constraintHeight:12];
+  [self.modalView addConstraint:[NSLayoutConstraint constraintWithItem:self.optOutButton
+                                                             attribute:NSLayoutAttributeCenterX
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:self.modalView
+                                                             attribute:NSLayoutAttributeCenterX
+                                                            multiplier:1
+                                                              constant:0]];
   [[[[self.optOutButton wtr_bottomConstraint] toSecondViewBottom:self.modalView] withConstant:-14] addToView:self.modalView];
 }
 
