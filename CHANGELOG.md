@@ -1,3 +1,9 @@
+## 0.25.0 (2023-02-21)
+
+### Changes:
+
+- Add support for custom first question
+
 ## 0.24.1 (2023-02-16)
 
 ### Changes:

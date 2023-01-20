@@ -65,6 +65,7 @@
     _scale = [self scoreRules][_surveyType][0];
     _showOptOut = NO;
     _showPoweredBy = YES;
+    _customFirstQuestionEnabled = NO;
   }
     
   return self;
@@ -89,6 +90,7 @@
     NSString *languageCodeFromServer = surveyServerSettings[@"settings"][@"language"];
     NSInteger delay = _timeDelay > -1 ? _timeDelay : [surveyServerSettings[@"settings"][@"time_delay"] integerValue];
     _showPoweredBy = [surveyServerSettings[@"settings"][@"powered_by"] boolValue];
+    _customFirstQuestionEnabled = [surveyServerSettings[@"settings"][@"custom_first_question_enabled"] boolValue];
       
     if (surveyTypeFromSurvey) {
       _surveyType = surveyTypeFromSurvey;
@@ -135,6 +137,10 @@
     
     if (languageCodeFromServer) {
       _languageCode = languageCodeFromServer;
+    }
+
+    if (_customFirstQuestionEnabled && surveyServerSettings[@"settings"][@"custom_first_question"] != nil) {
+      _customFirstQuestion = surveyServerSettings[@"settings"][@"custom_first_question"];
     }
   }
 }

@@ -136,7 +136,11 @@
   tempLabel.numberOfLines = 0;
   tempLabel.lineBreakMode = NSLineBreakByWordWrapping;
   tempLabel.font = font;
-  tempLabel.text = [settings questionText];
+  if (settings.customFirstQuestionEnabled && settings.customFirstQuestion != nil) {
+    tempLabel.text = [settings customFirstQuestion];
+  } else {
+    tempLabel.text = [settings questionText];
+  }
   [tempLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 
   return tempLabel;

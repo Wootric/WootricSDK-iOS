@@ -41,6 +41,7 @@
 @property (nonatomic, strong) NSString *customQuestion;
 @property (nonatomic, strong) NSString *externalId;
 @property (nonatomic, strong) NSString *phoneNumber;
+@property (nonatomic, strong) NSString *customFirstQuestion;
 @property (nonatomic, strong) NSNumber *registeredPercentage;
 @property (nonatomic, strong) NSNumber *visitorPercentage;
 @property (nonatomic, strong) NSNumber *resurveyThrottle;
@@ -60,6 +61,7 @@
 @property (nonatomic, assign) BOOL skipFeedbackScreenForPromoter;
 @property (nonatomic, assign) BOOL passScoreAndTextToURL;
 @property (nonatomic, assign) BOOL showPoweredBy;
+@property (nonatomic, assign) BOOL customFirstQuestionEnabled;
 @property (nonatomic, strong) UIColor *sendButtonBackgroundColor;
 @property (nonatomic, strong) UIColor *sliderColor;
 @property (nonatomic, strong) UIColor *socialSharingColor;
