@@ -1,3 +1,9 @@
+## 0.26.2 (2023-08-08)
+
+### Changes:
+
+- Fix smartphone survey UI when application becomes active again
+
 ## 0.26.1 (2023-06-08)
 
 ### Changes:

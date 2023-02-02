@@ -33,12 +33,18 @@
 static id<WTRSurveyDelegate> _delegate = nil;
 static UIViewController *_presentedViewController;
 static WTRSettings *_presentedSettings;
+static bool shouldShowSurvey;
 
 @implementation Wootric
 
 + (void)configureWithAccountToken:(NSString *)accountToken {
   WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
   surveyClient.accountToken = accountToken;
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(applicationDidBecomeActive:)
+                                               name:UIApplicationDidBecomeActiveNotification
+                                             object:nil];
 }
 
 + (void)configureWithClientID:(NSString *)clientID clientSecret:(NSString *)clientSecret accountToken:(NSString *)accountToken {
@@ -264,6 +270,7 @@ static WTRSettings *_presentedSettings;
 }
 
 + (void)stop {
+  shouldShowSurvey = NO;
   if (_presentedViewController == nil || _presentedSettings == nil) {
     [WTRLogger log:@"No survey triggered."];
     return;
@@ -278,7 +285,7 @@ static WTRSettings *_presentedSettings;
       
     }];
   }
-  
+
   [WTRLogger log:@"Stopping survey..."];
 }
 
@@ -300,9 +307,6 @@ static WTRSettings *_presentedSettings;
         [self performSelector:@selector(presentSurveyInViewController:)
                    withObject:@[viewController, settings]
                    afterDelay:settings.timeDelay];
-        
-        [[[WTRDefaultNotificationCenter alloc] initWithNotificationCenter:[NSNotificationCenter defaultCenter]] postNotificationName:[Wootric surveyWillAppearNotification] object:self];
-        [[Wootric delegate] willPresentSurvey];
       });
     }];
   } else {
@@ -311,18 +315,27 @@ static WTRSettings *_presentedSettings;
 }
 
 + (void)presentSurveyInViewController:(NSArray *)objects {
-  UIViewController *viewController = objects[0];
-  WTRSettings *settings = objects[1];
+  if (UIApplication.sharedApplication.applicationState == UIApplicationStateActive) {
+    shouldShowSurvey = NO;
+    [[[WTRDefaultNotificationCenter alloc] initWithNotificationCenter:[NSNotificationCenter defaultCenter]] postNotificationName:[Wootric surveyWillAppearNotification] object:self];
+    [[Wootric delegate] willPresentSurvey];
 
-  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-    WTRiPADSurveyViewController *surveyViewController = [[WTRiPADSurveyViewController alloc] initWithSurveySettings:settings
-                                                                                                 notificationCenter:[[WTRDefaultNotificationCenter alloc ]initWithNotificationCenter:[NSNotificationCenter defaultCenter]]];
-    [viewController presentViewController:surveyViewController animated:YES completion:nil];
+    UIViewController *viewController = objects[0];
+    WTRSettings *settings = objects[1];
+
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+      WTRiPADSurveyViewController *surveyViewController = [[WTRiPADSurveyViewController alloc] initWithSurveySettings:settings
+                                                                                                   notificationCenter:[[WTRDefaultNotificationCenter alloc ]initWithNotificationCenter:[NSNotificationCenter defaultCenter]]];
+      [viewController presentViewController:surveyViewController animated:YES completion:nil];
+    } else {
+      WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:settings
+                                                                                           notificationCenter:[[WTRDefaultNotificationCenter alloc]
+                                                                                                               initWithNotificationCenter:[NSNotificationCenter defaultCenter]]];
+      [viewController presentViewController:surveyViewController animated:YES completion:nil];
+    }
   } else {
-    WTRSurveyViewController *surveyViewController = [[WTRSurveyViewController alloc] initWithSurveySettings:settings
-                                                                                         notificationCenter:[[WTRDefaultNotificationCenter alloc]
-                                                                                 initWithNotificationCenter:[NSNotificationCenter defaultCenter]]];
-    [viewController presentViewController:surveyViewController animated:YES completion:nil];
+    [WTRLogger logLevel:WTRLogLevelVerbose message:@"applicationDidBecomeActive and shouldShowSurvey = YES"];
+    shouldShowSurvey = YES;
   }
 }
 
@@ -487,4 +500,19 @@ static WTRSettings *_presentedSettings;
   return _delegate;
 }
 
+#pragma mark - NSNotificationCenter
+
++ (void)applicationDidBecomeActive:(NSNotification *)note {
+  if (shouldShowSurvey && _presentedViewController && _presentedSettings) {
+    [WTRLogger logLevel:WTRLogLevelVerbose message:@"applicationDidBecomeActive and shouldShowSurvey = YES"];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self performSelector:@selector(presentSurveyInViewController:)
+                 withObject:@[_presentedViewController, _presentedSettings]];
+    });
+  }
+}
+
++ (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 @end
