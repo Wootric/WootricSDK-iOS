@@ -1,3 +1,9 @@
+## 0.24.1 (2023-02-16)
+
+### Changes:
+
+- Update "powered by InMoment" text
+
 ## 0.24.0 (2023-01-31)
 
 ### Changes:

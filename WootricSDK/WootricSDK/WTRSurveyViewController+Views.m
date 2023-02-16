@@ -99,9 +99,15 @@ static NSString *const kInMoment = @"InMoment";
   self.poweredByWootric = [[UIButton alloc] init];
   [self.poweredByWootric setTranslatesAutoresizingMaskIntoConstraints:NO];
   NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", kPoweredBy, kInMoment]];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, kPoweredBy.length - 1)];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColor] range:NSMakeRange(kPoweredBy.length, kInMoment.length)];
-  [attrStr addAttribute:NSFontAttributeName value:[UIItems regularFontWithSize:10] range:NSMakeRange(0, kPoweredBy.length + kInMoment.length)];
+  if ([WTRColor poweredByColor] != nil && [WTRColor wootricTextColor] != nil && [UIItems regularFontWithSize:10] != nil  && kPoweredBy.length > 1 && kInMoment.length > 1) {
+    [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, kPoweredBy.length - 1)];
+    [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColor] range:NSMakeRange(kPoweredBy.length, kInMoment.length)];
+    [attrStr addAttribute:NSFontAttributeName value:[UIItems regularFontWithSize:10] range:NSMakeRange(0, kPoweredBy.length + kInMoment.length)];
+  } else {
+    [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:37/255 green:55/55 blue:70/255 alpha:1.0] range:NSMakeRange(0, 10)];
+    [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:37/255 green:55/55 blue:70/255 alpha:1.0] range:NSMakeRange(11, 8)];
+    [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, 19)];
+  }
   [self.poweredByWootric setAttributedTitle:attrStr forState:UIControlStateNormal];
   [self.poweredByWootric addTarget:self
                       action:NSSelectorFromString(@"openWootricHomepage:")
