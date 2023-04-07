@@ -1,3 +1,9 @@
+## 0.26.0 (2023-06-01)
+
+### Changes:
+
+- Add support for AU tokens
+
 ## 0.25.0 (2023-02-21)
 
 ### Changes:

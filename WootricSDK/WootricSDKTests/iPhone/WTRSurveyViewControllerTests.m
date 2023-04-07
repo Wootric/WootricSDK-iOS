@@ -83,9 +83,13 @@
 - (void)testOptOutUrl {
   XCTAssertTrue([[[_viewController optOutURL] absoluteString] hasPrefix:@"https://app.wootric.com/"]);
 
-  [_viewController setAccountToken:@"NPS-EU"];
+  [_viewController setAccountToken:@"NPS-EU-"];
 
   XCTAssertTrue([[[_viewController optOutURL] absoluteString] hasPrefix:@"https://app.wootric.eu/"]);
+  
+  [_viewController setAccountToken:@"NPS-AU-"];
+
+  XCTAssertTrue([[[_viewController optOutURL] absoluteString] hasPrefix:@"https://app.wootric.au/"]);
 }
 
 @end

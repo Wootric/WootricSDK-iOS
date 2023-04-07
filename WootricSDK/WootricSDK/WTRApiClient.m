@@ -32,10 +32,8 @@ static NSString *const WTRSamplingRule = @"Wootric Sampling Rule";
 static NSString *const WTRCustomEventName = @"custom_event_name";
 static NSString *const WTRRegisterEventsEndpoint = @"/registered_events.json";
 static NSString *const WTREligibleEndpoint = @"/eligible.json";
-static NSString *const WTRSurveyServerURL = @"https://survey.wootric.com";
-static NSString *const WTRBaseAPIURL = @"https://api.wootric.com";
-static NSString *const WTRSurveyEUServerURL = @"https://eligibility.wootric.eu";
-static NSString *const WTRBaseEUAPIURL = @"https://app.wootric.eu";
+static NSString *const WTRSurveyServerURL = @"https://eligibility.wootric.";
+static NSString *const WTRBaseAPIURL = @"https://app.wootric.";
 static NSString *const WTRAPIVersion = @"api/v1";
 
 @interface WTRApiClient ()
@@ -619,11 +617,11 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (NSString *)baseApiUrl {
-  return [WTRUtils startsWithEU:_accountToken] ? WTRBaseEUAPIURL : WTRBaseAPIURL;
+  return [NSString stringWithFormat:@"%@%@", WTRBaseAPIURL, [WTRUtils getTokenTLD:_accountToken]];
 }
 
 - (NSString *)eligibilityUrl {
-  return [WTRUtils startsWithEU:_accountToken] ? WTRSurveyEUServerURL : WTRSurveyServerURL;
+  return [NSString stringWithFormat:@"%@%@", WTRSurveyServerURL, [WTRUtils getTokenTLD:_accountToken]];
 }
 
 - (BOOL)needsSurvey {

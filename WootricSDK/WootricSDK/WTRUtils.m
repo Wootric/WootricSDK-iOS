@@ -32,11 +32,14 @@
   return [result stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 }
 
-+ (BOOL)startsWithEU:(NSString *)aString {
-  if ([aString length] < 6) {
-    return false;
++ (NSString *)getTokenTLD:(NSString *)aString {
+  NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"NPS-(EU-|AU-)"
+                                                                    options:0
+                                                                      error:nil];
+  if (aString != nil && [regex numberOfMatchesInString:aString options:0 range:NSMakeRange(0, [aString length])] > 0) {
+    return [[aString substringWithRange:NSMakeRange(4, 2)] lowercaseString];
   }
-  return [[aString substringToIndex:6] isEqualToString:@"NPS-EU"];
+  return @"com";
 }
 
 + (NSArray *)shuffleArray:(NSArray *)array {

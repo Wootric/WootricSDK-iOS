@@ -35,12 +35,15 @@
   XCTAssertEqualObjects(@"abc%20def", [WTRUtils percentEscapeString:@"abc def"]);
 }
 
-- (void)testStartsWithEU {
-  XCTAssertTrue([WTRUtils startsWithEU:@"NPS-EU"]);
-  XCTAssertFalse([WTRUtils startsWithEU:@"nps-eu"]);
-  XCTAssertFalse([WTRUtils startsWithEU:@"NPS"]);
-  XCTAssertFalse([WTRUtils startsWithEU:@"eu-NPS"]);
-  XCTAssertFalse([WTRUtils startsWithEU:@"EU-NPS"]);
+- (void)testGetTokenTDL {
+  XCTAssertEqualObjects([WTRUtils getTokenTLD:@"NPS-EU-123456"], @"eu");
+  XCTAssertEqualObjects([WTRUtils getTokenTLD:@"NPS-AU-A1B2C3"], @"au");
+  XCTAssertEqualObjects([WTRUtils getTokenTLD:@"NPS-1234"], @"com");
+  XCTAssertEqualObjects([WTRUtils getTokenTLD:@"whatever"], @"com");
+  XCTAssertEqualObjects([WTRUtils getTokenTLD:@""], @"com");
+  XCTAssertEqualObjects([WTRUtils getTokenTLD:@"EU"], @"com");
+  XCTAssertEqualObjects([WTRUtils getTokenTLD:@"AU"], @"com");
+  XCTAssertEqualObjects([WTRUtils getTokenTLD:@"NPS-US-EU"], @"com");
 }
 
 @end

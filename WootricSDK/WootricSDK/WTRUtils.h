@@ -28,7 +28,7 @@
 @interface WTRUtils : NSObject
 
 + (NSString *)percentEscapeString:(NSString *)string;
-+ (BOOL)startsWithEU:(NSString *)aString;
++ (NSString *)getTokenTLD:(NSString *)aString;
 + (NSArray *)shuffleArray:(NSArray *)array;
 + (CGSize)sizeForText:(NSString *)text fontSize:(int)fontSize;
 
