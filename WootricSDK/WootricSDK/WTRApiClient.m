@@ -560,7 +560,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
     params = [NSString stringWithFormat:@"%@&survey[language]=%@", params, _settings.languageCode];
   }
   for (NSString *key in picklistAnswers) {
-    params = [NSString stringWithFormat:@"%@&driver_picklist[%@]=%@", params, key, picklistAnswers[key]];
+    params = [NSString stringWithFormat:@"%@&driver_picklist[%@]=%@", params, [WTRUtils percentEscapeString:key], [WTRUtils percentEscapeString:picklistAnswers[key]]];
   }
   
   if (score > -1) {

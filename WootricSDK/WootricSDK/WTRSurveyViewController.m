@@ -163,6 +163,7 @@
     [_modalView.layer insertSublayer:_gradient atIndex:0];
   }
 
+  [_feedbackView clearFeedbackText];
   [_feedbackView textViewResignFirstResponder];
   _scrolled = NO;
   [self setQuestionViewVisible:YES andFeedbackViewVisible:NO];

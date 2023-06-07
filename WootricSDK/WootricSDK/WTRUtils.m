@@ -29,6 +29,7 @@
 
 + (NSString *)percentEscapeString:(NSString *)string {
   NSString *result = [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+  result = [result stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
   return [result stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 }
 

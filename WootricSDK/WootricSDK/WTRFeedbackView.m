@@ -128,6 +128,10 @@
   return @"";
 }
 
+- (void)clearFeedbackText {
+  _feedbackTextView.text = @"";
+}
+
 - (BOOL)feedbackTextPresent {
   NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
   return !([[_feedbackTextView.text stringByTrimmingCharactersInSet:set] length] == 0);

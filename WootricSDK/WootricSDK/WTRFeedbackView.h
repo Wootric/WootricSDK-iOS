@@ -36,6 +36,7 @@
 - (void)showFeedbackPlaceholder:(BOOL)flag;
 - (void)setFeedbackPlaceholderText:(NSString *)text;
 - (NSString *)feedbackText;
+- (void)clearFeedbackText;
 - (BOOL)feedbackTextPresent;
 - (BOOL)isActive;
 - (NSDictionary *)getDriverPicklistSelectedAnswers;

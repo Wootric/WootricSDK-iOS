@@ -1,3 +1,10 @@
+## 0.26.1 (2023-06-08)
+
+### Changes:
+
+- Fix DriverPicklist ampersand bug
+- Fix second screen placeholder bug
+
 ## 0.26.0 (2023-06-01)
 
 ### Changes:

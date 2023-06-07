@@ -252,7 +252,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (void)testResponseParams {
-  static NSString *expectedResponse = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps&driver_picklist[Price]=Precio&score=9";
+  static NSString *expectedResponse = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps&driver_picklist[Help%20%26%20support]=Ayuda%20%26%20soporte&score=9";
   static NSString *expectedResponseAccountId = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps&survey[language]=ES&score=9&account_id=1234";
   
   static NSString *expectedResponseAccountIdText = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps&survey[language]=ES&score=9&text=test&account_id=1234";
@@ -266,10 +266,10 @@ static NSString *const WTRAPIVersion = @"api/v1";
   NSString *text = nil;
   int priority = 0;
   
-  NSString *params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil picklistAnswers:@{@"Price": @"Precio"}];
+  NSString *params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil picklistAnswers:@{@"Help & support": @"Ayuda & soporte"}];
   XCTAssertEqualObjects(params, expectedResponse, "Should not have account_id nor text in params");
   
-  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text picklistAnswers:@{@"Price": @"Precio"}];
+  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text picklistAnswers:@{@"Help & support": @"Ayuda & soporte"}];
   XCTAssertEqualObjects(params, expectedResponse, "Should not have account_id nor text in params");
   
   accountID = @1234;
