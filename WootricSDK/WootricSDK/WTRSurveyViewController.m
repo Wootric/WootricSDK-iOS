@@ -215,11 +215,11 @@
   int feedbackViewSpacing = 5;
   int modalSpacing = 10;
   
-  if (!_questionView.hidden) {
+  if (_feedbackView.hidden) {
     if ([_settings driverPicklistAnswers]) {
       [self updateConstraintModalHeight:modalHeight];
     }
-  } else if (!_feedbackView.hidden) {
+  } else {
     if ([_settings driverPicklistAnswers]) {
       if ([_settings showDisclaimer]) {
         modalHeight += disclaimerHeight;
@@ -229,9 +229,10 @@
         modalHeight = (modalHeight - openEndedHeight) + modalSpacing + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight];
         feedbackViewHeight = feedbackViewHeight + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight];
       } else {
-        modalHeight = modalHeight + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight];
-        feedbackViewHeight = feedbackViewHeight + feedbackViewSpacing + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight];
+        modalHeight = modalHeight + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight] + 15;
+        feedbackViewHeight = feedbackViewHeight + feedbackViewSpacing + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight] + 15;
       }
+
       [self updateConstraintModalHeight:modalHeight feedbackViewHeight:feedbackViewHeight];
     }
   }
@@ -361,8 +362,19 @@
   BOOL twitterAvailable = ([self twitterHandlerAndFeedbackTextPresent] && [_settings positiveTypeScore:score]);
   BOOL facebookAvailable = ([_settings facebookPageSet] && [_settings positiveTypeScore:score]);
   
-  CGFloat modalHeight = _constraintModalHeight.constant - 70.0f;
-  CGFloat socialShareViewHeight = _socialShareViewHeightConstraint.constant - 10.0f;
+//  CGFloat modalHeight = _constraintModalHeight.constant - 70.0f;
+  CGFloat modalHeight = _constraintModalHeight.constant;
+//  CGFloat socialShareViewHeight = _socialShareViewHeightConstraint.constant - 10.0f;
+  CGFloat socialShareViewHeight = _socialShareViewHeightConstraint.constant;
+  
+  NSDictionary *driverPicklistSettings = [_settings driverPicklistSettingsForScore:_currentScore];
+  if (driverPicklistSettings[@"dpl_hide_open_ended"] && [driverPicklistSettings[@"dpl_hide_open_ended"] intValue] == 1) {
+    modalHeight += 60.0f;
+    socialShareViewHeight -= 24.0f;
+  } else {
+    modalHeight -= 70.0f;
+    socialShareViewHeight -= 10.0f;
+  }
   
   if (!twitterAvailable && !facebookAvailable) {
     if ([_settings thankYouSetupDependingOnScore:score] == nil) {
@@ -391,9 +403,10 @@
 - (void)updateConstraintModalHeight:(CGFloat)constraintModalHeight {
   _constraintModalHeight.constant = constraintModalHeight;
   _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;
-  
+
   [UIView animateWithDuration:0.2 animations:^{
     [self.view layoutIfNeeded];
+    [self setModalGradient:self->_modalView.bounds];
   }];
 }
 

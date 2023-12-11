@@ -148,8 +148,11 @@
 - (void)setupEditScoreButtonWithViewController:(UIViewController *)viewController {
   _editScoreButton = [[UIButton alloc] init];
   _editScoreButton.titleLabel.font = [UIItems boldFontWithSize:12];
-  [_editScoreButton setTitle:[_settings editScoreButtonText].uppercaseString forState:UIControlStateNormal];
-  [_editScoreButton setTitleColor:[_settings sliderColor] forState:UIControlStateNormal];
+  NSDictionary *underlineAttribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)};
+  NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:[_settings editScoreButtonText].uppercaseString
+                                                           attributes:underlineAttribute];
+  [_editScoreButton setAttributedTitle:attrString forState:UIControlStateNormal];
+  [_editScoreButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [_editScoreButton addTarget:viewController
                        action:NSSelectorFromString(@"editScoreButtonPressed:")
              forControlEvents:UIControlEventTouchUpInside];

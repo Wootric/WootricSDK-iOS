@@ -80,7 +80,7 @@
   self.dismissButton.titleLabel.font = [UIItems regularFontWithSize:20];
   [self.dismissButton setContentEdgeInsets:UIEdgeInsetsMake(0.0f, 0.0f, 3.0f, 0.0f)];
   [self.dismissButton setTitle:@"\u00D7" forState:UIControlStateNormal];
-  [self.dismissButton setTitleColor:[WTRColor iPadCircleButtonTextColor] forState:UIControlStateNormal];
+  [self.dismissButton setTitleColor:[WTRColor iPadCircleButtonTextColorForColor:[WTRColor iPadCircleButtonBorderColor] scoreScaleType:@"unfilled" state:false] forState:UIControlStateNormal];
   [self.dismissButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.dismissButton addTarget:self action:NSSelectorFromString(@"dismissButtonPressed") forControlEvents:UIControlEventTouchUpInside];
 }

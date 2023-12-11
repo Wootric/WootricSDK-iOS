@@ -24,6 +24,28 @@
 
 #import "WTRColor.h"
 
+
+static NSString *const WTRDismissColor = @"#C8C8C8";
+static NSString *const WTRSliderModalBorderColor = @"#EBEBEB";
+static NSString *const WTRSliderBackgroundColor = @"#EFEFEF";
+static NSString *const WTRSliderDotBorderColor = @"#E6E6E6";
+static NSString *const WTRGrayGradientTopColor = @"#FDFDFD";
+static NSString *const WTRGrayGradientBottomColor = @"#F7F7F7";
+static NSString *const WTRSocialShareTextColor = @"#3081C2";
+static NSString *const WTRSocialLogoTextColor = @"#105DA0";
+static NSString *const WTRTextAreaTextColor = @"#000000";
+static NSString *const WTRTextAreaPlaceholderColor = @"#66737E";
+static NSString *const WTRCircleButtonBorderColor = @"#CBCBCB";
+static NSString *const WTRCircleButtonSelectedColor = @"#B3CDFF";
+static NSString *const WTRTextViewBackgroundColor = @"#FAFAFA";
+
+static NSString *const WTROrcaColor = @"#253746";
+static NSString *const WTROrcaL2Color = @"#66737E";
+static NSString *const WTRBlueColor = @"#0058FF";
+static NSString *const WTRAdminBlueColor = @"#B3CDFF";
+
+static NSString *const WTRScoreScaleFilledType = @"filled";
+
 @implementation WTRColor
 
 + (UIColor *)viewBackgroundColor {
@@ -31,151 +53,200 @@
 }
 
 + (UIColor *)dismissXColor {
-  return [self colorWithHexString:@"#C8C8C8"];
+  return [self colorWithHexString:WTRDismissColor];
 }
 
 + (UIColor *)sliderModalBorderColor {
-  return [self colorWithHexString:@"EBEBEB"];
+  return [self colorWithHexString:WTRSliderModalBorderColor];
 }
 
 + (UIColor *)grayGradientTopColor {
-  return [self colorWithHexString:@"#FDFDFD"];
+  return [self colorWithHexString:WTRGrayGradientTopColor];
 }
 
 + (UIColor *)grayGradientBottomColor {
-  return [self colorWithHexString:@"#F7F7F7"];
+  return [self colorWithHexString:WTRGrayGradientBottomColor];
 }
 
 + (UIColor *)sliderBackgroundColor {
-  return [self colorWithHexString:@"#EFEFEF"];
+  return [self colorWithHexString:WTRSliderBackgroundColor];
 }
 
 + (UIColor *)sliderDotBorderColor {
-  return [self colorWithHexString:@"#E6E6E6"];
+  return [self colorWithHexString:WTRSliderDotBorderColor];
 }
 
 + (UIColor *)anchorAndScoreColor {
-  return [self colorWithHexString:@"#66737E"];
+  return [self colorWithHexString:WTROrcaL2Color];
 }
 
 + (UIColor *)sendButtonDisabledBackgroundColor {
-  return [[self colorWithHexString:@"#0058FF"] colorWithAlphaComponent:0.4f];
+  return [[self colorWithHexString:WTRBlueColor] colorWithAlphaComponent:0.4f];
 }
 
 + (UIColor *)sendButtonBackgroundColor {
-  return [self colorWithHexString:@"#0058FF"];
+  return [self colorWithHexString:WTROrcaColor];
+}
+
++ (UIColor *)sendButtonTextColorForColor:(UIColor *)color {
+  if (color) {
+    return [self fontColorForColor:color];
+  }
+  return [UIColor whiteColor];
 }
 
 + (UIColor *)poweredByColor {
-  return [self colorWithHexString:@"#253746"];
+  return [self colorWithHexString:WTROrcaColor];
 }
 
 + (UIColor *)optOutTextColor {
-  return [self colorWithHexString:@"#253746"];
+  return [self colorWithHexString:WTROrcaColor];
 }
 
-+ (UIColor *)wootricTextColor {
-  return [self colorWithHexString:@"#253746"];
++ (UIColor *)wootricTextColorForColor:(UIColor *)color {
+  if (color) {
+    return [self fontColorForColor:color];
+  }
+  return [self colorWithHexString:WTROrcaColor];
 }
 
 + (UIColor *)sliderValueColor {
-  return [self colorWithHexString:@"#024EA9"];
+  return [self colorWithHexString:WTRAdminBlueColor];
 }
 
 + (UIColor *)sliderDotSelectedColor {
-  return [self colorWithHexString:@"#024EA9"];
+  return [self colorWithHexString:WTRAdminBlueColor];
 }
 
 + (UIColor *)selectedValueDotColor {
-  return [self colorWithHexString:@"#024EA9"];
+  return [self colorWithHexString:WTRAdminBlueColor];
 }
 
 + (UIColor *)selectedValueScoreColor {
-  return [self colorWithHexString:@"#024EA9"];
+  return [self colorWithHexString:WTRAdminBlueColor];
 }
 
 + (UIColor *)socialShareQuestionTextColor {
-  return [self colorWithHexString:@"#3081C2"];
+  return [self colorWithHexString:WTRSocialShareTextColor];
+}
+
++ (UIColor *)noThanksButtonTextColor {
+  return [self colorWithHexString:WTRSocialShareTextColor];
 }
 
 + (UIColor *)facebookLogoTextColor {
-  return [self colorWithHexString:@"#105DA0"];
+  return [self colorWithHexString:WTRSocialLogoTextColor];
 }
 
 + (UIColor *)twitterLogoTextColor {
-  return [self colorWithHexString:@"#105DA0"];
+  return [self colorWithHexString:WTRSocialLogoTextColor];
 }
 
 + (UIColor *)selectedValueUnderlineColor {
-  return [self colorWithHexString:@"#0058FF"];
+  return [self colorWithHexString:WTRBlueColor];
 }
 
 + (UIColor *)editScoreTextColor {
-  return [self colorWithHexString:@"#0058FF"];
+  return [self colorWithHexString:WTRBlueColor];
 }
 
 + (UIColor *)textAreaBorderColor {
-  return [self colorWithHexString:@"#253746"];
+  return [self colorWithHexString:WTROrcaColor];
 }
 
 + (UIColor *)textAreaTextColor {
-  return [self colorWithHexString:@"#7F7F7F"];
+  return [self colorWithHexString:WTRTextAreaTextColor];
+}
+
++ (UIColor *)textAreaPlaceholderColor {
+  return [self colorWithHexString:WTRTextAreaPlaceholderColor];
 }
 
 + (UIColor *)textAreaCursorColor {
-  return [self colorWithHexString:@"#3081C2"];
+  return [self colorWithHexString:WTRSocialShareTextColor];
 }
 
 + (UIColor *)callToActionButtonBackgroundColor {
-  return [self colorWithHexString:@"#0058FF"];
+  return [self colorWithHexString:WTROrcaColor];
 }
 
 + (UIColor *)iPadCircleButtonBorderColor {
-  return [self colorWithHexString:@"#CBCBCB"];
+  return [self colorWithHexString:WTRCircleButtonBorderColor];
+}
+
++ (UIColor *)iPadCircleButtonTextColorForColor:(UIColor *)color scoreScaleType:(NSString *)scoreScaleType state:(BOOL)isSelected {
+  if (isSelected || [scoreScaleType isEqualToString:WTRScoreScaleFilledType]) {
+    if (color) {
+      return [self fontColorForColor:color];
+    } else {
+      return [self fontColorForColor:[self colorWithHexString:WTROrcaColor]];
+    }
+  }
+  return [UIColor blackColor];
 }
 
 + (UIColor *)iPadCircleButtonTextColor {
-  return [self colorWithHexString:@"#253746"];
+  return [self colorWithHexString:WTROrcaColor];
 }
 
 + (UIColor *)iPadCircleButtonSelectedBackgroundColor {
-  return [self colorWithHexString:@"#B3CDFF"];
+  return [self colorWithHexString:WTRCircleButtonSelectedColor];
 }
 
 + (UIColor *)iPadCircleButtonSelectedBorderColor {
-  return [self colorWithHexString:@"#B3CDFF"];
+  return [self colorWithHexString:WTRCircleButtonSelectedColor];
 }
 
 + (UIColor *)iPadPoweredByWootricTextColor {
-  return [self colorWithHexString:@"#253746"];
+  return [self colorWithHexString:WTROrcaColor];
 }
 
 + (UIColor *)iPadQuestionsTextColor {
-  return [self colorWithHexString:@"#253746"];
+  return [self colorWithHexString:WTROrcaColor];
 }
 
 + (UIColor *)iPadFeedbackTextViewBackgroundColor {
-  return [self colorWithHexString:@"#FAFAFA"];
+  return [self colorWithHexString:WTRTextViewBackgroundColor];
 }
 
 + (UIColor *)iPadSendButtonBackgroundColor {
-  return [self colorWithHexString:@"#253746"];
+  return [self colorWithHexString:WTROrcaColor];
 }
 
 + (UIColor *)iPadThankYouButtonBorderColor {
-  return [self colorWithHexString:@"#0058FF"];
+  return [self colorWithHexString:WTRBlueColor];
 }
 
-+ (UIColor *)iPadThankYouButtonTextColor {
-  return [self colorWithHexString:@"#0058FF"];
++ (UIColor *)iPadThankYouButtonTextColorForColor:(UIColor *)color {
+  if (color) {
+    return [self fontColorForColor:color];
+  }
+  return [self colorWithHexString:WTRBlueColor];
 }
 
 + (UIColor *)iPadNoThanksButtonBorderColor {
-  return [self colorWithHexString:@"#253746"];
+  return [self colorWithHexString:WTROrcaColor];
 }
 
 + (UIColor *)iPadNoThanksButtonTextColor {
-  return [self colorWithHexString:@"#253746"];
+  return [self colorWithHexString:WTROrcaColor];
+}
+
++ (UIColor *)lighterColor:(UIColor *)color byPercetage:(CGFloat)percentage {
+  return [self adjustColor:color byPercentage:ABS(percentage)];
+}
+
++ (UIColor *)darkerColor:(UIColor *)color byPercentage:(CGFloat)percentage {
+  return [self adjustColor:color byPercentage:(-1 * ABS(percentage))];
+}
+
++ (nullable UIColor *)adjustColor:(UIColor *)color byPercentage:(CGFloat)percentage {
+  CGFloat red, green, blue, alpha;
+  if ([color getRed:&red green:&green blue:&blue alpha:&alpha]) {
+    return [UIColor colorWithRed:MIN(red + percentage/100.f, 1.0) green:MIN(green + percentage/100.f, 1.0) blue:MIN(blue + percentage/100.f, 1.0) alpha:alpha];
+  } else {
+    return nil;
+  }
 }
 
 + (UIColor *)colorWithHexString:(NSString *)hexString {
@@ -190,6 +261,16 @@
   int b = (hex) & 0xFF;
 
   return [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:1.0f];
+}
+
++ (nullable UIColor *)fontColorForColor:(UIColor *)color {
+  CGFloat red, green, blue, alpha;
+  if ([color getRed:&red green:&green blue:&blue alpha:&alpha]) {
+    CGFloat yiq = ((red * 255 * 299) + (green * 255 * 587) + (blue * 255 * 114)) / 1000;
+    return yiq >= 128 ? [UIColor blackColor] : [UIColor whiteColor];
+  } else {
+    return nil;
+  }
 }
 
 @end

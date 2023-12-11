@@ -163,9 +163,13 @@
 - (void)setupNoThanksButtonWithTargetViewController:(UIViewController *)viewController {
   _noThanksButton = [[UIButton alloc] init];
   _noThanksButton.titleLabel.font = [UIItems boldFontWithSize:12];
+  NSDictionary *underlineAttribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)};
+  NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:[[_settings socialShareDeclineText] uppercaseString]
+                                                           attributes:underlineAttribute];
+
   [_noThanksButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [_noThanksButton setTitle:[[_settings socialShareDeclineText] uppercaseString] forState:UIControlStateNormal];
-  [_noThanksButton setTitleColor:[_settings sendButtonBackgroundColor] forState:UIControlStateNormal];
+  [_noThanksButton setAttributedTitle:attrString forState:UIControlStateNormal];
+  [_noThanksButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [_noThanksButton addTarget:viewController
                       action:NSSelectorFromString(@"noThanksButtonPressed")
             forControlEvents:UIControlEventTouchUpInside];

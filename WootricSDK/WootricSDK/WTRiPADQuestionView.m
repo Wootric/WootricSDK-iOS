@@ -90,13 +90,16 @@
 - (void)setupSendButtonViewWithViewController:(UIViewController *)viewController {
   _sendButton = [[UIButton alloc] init];
   _sendButton.backgroundColor = [WTRColor iPadSendButtonBackgroundColor];
+  if (_settings.sendButtonBackgroundColor) {
+    _sendButton.backgroundColor = _settings.sendButtonBackgroundColor;
+  }
   _sendButton.layer.cornerRadius = 3;
   _sendButton.hidden = true;
   _sendButton.titleLabel.font = [UIItems boldFontWithSize:14];
   [_sendButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_sendButton setTitle:[self.settings sendButtonText] forState:UIControlStateNormal];
-  [_sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  [_sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
+  [_sendButton setTitleColor:[WTRColor sendButtonTextColorForColor:_settings.sendButtonBackgroundColor] forState:UIControlStateNormal];
+  [_sendButton setTitleColor:[WTRColor sendButtonTextColorForColor:_settings.sendButtonBackgroundColor] forState:UIControlStateDisabled];
   [_sendButton addTarget:viewController
                   action:NSSelectorFromString(@"sendButtonPressed")
         forControlEvents:UIControlEventTouchUpInside];

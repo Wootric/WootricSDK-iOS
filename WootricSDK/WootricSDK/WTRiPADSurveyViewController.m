@@ -128,6 +128,9 @@
   [_feedbackView setDriverPicklistBasedOnScore:sender.assignedScore];
   [_feedbackView setFollowupLabelTextBasedOnScore:sender.assignedScore];
   [_feedbackView setFeedbackPlaceholderText:placeholderText];
+  if ([_feedbackView feedbackText].length > 0) {
+    [_feedbackView showFeedbackPlaceholder:false];
+  }
   if (_feedbackView.hidden) {
     if (_settings.skipFeedbackScreen) {
       [self sendButtonPressed];
@@ -238,6 +241,10 @@
   if ([_feedbackView feedbackTextPresent]) {
     _feedbackText = [_feedbackView feedbackText];
   }
+  if ([_settings thankYouMainDependingOnScore:_currentScore]) {
+    _finalThankYouLabel.text = [_settings thankYouMainDependingOnScore:_currentScore];
+  }
+  
   if ([self socialShareAvailableForScore:_currentScore]) {
     [_socialShareView setThankYouButtonTextAndURLDependingOnScore:_currentScore text:_feedbackText];
     [_socialShareView setThankYouMainDependingOnScore:_currentScore];
@@ -281,6 +288,7 @@
     }];
   } else {
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[[_feedbackView feedbackText]] applicationActivities:nil];
+    activityViewController.modalPresentationStyle = UIModalPresentationPopover;
     activityViewController.excludedActivityTypes = @[
       UIActivityTypePostToWeibo,
       UIActivityTypeMessage,
@@ -296,6 +304,11 @@
       UIActivityTypeAirDrop,
       UIActivityTypeOpenInIBooks
     ];
+    if(activityViewController.popoverPresentationController){
+      activityViewController.popoverPresentationController.sourceView = self.view;
+      activityViewController.popoverPresentationController.sourceRect = sender.frame;
+    }
+    
     [self presentViewController:activityViewController animated:YES completion:^{
       [WTRLogger log:@"Post successful."];
     }];

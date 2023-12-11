@@ -35,6 +35,7 @@
 @property (nonatomic, strong) WTRDelegateMockViewController *testViewController;
 @property (nonatomic, strong) WTRMockNotificationCenter *notificationCenter;
 @property (nonatomic, strong) WTRApiClient *apiClient;
+@property (nonatomic, strong) WTRSettings *settings;
 @end
 
 @interface WTRSurveyViewController (Tests)
@@ -47,11 +48,13 @@
 - (void)setUp {
   [super setUp];
   _apiClient = [WTRApiClient sharedInstance];
+  _settings = [WTRSettings new];
+  [_settings parseDataFromSurveyServer:[self surveyServerSettingsForMode:@"NPS"]];
   [Wootric configureWithClientID:@"id123" accountToken:@"nps-test"];
   _testViewController = [[WTRDelegateMockViewController alloc] init];
   [Wootric setDelegate:_testViewController];
   _notificationCenter = [WTRMockNotificationCenter new];
-  _viewController = [[WTRSurveyViewController alloc] initWithSurveySettings:_apiClient.settings
+  _viewController = [[WTRSurveyViewController alloc] initWithSurveySettings:_settings
                                                          notificationCenter:_notificationCenter];
 }
 
@@ -90,6 +93,57 @@
   [_viewController setAccountToken:@"NPS-AU-"];
 
   XCTAssertTrue([[[_viewController optOutURL] absoluteString] hasPrefix:@"https://app.wootric.au/"]);
+}
+
+- (NSDictionary *)surveyServerSettingsForMode:(NSString *)mode {
+  NSDictionary *settings = @{
+    @"eligible": @1,
+    @"settings": @{
+      @"time_delay": @10,
+      @"first_survey": @30,
+      @"resurvey_throttle": @180,
+      @"decline_resurvey_throttle": @30,
+      @"survey_type": mode,
+      @"localized_texts": @{
+        @"nps_question": @"How likely are you to recommend Wootric to a friend or co-worker?",
+        @"anchors": @{
+          @"likely": @"Extremely likely",
+          @"not_likely": @"Not at all likely"
+        },
+        @"ces_question": @"How easy was it for you to use Wootric?",
+        @"ces_anchors": @{
+          @"very_difficult": @"Very difficult",
+          @"difficult": @"Difficult",
+          @"somewhat_difficult": @"Somewhat difficult",
+          @"neutral": @"Neutral",
+          @"somewhat_easy": @"Somewhat easy",
+          @"easy": @"Easy",
+          @"very_easy": @"Very easy"
+        },
+        @"csat_question": @"How satisfied are you with Wootric?",
+        @"csat_anchors": @{
+          @"very_unsatisfied": @"Very unsatisfied",
+          @"unsatisfied": @"Unsatisfied",
+          @"neutral": @"Neutral",
+          @"satisfied": @"Satisfied",
+          @"very_satisfied": @"Very satisfied"
+        },
+        @"dismiss": @"dismiss",
+        @"followup_placeholder": @"Help us by explaining your score.",
+        @"followup_question": @"Thank you! Care to tell us why?",
+        @"final_thank_you": @"Thank you for your response, and your feedback!",
+        @"send": @"send",
+        @"edit_score": @"edit",
+        @"social_share": @{
+          @"decline": @"No thanks...",
+          @"question": @"Would you be willing to share your positive comments?"
+        }
+      },
+      @"language": @"en"
+    }
+  };
+
+  return settings;
 }
 
 @end

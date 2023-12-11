@@ -42,6 +42,7 @@
 @property (nonatomic, strong) NSString *externalId;
 @property (nonatomic, strong) NSString *phoneNumber;
 @property (nonatomic, strong) NSString *customFirstQuestion;
+@property (nonatomic, strong) NSString *scoreScaleType;
 @property (nonatomic, strong) NSNumber *registeredPercentage;
 @property (nonatomic, strong) NSNumber *visitorPercentage;
 @property (nonatomic, strong) NSNumber *resurveyThrottle;

@@ -71,10 +71,10 @@
 }
 
 - (void)highlightAnchorForScore:(int)currentScore {
-  if (currentScore == 0) {
+  if (currentScore == [_settings minimumScore]) {
     _notLikelyAnchor.textColor = [_settings sliderColor];
     _likelyAnchor.textColor = [WTRColor anchorAndScoreColor];
-  } else if (currentScore == 10) {
+  } else if (currentScore == [_settings maximumScore]) {
     _likelyAnchor.textColor = [_settings sliderColor];
     _notLikelyAnchor.textColor = [WTRColor anchorAndScoreColor];
   } else {

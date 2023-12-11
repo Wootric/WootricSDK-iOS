@@ -24,7 +24,7 @@
     selected = false;
     self.contentView.layer.cornerRadius = 3;
     self.contentView.layer.borderWidth = 1;
-    self.contentView.layer.borderColor = [WTRColor wootricTextColor].CGColor;
+    self.contentView.layer.borderColor = self.customColor.CGColor;
     
     _titleLabel = [[UILabel alloc] initWithFrame:frame];
     _titleLabel.font = [UIItems regularFontWithSize:WTRFontSize];
@@ -49,14 +49,14 @@
   _titleLabel.text = text;
   selected = false;
   self.contentView.backgroundColor = [UIColor whiteColor];
-  self.contentView.layer.borderColor = [WTRColor wootricTextColor].CGColor;
-  _titleLabel.textColor = [WTRColor wootricTextColor];
+  self.contentView.layer.borderColor = [WTRColor iPadCircleButtonBorderColor].CGColor;
+  _titleLabel.textColor = [WTRColor wootricTextColorForColor:[UIColor whiteColor]];
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   self.customColor = backgroundColor;
   self.contentView.layer.borderColor = [self.customColor colorWithAlphaComponent:1.0f].CGColor;
-  _titleLabel.textColor = self.customColor;
+  _titleLabel.textColor = [WTRColor wootricTextColorForColor:self.customColor];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -66,12 +66,12 @@
   selected = !selected;
   if (selected) {
     self.contentView.backgroundColor = self.customColor;
-    self.contentView.layer.borderColor = self.customColor.CGColor;
-    _titleLabel.textColor = [UIColor whiteColor];
+    self.contentView.layer.borderColor = [WTRColor darkerColor:self.customColor byPercentage:20.0f].CGColor;
+    _titleLabel.textColor = [WTRColor wootricTextColorForColor:self.customColor];
   } else {
     self.contentView.backgroundColor = [UIColor whiteColor];
-    self.contentView.layer.borderColor = [WTRColor wootricTextColor].CGColor;
-    _titleLabel.textColor = [WTRColor wootricTextColor];
+    self.contentView.layer.borderColor = [WTRColor iPadCircleButtonBorderColor].CGColor;
+    _titleLabel.textColor = [WTRColor wootricTextColorForColor:[UIColor whiteColor]];
   }
 }
 
@@ -82,8 +82,8 @@
 - (void)unselect {
   selected = false;
   self.contentView.backgroundColor = [UIColor whiteColor];
-  self.contentView.layer.borderColor = [WTRColor wootricTextColor].CGColor;
-  _titleLabel.textColor = [WTRColor wootricTextColor];
+  self.contentView.layer.borderColor = [WTRColor iPadCircleButtonBorderColor].CGColor;
+  _titleLabel.textColor = [WTRColor wootricTextColorForColor:[UIColor whiteColor]];
 }
 
 @end

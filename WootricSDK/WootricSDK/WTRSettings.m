@@ -31,6 +31,16 @@
 #import "WTRUserCustomThankYou.h"
 #import "WTRColor.h"
 
+static NSString *const WTRSettingsKey = @"settings";
+static NSString *const WTRLocalizedTextsKey = @"localized_texts";
+static NSString *const WTRMessagesKey = @"messages";
+static NSString *const WTRCustomThankYouKey = @"custom_thank_you";
+static NSString *const WTRCustomColorsKey = @"custom_colors";
+static NSString *const WTRCustomPrimaryColorKey = @"custom_primary_color";
+static NSString *const WTRCustomSecondaryColorKey = @"custom_secondary_color";
+static NSString *const WTRScoreScaleTypeKey = @"score_scale_type";
+static NSString *const WTRSocialKey = @"social";
+
 @interface WTRSettings ()
 
 @property (nonatomic, strong) WTRLocalizedTexts *localizedTexts;
@@ -76,22 +86,24 @@
   NSDictionary *localizedTextsFromSurvey;
   NSDictionary *customMessagesFromSurvey;
   NSDictionary *customThankYouFromSurvey;
+  NSDictionary *customColorsFromSurvey;
   NSDictionary *socialFromSurvey;
     
-  if (surveyServerSettings[@"settings"]) {
-    localizedTextsFromSurvey = surveyServerSettings[@"settings"][@"localized_texts"];
-    customMessagesFromSurvey = surveyServerSettings[@"settings"][@"messages"];
-    customThankYouFromSurvey = surveyServerSettings[@"settings"][@"custom_thank_you"];
-    socialFromSurvey = surveyServerSettings[@"settings"][@"social"];
-    NSString *surveyTypeFromSurvey = surveyServerSettings[@"settings"][@"survey_type"];
-    NSInteger surveyTypeScaleFromSurvey = [surveyServerSettings[@"settings"][@"survey_type_scale"] integerValue];
-    NSNumber *firstSurvey = surveyServerSettings[@"settings"][@"first_survey"];
-    NSNumber *resurveyThrottleFromServer = surveyServerSettings[@"settings"][@"resurvey_throttle"];
-    NSNumber *declineResurveyThrottleFromServer = surveyServerSettings[@"settings"][@"decline_resurvey_throttle"];
-    NSString *languageCodeFromServer = surveyServerSettings[@"settings"][@"language"];
-    NSInteger delay = _timeDelay > -1 ? _timeDelay : [surveyServerSettings[@"settings"][@"time_delay"] integerValue];
-    _showPoweredBy = [surveyServerSettings[@"settings"][@"powered_by"] boolValue];
-    _customFirstQuestionEnabled = [surveyServerSettings[@"settings"][@"custom_first_question_enabled"] boolValue];
+  if (surveyServerSettings[WTRSettingsKey]) {
+    localizedTextsFromSurvey = surveyServerSettings[WTRSettingsKey][WTRLocalizedTextsKey];
+    customMessagesFromSurvey = surveyServerSettings[WTRSettingsKey][WTRMessagesKey];
+    customThankYouFromSurvey = surveyServerSettings[WTRSettingsKey][WTRCustomThankYouKey];
+    customColorsFromSurvey = surveyServerSettings[WTRSettingsKey][WTRCustomColorsKey];
+    socialFromSurvey = surveyServerSettings[WTRSettingsKey][WTRSocialKey];
+    NSString *surveyTypeFromSurvey = surveyServerSettings[WTRSettingsKey][@"survey_type"];
+    NSInteger surveyTypeScaleFromSurvey = [surveyServerSettings[WTRSettingsKey][@"survey_type_scale"] integerValue];
+    NSNumber *firstSurvey = surveyServerSettings[WTRSettingsKey][@"first_survey"];
+    NSNumber *resurveyThrottleFromServer = surveyServerSettings[WTRSettingsKey][@"resurvey_throttle"];
+    NSNumber *declineResurveyThrottleFromServer = surveyServerSettings[WTRSettingsKey][@"decline_resurvey_throttle"];
+    NSString *languageCodeFromServer = surveyServerSettings[WTRSettingsKey][@"language"];
+    NSInteger delay = _timeDelay > -1 ? _timeDelay : [surveyServerSettings[WTRSettingsKey][@"time_delay"] integerValue];
+    _showPoweredBy = [surveyServerSettings[WTRSettingsKey][@"powered_by"] boolValue];
+    _customFirstQuestionEnabled = [surveyServerSettings[WTRSettingsKey][@"custom_first_question_enabled"] boolValue];
       
     if (surveyTypeFromSurvey) {
       _surveyType = surveyTypeFromSurvey;
@@ -140,8 +152,26 @@
       _languageCode = languageCodeFromServer;
     }
 
-    if (_customFirstQuestionEnabled && surveyServerSettings[@"settings"][@"custom_first_question"] != nil) {
-      _customFirstQuestion = surveyServerSettings[@"settings"][@"custom_first_question"];
+    if (_customFirstQuestionEnabled && surveyServerSettings[WTRSettingsKey][@"custom_first_question"] != nil) {
+      _customFirstQuestion = surveyServerSettings[WTRSettingsKey][@"custom_first_question"];
+    }
+
+    if (customColorsFromSurvey) {
+      // primary
+      _sliderColor = [WTRColor colorWithHexString:customColorsFromSurvey[WTRCustomPrimaryColorKey]];
+      _scoreScaleType = customColorsFromSurvey[WTRScoreScaleTypeKey];
+      
+      //secondary
+      if (customColorsFromSurvey[WTRCustomSecondaryColorKey] != [NSNull null]) {
+        _sendButtonBackgroundColor = [WTRColor colorWithHexString:customColorsFromSurvey[WTRCustomSecondaryColorKey]];
+        _socialSharingColor = [WTRColor colorWithHexString:customColorsFromSurvey[WTRCustomSecondaryColorKey]];
+        _userCustomThankYou.backgroundColor = [WTRColor colorWithHexString:customColorsFromSurvey[WTRCustomSecondaryColorKey]];
+      } else {
+        _sendButtonBackgroundColor = [WTRColor colorWithHexString:customColorsFromSurvey[WTRCustomPrimaryColorKey]];
+        _socialSharingColor = [WTRColor colorWithHexString:customColorsFromSurvey[WTRCustomPrimaryColorKey]];
+        _userCustomThankYou.backgroundColor = [WTRColor colorWithHexString:customColorsFromSurvey[WTRCustomPrimaryColorKey]];
+      }
+
     }
   }
 }
@@ -342,7 +372,7 @@
   if (_sliderColor) {
     return _sliderColor;
   }
-  return [WTRColor wootricTextColor];
+  return [WTRColor wootricTextColorForColor:nil];
 }
 
 - (UIColor *)thankYouButtonBackgroundColor {

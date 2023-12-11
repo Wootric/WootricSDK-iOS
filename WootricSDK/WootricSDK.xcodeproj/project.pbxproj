@@ -35,6 +35,7 @@
 		3E4AAE1C2925732300F6CC87 /* WTRCollectionViewCenterLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E4AAE1A2925732300F6CC87 /* WTRCollectionViewCenterLayout.m */; };
 		3E4AAE1F292578C700F6CC87 /* WTRCollectionViewRow.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E4AAE1D292578C700F6CC87 /* WTRCollectionViewRow.h */; };
 		3E4AAE20292578C700F6CC87 /* WTRCollectionViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E4AAE1E292578C700F6CC87 /* WTRCollectionViewRow.m */; };
+		3E6B96362BB770EA00734D2B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3E6B96352BB770EA00734D2B /* PrivacyInfo.xcprivacy */; };
 		3E7893FE28B93D0D00E7D1BB /* WTRDriverPicklistCollectionViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E7893FC28B93D0D00E7D1BB /* WTRDriverPicklistCollectionViewCell.h */; };
 		3E7893FF28B93D0D00E7D1BB /* WTRDriverPicklistCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E7893FD28B93D0D00E7D1BB /* WTRDriverPicklistCollectionViewCell.m */; };
 		3EEB95AA2B85860E00BEBBE1 /* WTRiPADFooterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EEB95A82B85860E00BEBBE1 /* WTRiPADFooterView.h */; };
@@ -174,6 +175,7 @@
 		3E4AAE1A2925732300F6CC87 /* WTRCollectionViewCenterLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRCollectionViewCenterLayout.m; sourceTree = "<group>"; };
 		3E4AAE1D292578C700F6CC87 /* WTRCollectionViewRow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRCollectionViewRow.h; sourceTree = "<group>"; };
 		3E4AAE1E292578C700F6CC87 /* WTRCollectionViewRow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRCollectionViewRow.m; sourceTree = "<group>"; };
+		3E6B96352BB770EA00734D2B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		3E7893FC28B93D0D00E7D1BB /* WTRDriverPicklistCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRDriverPicklistCollectionViewCell.h; sourceTree = "<group>"; };
 		3E7893FD28B93D0D00E7D1BB /* WTRDriverPicklistCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTRDriverPicklistCollectionViewCell.m; sourceTree = "<group>"; };
 		3EEB95A82B85860E00BEBBE1 /* WTRiPADFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTRiPADFooterView.h; sourceTree = "<group>"; };
@@ -547,6 +549,7 @@
 				3EF70E162626734C00FAE414 /* IBMPlexSans-Regular.ttf */,
 				0FD5920E1D99EAFF00DD173B /* fontawesome-webfont.ttf */,
 				0F04153A1FA8F11000E3C926 /* Info.plist */,
+				3E6B96352BB770EA00734D2B /* PrivacyInfo.xcprivacy */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -733,6 +736,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E6B96362BB770EA00734D2B /* PrivacyInfo.xcprivacy in Resources */,
 				0FD5920F1D99EB0500DD173B /* fontawesome-webfont.ttf in Resources */,
 				3EF70E1D2626734C00FAE414 /* IBMPlexSans-Bold.ttf in Resources */,
 				3EF70E222626734C00FAE414 /* IBMPlexSans-Italic.ttf in Resources */,
@@ -980,7 +984,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_dylib;
-				MARKETING_VERSION = 0.27.1;
+				MARKETING_VERSION = 0.28.0;
 				MODULEMAP_FILE = "";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";
@@ -1014,7 +1018,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = mh_dylib;
-				MARKETING_VERSION = 0.27.1;
+				MARKETING_VERSION = 0.28.0;
 				MODULEMAP_FILE = "";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu99 gnu++11";

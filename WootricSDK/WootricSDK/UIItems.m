@@ -104,7 +104,7 @@
 
 + (UILabel *)feedbackPlaceholder {
   UILabel *tempLabel = [[UILabel alloc] init];
-  tempLabel.textColor = [WTRColor textAreaTextColor];
+  tempLabel.textColor = [WTRColor textAreaPlaceholderColor];
   tempLabel.font = [self regularFontWithSize:16];
   tempLabel.numberOfLines = 0;
   tempLabel.lineBreakMode = NSLineBreakByWordWrapping;

@@ -37,9 +37,10 @@
 + (UIColor *)anchorAndScoreColor;
 + (UIColor *)sendButtonBackgroundColor;
 + (UIColor *)sendButtonDisabledBackgroundColor;
++ (UIColor *)sendButtonTextColorForColor:(UIColor *)color;
 + (UIColor *)poweredByColor;
 + (UIColor *)optOutTextColor;
-+ (UIColor *)wootricTextColor;
++ (UIColor *)wootricTextColorForColor:(UIColor *)color;
 + (UIColor *)sliderValueColor;
 + (UIColor *)sliderDotSelectedColor;
 + (UIColor *)selectedValueDotColor;
@@ -48,14 +49,16 @@
 + (UIColor *)editScoreTextColor;
 + (UIColor *)textAreaBorderColor;
 + (UIColor *)textAreaTextColor;
++ (UIColor *)textAreaPlaceholderColor;
 + (UIColor *)textAreaCursorColor;
 + (UIColor *)callToActionButtonBackgroundColor;
 + (UIColor *)socialShareQuestionTextColor;
++ (UIColor *)noThanksButtonTextColor;
 + (UIColor *)facebookLogoTextColor;
 + (UIColor *)twitterLogoTextColor;
 
 + (UIColor *)iPadCircleButtonBorderColor;
-+ (UIColor *)iPadCircleButtonTextColor;
++ (UIColor *)iPadCircleButtonTextColorForColor:(UIColor *)color scoreScaleType:(NSString *)scoreScaleType state:(BOOL)isSelected;
 + (UIColor *)iPadCircleButtonSelectedBackgroundColor;
 + (UIColor *)iPadCircleButtonSelectedBorderColor;
 + (UIColor *)iPadPoweredByWootricTextColor;
@@ -63,8 +66,12 @@
 + (UIColor *)iPadFeedbackTextViewBackgroundColor;
 + (UIColor *)iPadSendButtonBackgroundColor;
 + (UIColor *)iPadThankYouButtonBorderColor;
-+ (UIColor *)iPadThankYouButtonTextColor;
++ (UIColor *)iPadThankYouButtonTextColorForColor:(UIColor *)color;
 + (UIColor *)iPadNoThanksButtonBorderColor;
 + (UIColor *)iPadNoThanksButtonTextColor;
+
++ (UIColor *)lighterColor:(UIColor *)color byPercetage:(CGFloat)percentage;
++ (UIColor *)darkerColor:(UIColor *)color byPercentage:(CGFloat)percentage;
++ (UIColor *)colorWithHexString:(NSString *)hexString;
 
 @end
