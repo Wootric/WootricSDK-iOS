@@ -45,7 +45,7 @@
 
 - (void)addCircleButtonsWithViewController:(UIViewController *)viewController {
   for (int i = [_settings minimumScore]; i <= [_settings maximumScore]; i++) {
-    WTRCircleScoreButton *circleButton = [[WTRCircleScoreButton alloc] initWithViewController:viewController];
+    WTRCircleScoreButton *circleButton = [[WTRCircleScoreButton alloc] initWithViewController:viewController color:_settings.sliderColor scoreScaleType:_settings.scoreScaleType];
     circleButton.tag = 9000 + i;
     circleButton.assignedScore = i;
     [circleButton setTitle:[NSString stringWithFormat:@"%d", i] forState:UIControlStateNormal];

@@ -66,6 +66,13 @@
   return [self colorWithHexString:@"#0058FF"];
 }
 
++ (UIColor *)sendButtonTextColorForColor:(UIColor *)color {
+  if (color) {
+    return [self fontColorForColor:color];
+  }
+  return [UIColor whiteColor];
+}
+
 + (UIColor *)poweredByColor {
   return [self colorWithHexString:@"#253746"];
 }
@@ -74,7 +81,10 @@
   return [self colorWithHexString:@"#253746"];
 }
 
-+ (UIColor *)wootricTextColor {
++ (UIColor *)wootricTextColorForColor:(UIColor *)color {
+  if (color) {
+    return [self fontColorForColor:color];
+  }
   return [self colorWithHexString:@"#253746"];
 }
 
@@ -134,6 +144,17 @@
   return [self colorWithHexString:@"#CBCBCB"];
 }
 
++ (UIColor *)iPadCircleButtonTextColorForColor:(UIColor *)color scoreScaleType:(NSString *)scoreScaleType state:(BOOL)isSelected {
+  if (isSelected || [scoreScaleType isEqualToString:@"filled"]) {
+    if (color) {
+      return [self fontColorForColor:color];
+    } else {
+      return [self fontColorForColor:[self colorWithHexString:@"#253746"]];
+    }
+  }
+  return [UIColor blackColor];
+}
+
 + (UIColor *)iPadCircleButtonTextColor {
   return [self colorWithHexString:@"#253746"];
 }
@@ -166,7 +187,10 @@
   return [self colorWithHexString:@"#0058FF"];
 }
 
-+ (UIColor *)iPadThankYouButtonTextColor {
++ (UIColor *)iPadThankYouButtonTextColorForColor:(UIColor *)color {
+  if (color) {
+    return [self fontColorForColor:color];
+  }
   return [self colorWithHexString:@"#0058FF"];
 }
 
@@ -176,6 +200,23 @@
 
 + (UIColor *)iPadNoThanksButtonTextColor {
   return [self colorWithHexString:@"#253746"];
+}
+
++ (UIColor *)lighterColor:(UIColor *)color byPercetage:(CGFloat)percentage {
+  return [self adjustColor:color byPercentage:ABS(percentage)];
+}
+
++ (UIColor *)darkerColor:(UIColor *)color byPercentage:(CGFloat)percentage {
+  return [self adjustColor:color byPercentage:(-1 * ABS(percentage))];
+}
+
++ (nullable UIColor *)adjustColor:(UIColor *)color byPercentage:(CGFloat)percentage {
+  CGFloat red, green, blue, alpha;
+  if ([color getRed:&red green:&green blue:&blue alpha:&alpha]) {
+    return [UIColor colorWithRed:MIN(red + percentage/100.f, 1.0) green:MIN(green + percentage/100.f, 1.0) blue:MIN(blue + percentage/100.f, 1.0) alpha:alpha];
+  } else {
+    return nil;
+  }
 }
 
 + (UIColor *)colorWithHexString:(NSString *)hexString {
@@ -190,6 +231,17 @@
   int b = (hex) & 0xFF;
 
   return [UIColor colorWithRed:r / 255.0f green:g / 255.0f blue:b / 255.0f alpha:1.0f];
+}
+
++ (nullable UIColor *)fontColorForColor:(UIColor *)color {
+  CGFloat red, green, blue, alpha;
+  if ([color getRed:&red green:&green blue:&blue alpha:&alpha]) {
+    CGFloat yiq = ((red * 255 * 299) + (green * 255 * 587) + (blue * 255 * 114)) / 1000;
+    NSLog(@"%f", yiq);
+    return yiq >= 128 ? [UIColor blackColor] : [UIColor whiteColor];
+  } else {
+    return nil;
+  }
 }
 
 @end

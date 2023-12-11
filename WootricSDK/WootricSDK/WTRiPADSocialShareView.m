@@ -171,15 +171,27 @@
 #pragma mark - Setup Views
 
 - (void)setupFacebookButtonWithTargetViewController:(UIViewController *)viewController {
-  _facebookButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAFacebook] textColor:[WTRColor facebookLogoTextColor]];
+  if (_settings.socialSharingColor) {
+    _facebookButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAFacebook] textColor:_settings.socialSharingColor];
+  } else {
+    _facebookButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAFacebook] textColor:[WTRColor facebookLogoTextColor]];
+  }
 }
 
 - (void)setupTwitterButtonWithTargetViewController:(UIViewController *)viewController {
-  _twitterButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FATwitter] textColor:[WTRColor twitterLogoTextColor]];
+  if (_settings.socialSharingColor) {
+    _twitterButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FATwitter] textColor:_settings.socialSharingColor];
+  } else {
+    _twitterButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FATwitter] textColor:[WTRColor twitterLogoTextColor]];
+  }
 }
 
 - (void)setupFacebookLikeButtonWithTargetViewController:(UIViewController *)viewController {
-  _facebookLikeButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] textColor:[WTRColor facebookLogoTextColor]];
+  if (_settings.socialSharingColor) {
+    _facebookLikeButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] textColor:_settings.socialSharingColor];
+  } else {
+    _facebookLikeButton = [UIItems socialButtonWithTargetViewController:viewController title:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] textColor:[WTRColor facebookLogoTextColor]];
+  }
 }
 
 - (void)setupNoThanksButtonWithTargetViewController:(UIViewController *)viewController {
@@ -198,7 +210,7 @@
 }
 
 - (void)setupThankYouButtonWithTargetViewController:(UIViewController *)viewController {
-  _thankYouButton = [[WTRiPADThankYouButton alloc] initWithViewController:viewController];
+  _thankYouButton = [[WTRiPADThankYouButton alloc] initWithViewController:viewController backgroundColor:_settings.thankYouButtonBackgroundColor];
 }
 
 - (void)setupThankYouMainLabel {
