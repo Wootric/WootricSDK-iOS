@@ -29,18 +29,18 @@
 #import "WTRiPADQuestionView.h"
 #import "WTRiPADFeedbackView.h"
 #import "WTRiPADSocialShareView.h"
+#import "WTRiPADFooterView.h"
 
 @interface WTRiPADSurveyViewController : UIViewController <UITextViewDelegate>
 
 @property (nonatomic, strong) WTRSettings *settings;
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) UIButton *poweredByWootric;
-@property (nonatomic, strong) UIButton *optOutButton;
 @property (nonatomic, strong) UIButton *dismissButton;
 @property (nonatomic, strong) WTRiPADModalView *modalView;
 @property (nonatomic, strong) WTRiPADQuestionView *questionView;
 @property (nonatomic, strong) WTRiPADFeedbackView *feedbackView;
 @property (nonatomic, strong) WTRiPADSocialShareView *socialShareView;
+@property (nonatomic, strong) WTRiPADFooterView *footerView;
 @property (nonatomic, strong) NSLayoutConstraint *constraintTopToModalTop;
 @property (nonatomic, strong) NSLayoutConstraint *constraintQuestionTopToModalTop;
 @property (nonatomic, strong) NSLayoutConstraint *constraintModalHeight;

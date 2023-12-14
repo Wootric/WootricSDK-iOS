@@ -207,10 +207,10 @@
 }
 
 - (void)setupFeedbackTextViewConstraints {
-  [_feedbackTextView wtr_constraintHeight:148.0f];
+  [_feedbackTextView wtr_constraintHeight:138.0f];
   [[[[_feedbackTextView wtr_leftConstraint] toSecondViewLeft:self] withConstant:16] addToView:self];
   [[[[_feedbackTextView wtr_rightConstraint] toSecondViewRight:self] withConstant:-16] addToView:self];
-  [[[_feedbackTextView wtr_bottomConstraint] toSecondViewBottom:self] addToView:self];
+  [[[[_feedbackTextView wtr_bottomConstraint] toSecondViewBottom:self] withConstant:-14] addToView:self];
 }
 
 - (void)setupFeedbackLabelConstraints {

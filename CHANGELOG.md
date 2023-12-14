@@ -1,3 +1,9 @@
+## 0.27.0 (2024-02-28)
+
+### Changes:
+
+- Add disclaimer support
+
 ## 0.26.3 (2024-01-22)
 
 ### Changes:

@@ -168,6 +168,7 @@
   _scrolled = NO;
   [self setQuestionViewVisible:YES andFeedbackViewVisible:NO];
   [self updateConstraints];
+  [self updateDisclaimerLabelConstraintsForScreen:1];
 }
 
 - (void)dismissButtonPressed:(UIButton *)sender {
@@ -193,7 +194,7 @@
     if (_settings.skipFeedbackScreen) {
       [self presentShareScreenOrDismissForScore:_currentScore];
     } else if (_settings.skipFeedbackScreenForPromoter && [_settings positiveTypeScore:_currentScore]) {
-        [self presentShareScreenOrDismissForScore:_currentScore];
+      [self presentShareScreenOrDismissForScore:_currentScore];
     } else {
       [self setQuestionViewVisible:NO andFeedbackViewVisible:YES];
       [_feedbackView setFollowupLabelTextBasedOnScore:_currentScore];
@@ -201,23 +202,37 @@
       [_feedbackView setDriverPicklistBasedOnScore:_currentScore];
 
       [self updateConstraints];
+      [self updateDisclaimerLabelConstraintsForScreen:2];
     }
   }
 }
 
 - (void)updateConstraints {
-  if (_feedbackView.hidden) {
+  int modalHeight = 308;
+  int feedbackViewHeight = 213;
+  int openEndedHeight = 148;
+  int disclaimerHeight = 18;
+  int feedbackViewSpacing = 5;
+  int modalSpacing = 10;
+  
+  if (!_questionView.hidden) {
     if ([_settings driverPicklistAnswers]) {
-      [self updateConstraintModalHeight:308];
+      [self updateConstraintModalHeight:modalHeight];
     }
-  } else {
+  } else if (!_feedbackView.hidden) {
     if ([_settings driverPicklistAnswers]) {
+      if ([_settings showDisclaimer]) {
+        modalHeight += disclaimerHeight;
+      }
       NSDictionary *driverPicklistSettings = [_settings driverPicklistSettingsForScore:_currentScore];
       if (driverPicklistSettings[@"dpl_hide_open_ended"] && [driverPicklistSettings[@"dpl_hide_open_ended"] intValue] == 1) {
-        [self updateConstraintModalHeight:((308 - 148) + 10 + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight]) feedbackViewHeight:(213 + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight])];
+        modalHeight = (modalHeight - openEndedHeight) + modalSpacing + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight];
+        feedbackViewHeight = feedbackViewHeight + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight];
       } else {
-        [self updateConstraintModalHeight:(308 + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight]) feedbackViewHeight:(217 + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight])];
+        modalHeight = modalHeight + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight];
+        feedbackViewHeight = feedbackViewHeight + feedbackViewSpacing + [_feedbackView driverPicklistHeight] + [_feedbackView followupLabelHeight];
       }
+      [self updateConstraintModalHeight:modalHeight feedbackViewHeight:feedbackViewHeight];
     }
   }
   
@@ -229,6 +244,9 @@
   if ([self socialShareAvailableForScore:score]) {
     [self setupFacebookAndTwitterForScore:score];
     [self presentSocialShareViewWithScore:score];
+    if ([_settings showDisclaimer]) {
+      [self updateDisclaimerLabelConstraintsForScreen:3];
+    }
   } else {
     [self dismissWithFinalThankYouForScore:score];
   }
@@ -259,9 +277,23 @@
   NSURL *url = [NSURL URLWithString:@"https://www.wootric.com"];
   [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
     if (!success) {
-      [WTRLogger logError:@"Failed to open wootric page"];
+      [WTRLogger logError:@"Failed to open wootric page."];
     }
   }];
+}
+
+- (void)openDisclaimerLink:(UITapGestureRecognizer *)gesture {
+  NSURL *url = self.settings.disclaimerLinkURL;
+  
+  if (url) {
+    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
+      if (!success) {
+        [WTRLogger logError:@"Failed to disclaimerLinkURL page"];
+      }
+    }];
+  } else {
+    [WTRLogger logError:@"No disclaimerLinkURL set."];
+  }
 }
 
 - (void)optOutButtonPressed:(UIButton *)sender {
@@ -269,7 +301,7 @@
     if (success) {
       [self dismissViewControllerWithBackgroundFade];
     } else {
-      [WTRLogger logError:@"Failed to open wootric page"];
+      [WTRLogger logError:@"Failed to open opt out page"];
     }
   }];
 }
@@ -279,7 +311,7 @@
     NSURL *url = _settings.facebookPage;
     [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
       if (!success) {
-        [WTRLogger logError:@"Failed to open wootric page"];
+        [WTRLogger logError:@"Failed to open Facebook page"];
       }
     }];
   } else {
@@ -329,18 +361,30 @@
   BOOL twitterAvailable = ([self twitterHandlerAndFeedbackTextPresent] && [_settings positiveTypeScore:score]);
   BOOL facebookAvailable = ([_settings facebookPageSet] && [_settings positiveTypeScore:score]);
   
+  CGFloat modalHeight = _constraintModalHeight.constant - 70.0f;
+  CGFloat socialShareViewHeight = _socialShareViewHeightConstraint.constant - 10.0f;
+  
   if (!twitterAvailable && !facebookAvailable) {
     if ([_settings thankYouSetupDependingOnScore:score] == nil) {
-      [self updateConstraintModalHeight:220 socialShareViewHeight:180];
+      modalHeight = 220;
+      socialShareViewHeight = 180;
     } else {
-      [self updateConstraintModalHeight:240 socialShareViewHeight:200];
+      modalHeight = 240;
+      socialShareViewHeight = 200;
     }
   } else if ((twitterAvailable || facebookAvailable) && ![_settings thankYouLinkConfiguredForScore:score]) {
-    [self updateConstraintModalHeight:240 socialShareViewHeight:200];
+    modalHeight = 240;
+    socialShareViewHeight = 200;
   } else if (![_settings positiveTypeScore:score] && ![_settings thankYouLinkConfiguredForScore:score]) {
-    [self updateConstraintModalHeight:240 socialShareViewHeight:200];
+    modalHeight = 240;
+    socialShareViewHeight = 200;
   }
-  
+
+  if ([_settings showDisclaimer]) {
+    modalHeight += 14;
+    socialShareViewHeight += 24;
+  }
+  [self updateConstraintModalHeight:modalHeight socialShareViewHeight:socialShareViewHeight];
   [_socialShareView displayShareButtonsWithTwitterAvailable:twitterAvailable andFacebookAvailable:facebookAvailable];
 }
 
@@ -393,6 +437,7 @@
   _poweredByWootric.hidden = YES;
   _optOutButton.hidden = YES;
   _finalThankYouLabel.hidden = NO;
+  _disclaimerLabel.hidden = YES;
   _finalThankYouLabel.text = [_settings thankYouMainDependingOnScore:score];
   [_modalView hideDismissButton];
   _constraintModalHeight.constant = 125;

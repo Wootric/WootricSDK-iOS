@@ -36,44 +36,11 @@
   [self.feedbackView setupSubviewsConstraints];
   [self setupSocialShareViewConstraints];
   [self.socialShareView setupSubviewsConstraints];
+  [self setupFooterViewConstraints];
+  [self.footerView setupSubviewsConstraints];
   [self setupFinalThankYouLabelConstraints];
   
-  if ([self.settings showPoweredBy]) {
-    [self setupPoweredByWootricConstraints];
-    if ([self.settings showOptOut]) {
-      [self setupOptOutButtonConstraints];
-    }
-  } else {
-    if ([self.settings showOptOut]) {
-      [self setupOptOutButtonConstraintsCenteredX];
-    }
-  }
-  
   [self setupDismissButtonConstraints];
-}
-
-- (void)setupPoweredByWootricConstraints {
-  [self.poweredByWootric wtr_constraintHeight:12];
-  [[[self.poweredByWootric wtr_centerXConstraint] toSecondViewCenterX:self.modalView] addToView:self.modalView];
-  [[[[self.poweredByWootric wtr_bottomConstraint] toSecondViewBottom:self.modalView] withConstant:-14] addToView:self.modalView];
-}
-
-- (void)setupOptOutButtonConstraints {
-  [self.optOutButton wtr_constraintHeight:12];
-  [[[[self.optOutButton wtr_leftConstraint] toSecondViewRight:self.poweredByWootric] withConstant:4] addToView:self.modalView];
-  [[[[self.optOutButton wtr_bottomConstraint] toSecondViewBottom:self.modalView] withConstant:-14] addToView:self.modalView];
-}
-
-- (void)setupOptOutButtonConstraintsCenteredX {
-  [self.optOutButton wtr_constraintHeight:12];
-  [self.modalView addConstraint:[NSLayoutConstraint constraintWithItem:self.optOutButton
-                                                             attribute:NSLayoutAttributeCenterX
-                                                             relatedBy:NSLayoutRelationEqual
-                                                                toItem:self.modalView
-                                                             attribute:NSLayoutAttributeCenterX
-                                                            multiplier:1
-                                                              constant:0]];
-  [[[[self.optOutButton wtr_bottomConstraint] toSecondViewBottom:self.modalView] withConstant:-14] addToView:self.modalView];
 }
 
 - (void)setupScrollViewConstraints {
@@ -154,6 +121,12 @@
                                                                        constant:165];
 
   [self.socialShareView addConstraint:self.socialShareViewHeightConstraint];
+}
+
+- (void)setupFooterViewConstraints {
+  [self.footerView wtr_constraintHeight:24];
+  [[[self.footerView wtr_bottomConstraint] toSecondViewBottom:self.modalView] addToView:self.modalView];
+  [[[self.footerView wtr_centerXConstraint] toSecondViewCenterX:self.modalView] addToView:self.modalView];
 }
 
 - (void)setupFinalThankYouLabelConstraints {

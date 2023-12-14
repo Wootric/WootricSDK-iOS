@@ -65,6 +65,7 @@
     _scale = [self scoreRules][_surveyType][0];
     _showOptOut = NO;
     _showPoweredBy = YES;
+    _showDisclaimer = NO;
     _customFirstQuestionEnabled = NO;
   }
     
@@ -1044,6 +1045,10 @@
   settingsCopy.surveyImmediately = self.surveyImmediately;
   settingsCopy.forceSurvey = self.forceSurvey;
   settingsCopy.showOptOut = self.showOptOut;
+  settingsCopy.showDisclaimer = self.showDisclaimer;
+  settingsCopy.disclaimerText = self.disclaimerText;
+  settingsCopy.disclaimerLinkURL = self.disclaimerLinkURL;
+  settingsCopy.disclaimerLinkText = self.disclaimerLinkText;
   settingsCopy.setDefaultAfterSurvey = self.setDefaultAfterSurvey;
   settingsCopy.skipFeedbackScreen = self.skipFeedbackScreen;
   settingsCopy.skipFeedbackScreenForPromoter = self.skipFeedbackScreenForPromoter;

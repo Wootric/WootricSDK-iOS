@@ -47,6 +47,9 @@ static NSString *const kInMoment = @"InMoment";
   if ([self.settings showPoweredBy]) {
     [self setupPoweredByWootric];
   }
+  if ([self.settings showDisclaimer]) {
+    [self setupDisclaimer];
+  }
 
   [self addViewsToModal];
   [self.view addSubview:self.scrollView];
@@ -104,8 +107,8 @@ static NSString *const kInMoment = @"InMoment";
     [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColor] range:NSMakeRange(kPoweredBy.length, kInMoment.length)];
     [attrStr addAttribute:NSFontAttributeName value:[UIItems regularFontWithSize:10] range:NSMakeRange(0, kPoweredBy.length + kInMoment.length)];
   } else {
-    [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:37/255 green:55/55 blue:70/255 alpha:1.0] range:NSMakeRange(0, 10)];
-    [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:37/255 green:55/55 blue:70/255 alpha:1.0] range:NSMakeRange(11, 8)];
+    [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, 10)];
+    [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColor] range:NSMakeRange(11, 8)];
     [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, 19)];
   }
   [self.poweredByWootric setAttributedTitle:attrStr forState:UIControlStateNormal];
@@ -123,6 +126,23 @@ static NSString *const kInMoment = @"InMoment";
   [self.optOutButton addTarget:self
                             action:NSSelectorFromString(@"optOutButtonPressed:")
                   forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)setupDisclaimer {
+  self.disclaimerLabel = [[UILabel alloc] init];
+  NSString *fullText = [NSString stringWithFormat:@"%@ %@", self.settings.disclaimerText, self.settings.disclaimerLinkText];
+  
+  [self.disclaimerLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:fullText];
+  [attrStr addAttribute:NSFontAttributeName value:[UIItems regularFontWithSize:12] range:NSMakeRange(0, attrStr.length)];
+  [attrStr addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:[fullText rangeOfString:self.settings.disclaimerLinkText]];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, attrStr.length)];
+  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:[fullText rangeOfString:self.settings.disclaimerLinkText]];
+  self.disclaimerLabel.attributedText = attrStr;
+  self.disclaimerLabel.userInteractionEnabled = YES;
+  self.disclaimerLabel.textAlignment = NSTextAlignmentCenter;
+  UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:NSSelectorFromString(@"openDisclaimerLink:")];
+  [self.disclaimerLabel addGestureRecognizer:tapGesture];
 }
 
 #pragma mark - Modals
@@ -158,6 +178,9 @@ static NSString *const kInMoment = @"InMoment";
   }
   if ([self.settings showPoweredBy]) {
     [self.modalView addSubview:self.poweredByWootric];
+  }
+  if ([self.settings showDisclaimer]) {
+    [self.modalView addSubview:self.disclaimerLabel];
   }
 }
 

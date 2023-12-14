@@ -335,6 +335,13 @@
  */
 + (void)showOptOut:(BOOL)flag;
 /**
+ @discussion Show disclaimer text with link to disclaimer website.
+ @param text A string with the disclaimer text..
+ @param link A NSURL with the disclaimer's website.
+ @param linkText A string with the link's text.
+ */
++ (void)showDisclaimerText:(NSString *)text link:(NSURL *)link linkText:(NSString *)linkText;
+/**
  @discussion Notification posted when the survey view is about to be presented.
  */
 + (NSNotificationName)surveyWillAppearNotification;

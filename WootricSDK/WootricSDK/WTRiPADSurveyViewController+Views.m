@@ -26,10 +26,6 @@
 #import "WTRColor.h"
 #import "UIItems.h"
 
-static NSString *const kPoweredBy = @"powered by ";
-static NSString *const kInMoment = @"InMoment";
-static NSString *const kInMomentOptOut = @"InMoment •";
-
 @implementation WTRiPADSurveyViewController (Views)
 
 - (void)setupViews {
@@ -38,20 +34,9 @@ static NSString *const kInMomentOptOut = @"InMoment •";
   [self setupQuestionView];
   [self setupFeedbackView];
   [self setupSocialShareView];
+  [self setupFooterView];
   [self setupFinalThankYouLabel];
   [self setupDismissButton];
-  if ([self.settings showOptOut]) {
-    [self setupPoweredByWootric:[NSString stringWithFormat:@"%@%@", kPoweredBy, kInMomentOptOut]];
-    [self setupOptOutButton];
-  } else {
-    [self setupPoweredByWootric:[NSString stringWithFormat:@"%@%@", kPoweredBy, kInMoment]];
-  }
-  
-  if ([self.settings showPoweredBy]) {
-    self.poweredByWootric.hidden = NO;
-  } else {
-    self.poweredByWootric.hidden = YES;
-  }
 
   [self addViewsToModal];
   [self.view addSubview:self.scrollView];
@@ -63,8 +48,7 @@ static NSString *const kInMomentOptOut = @"InMoment •";
   [self.modalView addSubview:self.feedbackView];
   [self.modalView addSubview:self.socialShareView];
   [self.modalView addSubview:self.finalThankYouLabel];
-  [self.modalView addSubview:self.poweredByWootric];
-  [self.modalView addSubview:self.optOutButton];
+  [self.modalView addSubview:self.footerView];
   [self.modalView addSubview:self.dismissButton];
 }
 
@@ -81,6 +65,11 @@ static NSString *const kInMomentOptOut = @"InMoment •";
 - (void)setupSocialShareView {
   self.socialShareView = [[WTRiPADSocialShareView alloc] initWithSettings:self.settings];
   [self.socialShareView initializeSubviewsWithTargetViewController:self];
+}
+
+- (void)setupFooterView {
+  self.footerView = [[WTRiPADFooterView alloc] initWithSettings:self.settings];
+  [self.footerView initializeSubviewsWithTargetViewController:self];
 }
 
 - (void)setupDismissButton {
@@ -106,45 +95,6 @@ static NSString *const kInMomentOptOut = @"InMoment •";
   self.finalThankYouLabel.font = [UIItems regularFontWithSize:18];
   self.finalThankYouLabel.text = [self.settings finalThankYouText];
   [self.finalThankYouLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-}
-
-- (void)setupPoweredByWootric:(NSString *)text {
-  self.poweredByWootric = [[UIButton alloc] init];
-  [self.poweredByWootric setTranslatesAutoresizingMaskIntoConstraints:NO];
-  NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:text];
-  if ([WTRColor poweredByColor] != nil && [WTRColor iPadPoweredByWootricTextColor] != nil && [UIItems regularFontWithSize:10] != nil  && kPoweredBy.length > 1 && kInMoment.length > 1) {
-    [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, kPoweredBy.length - 1)];
-    [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor iPadPoweredByWootricTextColor] range:NSMakeRange(kPoweredBy.length, kInMoment.length)];
-    [attrStr addAttribute:NSFontAttributeName value:[UIItems regularFontWithSize:10] range:NSMakeRange(0, text.length)];
-  } else {
-    [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:37/255 green:55/55 blue:70/255 alpha:1.0] range:NSMakeRange(0, 10)];
-    [attrStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:37/255 green:55/55 blue:70/255 alpha:1.0] range:NSMakeRange(11, 8)];
-    [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, 19)];
-  }
-  [self.poweredByWootric setAttributedTitle:attrStr forState:UIControlStateNormal];
-  [self.poweredByWootric addTarget:self
-                            action:NSSelectorFromString(@"openWootricHomepage:")
-                  forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)setupPoweredByWootricForSocialShareView {
-  NSString *text = [NSString stringWithFormat:@"%@%@", kPoweredBy, kInMoment];
-  NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:text];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, kPoweredBy.length - 1)];
-  [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor iPadPoweredByWootricTextColor] range:NSMakeRange(kPoweredBy.length, kInMoment.length)];
-  [attrStr addAttribute:NSFontAttributeName value:[UIItems regularFontWithSize:10] range:NSMakeRange(0, text.length)];
-  [self.poweredByWootric setAttributedTitle:attrStr forState:UIControlStateNormal];
-}
-
-- (void)setupOptOutButton {
-  self.optOutButton = [[UIButton alloc] init];
-  [self.optOutButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [self.optOutButton setTitle:NSLocalizedString(@"opt out", "") forState:UIControlStateNormal];
-  [self.optOutButton setTitleColor:[WTRColor optOutTextColor] forState:UIControlStateNormal];
-  [self.optOutButton.titleLabel setFont:[UIItems regularFontWithSize:10]];
-  [self.optOutButton addTarget:self
-                        action:NSSelectorFromString(@"optOutButtonPressed:")
-              forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setupModalView {

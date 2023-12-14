@@ -28,5 +28,6 @@
 
 - (void)setupConstraints;
 - (void)setupPoweredByWootricConstraintsCenteredX;
+- (void)updateDisclaimerLabelConstraintsForScreen:(int)screen;
 
 @end

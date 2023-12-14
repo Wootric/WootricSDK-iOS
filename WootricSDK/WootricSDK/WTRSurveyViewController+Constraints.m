@@ -49,6 +49,9 @@
       [self setupPoweredByWootricConstraintsCenteredX];
     }
   }
+  if ([self.settings showDisclaimer]) {
+    [self setupDisclaimerConstraints];
+  }
 }
 
 #pragma mark - Buttons
@@ -123,6 +126,63 @@
                                                            multiplier:1
                                                              constant:12];
   [self.optOutButton addConstraint:constH];
+}
+
+- (void)setupDisclaimerConstraints {
+  NSLayoutConstraint *constX = [NSLayoutConstraint constraintWithItem:self.disclaimerLabel
+                                                                  attribute:NSLayoutAttributeCenterX
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:self.modalView
+                                                                  attribute:NSLayoutAttributeCenterX
+                                                                 multiplier:1
+                                                                   constant:0];
+  [self.modalView addConstraint:constX];
+
+  self.constraintDisclaimerLabelBottom = [NSLayoutConstraint constraintWithItem:self.disclaimerLabel
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.sendButton
+                                                                 attribute:NSLayoutAttributeTop
+                                                                multiplier:1
+                                                                  constant:-14];
+  [self.modalView addConstraint:self.constraintDisclaimerLabelBottom];
+
+  NSLayoutConstraint *constH = [NSLayoutConstraint constraintWithItem:self.disclaimerLabel
+                                                            attribute:NSLayoutAttributeHeight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:12];
+  [self.disclaimerLabel addConstraint:constH];
+  
+  NSLayoutConstraint *constW = [NSLayoutConstraint constraintWithItem:self.disclaimerLabel
+                                                            attribute:NSLayoutAttributeWidth
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:nil
+                                                            attribute:NSLayoutAttributeNotAnAttribute
+                                                           multiplier:1
+                                                             constant:300];
+  [self.disclaimerLabel addConstraint:constW];
+}
+
+- (void)updateDisclaimerLabelConstraintsForScreen:(int)screen {
+  if (screen == 2) {
+    self.constraintDisclaimerLabelBottom.constant = -20;
+  } else if (screen == 3) {
+    [self.modalView removeConstraint:self.constraintDisclaimerLabelBottom];
+    self.constraintDisclaimerLabelBottom = [NSLayoutConstraint constraintWithItem:self.disclaimerLabel
+                                                                   attribute:NSLayoutAttributeBottom
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.modalView
+                                                                   attribute:NSLayoutAttributeBottom
+                                                                  multiplier:1
+                                                                    constant:-48];
+    [self.modalView addConstraint:self.constraintDisclaimerLabelBottom];
+  }
+  [UIView animateWithDuration:0.2 animations:^{
+    [self.view layoutIfNeeded];
+  }];
 }
 
 - (void)setupDismissButtonConstraints {
@@ -381,7 +441,7 @@
                                                                toItem:nil
                                                             attribute:NSLayoutAttributeNotAnAttribute
                                                            multiplier:1
-                                                             constant:213];
+                                                             constant:221];
   [self.questionView addConstraint:self.constraintQuestionViewHeight];
 }
 

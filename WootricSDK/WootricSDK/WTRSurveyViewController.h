@@ -41,6 +41,7 @@
 @property (nonatomic, strong) UIButton *sendButton;
 @property (nonatomic, strong) UIButton *poweredByWootric;
 @property (nonatomic, strong) UIButton *optOutButton;
+@property (nonatomic, strong) UILabel *disclaimerLabel;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSLayoutConstraint *constraintTopToModalTop;
 @property (nonatomic, strong) NSLayoutConstraint *socialShareViewHeightConstraint;
@@ -48,6 +49,7 @@
 @property (nonatomic, strong) NSLayoutConstraint *constraintFeedbackViewHeight;
 @property (nonatomic, strong) NSLayoutConstraint *constraintQuestionViewHeight;
 @property (nonatomic, strong) NSLayoutConstraint *constraintPoweredByWootricX;
+@property (nonatomic, strong) NSLayoutConstraint *constraintDisclaimerLabelBottom;
 @property (nonatomic, strong) WTRSettings *settings;
 @property (nonatomic, strong) UILabel *finalThankYouLabel;
 

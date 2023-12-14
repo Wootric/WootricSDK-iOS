@@ -194,7 +194,7 @@
   NSURL *url = [NSURL URLWithString:@"https://www.wootric.com"];
   [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
     if (!success) {
-      [WTRLogger logError:@"Failed to open wootric page"];
+      [WTRLogger logError:@"Failed to open wootric page."];
     }
   }];
 }
@@ -204,9 +204,23 @@
     if (success) {
       [self dismissViewControllerWithBackgroundFade];
     } else {
-      [WTRLogger logError:@"Failed to open wootric page"];
+      [WTRLogger logError:@"Failed to open opt out page."];
     }
   }];
+}
+
+- (void)openDisclaimerLink:(UITapGestureRecognizer *)gesture {
+  NSURL *url = self.settings.disclaimerLinkURL;
+
+  if (url) {
+    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
+      if (!success) {
+        [WTRLogger logError:@"Failed to open disclaimerLinkURL page."];
+      }
+    }];
+  } else {
+    [WTRLogger logError:@"No disclaimerLinkURL set."];
+  }
 }
 
 - (void)openThankYouURL:(WTRiPADThankYouButton *)sender {
@@ -214,7 +228,7 @@
     if (success) {
       [self dismissViewControllerWithBackgroundFade];
     } else {
-      [WTRLogger logError:@"Failed to open wootric page"];
+      [WTRLogger logError:@"Failed to open thank you link page."];
     }
   }];
 }
@@ -262,7 +276,7 @@
     NSURL *url = _settings.facebookPage;
     [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
       if (!success) {
-        [WTRLogger logError:@"Failed to open wootric page"];
+        [WTRLogger logError:@"Failed to open Facebook page."];
       }
     }];
   } else {
@@ -283,7 +297,7 @@
       UIActivityTypeOpenInIBooks
     ];
     [self presentViewController:activityViewController animated:YES completion:^{
-      [WTRLogger log:@"Post successful"];
+      [WTRLogger log:@"Post successful."];
     }];
   }
 }
@@ -319,15 +333,7 @@
   [self setQuestionViewVisible:NO andFeedbackViewVisible:NO];
   [_feedbackView textViewResignFirstResponder];
   _socialShareView.hidden = NO;
-  if ([self.settings showOptOut]) {
-    [self setupPoweredByWootricForSocialShareView];
-    _optOutButton.hidden = YES;
-  }
-  if ([self.settings showPoweredBy]) {
-    _poweredByWootric.hidden = NO;
-  } else {
-    _poweredByWootric.hidden = YES;
-  }
+  
   [UIView animateWithDuration:0.2 animations:^{
     [self.view layoutIfNeeded];
   } completion:^(BOOL finished) {
@@ -341,9 +347,8 @@
   _feedbackView.hidden = YES;
   _questionView.hidden = YES;
   _socialShareView.hidden = YES;
-  _poweredByWootric.hidden = YES;
-  _optOutButton.hidden = YES;
   _finalThankYouLabel.hidden = NO;
+  _footerView.hidden = YES;
   _dismissButton.hidden = YES;
   _constraintModalHeight.constant = 125;
   _constraintTopToModalTop.constant = self.view.frame.size.height - _constraintModalHeight.constant;

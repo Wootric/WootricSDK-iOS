@@ -27,6 +27,5 @@
 @interface WTRiPADSurveyViewController (Constraints)
 
 - (void)setupConstraints;
-- (void)setupOptOutButtonConstraintsCenteredX;
 
 @end

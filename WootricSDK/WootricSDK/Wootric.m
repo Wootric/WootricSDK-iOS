@@ -29,6 +29,7 @@
 #import "WTRiPADSurveyViewController.h"
 #import "WTRLogger.h"
 #import "WTRSurveyDelegate.h"
+#import "WTRUtils.h"
 
 static id<WTRSurveyDelegate> _delegate = nil;
 static UIViewController *_presentedViewController;
@@ -123,6 +124,26 @@ static bool shouldShowSurvey;
 + (void)showOptOut:(BOOL)flag {
   WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
   surveyClient.settings.showOptOut = flag;
+}
+
++ (void)showDisclaimerText:(NSString *)text link:(NSURL *)link linkText:(NSString *)linkText {
+  if (![WTRUtils isValidString:text]) {
+    [WTRLogger logError:@"showDisclaimerText's text variable cannot be nil or empty string"];
+    return;
+  }
+  if (!link) {
+    [WTRLogger logError:@"showDisclaimerText's link variable cannot be nil"];
+    return;
+  }
+  if (![WTRUtils isValidString:linkText]) {
+    [WTRLogger logError:@"showDisclaimerText's linkText variable cannot be nil or empty string"];
+    return;
+  }
+  WTRSurvey *surveyClient = [WTRSurvey sharedInstance];
+  surveyClient.settings.showDisclaimer = YES;
+  surveyClient.settings.disclaimerText = text;
+  surveyClient.settings.disclaimerLinkURL = link;
+  surveyClient.settings.disclaimerLinkText = linkText;
 }
 
 + (void)surveyImmediately:(BOOL)flag {

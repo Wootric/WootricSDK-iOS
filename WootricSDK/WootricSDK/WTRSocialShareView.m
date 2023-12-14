@@ -293,7 +293,11 @@
 
 - (void)setupNoThanksButtonConstraints {
   [[[_noThanksButton wtr_centerXConstraint] toSecondViewCenterX:self] addToView:self];
-  [[[[_noThanksButton wtr_bottomConstraint] toSecondViewBottom:self] withConstant:-8] addToView:self];
+  if ([_settings showDisclaimer]) {
+    [[[[_noThanksButton wtr_bottomConstraint] toSecondViewBottom:self] withConstant:-34] addToView:self];
+  } else {
+    [[[[_noThanksButton wtr_bottomConstraint] toSecondViewBottom:self] withConstant:-8] addToView:self];
+  }
 }
 
 @end
