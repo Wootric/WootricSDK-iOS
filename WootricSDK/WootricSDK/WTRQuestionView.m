@@ -38,7 +38,7 @@
 @property (nonatomic, strong) WTRSlider *scoreSlider;
 @property (nonatomic, strong) WTRScoreView *scoreLabel;
 @property (nonatomic, strong) WTRSettings *settings;
-@property (nonatomic, strong) WTRSurveyViewController *viewController;
+@property (nonatomic, weak) WTRSurveyViewController *viewController;
 
 @end
 
