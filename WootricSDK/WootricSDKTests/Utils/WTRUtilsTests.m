@@ -31,10 +31,6 @@
 
 @implementation WTRUtilsTests
 
-- (void)testEscapeSpace {
-  XCTAssertEqualObjects(@"abc%20def", [WTRUtils percentEscapeString:@"abc def"]);
-}
-
 - (void)testGetTokenTDL {
   XCTAssertEqualObjects([WTRUtils getTokenTLD:@"NPS-EU-123456"], @"eu");
   XCTAssertEqualObjects([WTRUtils getTokenTLD:@"NPS-AU-A1B2C3"], @"au");
@@ -46,4 +42,18 @@
   XCTAssertEqualObjects([WTRUtils getTokenTLD:@"NPS-US-EU"], @"com");
 }
 
+- (void)testIsValidString {
+  XCTAssertTrue([WTRUtils isValidString:@"a"]);
+  XCTAssertTrue([WTRUtils isValidString:@"very long text"]);
+  XCTAssertFalse([WTRUtils isValidString:@""]);
+  XCTAssertFalse([WTRUtils isValidString:nil]);
+}
+
+- (void)testIsValidNumber {
+  XCTAssertTrue([WTRUtils isValidNumber:@1]);
+  XCTAssertTrue([WTRUtils isValidNumber:@1.5]);
+  XCTAssertTrue([WTRUtils isValidNumber:@0]);
+  XCTAssertFalse([WTRUtils isValidNumber:nil]);
+  XCTAssertFalse([WTRUtils isValidNumber:@-5]);
+}
 @end

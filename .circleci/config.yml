@@ -2,7 +2,7 @@ version: 3
 jobs:
   build-and-test:
     macos:
-      xcode: "13.2.1"
+      xcode: "15.2.0"
     environment:
       FL_OUTPUT_DIR: output
 
@@ -12,7 +12,7 @@ jobs:
           name: Build and run tests
           command: fastlane scan
           environment:
-            SCAN_DEVICE: iPhone 8
+            SCAN_DEVICE: iPhone 12
             SCAN_SCHEME: WootricSDK
 
       - store_test_results:

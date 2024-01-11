@@ -27,9 +27,10 @@
 
 @interface WTRUtils : NSObject
 
-+ (NSString *)percentEscapeString:(NSString *)string;
 + (NSString *)getTokenTLD:(NSString *)aString;
 + (NSArray *)shuffleArray:(NSArray *)array;
 + (CGSize)sizeForText:(NSString *)text fontSize:(int)fontSize;
++ (BOOL)isValidString:(NSString *)string;
++ (BOOL)isValidNumber:(NSNumber *)number;
 
 @end

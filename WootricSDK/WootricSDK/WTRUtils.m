@@ -27,12 +27,6 @@
 
 @implementation WTRUtils
 
-+ (NSString *)percentEscapeString:(NSString *)string {
-  NSString *result = [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
-  result = [result stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
-  return [result stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-}
-
 + (NSString *)getTokenTLD:(NSString *)aString {
   NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"NPS-(EU-|AU-)"
                                                                     options:0
@@ -59,4 +53,17 @@
   return CGSizeMake([text sizeWithAttributes:attributes].width + 10, [text sizeWithAttributes:attributes].height + 10);
 }
 
++ (BOOL)isValidString:(NSString *)string {
+  if (string != nil && string.length > 0) {
+    return YES;
+  }
+  return NO;
+}
+
++ (BOOL)isValidNumber:(NSNumber *)number {
+  if (number != nil && [number doubleValue] >= 0) {
+    return YES;
+  }
+  return NO;
+}
 @end

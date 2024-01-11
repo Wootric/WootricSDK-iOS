@@ -23,7 +23,6 @@
 // THE SOFTWARE.
 
 #import "WTRApiClient.h"
-#import "WTRPropertiesParser.h"
 #import "WTRUtils.h"
 #import "WTRLogger.h"
 #import <CommonCrypto/CommonHMAC.h>
@@ -32,9 +31,36 @@ static NSString *const WTRSamplingRule = @"Wootric Sampling Rule";
 static NSString *const WTRCustomEventName = @"custom_event_name";
 static NSString *const WTRRegisterEventsEndpoint = @"/registered_events.json";
 static NSString *const WTREligibleEndpoint = @"/eligible.json";
-static NSString *const WTRSurveyServerURL = @"https://eligibility.wootric.";
-static NSString *const WTRBaseAPIURL = @"https://app.wootric.";
-static NSString *const WTRAPIVersion = @"api/v1";
+static NSString *const WTRResponsesEndpoint = @"responses";
+static NSString *const WTRDeclinesEndpoint = @"declines";
+static NSString *const WTREndUsersEndpoint = @"end_users";
+static NSString *const WTRSurveyServerURL = @"eligibility.wootric.";
+static NSString *const WTRBaseAPIURL = @"app.wootric.";
+static NSString *const WTRAPIVersion = @"/api/v1";
+
+static NSString *const WTRAccountTokenKey = @"account_token";
+static NSString *const WTRClientIdKey = @"client_id";
+static NSString *const WTREmailKey = @"email";
+static NSString *const WTRExternalIdKey = @"external_id";
+static NSString *const WTRPhoneNumberKey = @"phone_number";
+static NSString *const WTRCreatedAtKey = @"external_created_at";
+static NSString *const WTRSurveyImmediatelyKey = @"survey_immediately";
+static NSString *const WTRPropertiesKey = @"properties";
+static NSString *const WTRProductNameKey = @"product_name";
+static NSString *const WTRAudienceTextKey = @"audience_text";
+static NSString *const WTRRegisteredPercentKey = @"registered_percent";
+static NSString *const WTRVisitorPercentKey = @"visitor_percent";
+static NSString *const WTRResurveyThrottleKey = @"resurvey_throttle";
+static NSString *const WTRDailyResponseCapKey = @"daily_response_cap";
+static NSString *const WTREndUserCreatedAtKey = @"end_user_created_at";
+static NSString *const WTRLanguageKey = @"language";
+static NSString *const WTRLanguageCodeKey = @"code";
+static NSString *const WTRFirstSurveyDelayKey = @"first_survey_delay";
+static NSString *const WTREventNameKey = @"event_name";
+
+static NSString *const WTROSNameKey = @"os_name";
+static NSString *const WTRSDKVersionKey = @"sdk_version";
+static NSString *const WTROSVersionKey = @"os_version";
 
 @interface WTRApiClient ()
 
@@ -85,10 +111,10 @@ static NSString *const WTRAPIVersion = @"api/v1";
   if (!self.userID) {
     [self getEndUserWithEmail:^(NSInteger endUserID) {
       self.userID = endUserID;
-      [self createResponseForEndUser:self.userID withScore:-1 text:nil picklistAnswers:nil endpoint:@"declines"];
+      [self createResponseForEndUser:self.userID withScore:-1 text:nil picklistAnswers:nil endpoint:WTRDeclinesEndpoint];
     }];
   } else {
-    [self createResponseForEndUser:self.userID withScore:-1 text:nil picklistAnswers:nil endpoint:@"declines"];
+    [self createResponseForEndUser:self.userID withScore:-1 text:nil picklistAnswers:nil endpoint:WTRDeclinesEndpoint];
   }
 }
 
@@ -96,20 +122,15 @@ static NSString *const WTRAPIVersion = @"api/v1";
   if (!self.userID) {
     [self getEndUserWithEmail:^(NSInteger endUserID) {
       self.userID = endUserID;
-      [self createResponseForEndUser:self.userID withScore:score text:text picklistAnswers:picklistAnswers endpoint:@"responses"];
+      [self createResponseForEndUser:self.userID withScore:score text:text picklistAnswers:picklistAnswers endpoint:WTRResponsesEndpoint];
     }];
   } else {
-    [self createResponseForEndUser:self.userID withScore:score text:text picklistAnswers:picklistAnswers endpoint:@"responses"];
+    [self createResponseForEndUser:self.userID withScore:score text:text picklistAnswers:picklistAnswers endpoint:WTRResponsesEndpoint];
   }
 }
 
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID {
-  NSString *escapedEmail = [WTRUtils percentEscapeString:[_settings getEndUserEmailOrUnknown]];
-  
-  escapedEmail = [self addVersionsToURLString:escapedEmail];
-  
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users?email=%@", [self baseApiUrl], WTRAPIVersion, escapedEmail]];
-  NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:nil andHTTPBody:nil];
+  NSMutableURLRequest *urlRequest = [self requestWithHost:[self baseApiUrl] path:[NSString stringWithFormat:@"%@/%@", WTRAPIVersion, WTREndUsersEndpoint] HTTPMethod:nil queryItems:@[[self addEmailToURL]]];
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       [WTRLogger logError:@"(GET end user): %@", error];
@@ -142,46 +163,35 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (void)updateExistingEndUser:(NSInteger)endUserID {
-  BOOL needsUpdate = NO;
-  NSString *escapedEmail = [WTRUtils percentEscapeString:[_settings getEndUserEmailOrUnknown]];
-  NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
+  NSMutableArray *queryItems = [NSMutableArray new];
+  [queryItems addObject:[self addEmailToURL]];
 
-  if (_settings.productName) {
-    needsUpdate = YES;
-    params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, [WTRUtils percentEscapeString:_settings.productName]];
+  if ([WTRUtils isValidString:_settings.productName]) {
+    [queryItems addObject:[NSURLQueryItem queryItemWithName:@"properties[product_name]" value:_settings.productName]];
   }
   
-  if (_settings.externalId) {
-    needsUpdate = YES;
-    params = [NSString stringWithFormat:@"%@&external_id=%@", params, _settings.externalId];
+  if ([WTRUtils isValidString:_settings.externalId]) {
+    [queryItems addObject:[NSURLQueryItem queryItemWithName:WTRExternalIdKey value:_settings.externalId]];
   }
   
-  if (_settings.phoneNumber) {
-    needsUpdate = YES;
-    params = [NSString stringWithFormat:@"%@&phone_number=%@", params, _settings.phoneNumber];
+  if ([WTRUtils isValidString:_settings.phoneNumber]) {
+    [queryItems addObject:[NSURLQueryItem queryItemWithName:WTRPhoneNumberKey value:_settings.phoneNumber]];
   }
   
-  if (self.eligibilitySamplingRule) {
-    needsUpdate = YES;
-    params = [NSString stringWithFormat:@"%@&properties[%@]=%@", params, [WTRUtils percentEscapeString:WTRSamplingRule], [WTRUtils percentEscapeString:self.eligibilitySamplingRule]];
+  if ([WTRUtils isValidString:self.eligibilitySamplingRule]) {
+    [queryItems addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"%@[%@]", WTRPropertiesKey, WTRSamplingRule] value:self.eligibilitySamplingRule]];
   }
   
-  if (_settings.eventName) {
-    needsUpdate = YES;
-    params = [NSString stringWithFormat:@"%@&properties[%@]=%@", params, [WTRUtils percentEscapeString:WTRCustomEventName], [WTRUtils percentEscapeString:_settings.eventName]];
+  if ([WTRUtils isValidString:_settings.eventName]) {
+    [queryItems addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"%@[%@]", WTRPropertiesKey, WTRCustomEventName] value:_settings.eventName]];
   }
 
   if (_settings.customProperties) {
-    needsUpdate = YES;
-    NSString *parsedProperties = [WTRPropertiesParser parseToStringFromDictionary:_settings.customProperties];
-    params = [NSString stringWithFormat:@"%@%@", params, parsedProperties];
+    [queryItems addObjectsFromArray:[self addPropertiesToURL]];
   }
 
-  params = [self addVersionsToURLString:params];
-
-  if (needsUpdate) {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld?%@", [self baseApiUrl], WTRAPIVersion, (long)endUserID, params]];
-    NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"PUT" andHTTPBody:nil];
+  if (queryItems.count > 1) {
+    NSMutableURLRequest *urlRequest = [self requestWithHost:[self baseApiUrl] path:[NSString stringWithFormat:@"%@/%@/%ld", WTRAPIVersion, WTREndUsersEndpoint, (long)endUserID] HTTPMethod:@"PUT" queryItems:queryItems];
 
     NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
       if (error || data == nil) {
@@ -204,41 +214,40 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users", [self baseApiUrl], WTRAPIVersion]];
-  NSString *escapedEmail = [WTRUtils percentEscapeString:[_settings getEndUserEmailOrUnknown]];
-  NSString *params = [NSString stringWithFormat:@"email=%@", escapedEmail];
+  NSMutableArray *items = [NSMutableArray new];
+  [items addObject:[NSURLQueryItem queryItemWithName:WTREmailKey value:[_settings getEndUserEmailOrUnknown]]];
     
-  if (_settings.externalCreatedAt != nil) {
-    params = [NSString stringWithFormat:@"%@&external_created_at=%ld", params, (long)[_settings.externalCreatedAt integerValue]];
+  if ([WTRUtils isValidNumber:_settings.externalCreatedAt]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:WTRCreatedAtKey value:[NSString stringWithFormat:@"%ld", (long)[_settings.externalCreatedAt integerValue]]]];
   }
   
-  if (_settings.externalId) {
-    params = [NSString stringWithFormat:@"%@&external_id=%@", params, _settings.externalId];
+  if ([WTRUtils isValidString:_settings.externalId]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:WTRExternalIdKey value:_settings.externalId]];
   }
   
-  if (_settings.phoneNumber) {
-    params = [NSString stringWithFormat:@"%@&phone_number=%@", params, _settings.phoneNumber];
+  if ([WTRUtils isValidString:_settings.phoneNumber]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:WTRPhoneNumberKey value:_settings.phoneNumber]];
   }
     
-  if (_settings.productName) {
-    params = [NSString stringWithFormat:@"%@&properties[product_name]=%@", params, _settings.productName];
+  if ([WTRUtils isValidString:_settings.productName]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"%@[%@]", WTRPropertiesKey, WTRProductNameKey] value:_settings.productName]];
   }
   
-  if (self.eligibilitySamplingRule) {
-    params = [NSString stringWithFormat:@"%@&properties[%@]=%@", params, [WTRUtils percentEscapeString:WTRSamplingRule], [WTRUtils percentEscapeString:self.eligibilitySamplingRule]];
+  if ([WTRUtils isValidString:self.eligibilitySamplingRule]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"%@[%@]", WTRPropertiesKey, WTRSamplingRule] value:self.eligibilitySamplingRule]];
   }
   
-  if (_settings.eventName) {
-    params = [NSString stringWithFormat:@"%@&properties[%@]=%@", params, [WTRUtils percentEscapeString:WTRCustomEventName], [WTRUtils percentEscapeString:_settings.eventName]];
+  if ([WTRUtils isValidString:_settings.eventName]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"%@[%@]", WTRPropertiesKey, WTRCustomEventName] value:_settings.eventName]];
   }
     
   if (_settings.customProperties) {
-    NSString *parsedProperties = [WTRPropertiesParser parseToStringFromDictionary:_settings.customProperties];
-    params = [NSString stringWithFormat:@"%@%@", params, parsedProperties];
+    for (NSString *key in _settings.customProperties) {
+      [items addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"%@[%@]", WTRPropertiesKey, key] value:[_settings.customProperties objectForKey:key]]];
+    }
   }
     
-  NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
-
+  NSMutableURLRequest *urlRequest = [self requestWithHost:[self baseApiUrl] path:[NSString stringWithFormat:@"%@/%@", WTRAPIVersion, WTREndUsersEndpoint] HTTPMethod:@"POST" queryItems:items];
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       [WTRLogger logError:@"(create end user): %@", error];
@@ -256,10 +265,9 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (void)createResponseForEndUser:(NSInteger)endUserID withScore:(NSInteger)score text:(NSString *)text picklistAnswers:(NSDictionary *)picklistAnswers endpoint:(NSString *)endpoint {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/end_users/%ld/%@", [self baseApiUrl], WTRAPIVersion, (long)endUserID, endpoint]];
-  NSString *params = [self paramsWithScore:score endUserID:endUserID accountID:_accountID uniqueLink:_uniqueLink priority:_priority text:text picklistAnswers:picklistAnswers];
+  NSArray *params = [self paramsWithScore:score endUserID:endUserID accountID:_accountID uniqueLink:_uniqueLink priority:_priority text:text picklistAnswers:picklistAnswers];
   
-  NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
+  NSMutableURLRequest *urlRequest = [self requestWithHost:[self baseApiUrl] path:[NSString stringWithFormat:@"%@/%@/%ld/%@", WTRAPIVersion, WTREndUsersEndpoint, (long)endUserID, endpoint] HTTPMethod:@"POST" queryItems:params];
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
     if (error) {
       [WTRLogger logError:@"ResponseError: %@", error];
@@ -276,7 +284,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (void)getRegisteredEventList:(void (^)(NSArray *))events {
-  NSString *baseURLString = [NSString stringWithFormat:@"%@%@?account_token=%@", [self eligibilityUrl], WTRRegisterEventsEndpoint, _accountToken];
+  NSString *baseURLString = [NSString stringWithFormat:@"https://%@%@?account_token=%@", [self eligibilityUrl], WTRRegisterEventsEndpoint, _accountToken];
 
   NSURL *url = [NSURL URLWithString:baseURLString];
   NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -303,11 +311,7 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (void)authenticate:(void (^)(BOOL))authenticated {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/oauth/token", [self baseApiUrl]]];
-  NSString *params = [NSString stringWithFormat:@"grant_type=client_credentials&client_id=%@", _clientID];
-  params = [self addVersionsToURLString:params];
-
-  NSMutableURLRequest *urlRequest = [self requestWithURL:url HTTPMethod:@"POST" andHTTPBody:params];
+  NSMutableURLRequest *urlRequest = [self requestWithHost:[self baseApiUrl] path:@"/oauth/token" HTTPMethod:@"POST" queryItems:@[[NSURLQueryItem queryItemWithName:@"grant_type" value:@"client_credentials"], [NSURLQueryItem queryItemWithName:WTRClientIdKey value:_clientID]]];
   [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"User-Agent"];
 
   NSURLSessionDataTask *dataTask = [_wootricSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -347,16 +351,21 @@ static NSString *const WTRAPIVersion = @"api/v1";
 
 - (void)checkEligibility:(void (^)(BOOL))eligible {
   if (self.settings.forceSurvey || [self needsSurvey]) {
-    NSString *baseURLString = [NSString stringWithFormat:@"%@%@?account_token=%@", [self eligibilityUrl], WTREligibleEndpoint, _accountToken];
-    
-    baseURLString = [self addVersionsToURLString:baseURLString];
-    baseURLString = [self addEmailToURLString:baseURLString];
-    baseURLString = [self addSurveyServerCustomSettingsToURLString:baseURLString];
-    baseURLString = [self addPropertiesToURLString:baseURLString];
-    baseURLString = [self addEventNameToURLString:baseURLString];
+    NSURLComponents *components = [NSURLComponents new];
+    NSMutableArray *queryItems = [NSMutableArray new];
+    components.scheme = @"https";
+    components.host = [self eligibilityUrl];
+    components.path = WTREligibleEndpoint;
 
-    NSURL *url = [NSURL URLWithString:baseURLString];
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [queryItems addObject:[NSURLQueryItem queryItemWithName:WTRAccountTokenKey value:_accountToken]];
+    [queryItems addObjectsFromArray:[self addVersionsToURL]];
+    [queryItems addObject:[self addEmailToURL]];
+    [queryItems addObjectsFromArray:[self addSurveyServerCustomSettingsToURL]];
+    [queryItems addObjectsFromArray:[self addPropertiesToURL]];
+    [queryItems addObject:[self addEventNameToURL]];
+
+    components.queryItems = queryItems;
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:components.URL];
     [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"User-Agent"];
 
     [WTRLogger log:@"eligibility - %@", urlRequest];
@@ -378,8 +387,8 @@ static NSString *const WTRAPIVersion = @"api/v1";
             [WTRLogger log:@"User eligible. Code: %@. Description: %@.", responseJSON[@"details"][@"code"], responseJSON[@"details"][@"why"]];
 
             [self->_settings parseDataFromSurveyServer:responseJSON];
-            self->_accountToken = responseJSON[@"settings"][@"account_token"];
-            self->_clientID = responseJSON[@"settings"][@"client_id"];
+            self->_accountToken = responseJSON[@"settings"][WTRAccountTokenKey];
+            self->_clientID = responseJSON[@"settings"][WTRClientIdKey];
 
             if (self->_accountToken == nil || self->_clientID == nil) {
               [WTRLogger logError:@"Error retreiving token."];
@@ -423,15 +432,17 @@ static NSString *const WTRAPIVersion = @"api/v1";
   }
 }
 
-- (NSMutableURLRequest *)requestWithURL:(NSURL *)url HTTPMethod:(NSString *)httpMethod andHTTPBody:(NSString *)httpBody {
-  NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+- (NSMutableURLRequest *)requestWithHost:(NSString *)host path:(NSString *)path HTTPMethod:(NSString *)httpMethod queryItems:(NSArray *)queryItems {
+  NSURLComponents *components = [NSURLComponents new];
+  components.scheme = @"https";
+  components.host = host;
+  components.path = path;
+
+  components.queryItems = [queryItems arrayByAddingObjectsFromArray:[self addVersionsToURL]];
+  NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:components.URL];
+
   [urlRequest setValue:@"Wootric-Mobile-SDK" forHTTPHeaderField:@"User-Agent"];
   
-  if (httpBody) {
-    httpBody = [self addVersionsToURLString:httpBody];
-    urlRequest.HTTPBody = [httpBody dataUsingEncoding:NSUTF8StringEncoding];
-  }
-
   if (httpMethod) {
     urlRequest.HTTPMethod = httpMethod;
   }
@@ -443,142 +454,133 @@ static NSString *const WTRAPIVersion = @"api/v1";
   return urlRequest;
 }
 
-- (NSString *)addEmailToURLString:(NSString *)baseURLString {
-  NSString *endUserEmail = [_settings getEndUserEmailOrUnknown];
-
-  if (![endUserEmail isEqual: @"Unknown"]) {
-    baseURLString = [NSString stringWithFormat:@"%@&email=%@", baseURLString, [WTRUtils percentEscapeString:endUserEmail]];
-  }
-
-  return baseURLString;
+- (NSURLQueryItem *)addEmailToURL {
+  return [NSURLQueryItem queryItemWithName:WTREmailKey value:[_settings getEndUserEmailOrUnknown]];
 }
 
-- (NSString *)addVersionsToURLString:(NSString *)baseURLString {
-  
-  baseURLString = [NSString stringWithFormat:@"%@&os_name=iOS", baseURLString];
-  
-  if (_sdkVersion != nil) {
-    baseURLString = [NSString stringWithFormat:@"%@&sdk_version=%@", baseURLString, _sdkVersion];
+- (NSArray *)addVersionsToURL {
+  NSMutableArray *items = [NSMutableArray new];
+  [items addObject:[NSURLQueryItem queryItemWithName:WTROSNameKey value:@"iOS"]];
+
+  if ([WTRUtils isValidString:_sdkVersion]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:WTRSDKVersionKey value:_sdkVersion]];
   }
   
-  if (_osVersion != nil) {
-    baseURLString = [NSString stringWithFormat:@"%@&os_version=%@", baseURLString, _osVersion];
+  if ([WTRUtils isValidString:_osVersion]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:WTROSVersionKey value:_osVersion]];
   }
   
-  return baseURLString;
+  return items;
 }
 
-- (NSString *)addSurveyServerCustomSettingsToURLString:(NSString *)baseURLString {
+- (NSArray *)addSurveyServerCustomSettingsToURL {
+  NSMutableArray *items = [NSMutableArray new];
   if (_settings.surveyImmediately || _settings.forceSurvey) {
-    baseURLString = [NSString stringWithFormat:@"%@&survey_immediately=%d",
-                     baseURLString, YES];
+    [items addObject:[NSURLQueryItem queryItemWithName:WTRSurveyImmediatelyKey value:@"true"]];
   }
 
-  if (_settings.registeredPercentage != nil) {
-    baseURLString = [NSString stringWithFormat:@"%@&registered_percent=%d",
-                     baseURLString, [_settings.registeredPercentage intValue]];
+  if ([WTRUtils isValidNumber:_settings.registeredPercentage]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:WTRRegisteredPercentKey value:[_settings.registeredPercentage stringValue]]];
   }
 
-  if (_settings.visitorPercentage != nil) {
-    baseURLString = [NSString stringWithFormat:@"%@&visitor_percent=%d",
-                     baseURLString, [_settings.visitorPercentage intValue]];
+  if ([WTRUtils isValidNumber:_settings.visitorPercentage]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:WTRVisitorPercentKey value:[_settings.visitorPercentage stringValue]]];
   }
 
-  if (_settings.resurveyThrottle != nil) {
-    baseURLString = [NSString stringWithFormat:@"%@&resurvey_throttle=%d",
-                     baseURLString, [_settings.resurveyThrottle intValue]];
+  if ([WTRUtils isValidNumber:_settings.resurveyThrottle]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:WTRResurveyThrottleKey value:[_settings.resurveyThrottle stringValue]]];
   }
 
-  if (_settings.dailyResponseCap != nil) {
-    baseURLString = [NSString stringWithFormat:@"%@&daily_response_cap=%d",
-                     baseURLString, [_settings.dailyResponseCap intValue]];
+  if ([WTRUtils isValidNumber:_settings.dailyResponseCap]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:WTRDailyResponseCapKey value:[_settings.dailyResponseCap stringValue]]];
   }
 
-  if (_settings.externalCreatedAt != nil) {
-    baseURLString = [NSString stringWithFormat:@"%@&end_user_created_at=%ld",
-                     baseURLString, (long)[_settings.externalCreatedAt integerValue]];
+  if ([WTRUtils isValidNumber:_settings.externalCreatedAt]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:WTREndUserCreatedAtKey value:[_settings.externalCreatedAt stringValue]]];
   }
 
-  if (_settings.languageCode) {
-    baseURLString = [NSString stringWithFormat:@"%@&language[code]=%@",
-                     baseURLString, _settings.languageCode];
+  if ([WTRUtils isValidString:_settings.languageCode]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"%@[%@]", WTRLanguageKey, WTRLanguageCodeKey] value:_settings.languageCode]];
   }
 
-  if (_settings.customProductName) {
-    baseURLString = [NSString stringWithFormat:@"%@&language[product_name]=%@",
-                     baseURLString, [WTRUtils percentEscapeString:_settings.customProductName]];
+  if ([WTRUtils isValidString:_settings.customProductName]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"%@[%@]", WTRLanguageKey, WTRProductNameKey] value:_settings.customProductName]];
   }
 
-  if (_settings.customAudience) {
-    baseURLString = [NSString stringWithFormat:@"%@&language[audience_text]=%@",
-                     baseURLString, [WTRUtils percentEscapeString:_settings.customAudience]];
+  if ([WTRUtils isValidString:_settings.customAudience]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"%@[%@]", WTRLanguageKey, WTRAudienceTextKey] value:_settings.customAudience]];
   }
 
+  // this value needs to be higher than 0
   if ([_settings.firstSurveyAfter intValue] > 0) {
-    baseURLString = [NSString stringWithFormat:@"%@&first_survey_delay=%d",
-                     baseURLString, [_settings.firstSurveyAfter intValue]];
+    [items addObject:[NSURLQueryItem queryItemWithName:WTRFirstSurveyDelayKey value:[_settings.firstSurveyAfter stringValue]]];
   }
   
-  if (_settings.externalId) {
-    baseURLString = [NSString stringWithFormat:@"%@&external_id=%@",
-                     baseURLString, _settings.externalId];
+  if ([WTRUtils isValidString:_settings.externalId]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:WTRExternalIdKey value:_settings.externalId]];
   }
   
-  if (_settings.phoneNumber) {
-    baseURLString = [NSString stringWithFormat:@"%@&phone_number=%@",
-                     baseURLString, _settings.phoneNumber];
+  if ([WTRUtils isValidString:_settings.phoneNumber]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:WTRPhoneNumberKey value:_settings.phoneNumber]];
   }
   
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   double lastSeen = [defaults doubleForKey:@"lastSeenAt"];
-  baseURLString = [NSString stringWithFormat:@"%@&end_user_last_seen=%.0f", baseURLString, lastSeen];
+  [items addObject:[NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:[NSString stringWithFormat:@"%.0f", lastSeen]]];
 
-  return baseURLString;
+  return items;
 }
 
-- (NSString *)addPropertiesToURLString:(NSString *)baseURLString {
+- (NSArray *)addPropertiesToURL {
+  NSMutableArray *items = [NSMutableArray new];
   if (_settings.customProperties) {
-    NSString *parsedProperties = [WTRPropertiesParser parseToStringFromDictionary:_settings.customProperties];
-    baseURLString = [NSString stringWithFormat:@"%@%@", baseURLString, parsedProperties];
-    ;
+    for (NSString *key in _settings.customProperties) {
+      [items addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"%@[%@]",WTRPropertiesKey, key] value:[_settings.customProperties objectForKey:key]]];
+    }
   }
-  return baseURLString;
+  return items;
 }
 
-- (NSString *)addEventNameToURLString:(NSString *)baseURLString {
-  if (_settings.eventName) {
-    baseURLString = [NSString stringWithFormat:@"%@&event_name=%@", baseURLString, [WTRUtils percentEscapeString:_settings.eventName]];
-    ;
-  }
-  return baseURLString;
+- (NSURLQueryItem *)addEventNameToURL {
+  return [NSURLQueryItem queryItemWithName:WTREventNameKey value:_settings.eventName];
 }
 
-- (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text picklistAnswers:(NSDictionary *)picklistAnswers {
-  NSString *params = [NSString stringWithFormat:@"origin_url=%@&end_user[id]=%ld&survey[channel]=mobile&survey[unique_link]=%@&priority=%i&metric_type=%@", _settings.originURL, endUserID, uniqueLink, priority, [_settings.surveyType lowercaseString]];
+- (NSArray *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text picklistAnswers:(NSDictionary *)picklistAnswers {
+  NSMutableArray *items = [NSMutableArray new];
+  [items addObject:[NSURLQueryItem queryItemWithName:@"origin_url" value:_settings.originURL]];
+  [items addObject:[NSURLQueryItem queryItemWithName:@"end_user[id]" value:[NSString stringWithFormat:@"%ld", endUserID]]];
+  [items addObject:[NSURLQueryItem queryItemWithName:@"survey[channel]" value:@"mobile"]];
+  [items addObject:[NSURLQueryItem queryItemWithName:@"survey[unique_link]" value:uniqueLink]];
+  [items addObject:[NSURLQueryItem queryItemWithName:@"priority" value:[NSString stringWithFormat:@"%i", priority]]];
+  [items addObject:[NSURLQueryItem queryItemWithName:@"metric_type" value:[_settings.surveyType lowercaseString]]];
   
-  if (_settings.languageCode != nil) {
-    params = [NSString stringWithFormat:@"%@&survey[language]=%@", params, _settings.languageCode];
+  if ([WTRUtils isValidString:_settings.languageCode]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:@"survey[language]" value:_settings.languageCode]];
   }
+  
+  if ([WTRUtils isValidString:_settings.eventName]) {
+    [items addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"%@[%@]", WTRPropertiesKey,WTRCustomEventName] value:_settings.eventName]];
+  }
+  
   for (NSString *key in picklistAnswers) {
-    params = [NSString stringWithFormat:@"%@&driver_picklist[%@]=%@", params, [WTRUtils percentEscapeString:key], [WTRUtils percentEscapeString:picklistAnswers[key]]];
+    [items addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"driver_picklist[%@]", key] value:picklistAnswers[key]]];
   }
   
   if (score > -1) {
-    params = [NSString stringWithFormat:@"%@&score=%ld", params, (long) score];
+    [items addObject:[NSURLQueryItem queryItemWithName:@"score" value:[NSString stringWithFormat:@"%ld", score]]];
     
     if (text) {
-      NSString *escapedText = [WTRUtils percentEscapeString:text];
-      params = [NSString stringWithFormat:@"%@&text=%@", params, escapedText];
+      [items addObject:[NSURLQueryItem queryItemWithName:@"text" value:text]];
     }
   }
 
   if (accountID != nil) {
-    params = [NSString stringWithFormat:@"%@&account_id=%ld", params, [accountID longValue]];
+    [items addObject:[NSURLQueryItem queryItemWithName:@"account_id" value:[NSString stringWithFormat:@"%ld", [accountID longValue]]]];
   }
   
   _priority++;
   
-  return params;
+  return items;
 }
 
 - (NSString *)buildUniqueLinkAccountToken:(NSString *)accountToken endUserEmail:(NSString *)endUserEmail date:(NSTimeInterval)date randomString:(NSString *)randomString {

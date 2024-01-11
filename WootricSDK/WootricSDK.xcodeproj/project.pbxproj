@@ -58,8 +58,6 @@
 		B2102A3B1BB59AE60025DABC /* WTRSurvey.h in Headers */ = {isa = PBXBuildFile; fileRef = B2102A371BB59AE60025DABC /* WTRSurvey.h */; };
 		B2102A3C1BB59AE60025DABC /* WTRSurvey.m in Sources */ = {isa = PBXBuildFile; fileRef = B2102A381BB59AE60025DABC /* WTRSurvey.m */; };
 		B21372961BED0DB1009F5974 /* WTRSurveyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B21372951BED0DB1009F5974 /* WTRSurveyTests.m */; };
-		B229766D1BB0036100FC2772 /* WTRPropertiesParser.h in Headers */ = {isa = PBXBuildFile; fileRef = B229766B1BB0036100FC2772 /* WTRPropertiesParser.h */; };
-		B229766E1BB0036100FC2772 /* WTRPropertiesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B229766C1BB0036100FC2772 /* WTRPropertiesParser.m */; };
 		B22976751BB1404D00FC2772 /* WTRCustomThankYou.h in Headers */ = {isa = PBXBuildFile; fileRef = B22976731BB1404D00FC2772 /* WTRCustomThankYou.h */; };
 		B22976761BB1404D00FC2772 /* WTRCustomThankYou.m in Sources */ = {isa = PBXBuildFile; fileRef = B22976741BB1404D00FC2772 /* WTRCustomThankYou.m */; };
 		B229767D1BB1901500FC2772 /* WTRThankYouButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B229767B1BB1901500FC2772 /* WTRThankYouButton.h */; };
@@ -197,8 +195,6 @@
 		B2102A371BB59AE60025DABC /* WTRSurvey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRSurvey.h; sourceTree = "<group>"; };
 		B2102A381BB59AE60025DABC /* WTRSurvey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSurvey.m; sourceTree = "<group>"; };
 		B21372951BED0DB1009F5974 /* WTRSurveyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRSurveyTests.m; sourceTree = "<group>"; };
-		B229766B1BB0036100FC2772 /* WTRPropertiesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRPropertiesParser.h; sourceTree = "<group>"; };
-		B229766C1BB0036100FC2772 /* WTRPropertiesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRPropertiesParser.m; sourceTree = "<group>"; };
 		B22976731BB1404D00FC2772 /* WTRCustomThankYou.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRCustomThankYou.h; sourceTree = "<group>"; };
 		B22976741BB1404D00FC2772 /* WTRCustomThankYou.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTRCustomThankYou.m; sourceTree = "<group>"; };
 		B229767B1BB1901500FC2772 /* WTRThankYouButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTRThankYouButton.h; sourceTree = "<group>"; };
@@ -468,8 +464,6 @@
 				B24550901B8E0188001AC1FB /* WTRColor.m */,
 				B2C940621BA30AFB00482494 /* UIImage+ImageFromColor.h */,
 				B2C940631BA30AFB00482494 /* UIImage+ImageFromColor.m */,
-				B229766B1BB0036100FC2772 /* WTRPropertiesParser.h */,
-				B229766C1BB0036100FC2772 /* WTRPropertiesParser.m */,
 				178571962088FCA700CCBE02 /* WTRLogger.h */,
 				178571972088FCA700CCBE02 /* WTRLogger.m */,
 				0FE0F3F720DC041B00499248 /* WTRNotificationCenter.h */,
@@ -625,7 +619,6 @@
 				0FE0F3F920DC041B00499248 /* WTRNotificationCenter.h in Headers */,
 				B22976751BB1404D00FC2772 /* WTRCustomThankYou.h in Headers */,
 				B24550911B8E0188001AC1FB /* WTRColor.h in Headers */,
-				B229766D1BB0036100FC2772 /* WTRPropertiesParser.h in Headers */,
 				B2102A2D1BB59ABC0025DABC /* WTRDefaults.h in Headers */,
 				B2DC6F371B82143B00F599B3 /* WTRSettings.h in Headers */,
 				B25CE75F1BAADC920063E6E5 /* WTRQuestionView.h in Headers */,
@@ -760,7 +753,6 @@
 				0FE0F3FE20DC059700499248 /* WTRDefaultNotificationCenter.m in Sources */,
 				B2102A341BB59ACE0025DABC /* WTRCustomMessages.m in Sources */,
 				B22976761BB1404D00FC2772 /* WTRCustomThankYou.m in Sources */,
-				B229766E1BB0036100FC2772 /* WTRPropertiesParser.m in Sources */,
 				7E0D324024207C960034CEBD /* WTROperation.m in Sources */,
 				B260ECDE1BD7E5B200E29CD5 /* UIView+Constraints.m in Sources */,
 				B268666F1BD5339800A4288D /* WTRiPADSurveyViewController.m in Sources */,
@@ -972,7 +964,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = mh_dylib;
-				MARKETING_VERSION = 0.26.2;
+				MARKETING_VERSION = 0.26.3;
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wootric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -999,7 +991,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = mh_dylib;
-				MARKETING_VERSION = 0.26.2;
+				MARKETING_VERSION = 0.26.3;
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wootric.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

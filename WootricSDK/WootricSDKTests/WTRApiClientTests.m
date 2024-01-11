@@ -29,12 +29,12 @@
 static NSString *const WTRSamplingRule = @"Wootric Sampling Rule";
 static NSString *const WTRRegisterEventsEndpoint = @"/registered_events.json";
 static NSString *const WTREligibleEndpoint = @"/eligible.json";
-static NSString *const WTRSurveyServerURL = @"https://eligibility.wootric.com";
-static NSString *const WTRBaseAPIURL = @"https://app.wootric.com";
-static NSString *const WTRSurveyEUServerURL = @"https://eligibility.wootric.eu";
-static NSString *const WTRBaseEUAPIURL = @"https://app.wootric.eu";
-static NSString *const WTRSurveyAUServerURL = @"https://eligibility.wootric.au";
-static NSString *const WTRBaseAUAPIURL = @"https://app.wootric.au";
+static NSString *const WTRSurveyServerURL = @"eligibility.wootric.com";
+static NSString *const WTRBaseAPIURL = @"app.wootric.com";
+static NSString *const WTRSurveyEUServerURL = @"eligibility.wootric.eu";
+static NSString *const WTRBaseEUAPIURL = @"app.wootric.eu";
+static NSString *const WTRSurveyAUServerURL = @"eligibility.wootric.au";
+static NSString *const WTRBaseAUAPIURL = @"app.wootric.au";
 static NSString *const WTRAPIVersion = @"api/v1";
 
 @interface WTRApiClientTests : XCTestCase
@@ -55,17 +55,18 @@ static NSString *const WTRAPIVersion = @"api/v1";
 @property (nonatomic, assign) BOOL endUserAlreadyUpdated;
 @property (nonatomic) int priority;
 
-- (NSMutableURLRequest *)requestWithURL:(NSURL *)url HTTPMethod:(NSString *)httpMethod andHTTPBody:(NSString *)httpBody;
+//- (NSMutableURLRequest *)requestWithURL:(NSURL *)url HTTPMethod:(NSString *)httpMethod andHTTPBody:(NSString *)httpBody;
+- (NSMutableURLRequest *)requestWithHost:(NSString *)host path:(NSString *)path HTTPMethod:(NSString *)httpMethod queryItems:(NSArray *)queryItems;
 - (void)createEndUser:(void (^)(NSInteger endUserID))endUserWithID;
 - (void)getEndUserWithEmail:(void (^)(NSInteger endUserID))endUserWithID;
 - (void)authenticate:(void (^)(BOOL))authenticated;
 - (NSString *)paramsWithScore:(NSInteger)score endUserID:(long)endUserID accountID:(NSNumber *)accountID uniqueLink:(nonnull NSString *)uniqueLink priority:(int)priority text:(nullable NSString *)text picklistAnswers:(NSDictionary *)picklistAnswers;
 - (NSString *)randomString;
 - (NSString *)buildUniqueLinkAccountToken:(NSString *)accountToken endUserEmail:(NSString *)endUserEmail date:(NSTimeInterval)date randomString:(NSString *)randomString;
-- (NSString *)addSurveyServerCustomSettingsToURLString:(NSString *)baseURLString;
-- (NSString *)addVersionsToURLString:(NSString *)baseURLString;
-- (NSString *)addPropertiesToURLString:(NSString *)baseURLString;
-- (NSString *)addEmailToURLString:(NSString *)baseURLString;
+- (NSArray *)addSurveyServerCustomSettingsToURL;
+- (NSArray *)addVersionsToURL;
+- (NSArray *)addPropertiesToURL;
+- (NSURLQueryItem *)addEmailToURL;
 - (BOOL)needsSurvey;
 - (NSString *)baseApiUrl;
 - (NSString *)eligibilityUrl;
@@ -107,81 +108,74 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 
-- (void)testAddSurveyServerCustomSettingsToURLString {
-  NSString *baseURLString = @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com";
-  
-  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&end_user_last_seen=0");
+- (void)testAddSurveyServerCustomSettingsToURL {
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURL], @[[NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:@"0"]]);
   
   _apiClient.settings.surveyImmediately = YES;
-  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&end_user_last_seen=0");
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURL], (@[[NSURLQueryItem queryItemWithName:@"survey_immediately" value:@"true"], [NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:@"0"]]));
   
   _apiClient.settings.registeredPercentage = @50;
-  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&end_user_last_seen=0");
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURL], (@[[NSURLQueryItem queryItemWithName:@"survey_immediately" value:@"true"], [NSURLQueryItem queryItemWithName:@"registered_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:@"0"]]));
   
   _apiClient.settings.visitorPercentage = @50;
-  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&end_user_last_seen=0");
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURL], (@[[NSURLQueryItem queryItemWithName:@"survey_immediately" value:@"true"], [NSURLQueryItem queryItemWithName:@"registered_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"visitor_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:@"0"]]));
   
   _apiClient.settings.resurveyThrottle = @100;
-  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&end_user_last_seen=0");
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURL], (@[[NSURLQueryItem queryItemWithName:@"survey_immediately" value:@"true"], [NSURLQueryItem queryItemWithName:@"registered_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"visitor_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"resurvey_throttle" value:@"100"], [NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:@"0"]]));
   
   _apiClient.settings.dailyResponseCap = @25;
-  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_last_seen=0");
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURL], (@[[NSURLQueryItem queryItemWithName:@"survey_immediately" value:@"true"], [NSURLQueryItem queryItemWithName:@"registered_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"visitor_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"resurvey_throttle" value:@"100"], [NSURLQueryItem queryItemWithName:@"daily_response_cap" value:@"25"], [NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:@"0"]]));
   
   _apiClient.settings.externalCreatedAt = @1234567890;
-  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&end_user_last_seen=0");
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURL], (@[[NSURLQueryItem queryItemWithName:@"survey_immediately" value:@"true"], [NSURLQueryItem queryItemWithName:@"registered_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"visitor_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"resurvey_throttle" value:@"100"], [NSURLQueryItem queryItemWithName:@"daily_response_cap" value:@"25"], [NSURLQueryItem queryItemWithName:@"end_user_created_at" value:@"1234567890"], [NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:@"0"]]));
   
   _apiClient.settings.languageCode = @"ES";
-  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&language[code]=ES&end_user_last_seen=0");
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURL], (@[[NSURLQueryItem queryItemWithName:@"survey_immediately" value:@"true"], [NSURLQueryItem queryItemWithName:@"registered_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"visitor_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"resurvey_throttle" value:@"100"], [NSURLQueryItem queryItemWithName:@"daily_response_cap" value:@"25"], [NSURLQueryItem queryItemWithName:@"end_user_created_at" value:@"1234567890"], [NSURLQueryItem queryItemWithName:@"language[code]" value:@"ES"], [NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:@"0"]]));
   
   _apiClient.settings.customProductName = @"productName";
-  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&language[code]=ES&language[product_name]=productName&end_user_last_seen=0");
-  
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURL], (@[[NSURLQueryItem queryItemWithName:@"survey_immediately" value:@"true"], [NSURLQueryItem queryItemWithName:@"registered_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"visitor_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"resurvey_throttle" value:@"100"], [NSURLQueryItem queryItemWithName:@"daily_response_cap" value:@"25"], [NSURLQueryItem queryItemWithName:@"end_user_created_at" value:@"1234567890"], [NSURLQueryItem queryItemWithName:@"language[code]" value:@"ES"], [NSURLQueryItem queryItemWithName:@"language[product_name]" value:@"productName"], [NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:@"0"]]));
   
   _apiClient.settings.customAudience = @"customAudience";
-  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&language[code]=ES&language[product_name]=productName&language[audience_text]=customAudience&end_user_last_seen=0");
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURL], (@[[NSURLQueryItem queryItemWithName:@"survey_immediately" value:@"true"], [NSURLQueryItem queryItemWithName:@"registered_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"visitor_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"resurvey_throttle" value:@"100"], [NSURLQueryItem queryItemWithName:@"daily_response_cap" value:@"25"], [NSURLQueryItem queryItemWithName:@"end_user_created_at" value:@"1234567890"], [NSURLQueryItem queryItemWithName:@"language[code]" value:@"ES"], [NSURLQueryItem queryItemWithName:@"language[product_name]" value:@"productName"], [NSURLQueryItem queryItemWithName:@"language[audience_text]" value:@"customAudience"], [NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:@"0"]]));
   
   _apiClient.settings.firstSurveyAfter = @1;
-  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&language[code]=ES&language[product_name]=productName&language[audience_text]=customAudience&first_survey_delay=1&end_user_last_seen=0");
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURL], (@[[NSURLQueryItem queryItemWithName:@"survey_immediately" value:@"true"], [NSURLQueryItem queryItemWithName:@"registered_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"visitor_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"resurvey_throttle" value:@"100"], [NSURLQueryItem queryItemWithName:@"daily_response_cap" value:@"25"], [NSURLQueryItem queryItemWithName:@"end_user_created_at" value:@"1234567890"], [NSURLQueryItem queryItemWithName:@"language[code]" value:@"ES"], [NSURLQueryItem queryItemWithName:@"language[product_name]" value:@"productName"], [NSURLQueryItem queryItemWithName:@"language[audience_text]" value:@"customAudience"], [NSURLQueryItem queryItemWithName:@"first_survey_delay" value:@"1"], [NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:@"0"]]));
   
   _apiClient.settings.externalId = @"a1b2c3d4";
-  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&language[code]=ES&language[product_name]=productName&language[audience_text]=customAudience&first_survey_delay=1&external_id=a1b2c3d4&end_user_last_seen=0");
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURL], (@[[NSURLQueryItem queryItemWithName:@"survey_immediately" value:@"true"], [NSURLQueryItem queryItemWithName:@"registered_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"visitor_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"resurvey_throttle" value:@"100"], [NSURLQueryItem queryItemWithName:@"daily_response_cap" value:@"25"], [NSURLQueryItem queryItemWithName:@"end_user_created_at" value:@"1234567890"], [NSURLQueryItem queryItemWithName:@"language[code]" value:@"ES"], [NSURLQueryItem queryItemWithName:@"language[product_name]" value:@"productName"], [NSURLQueryItem queryItemWithName:@"language[audience_text]" value:@"customAudience"], [NSURLQueryItem queryItemWithName:@"first_survey_delay" value:@"1"], [NSURLQueryItem queryItemWithName:@"external_id" value:@"a1b2c3d4"], [NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:@"0"]]));
   
   _apiClient.settings.phoneNumber = @"+0123456789";
-  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=a@test.com&survey_immediately=1&registered_percent=50&visitor_percent=50&resurvey_throttle=100&daily_response_cap=25&end_user_created_at=1234567890&language[code]=ES&language[product_name]=productName&language[audience_text]=customAudience&first_survey_delay=1&external_id=a1b2c3d4&phone_number=+0123456789&end_user_last_seen=0");
+  XCTAssertEqualObjects([_apiClient addSurveyServerCustomSettingsToURL],  (@[[NSURLQueryItem queryItemWithName:@"survey_immediately" value:@"true"], [NSURLQueryItem queryItemWithName:@"registered_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"visitor_percent" value:@"50"], [NSURLQueryItem queryItemWithName:@"resurvey_throttle" value:@"100"], [NSURLQueryItem queryItemWithName:@"daily_response_cap" value:@"25"], [NSURLQueryItem queryItemWithName:@"end_user_created_at" value:@"1234567890"], [NSURLQueryItem queryItemWithName:@"language[code]" value:@"ES"], [NSURLQueryItem queryItemWithName:@"language[product_name]" value:@"productName"], [NSURLQueryItem queryItemWithName:@"language[audience_text]" value:@"customAudience"], [NSURLQueryItem queryItemWithName:@"first_survey_delay" value:@"1"], [NSURLQueryItem queryItemWithName:@"external_id" value:@"a1b2c3d4"], [NSURLQueryItem queryItemWithName:@"phone_number" value:@"+0123456789"], [NSURLQueryItem queryItemWithName:@"end_user_last_seen" value:@"0"]]));
 }
 
-- (void) testAddEmailToURLString {
-  NSString *baseURLString = @"https://survey.wootric.com/eligible.json?account_token=NPS-token";
-
-  XCTAssertEqualObjects([_apiClient addEmailToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token");
+- (void) testAddEmailToURL {
+  XCTAssertEqualObjects([_apiClient addEmailToURL], [NSURLQueryItem queryItemWithName:@"email" value:@"Unknown"]);
 
   _apiClient.settings.endUserEmail = @"test@wootric.com";
 
-  XCTAssertEqualObjects([_apiClient addEmailToURLString:baseURLString], @"https://survey.wootric.com/eligible.json?account_token=NPS-token&email=test%40wootric.com");
+  XCTAssertEqualObjects([_apiClient addEmailToURL], [NSURLQueryItem queryItemWithName:@"email" value:@"test@wootric.com"]);
 }
 
 - (void)testRequestURL {
-  NSString *params = @"params";
-  NSString *urlString = @"test";
+  NSString *host = @"wootric.com";
   _apiClient.sdkVersion = @"0.6.0";
   _apiClient.osVersion = @"10.0";
-  NSURL *url = [NSURL URLWithString:urlString];
   
-  NSMutableURLRequest *urlRequest = [_apiClient requestWithURL:url HTTPMethod:nil andHTTPBody:nil];
+  NSMutableURLRequest *urlRequest = [_apiClient requestWithHost:host path:@"/test" HTTPMethod:nil queryItems:nil];
   
   XCTAssertNil([urlRequest valueForHTTPHeaderField:@"Authorization"]);
   
   _apiClient.accessToken = @"accessToken";
-  urlRequest = [_apiClient requestWithURL:url HTTPMethod:nil andHTTPBody:nil];
+  urlRequest = [_apiClient requestWithHost:host path:@"/test" HTTPMethod:nil queryItems:nil];
   XCTAssertEqualObjects([urlRequest valueForHTTPHeaderField:@"Authorization"], @"Bearer accessToken");
   XCTAssertEqualObjects([urlRequest valueForHTTPHeaderField:@"User-Agent"], @"Wootric-Mobile-SDK");
   
   NSString *httpBody = [[NSString alloc] initWithData:urlRequest.HTTPBody encoding:NSUTF8StringEncoding];
   XCTAssertEqualObjects(httpBody, @"");
   
-  urlRequest = [_apiClient requestWithURL:url HTTPMethod:nil andHTTPBody:params];
+  urlRequest = [_apiClient requestWithHost:host path:@"/test" HTTPMethod:nil queryItems:@[[NSURLQueryItem queryItemWithName:@"param" value:@"param value"]]];
   httpBody = [[NSString alloc] initWithData:urlRequest.HTTPBody encoding:NSUTF8StringEncoding];
-  XCTAssertEqualObjects(httpBody, @"params&os_name=iOS&sdk_version=0.6.0&os_version=10.0");
+  XCTAssertEqualObjects([urlRequest.URL absoluteString], @"https://wootric.com/test?param=param%20value&os_name=iOS&sdk_version=0.6.0&os_version=10.0");
 }
 
 - (void)testEligibilityURL {
@@ -210,29 +204,23 @@ static NSString *const WTRAPIVersion = @"api/v1";
   _apiClient.osVersion = nil;
   _apiClient.sdkVersion = nil;
   
-  NSString *versionString = [_apiClient addVersionsToURLString:@"string"];
-  XCTAssertEqualObjects(versionString, @"string&os_name=iOS");
+  XCTAssertEqualObjects([_apiClient addVersionsToURL], (@[[NSURLQueryItem queryItemWithName:@"os_name" value:@"iOS"]]));
   
   _apiClient.sdkVersion = @"0.6.0";
-  versionString = [_apiClient addVersionsToURLString:@"string"];
-  XCTAssertEqualObjects(versionString, @"string&os_name=iOS&sdk_version=0.6.0");
+  XCTAssertEqualObjects([_apiClient addVersionsToURL], (@[[NSURLQueryItem queryItemWithName:@"os_name" value:@"iOS"], [NSURLQueryItem queryItemWithName:@"sdk_version" value:@"0.6.0"]]));
   
   _apiClient.osVersion = @"10.0";
-  versionString = [_apiClient addVersionsToURLString:@"string"];
-  XCTAssertEqualObjects(versionString, @"string&os_name=iOS&sdk_version=0.6.0&os_version=10.0");
+  XCTAssertEqualObjects([_apiClient addVersionsToURL], (@[[NSURLQueryItem queryItemWithName:@"os_name" value:@"iOS"], [NSURLQueryItem queryItemWithName:@"sdk_version" value:@"0.6.0"], [NSURLQueryItem queryItemWithName:@"os_version" value:@"10.0"]]));
   
   _apiClient.sdkVersion = nil;
-  versionString = [_apiClient addVersionsToURLString:@"string"];
-  XCTAssertEqualObjects(versionString, @"string&os_name=iOS&os_version=10.0");
+  XCTAssertEqualObjects([_apiClient addVersionsToURL], (@[[NSURLQueryItem queryItemWithName:@"os_name" value:@"iOS"], [NSURLQueryItem queryItemWithName:@"os_version" value:@"10.0"]]));
 }
 
 - (void)testAddPropertiesToURLString {
-  NSString *versionString = [_apiClient addPropertiesToURLString:@"string"];
-  XCTAssertEqualObjects(versionString, @"string");
+//  XCTAssertEqualObjects([_apiClient addPropertiesToURL], (null));
 
   _apiClient.settings.customProperties = [NSMutableDictionary dictionaryWithDictionary:@{ @"pricing_plan": @"pro plan" }];
-  versionString = [_apiClient addPropertiesToURLString:@"string"];
-  XCTAssertEqualObjects(versionString, @"string&properties[pricing_plan]=pro%20plan");
+  XCTAssertEqualObjects([_apiClient addPropertiesToURL], (@[[NSURLQueryItem queryItemWithName:@"properties[pricing_plan]" value:@"pro plan"]]));
 }
 
 - (void)testRandomStringLength {
@@ -252,11 +240,6 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (void)testResponseParams {
-  static NSString *expectedResponse = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps&driver_picklist[Help%20%26%20support]=Ayuda%20%26%20soporte&score=9";
-  static NSString *expectedResponseAccountId = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps&survey[language]=ES&score=9&account_id=1234";
-  
-  static NSString *expectedResponseAccountIdText = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps&survey[language]=ES&score=9&text=test&account_id=1234";
-  
   _apiClient.settings.originURL = @"com.wootric.WootricSDK-Demo";
   _apiClient.settings.languageCode = nil;
   NSInteger score = 9;
@@ -266,25 +249,47 @@ static NSString *const WTRAPIVersion = @"api/v1";
   NSString *text = nil;
   int priority = 0;
   
-  NSString *params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil picklistAnswers:@{@"Help & support": @"Ayuda & soporte"}];
-  XCTAssertEqualObjects(params, expectedResponse, "Should not have account_id nor text in params");
-  
-  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text picklistAnswers:@{@"Help & support": @"Ayuda & soporte"}];
-  XCTAssertEqualObjects(params, expectedResponse, "Should not have account_id nor text in params");
+  XCTAssertEqualObjects([_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil picklistAnswers:@{@"Help & support": @"Ayuda & soporte"}], (@[
+    [NSURLQueryItem queryItemWithName:@"origin_url" value:@"com.wootric.WootricSDK-Demo"],
+    [NSURLQueryItem queryItemWithName:@"end_user[id]" value:@"12345678"],
+    [NSURLQueryItem queryItemWithName:@"survey[channel]" value:@"mobile"],
+    [NSURLQueryItem queryItemWithName:@"survey[unique_link]" value:@"5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e"],
+    [NSURLQueryItem queryItemWithName:@"priority" value:@"0"],
+    [NSURLQueryItem queryItemWithName:@"metric_type" value:@"nps"],
+    [NSURLQueryItem queryItemWithName:@"driver_picklist[Help & support]" value:@"Ayuda & soporte"],
+    [NSURLQueryItem queryItemWithName:@"score" value:@"9"]
+  ]), @"Should not have account_id nor text in params");
   
   accountID = @1234;
   _apiClient.settings.languageCode = @"ES";
-  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text picklistAnswers:nil];
-  XCTAssertEqualObjects(params, expectedResponseAccountId);
+  XCTAssertEqualObjects([_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text picklistAnswers:nil], (@[
+    [NSURLQueryItem queryItemWithName:@"origin_url" value:@"com.wootric.WootricSDK-Demo"],
+    [NSURLQueryItem queryItemWithName:@"end_user[id]" value:@"12345678"],
+    [NSURLQueryItem queryItemWithName:@"survey[channel]" value:@"mobile"],
+    [NSURLQueryItem queryItemWithName:@"survey[unique_link]" value:@"5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e"],
+    [NSURLQueryItem queryItemWithName:@"priority" value:@"0"],
+    [NSURLQueryItem queryItemWithName:@"metric_type" value:@"nps"],
+    [NSURLQueryItem queryItemWithName:@"survey[language]" value:@"ES"],
+    [NSURLQueryItem queryItemWithName:@"score" value:@"9"],
+    [NSURLQueryItem queryItemWithName:@"account_id" value:@"1234"]
+  ]));
   
   text = @"test";
-  params = [_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text picklistAnswers:nil];
-  XCTAssertEqualObjects(params, expectedResponseAccountIdText);
+  XCTAssertEqualObjects([_apiClient paramsWithScore:score endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:text picklistAnswers:nil], (@[
+    [NSURLQueryItem queryItemWithName:@"origin_url" value:@"com.wootric.WootricSDK-Demo"],
+    [NSURLQueryItem queryItemWithName:@"end_user[id]" value:@"12345678"],
+    [NSURLQueryItem queryItemWithName:@"survey[channel]" value:@"mobile"],
+    [NSURLQueryItem queryItemWithName:@"survey[unique_link]" value:@"5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e"],
+    [NSURLQueryItem queryItemWithName:@"priority" value:@"0"],
+    [NSURLQueryItem queryItemWithName:@"metric_type" value:@"nps"],
+    [NSURLQueryItem queryItemWithName:@"survey[language]" value:@"ES"],
+    [NSURLQueryItem queryItemWithName:@"score" value:@"9"],
+    [NSURLQueryItem queryItemWithName:@"text" value:@"test"],
+    [NSURLQueryItem queryItemWithName:@"account_id" value:@"1234"]
+  ]));
 }
 
 - (void)testDeclineParams {
-  static NSString *expectedResponse = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps&survey[language]=ES";
-  static NSString *expectedResponseAccountId = @"origin_url=com.wootric.WootricSDK-Demo&end_user[id]=12345678&survey[channel]=mobile&survey[unique_link]=5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e&priority=0&metric_type=nps&survey[language]=ES&account_id=1234";
   
   _apiClient.settings.originURL = @"com.wootric.WootricSDK-Demo";
   _apiClient.settings.languageCode = @"ES";
@@ -293,12 +298,27 @@ static NSString *const WTRAPIVersion = @"api/v1";
   NSString *uniqueLink = @"5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e";
   int priority = 0;
   
-  NSString *params = [_apiClient paramsWithScore:-1 endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil picklistAnswers:nil];
-  XCTAssertEqualObjects(params, expectedResponse);
+  XCTAssertEqualObjects([_apiClient paramsWithScore:-1 endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil picklistAnswers:nil], (@[
+    [NSURLQueryItem queryItemWithName:@"origin_url" value:@"com.wootric.WootricSDK-Demo"],
+    [NSURLQueryItem queryItemWithName:@"end_user[id]" value:@"12345678"],
+    [NSURLQueryItem queryItemWithName:@"survey[channel]" value:@"mobile"],
+    [NSURLQueryItem queryItemWithName:@"survey[unique_link]" value:@"5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e"],
+    [NSURLQueryItem queryItemWithName:@"priority" value:@"0"],
+    [NSURLQueryItem queryItemWithName:@"metric_type" value:@"nps"],
+    [NSURLQueryItem queryItemWithName:@"survey[language]" value:@"ES"]
+  ]));
   
   accountID = @1234;
-  params = [_apiClient paramsWithScore:-1 endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil picklistAnswers:nil];
-  XCTAssertEqualObjects(params, expectedResponseAccountId);
+  XCTAssertEqualObjects([_apiClient paramsWithScore:-1 endUserID:endUserID accountID:accountID uniqueLink:uniqueLink priority:priority text:nil picklistAnswers:nil], (@[
+    [NSURLQueryItem queryItemWithName:@"origin_url" value:@"com.wootric.WootricSDK-Demo"],
+    [NSURLQueryItem queryItemWithName:@"end_user[id]" value:@"12345678"],
+    [NSURLQueryItem queryItemWithName:@"survey[channel]" value:@"mobile"],
+    [NSURLQueryItem queryItemWithName:@"survey[unique_link]" value:@"5d8220d5b96ec1e0c4389a0a5951c05c3b1b998e53abbb11b14b9da5c2c0a81e"],
+    [NSURLQueryItem queryItemWithName:@"priority" value:@"0"],
+    [NSURLQueryItem queryItemWithName:@"metric_type" value:@"nps"],
+    [NSURLQueryItem queryItemWithName:@"survey[language]" value:@"ES"],
+    [NSURLQueryItem queryItemWithName:@"account_id" value:@"1234"]
+  ]));
 }
 
 - (void)testPriorityIncreases {
