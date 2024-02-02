@@ -362,7 +362,9 @@ static NSString *const WTROSVersionKey = @"os_version";
     [queryItems addObject:[self addEmailToURL]];
     [queryItems addObjectsFromArray:[self addSurveyServerCustomSettingsToURL]];
     [queryItems addObjectsFromArray:[self addPropertiesToURL]];
-    [queryItems addObject:[self addEventNameToURL]];
+    if ([WTRUtils isValidString:_settings.eventName]) {
+      [queryItems addObject:[self addEventNameToURL]];
+    }
 
     components.queryItems = queryItems;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:components.URL];
@@ -535,7 +537,7 @@ static NSString *const WTROSVersionKey = @"os_version";
   NSMutableArray *items = [NSMutableArray new];
   if (_settings.customProperties) {
     for (NSString *key in _settings.customProperties) {
-      [items addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"%@[%@]",WTRPropertiesKey, key] value:[_settings.customProperties objectForKey:key]]];
+      [items addObject:[NSURLQueryItem queryItemWithName:[NSString stringWithFormat:@"%@[%@]",WTRPropertiesKey, key] value:[NSString stringWithFormat:@"%@", [_settings.customProperties objectForKey:key]]]];
     }
   }
   return items;

@@ -217,10 +217,8 @@ static NSString *const WTRAPIVersion = @"api/v1";
 }
 
 - (void)testAddPropertiesToURLString {
-//  XCTAssertEqualObjects([_apiClient addPropertiesToURL], (null));
-
-  _apiClient.settings.customProperties = [NSMutableDictionary dictionaryWithDictionary:@{ @"pricing_plan": @"pro plan" }];
-  XCTAssertEqualObjects([_apiClient addPropertiesToURL], (@[[NSURLQueryItem queryItemWithName:@"properties[pricing_plan]" value:@"pro plan"]]));
+  _apiClient.settings.customProperties = [NSMutableDictionary dictionaryWithDictionary:@{ @"pricing_plan": @"pro plan", @"age_amount": @21.5 }];
+  XCTAssertEqualObjects([_apiClient addPropertiesToURL], (@[[NSURLQueryItem queryItemWithName:@"properties[age_amount]" value:@"21.5"], [NSURLQueryItem queryItemWithName:@"properties[pricing_plan]" value:@"pro plan"]]));
 }
 
 - (void)testRandomStringLength {

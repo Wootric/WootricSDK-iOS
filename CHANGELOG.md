@@ -1,3 +1,9 @@
+## 0.27.1 (2024-03-22)
+
+### Changes:
+
+- Fix crash in checkEligibility
+
 ## 0.27.0 (2024-02-28)
 
 ### Changes:
