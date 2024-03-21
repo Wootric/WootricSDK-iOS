@@ -28,14 +28,15 @@
 
 @implementation WTRiPADThankYouButton
 
-- (instancetype)initWithViewController:(UIViewController *)viewController {
+- (instancetype)initWithViewController:(UIViewController *)viewController backgroundColor:(UIColor *)backgroundColor {
   if (self = [super init]) {
     self.layer.cornerRadius = 3;
     self.layer.borderWidth = 1;
     self.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
-    self.layer.borderColor = [WTRColor iPadThankYouButtonBorderColor].CGColor;
+    self.layer.borderColor = [WTRColor darkerColor:backgroundColor byPercentage:20.0f].CGColor;
+    self.layer.backgroundColor = backgroundColor.CGColor;
     self.titleLabel.font = [UIItems regularFontWithSize:14];
-    [self setTitleColor:[WTRColor iPadThankYouButtonTextColor] forState:UIControlStateNormal];
+    [self setTitleColor:[WTRColor iPadThankYouButtonTextColorForColor:backgroundColor] forState:UIControlStateNormal];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addTarget:viewController action:NSSelectorFromString(@"openThankYouURL:") forControlEvents:UIControlEventTouchUpInside];
   }

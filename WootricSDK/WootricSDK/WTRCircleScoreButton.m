@@ -27,16 +27,25 @@
 #import "SimpleConstraints.h"
 #import "UIItems.h"
 
+@interface WTRCircleScoreButton ()
+
+@property (nonatomic, strong) UIColor *sliderColor;
+
+@end
+
 @implementation WTRCircleScoreButton
 
-- (instancetype)initWithViewController:(UIViewController *)viewController {
+- (instancetype)initWithViewController:(UIViewController *)viewController color:(UIColor *)color scoreScaleType:(NSString *)scoreScaleType {
   if (self = [super init]) {
     _isSelected = NO;
+    _sliderColor = color;
+    _scoreScaleType = scoreScaleType;
+    self.backgroundColor = [scoreScaleType isEqualToString:@"filled"] ? _sliderColor : [UIColor whiteColor];
     self.layer.cornerRadius = 21;
     self.layer.borderWidth = 1;
     self.layer.borderColor = [WTRColor iPadCircleButtonBorderColor].CGColor;
     self.titleLabel.font = [UIItems regularFontWithSize:14];
-    [self setTitleColor:[WTRColor iPadCircleButtonTextColor] forState:UIControlStateNormal];
+    [self setTitleColor:[WTRColor iPadCircleButtonTextColorForColor:_sliderColor scoreScaleType:_scoreScaleType state:false] forState:UIControlStateNormal];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self setupConstraints];
     [self addTarget:viewController action:NSSelectorFromString(@"selectScore:") forControlEvents:UIControlEventTouchUpInside];
@@ -73,16 +82,20 @@
 
 - (void)markAsSelected {
   _isSelected = YES;
-  self.backgroundColor = [WTRColor iPadCircleButtonSelectedBackgroundColor];
-  self.layer.borderColor = [WTRColor iPadCircleButtonSelectedBorderColor].CGColor;
-  [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  if (_sliderColor) {
+    self.backgroundColor = _sliderColor;
+  } else {
+    self.backgroundColor = [WTRColor iPadCircleButtonSelectedBackgroundColor];
+  }
+  self.layer.borderColor = [WTRColor iPadCircleButtonBorderColor].CGColor;
+  [self setTitleColor:[WTRColor iPadCircleButtonTextColorForColor:_sliderColor scoreScaleType:_scoreScaleType state:true] forState:UIControlStateNormal];
 }
 
 - (void)markAsUnselected {
   _isSelected = NO;
   self.backgroundColor = [UIColor whiteColor];
   self.layer.borderColor = [WTRColor iPadCircleButtonBorderColor].CGColor;
-  [self setTitleColor:[WTRColor iPadCircleButtonTextColor] forState:UIControlStateNormal];
+  [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 }
 
 @end

@@ -34,9 +34,10 @@
     self.layer.borderWidth = 1;
     self.backgroundColor = backgroundColor;
     self.layer.borderColor = [backgroundColor colorWithAlphaComponent:0.65f].CGColor;
+    self.layer.borderColor = [WTRColor darkerColor:backgroundColor byPercentage:20.0f].CGColor;
     self.titleLabel.font = [UIItems boldFontWithSize:14];
     self.titleLabel.adjustsFontSizeToFitWidth = YES;
-    [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self setTitleColor:[WTRColor sendButtonTextColorForColor:backgroundColor] forState:UIControlStateNormal];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addTarget:viewController action:NSSelectorFromString(@"openThankYouURL:") forControlEvents:UIControlEventTouchUpInside];
   }

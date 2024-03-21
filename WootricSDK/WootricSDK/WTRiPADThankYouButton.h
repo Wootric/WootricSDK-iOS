@@ -28,7 +28,7 @@
 
 @property (nonatomic, strong) NSURL *buttonURL;
 
-- (instancetype)initWithViewController:(UIViewController *)viewController;
+- (instancetype)initWithViewController:(UIViewController *)viewController backgroundColor:(UIColor *)backgroundColor;
 - (void)setText:(NSString *)text andURL:(NSURL *)url;
 
 @end

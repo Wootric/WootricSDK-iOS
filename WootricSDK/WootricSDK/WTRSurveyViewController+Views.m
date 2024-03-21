@@ -88,11 +88,13 @@ static NSString *const kInMoment = @"InMoment";
   self.sendButton.backgroundColor = [[self.settings sendButtonBackgroundColor] colorWithAlphaComponent:0.4f];
   self.sendButton.enabled = NO;
   self.sendButton.layer.cornerRadius = 3;
+  self.sendButton.layer.borderWidth = 1.0f;
+  self.sendButton.layer.borderColor = [WTRColor darkerColor:self.settings.sendButtonBackgroundColor byPercentage:20.0f].CGColor;
   self.sendButton.titleLabel.font = [UIItems boldFontWithSize:14];
   [self.sendButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [self.sendButton setTitle:[self.settings sendButtonText] forState:UIControlStateNormal];
-  [self.sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  [self.sendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
+  [self.sendButton setTitleColor:[WTRColor sendButtonTextColorForColor:self.settings.sendButtonBackgroundColor] forState:UIControlStateNormal];
+  [self.sendButton setTitleColor:[WTRColor sendButtonTextColorForColor:self.settings.sendButtonBackgroundColor] forState:UIControlStateDisabled];
   [self.sendButton addTarget:self
                       action:NSSelectorFromString(@"sendButtonPressed:")
             forControlEvents:UIControlEventTouchUpInside];
@@ -102,13 +104,13 @@ static NSString *const kInMoment = @"InMoment";
   self.poweredByWootric = [[UIButton alloc] init];
   [self.poweredByWootric setTranslatesAutoresizingMaskIntoConstraints:NO];
   NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", kPoweredBy, kInMoment]];
-  if ([WTRColor poweredByColor] != nil && [WTRColor wootricTextColor] != nil && [UIItems regularFontWithSize:10] != nil  && kPoweredBy.length > 1 && kInMoment.length > 1) {
+  if ([WTRColor poweredByColor] != nil && [WTRColor wootricTextColorForColor:nil] != nil && [UIItems regularFontWithSize:10] != nil  && kPoweredBy.length > 1 && kInMoment.length > 1) {
     [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, kPoweredBy.length - 1)];
-    [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColor] range:NSMakeRange(kPoweredBy.length, kInMoment.length)];
+    [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColorForColor:nil] range:NSMakeRange(kPoweredBy.length, kInMoment.length)];
     [attrStr addAttribute:NSFontAttributeName value:[UIItems regularFontWithSize:10] range:NSMakeRange(0, kPoweredBy.length + kInMoment.length)];
   } else {
     [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor poweredByColor] range:NSMakeRange(0, 10)];
-    [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColor] range:NSMakeRange(11, 8)];
+    [attrStr addAttribute:NSForegroundColorAttributeName value:[WTRColor wootricTextColorForColor:nil] range:NSMakeRange(11, 8)];
     [attrStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, 19)];
   }
   [self.poweredByWootric setAttributedTitle:attrStr forState:UIControlStateNormal];

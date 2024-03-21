@@ -165,7 +165,7 @@
   _noThanksButton.titleLabel.font = [UIItems boldFontWithSize:12];
   [_noThanksButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [_noThanksButton setTitle:[[_settings socialShareDeclineText] uppercaseString] forState:UIControlStateNormal];
-  [_noThanksButton setTitleColor:[_settings sendButtonBackgroundColor] forState:UIControlStateNormal];
+  [_noThanksButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [_noThanksButton addTarget:viewController
                       action:NSSelectorFromString(@"noThanksButtonPressed")
             forControlEvents:UIControlEventTouchUpInside];

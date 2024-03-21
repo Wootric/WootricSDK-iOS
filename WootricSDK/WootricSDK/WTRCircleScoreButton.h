@@ -28,8 +28,9 @@
 
 @property (nonatomic, assign) BOOL isSelected;
 @property (nonatomic, assign) int assignedScore;
+@property (nonatomic, assign) NSString *scoreScaleType;
 
-- (instancetype)initWithViewController:(UIViewController *)viewController;
+- (instancetype)initWithViewController:(UIViewController *)viewController color:(UIColor *)color scoreScaleType:(NSString *)scoreScaleType;
 - (void)addConstraintsWithSuperview:(UIView *)superView andLeftConstraintConstant:(CGFloat)leftConstant;
 - (void)markAsSelected;
 - (void)markAsUnselected;
